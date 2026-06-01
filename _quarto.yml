@@ -1,0 +1,38 @@
+project:
+  type: website
+  output-dir: docs # Points directly to GitHub Pages deployment folder
+
+website:
+  title: "Isogeny Cryptography Wiki"
+  description: "A minimal, accessible reference for isogeny-based protocols."
+  
+  # Global search configuration
+  search:
+    location: sidebar
+    type: overlay
+    copy-button: true
+
+  # Wiki-style sidebar navigation
+  sidebar:
+    style: "docked"
+    search: true
+    collapse-level: 2
+    contents:
+      - href: index.qmd
+        text: Home
+      - section: "Protocols"
+        contents:
+          - href: protocols/csidh.qmd
+            text: CSIDH
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: cyborg
+    toc: true                  # Table of contents on the right side
+    toc-location: right
+    code-fold: true            # Keep implementation code tidy
+    html-math-method: mathjax  # Excellent screen-reader support for LaTeX
+    minimal: false             # Keep true responsive navbar, but rely on bootstrap styling
+    number-sections: true
