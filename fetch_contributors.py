@@ -1,6 +1,7 @@
 import os
 import json
 import urllib.request
+import subprocess
 from pathlib import Path
 
 # Set to your specific repository
@@ -10,6 +11,22 @@ os.makedirs(".contributors", exist_ok=True)
 qmd_files = Path("protocols").rglob("*.qmd")
 
 for file_path in qmd_files:
+    # --- 1. SYNC TIMESTAMPS WITH GIT COMMIT HISTORY ---
+    try:
+        # Ask local git for the exact UNIX timestamp of the last commit for this file
+        git_cmd = ['git', 'log', '-1', '--format=%ct', str(file_path)]
+        result = subprocess.run(git_cmd, capture_output=True, text=True)
+        
+        if result.stdout.strip():
+            commit_timestamp = float(result.stdout.strip())
+            # Force the file's OS modification time to match the Git commit
+            os.utime(file_path, (commit_timestamp, commit_timestamp))
+    except Exception as e:
+        # If it's a brand new uncommitted file, fail silently and use today's date
+        pass 
+    # --------------------------------------------------
+
+    # --- 2. FETCH CONTRIBUTORS FROM GITHUB API ---
     snippet_path = Path(".contributors") / f"{file_path.stem}.md"
     url = f"https://api.github.com/repos/{REPO}/commits?path={file_path}"
     

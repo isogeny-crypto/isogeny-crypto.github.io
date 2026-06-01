@@ -83,5 +83,8 @@ The repository is configured to serve the site from the `/docs` directory on the
 ```bash
 git add .
 git commit -m "<descriptive commit message>"
+quarto render --clean
+git add docs/
+git commit --amend --no-edit
 git push origin main
 ```
