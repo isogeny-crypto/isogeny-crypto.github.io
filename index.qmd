@@ -1,6 +1,7 @@
 ---
 title: "Isogeny-based Cryptography Wiki"
 subtitle: "A collaborative, accessible reference for isogeny-based protocols and primitives."
+date-modified: ""
 ---
 
 Welcome to the **Isogeny-based Cryptography Wiki**. This site serves as an open-source, mathematically rigorous, and accessible repository of knowledge detailing post-quantum cryptographic protocols built on the hardness of finding isogenies between elliptic curves.

@@ -10,7 +10,7 @@ This website is statically generated using Quarto. It leverages MathJax for full
 To build or preview this site locally, you must install the following:
 
 1. Quarto CLI: The core HTML rendering engine.
-2. Python 3: Required to execute the fetch_contributors.py pre-render script.
+2. Python 3: Required to execute the `fetch_contributors.py` pre-render script.
 3. Git: For version control and repository syncing.
 
 Recommended Editor: Visual Studio Code with the official Quarto Extension for live previewing and integrated LaTeX support.
@@ -70,7 +70,7 @@ curl -L -o alpha.csl https://raw.githubusercontent.com/citation-style-language/s
 
 At build time, fetch_contributors.py dynamically queries the GitHub API to find the commit history of every `.qmd` file and generates a markdown snippet.
 
-- Do not edit the hidden .contributors/ folder manually.
+- Do not edit the hidden `.contributors/` folder manually.
 - Ensure the bottom of your article includes the shortcode: `{{< include ../../.contributors/filename.md >}}`.
 - Note: The script parses the remote GitHub repository. If you create a brand new file locally, the script will output "Pending GitHub sync" until your first push.
 
