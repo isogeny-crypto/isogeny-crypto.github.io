@@ -24,7 +24,7 @@ for file_path in qmd_files:
                 handles.add(commit['author']['login'])
         
         if handles:
-            links = [f"[@{h}](https://github.com/{h})" for h in handles]
+            links = [f"[\\@{h}](https://github.com/{h})" for h in handles]
             markdown = f"\n\n**Contributors:** {', '.join(links)}\n"
         else:
             markdown = "\n\n**Contributors:** No GitHub history found yet.\n"
