@@ -1,10 +1,11 @@
 project:
   type: website
   output-dir: docs # Points directly to GitHub Pages deployment folder
+  pre-render: python3 fetch_contributors.py
 
 website:
-  title: "Isogeny Cryptography Wiki"
-  description: "A minimal, accessible reference for isogeny-based protocols."
+  title: "Isogeny-based Cryptography Wiki"
+  description: "An accessible reference for isogeny-based protocols."
   
   # Global search configuration
   search:
@@ -20,8 +21,10 @@ website:
     contents:
       - href: index.qmd
         text: Home
-      - section: "Protocols"
-        contents: "protocols/*.qmd"
+      - section: "Key Exchange"
+        contents: "protocols/key-exchange/*.qmd"
+      - section: "Digital Signature"
+        contents: "protocols/digital-signature/*.qmd"
 
 format:
   html:

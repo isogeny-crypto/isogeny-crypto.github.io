@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Isogeny Cryptography Wiki</title>
+<title>Isogeny-based Cryptography Wiki</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -263,7 +263,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Isogeny Cryptography Wiki</a> 
+      <a href="./">Isogeny-based Cryptography Wiki</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
@@ -285,7 +285,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Protocols</span></a>
+ <span class="menu-text">Key Exchange</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -293,14 +293,25 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/csi-fish.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CSI-FiSh: Isogeny-Based Signatures</span></a>
+  <a href="./protocols/key-exchange/csidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CSIDH: Commutative Supersingular Isogeny Diffie-Hellman</span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Digital Signature</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/csidh.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CSIDH: Commutative Supersingular Isogeny Diffie-Hellman</span></a>
+  <a href="./protocols/digital-signature/csi-fish.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CSI-FiSh: Isogeny-Based Signatures</span></a>
   </div>
 </li>
       </ul>
@@ -317,7 +328,8 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started"><span class="header-section-number">1</span> Getting Started</a>
   <ul class="collapse">
-  <li><a href="#commutative-group-actions" id="toc-commutative-group-actions" class="nav-link" data-scroll-target="#commutative-group-actions"><span class="header-section-number">1.1</span> Commutative Group Actions</a></li>
+  <li><a href="#key-exchange" id="toc-key-exchange" class="nav-link" data-scroll-target="#key-exchange"><span class="header-section-number">1.1</span> Key Exchange</a></li>
+  <li><a href="#digital-signature" id="toc-digital-signature" class="nav-link" data-scroll-target="#digital-signature"><span class="header-section-number">1.2</span> Digital Signature</a></li>
   </ul></li>
   <li><a href="#contributing" id="toc-contributing" class="nav-link" data-scroll-target="#contributing"><span class="header-section-number">2</span> Contributing</a></li>
   </ul>
@@ -329,7 +341,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Isogeny Cryptography Wiki</h1>
+<h1 class="title">Isogeny-based Cryptography Wiki</h1>
 <p class="subtitle lead">A collaborative, accessible reference for isogeny-based protocols and primitives.</p>
 </div>
 
@@ -347,17 +359,21 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Welcome to the <strong>Isogeny Cryptography Wiki</strong>. This site serves as an open-source, mathematically rigorous, and accessible repository of knowledge detailing post-quantum cryptographic protocols built on the hardness of finding isogenies between elliptic curves.</p>
+<p>Welcome to the <strong>Isogeny-based Cryptography Wiki</strong>. This site serves as an open-source, mathematically rigorous, and accessible repository of knowledge detailing post-quantum cryptographic protocols built on the hardness of finding isogenies between elliptic curves.</p>
 <hr>
 <section id="getting-started" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="getting-started"><span class="header-section-number">1</span> Getting Started</h2>
-<p>If you are new to isogeny-based cryptography, we recommend exploring the protocols based on their underlying mathematical frameworks:</p>
-<section id="commutative-group-actions" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="commutative-group-actions"><span class="header-section-number">1.1</span> Commutative Group Actions</h3>
-<p>Protocols built on the framework of Couveignes, Rostovtsev, and Stolbunov (CRS), utilizing commutative group actions on supersingular elliptic curves:</p>
+<p>If you are new to cryptographic protocols, we recommend ….</p>
+<section id="key-exchange" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="key-exchange"><span class="header-section-number">1.1</span> Key Exchange</h3>
 <ul>
-<li><strong><a href="./protocols/csidh.html">CSIDH</a></strong> – Commutative Supersingular Isogeny Diffie-Hellman (Key Exchange).</li>
-<li><strong><a href="./protocols/csi-fish.html">CSI-FiSh</a></strong> – Efficient signatures using the Fiat-Shamir transform over a known class group.</li>
+<li><strong><a href="./protocols/key-exchange/csidh.html">CSIDH</a></strong> – Commutative Supersingular Isogeny Diffie-Hellman (Key Exchange).</li>
+</ul>
+</section>
+<section id="digital-signature" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="digital-signature"><span class="header-section-number">1.2</span> Digital Signature</h3>
+<ul>
+<li><strong><a href="./protocols/digital-signature/csi-fish.html">CSI-FiSh</a></strong> – Efficient signatures using the Fiat-Shamir transform over a known class group.</li>
 </ul>
 <hr>
 </section>

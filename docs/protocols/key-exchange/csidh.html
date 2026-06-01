@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2026-06-01">
 
-<title>CSI-FiSh: Isogeny-Based Signatures – Isogeny Cryptography Wiki</title>
+<title>CSIDH: Commutative Supersingular Isogeny Diffie-Hellman – Isogeny-based Cryptography Wiki</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -46,27 +46,27 @@ div.csl-indent {
 }</style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8544972074f534daeda2a979ade908c6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-51be66d225d5824707e5188ed71ba064.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8544972074f534daeda2a979ade908c6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-df87436491e5880ce0ac64bc60648184.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-831d1bee07739574ec2b76f4ece217d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-df87436491e5880ce0ac64bc60648184.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8544972074f534daeda2a979ade908c6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-51be66d225d5824707e5188ed71ba064.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8544972074f534daeda2a979ade908c6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-df87436491e5880ce0ac64bc60648184.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-831d1bee07739574ec2b76f4ece217d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-df87436491e5880ce0ac64bc60648184.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": true,
@@ -297,7 +297,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../protocols/csi-fish.html">Protocols</a></li><li class="breadcrumb-item"><a href="../protocols/csi-fish.html">CSI-FiSh: Isogeny-Based Signatures</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/csidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/csidh.html">CSIDH: Commutative Supersingular Isogeny Diffie-Hellman</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -312,7 +312,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Isogeny Cryptography Wiki</a> 
+      <a href="../../">Isogeny-based Cryptography Wiki</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
@@ -327,14 +327,14 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Protocols</span></a>
+ <span class="menu-text">Key Exchange</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -342,14 +342,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../protocols/csi-fish.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">CSI-FiSh: Isogeny-Based Signatures</span></a>
+  <a href="../../protocols/key-exchange/csidh.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">CSIDH: Commutative Supersingular Isogeny Diffie-Hellman</span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Digital Signature</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../protocols/csidh.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CSIDH: Commutative Supersingular Isogeny Diffie-Hellman</span></a>
+  <a href="../../protocols/digital-signature/csi-fish.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CSI-FiSh: Isogeny-Based Signatures</span></a>
   </div>
 </li>
       </ul>
@@ -365,8 +376,14 @@ window.Quarto = {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
-  <li><a href="#key-mechanism" id="toc-key-mechanism" class="nav-link" data-scroll-target="#key-mechanism"><span class="header-section-number">2</span> Key Mechanism</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">3</span> References</a></li>
+  <li><a href="#mathematical-foundation" id="toc-mathematical-foundation" class="nav-link" data-scroll-target="#mathematical-foundation"><span class="header-section-number">2</span> Mathematical Foundation</a>
+  <ul class="collapse">
+  <li><a href="#the-curve-space" id="toc-the-curve-space" class="nav-link" data-scroll-target="#the-curve-space"><span class="header-section-number">2.1</span> The Curve Space</a></li>
+  <li><a href="#the-class-group-action" id="toc-the-class-group-action" class="nav-link" data-scroll-target="#the-class-group-action"><span class="header-section-number">2.2</span> The Class Group Action</a></li>
+  </ul></li>
+  <li><a href="#key-exchange-protocol" id="toc-key-exchange-protocol" class="nav-link" data-scroll-target="#key-exchange-protocol"><span class="header-section-number">3</span> Key Exchange Protocol</a></li>
+  <li><a href="#performance-and-parameter-sets" id="toc-performance-and-parameter-sets" class="nav-link" data-scroll-target="#performance-and-parameter-sets"><span class="header-section-number">4</span> Performance and Parameter Sets</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">5</span> References</a></li>
   </ul>
 </nav>
     </div>
@@ -374,10 +391,10 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../protocols/csi-fish.html">Protocols</a></li><li class="breadcrumb-item"><a href="../protocols/csi-fish.html">CSI-FiSh: Isogeny-Based Signatures</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/csidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/csidh.html">CSIDH: Commutative Supersingular Isogeny Diffie-Hellman</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">CSI-FiSh: Isogeny-Based Signatures</h1>
-<p class="subtitle lead">Efficient signatures from commutative group actions</p>
+<h1 class="title">CSIDH: Commutative Supersingular Isogeny Diffie-Hellman</h1>
+<p class="subtitle lead">An overview of the post-quantum group action protocol</p>
 </div>
 
 
@@ -402,25 +419,116 @@ window.Quarto = {
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p><strong>CSI-FiSh</strong> (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren <span class="citation" data-cites="csifish">[<a href="#ref-csifish" role="doc-biblioref">BeKlVe19</a>]</span>.</p>
-<p>The primary hurdle in building efficient signatures from the <a href="../protocols/csidh.html">CSIDH</a> group action is that evaluating the group action can be slow, and the structure of the class group <span class="math inline">\(\text{Cl}(R)\)</span> is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.</p>
+<p><strong>CSIDH</strong> (Commutative Supersingular Isogeny Diffie-Hellman) is a post-quantum key exchange protocol proposed by Castryck et al. <span class="citation" data-cites="csidh">[<a href="#ref-csidh" role="doc-biblioref">CLMP18</a>]</span>. It serves as an isogeny-based analogue to traditional Diffie-Hellman key exchange, built on the framework of Couveignes, Rostovtsev, and Stolbunov (CRS).</p>
+<p>Because CSIDH provides a truly commutative group action, it is highly versatile and serves as the mathematical foundation for more advanced primitives, such as the isogeny-based signature scheme <a href="../../protocols/digital-signature/csi-fish.html">CSI-FiSh</a>.</p>
+<p>Unlike SIDH (which uses non-commutative endomorphism rings), CSIDH leverages a <strong>commutative group action</strong> by restricting to supersingular elliptic curves defined over a prime field <span class="math inline">\(\mathbb{F}_p\)</span> whose endomorphism rings are isomorphic to an order in an imaginary quadratic field.</p>
 <hr>
 </section>
-<section id="key-mechanism" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="key-mechanism"><span class="header-section-number">2</span> Key Mechanism</h2>
-<p>By computing the exact structure of <span class="math inline">\(\text{Cl}(R)\)</span> for a 512-bit prime <span class="math inline">\(p\)</span>, CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical <strong>Fiat-Shamir transform</strong> to the isogeny setting.</p>
-<ul>
-<li><strong>Underlying Hard Problem:</strong> The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational <a href="../protocols/csidh.html">CSIDH protocol</a>.</li>
-</ul>
+<section id="mathematical-foundation" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="mathematical-foundation"><span class="header-section-number">2</span> Mathematical Foundation</h2>
+<p>Let <span class="math inline">\(p\)</span> be a prime of the form <span class="math inline">\(p = 4 \cdot \ell_1 \cdot \ell_2 \cdots \ell_n - 1\)</span>, where <span class="math inline">\(\ell_i\)</span> are small, distinct odd primes.</p>
+<section id="the-curve-space" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="the-curve-space"><span class="header-section-number">2.1</span> The Curve Space</h3>
+<p>We consider the set <span class="math inline">\(\mathcal{S}_R\)</span> of <span class="math inline">\(\mathbb{F}_p\)</span>-isomorphism classes of supersingular elliptic curves <span class="math inline">\(E/\mathbb{F}_p\)</span> whose <span class="math inline">\(\mathbb{F}_p\)</span>-endomorphism ring <span class="math inline">\(\text{End}_{\mathbb{F}_p}(E)\)</span> is exactly the order <span class="math inline">\(R = \mathbb{Z}[\pi]\)</span>, where <span class="math inline">\(\pi\)</span> is the Frobenius endomorphism satisfying <span class="math inline">\(\pi^2 = -p\)</span>. These curves can be written in Montgomery form:</p>
+<p><span class="math display">\[E_A: y^2 = x^3 + Ax^2 + x\]</span></p>
+</section>
+<section id="the-class-group-action" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="the-class-group-action"><span class="header-section-number">2.2</span> The Class Group Action</h3>
+<p>The ideal class group <span class="math inline">\(\text{Cl}(R)\)</span> acts freely and transitively on the set <span class="math inline">\(\mathcal{S}_R\)</span>. Given an ideal class <span class="math inline">\([\mathfrak{a}] \in \text{Cl}(R)\)</span> and a curve class <span class="math inline">\([E] \in \mathcal{S}_R\)</span>, the group action is defined via the idealisogeny:</p>
+<p><span class="math display">\[[\mathfrak{a}] * E = E / E[\mathfrak{a}]\]</span></p>
+<p>Where <span class="math inline">\(E[\mathfrak{a}]\)</span> is the intersection of the kernels of all endomorphisms in <span class="math inline">\(\mathfrak{a}\)</span>. Because <span class="math inline">\(\text{Cl}(R)\)</span> is an abelian group, the action commutes:</p>
+<p><span class="math display">\[[\mathfrak{a}] * ([\mathfrak{b}] * E) = ([\mathfrak{a}\mathfrak{b}]) * E = [\mathfrak{b}] * ([\mathfrak{a}] * E)\]</span></p>
 <hr>
 </section>
-<section id="references" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="references"><span class="header-section-number">3</span> References</h2>
+</section>
+<section id="key-exchange-protocol" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="key-exchange-protocol"><span class="header-section-number">3</span> Key Exchange Protocol</h2>
+<p>The commutativity of the group action allows a direct translation of the classical Diffie-Hellman matrix or exponentiation paradigm.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Alice</th>
+<th style="text-align: center;">Public</th>
+<th style="text-align: center;">Bob</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Chooses secret ideal <span class="math inline">\([\mathfrak{a}]\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">Chooses secret ideal <span class="math inline">\([\mathfrak{b}]\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Computes <span class="math inline">\(E_A = [\mathfrak{a}] * E_0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\xrightarrow{\quad E_A \quad}\)</span></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(\xleftarrow{\quad E_B \quad}\)</span></td>
+<td style="text-align: center;">Computes <span class="math inline">\(E_B = [\mathfrak{b}] * E_0\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Computes <span class="math inline">\(E_{BA} = [\mathfrak{a}] * E_B\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">Computes <span class="math inline">\(E_{AB} = [\mathfrak{b}] * E_A\)</span></td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>Shared Secret:</strong> Since the group action commutes, <span class="math inline">\(E_{BA} = E_{AB}\)</span>. The Montgomery coefficient <span class="math inline">\(A \in \mathbb{F}_p\)</span> of this final curve serves as the shared cryptographic secret.</p>
+</blockquote>
+<hr>
+</section>
+<section id="performance-and-parameter-sets" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="performance-and-parameter-sets"><span class="header-section-number">4</span> Performance and Parameter Sets</h2>
+<p>CSIDH parameters are evaluated by their quantum security levels (NIST categories) against advanced sieve algorithms like Kuperberg’s hidden shift algorithm.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter Set</th>
+<th>Prime Bits (<span class="math inline">\(\log_2 p\)</span>)</th>
+<th>Public Key Size</th>
+<th>Key Exchange Speed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>CSIDH-512</strong></td>
+<td>511 bits</td>
+<td>64 Bytes</td>
+<td>~30-100 ms</td>
+</tr>
+<tr class="even">
+<td><strong>CSIDH-1024</strong></td>
+<td>1024 bits</td>
+<td>128 Bytes</td>
+<td>~200-500 ms</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="references" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="references"><span class="header-section-number">5</span> References</h2>
 <div id="refs" class="references csl-bib-body" role="list">
-<div id="ref-csifish" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[BeKlVe19] </div><div class="csl-right-inline"><span class="smallcaps">Beullens, Ward</span> ; <span class="smallcaps">Kleinjung, Thorsten</span> ; <span class="smallcaps">Vercauteren, Frederik</span>: <span>CSI-FiSh</span>: <span>E</span>fficient <span>I</span>sogeny-<span>B</span>ased <span>S</span>ignatures from <span>C</span>ommutative <span>G</span>roup <span>A</span>ctions. In: <em>ASIACRYPT 2019</em>&nbsp;: Springer, 2019, pp.&nbsp;227–255</div>
+<div id="ref-csidh" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[CLMP18] </div><div class="csl-right-inline"><span class="smallcaps">Castryck, Wouter</span> ; <span class="smallcaps">Lange, Tanja</span> ; <span class="smallcaps">Martindale, Chloe</span> ; <span class="smallcaps">Panny, Lorenz</span> ; <span class="smallcaps">Renes, Joost</span>: <span>CSIDH</span>: <span>C</span>ommutative <span>S</span>upersingular <span>I</span>sogeny <span>D</span>iffie-<span>H</span>ellman. In: <em>ASIACRYPT 2018</em>&nbsp;: Springer, 2018, pp.&nbsp;395–427</div>
 </div>
 </div>
+<hr>
+<p><strong>Contributors:</strong> No GitHub history found yet.</p>
 
 
 </section>

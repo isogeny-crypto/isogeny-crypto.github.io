@@ -8,7 +8,7 @@ date: 2026-06-01
 
 **CSIDH** (Commutative Supersingular Isogeny Diffie-Hellman) is a post-quantum key exchange protocol proposed by Castryck et al. [@csidh]. It serves as an isogeny-based analogue to traditional Diffie-Hellman key exchange, built on the framework of Couveignes, Rostovtsev, and Stolbunov (CRS).
 
-Because CSIDH provides a truly commutative group action, it is highly versatile and serves as the mathematical foundation for more advanced primitives, such as the isogeny-based signature scheme [CSI-FiSh](csi-fish.qmd).
+Because CSIDH provides a truly commutative group action, it is highly versatile and serves as the mathematical foundation for more advanced primitives, such as the isogeny-based signature scheme [CSI-FiSh](../digital-signature/csi-fish.qmd).
 
 Unlike SIDH (which uses non-commutative endomorphism rings), CSIDH leverages a **commutative group action** by restricting to supersingular elliptic curves defined over a prime field $\mathbb{F}_p$ whose endomorphism rings are isomorphic to an order in an imaginary quadratic field.
 
@@ -64,3 +64,6 @@ CSIDH parameters are evaluated by their quantum security levels (NIST categories
 
 ::: {#refs}
 :::
+
+---
+{{< include ../../.contributors/csidh.md >}}
