@@ -24,7 +24,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -278,7 +297,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../protocols/csidh.html">Protocols</a></li><li class="breadcrumb-item"><a href="../protocols/csidh.html">CSIDH: Commutative Supersingular Isogeny Diffie-Hellman</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../protocols/csi-fish.html">Protocols</a></li><li class="breadcrumb-item"><a href="../protocols/csidh.html">CSIDH: Commutative Supersingular Isogeny Diffie-Hellman</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -323,6 +342,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../protocols/csi-fish.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CSI-FiSh: Isogeny-Based Signatures</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../protocols/csidh.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">CSIDH: Commutative Supersingular Isogeny Diffie-Hellman</span></a>
   </div>
@@ -347,6 +372,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#key-exchange-protocol" id="toc-key-exchange-protocol" class="nav-link" data-scroll-target="#key-exchange-protocol"><span class="header-section-number">3</span> Key Exchange Protocol</a></li>
   <li><a href="#performance-and-parameter-sets" id="toc-performance-and-parameter-sets" class="nav-link" data-scroll-target="#performance-and-parameter-sets"><span class="header-section-number">4</span> Performance and Parameter Sets</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">5</span> References</a></li>
   </ul>
 </nav>
     </div>
@@ -354,7 +380,7 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../protocols/csidh.html">Protocols</a></li><li class="breadcrumb-item"><a href="../protocols/csidh.html">CSIDH: Commutative Supersingular Isogeny Diffie-Hellman</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../protocols/csi-fish.html">Protocols</a></li><li class="breadcrumb-item"><a href="../protocols/csidh.html">CSIDH: Commutative Supersingular Isogeny Diffie-Hellman</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">CSIDH: Commutative Supersingular Isogeny Diffie-Hellman</h1>
 <p class="subtitle lead">An overview of the post-quantum group action protocol</p>
@@ -382,7 +408,8 @@ window.Quarto = {
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p><strong>CSIDH</strong> (Commutative Supersingular Isogeny Diffie-Hellman), pronounced <em>sea-side</em>, is a post-quantum key exchange protocol proposed by Castryck, Lange, Martindale, Panny, and Renes in 2018. It serves as an isogeny-based analogue to traditional Diffie-Hellman key exchange, built on the framework of Couveignes, Rostovtsev, and Stolbunov (CRS).</p>
+<p><strong>CSIDH</strong> (Commutative Supersingular Isogeny Diffie-Hellman) is a post-quantum key exchange protocol proposed by Castryck et al. <span class="citation" data-cites="csidh">(<a href="#ref-csidh" role="doc-biblioref">Castryck et al. 2018</a>)</span>. It serves as an isogeny-based analogue to traditional Diffie-Hellman key exchange, built on the framework of Couveignes, Rostovtsev, and Stolbunov (CRS).</p>
+<p>Because CSIDH provides a truly commutative group action, it is highly versatile and serves as the mathematical foundation for more advanced primitives, such as the isogeny-based signature scheme <a href="../protocols/csi-fish.html">CSI-FiSh</a>.</p>
 <p>Unlike SIDH (which uses non-commutative endomorphism rings), CSIDH leverages a <strong>commutative group action</strong> by restricting to supersingular elliptic curves defined over a prime field <span class="math inline">\(\mathbb{F}_p\)</span> whose endomorphism rings are isomorphic to an order in an imaginary quadratic field.</p>
 <hr>
 </section>
@@ -480,6 +507,15 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+<hr>
+</section>
+<section id="references" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="references"><span class="header-section-number">5</span> References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-csidh" class="csl-entry" role="listitem">
+Castryck, Wouter, Tanja Lange, Chloe Martindale, Lorenz Panny, and Joost Renes. 2018. <span>“<span>CSIDH</span>: <span>C</span>ommutative <span>S</span>upersingular <span>I</span>sogeny <span>D</span>iffie-<span>H</span>ellman.”</span> <em>ASIACRYPT 2018</em>, 395–427.
+</div>
+</div>
 
 
 </section>

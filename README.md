@@ -2,5 +2,4 @@
 
 ```
 quarto render --clean
-quarto render
 ```

@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2026-06-01">
 
-<title>Isogeny Cryptography Wiki</title>
+<title>CSI-FiSh: Isogeny-Based Signatures – Isogeny Cryptography Wiki</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,30 +24,49 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-8544972074f534daeda2a979ade908c6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-51be66d225d5824707e5188ed71ba064.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-8544972074f534daeda2a979ade908c6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-df87436491e5880ce0ac64bc60648184.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-831d1bee07739574ec2b76f4ece217d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-df87436491e5880ce0ac64bc60648184.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8544972074f534daeda2a979ade908c6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-51be66d225d5824707e5188ed71ba064.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8544972074f534daeda2a979ade908c6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-df87436491e5880ce0ac64bc60648184.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-831d1bee07739574ec2b76f4ece217d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-df87436491e5880ce0ac64bc60648184.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": true,
@@ -74,6 +94,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -248,7 +297,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Home</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../protocols/csi-fish.html">Protocols</a></li><li class="breadcrumb-item"><a href="../protocols/csi-fish.html">CSI-FiSh: Isogeny-Based Signatures</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -263,7 +312,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Isogeny Cryptography Wiki</a> 
+      <a href="../">Isogeny Cryptography Wiki</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
@@ -278,7 +327,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
@@ -293,13 +342,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/csi-fish.html" class="sidebar-item-text sidebar-link">
+  <a href="../protocols/csi-fish.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">CSI-FiSh: Isogeny-Based Signatures</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/csidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../protocols/csidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSIDH: Commutative Supersingular Isogeny Diffie-Hellman</span></a>
   </div>
 </li>
@@ -315,11 +364,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started"><span class="header-section-number">1</span> Getting Started</a>
-  <ul class="collapse">
-  <li><a href="#commutative-group-actions" id="toc-commutative-group-actions" class="nav-link" data-scroll-target="#commutative-group-actions"><span class="header-section-number">1.1</span> Commutative Group Actions</a></li>
-  </ul></li>
-  <li><a href="#contributing" id="toc-contributing" class="nav-link" data-scroll-target="#contributing"><span class="header-section-number">2</span> Contributing</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
+  <li><a href="#key-mechanism" id="toc-key-mechanism" class="nav-link" data-scroll-target="#key-mechanism"><span class="header-section-number">2</span> Key Mechanism</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">3</span> References</a></li>
   </ul>
 </nav>
     </div>
@@ -327,10 +374,10 @@ ul.task-list li input[type="checkbox"] {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../protocols/csi-fish.html">Protocols</a></li><li class="breadcrumb-item"><a href="../protocols/csi-fish.html">CSI-FiSh: Isogeny-Based Signatures</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Isogeny Cryptography Wiki</h1>
-<p class="subtitle lead">A collaborative, accessible reference for isogeny-based protocols and primitives.</p>
+<h1 class="title">CSI-FiSh: Isogeny-Based Signatures</h1>
+<p class="subtitle lead">Efficient signatures from commutative group actions</p>
 </div>
 
 
@@ -338,6 +385,12 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 1, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -347,29 +400,27 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Welcome to the <strong>Isogeny Cryptography Wiki</strong>. This site serves as an open-source, mathematically rigorous, and accessible repository of knowledge detailing post-quantum cryptographic protocols built on the hardness of finding isogenies between elliptic curves.</p>
+<section id="overview" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
+<p><strong>CSI-FiSh</strong> (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren <span class="citation" data-cites="csifish">(<a href="#ref-csifish" role="doc-biblioref">Beullens et al. 2019</a>)</span>.</p>
+<p>The primary hurdle in building efficient signatures from the <a href="../protocols/csidh.html">CSIDH</a> group action is that evaluating the group action can be slow, and the structure of the class group <span class="math inline">\(\text{Cl}(R)\)</span> is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.</p>
 <hr>
-<section id="getting-started" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="getting-started"><span class="header-section-number">1</span> Getting Started</h2>
-<p>If you are new to isogeny-based cryptography, we recommend exploring the protocols based on their underlying mathematical frameworks:</p>
-<section id="commutative-group-actions" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="commutative-group-actions"><span class="header-section-number">1.1</span> Commutative Group Actions</h3>
-<p>Protocols built on the framework of Couveignes, Rostovtsev, and Stolbunov (CRS), utilizing commutative group actions on supersingular elliptic curves:</p>
+</section>
+<section id="key-mechanism" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="key-mechanism"><span class="header-section-number">2</span> Key Mechanism</h2>
+<p>By computing the exact structure of <span class="math inline">\(\text{Cl}(R)\)</span> for a 512-bit prime <span class="math inline">\(p\)</span>, CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical <strong>Fiat-Shamir transform</strong> to the isogeny setting.</p>
 <ul>
-<li><strong><a href="./protocols/csidh.html">CSIDH</a></strong> – Commutative Supersingular Isogeny Diffie-Hellman (Key Exchange).</li>
-<li><strong><a href="./protocols/csi-fish.html">CSI-FiSh</a></strong> – Efficient signatures using the Fiat-Shamir transform over a known class group.</li>
+<li><strong>Underlying Hard Problem:</strong> The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational <a href="../protocols/csidh.html">CSIDH protocol</a>.</li>
 </ul>
 <hr>
 </section>
-</section>
-<section id="contributing" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="contributing"><span class="header-section-number">2</span> Contributing</h2>
-<p>This wiki is maintained by the <strong>isogeny-crypto</strong> organization. If you spot a mathematical error, want to expand on a protocol’s performance metrics, or wish to add a new primitive:</p>
-<ol type="1">
-<li>Fork the repository on <a href="https://github.com/isogeny-crypto/isogeny-crypto.github.io">GitHub</a>.</li>
-<li>Create your article using a <code>.qmd</code> file in the <code>protocols/</code> directory.</li>
-<li>Submit a Pull Request.</li>
-</ol>
+<section id="references" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="references"><span class="header-section-number">3</span> References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-csifish" class="csl-entry" role="listitem">
+Beullens, Ward, Thorsten Kleinjung, and Frederik Vercauteren. 2019. <span>“<span>CSI-FiSh</span>: <span>E</span>fficient <span>I</span>sogeny-<span>B</span>ased <span>S</span>ignatures from <span>C</span>ommutative <span>G</span>roup <span>A</span>ctions.”</span> <em>ASIACRYPT 2019</em>, 227–55.
+</div>
+</div>
 
 
 </section>

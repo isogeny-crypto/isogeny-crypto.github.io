@@ -1,0 +1,28 @@
+---
+title: "Isogeny Cryptography Wiki"
+subtitle: "A collaborative, accessible reference for isogeny-based protocols and primitives."
+---
+
+Welcome to the **Isogeny Cryptography Wiki**. This site serves as an open-source, mathematically rigorous, and accessible repository of knowledge detailing post-quantum cryptographic protocols built on the hardness of finding isogenies between elliptic curves.
+
+---
+
+## Getting Started
+
+If you are new to isogeny-based cryptography, we recommend exploring the protocols based on their underlying mathematical frameworks:
+
+### Commutative Group Actions
+Protocols built on the framework of Couveignes, Rostovtsev, and Stolbunov (CRS), utilizing commutative group actions on supersingular elliptic curves:
+
+* **[CSIDH](protocols/csidh.qmd)** – Commutative Supersingular Isogeny Diffie-Hellman (Key Exchange).
+* **[CSI-FiSh](protocols/csi-fish.qmd)** – Efficient signatures using the Fiat-Shamir transform over a known class group.
+
+---
+
+## Contributing
+
+This wiki is maintained by the **isogeny-crypto** organization. If you spot a mathematical error, want to expand on a protocol's performance metrics, or wish to add a new primitive:
+
+1. Fork the repository on [GitHub](https://github.com/isogeny-crypto/isogeny-crypto.github.io).
+2. Create your article using a `.qmd` file in the `protocols/` directory.
+3. Submit a Pull Request.
