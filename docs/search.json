@@ -52,8 +52,8 @@
     ]
   },
   {
-    "objectID": "protocols/key-exchange/csidh.html#mathematical-foundation",
-    "href": "protocols/key-exchange/csidh.html#mathematical-foundation",
+    "objectID": "protocols/key-exchange/csidh.html#sec-math-foundation",
+    "href": "protocols/key-exchange/csidh.html#sec-math-foundation",
     "title": "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman",
     "section": "2 Mathematical Foundation",
     "text": "2 Mathematical Foundation\nLet \\(p\\) be a prime of the form \\(p = 4 \\cdot \\ell_1 \\cdot \\ell_2 \\cdots \\ell_n - 1\\), where \\(\\ell_i\\) are small, distinct odd primes.\n\n2.1 The Curve Space\nWe consider the set \\(\\mathcal{S}_R\\) of \\(\\mathbb{F}_p\\)-isomorphism classes of supersingular elliptic curves \\(E/\\mathbb{F}_p\\) whose \\(\\mathbb{F}_p\\)-endomorphism ring \\(\\text{End}_{\\mathbb{F}_p}(E)\\) is exactly the order \\(R = \\mathbb{Z}[\\pi]\\), where \\(\\pi\\) is the Frobenius endomorphism satisfying \\(\\pi^2 = -p\\). These curves can be written in Montgomery form:\n\\[E_A: y^2 = x^3 + Ax^2 + x\\]\n\n\n2.2 The Class Group Action\nThe ideal class group \\(\\text{Cl}(R)\\) acts freely and transitively on the set \\(\\mathcal{S}_R\\). Given an ideal class \\([\\mathfrak{a}] \\in \\text{Cl}(R)\\) and a curve class \\([E] \\in \\mathcal{S}_R\\), the group action is defined via the idealisogeny:\n\\[[\\mathfrak{a}] * E = E / E[\\mathfrak{a}]\\]\nWhere \\(E[\\mathfrak{a}]\\) is the intersection of the kernels of all endomorphisms in \\(\\mathfrak{a}\\). Because \\(\\text{Cl}(R)\\) is an abelian group, the action commutes:\n\\[[\\mathfrak{a}] * ([\\mathfrak{b}] * E) = ([\\mathfrak{a}\\mathfrak{b}]) * E = [\\mathfrak{b}] * ([\\mathfrak{a}] * E)\\]",
@@ -100,7 +100,7 @@
     "href": "protocols/digital-signature/csi-fish.html",
     "title": "CSI-FiSh: Isogeny-Based Signatures",
     "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH Mathematical Foundation.",
     "crumbs": [
       "Digital Signature",
       "CSI-FiSh: Isogeny-Based Signatures"
@@ -111,7 +111,7 @@
     "href": "protocols/digital-signature/csi-fish.html#overview",
     "title": "CSI-FiSh: Isogeny-Based Signatures",
     "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH Mathematical Foundation.",
     "crumbs": [
       "Digital Signature",
       "CSI-FiSh: Isogeny-Based Signatures"

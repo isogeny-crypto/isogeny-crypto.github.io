@@ -14,7 +14,7 @@ Unlike SIDH (which uses non-commutative endomorphism rings), CSIDH leverages a *
 
 ---
 
-## Mathematical Foundation
+## Mathematical Foundation {#sec-math-foundation}
 
 Let $p$ be a prime of the form $p = 4 \cdot \ell_1 \cdot \ell_2 \cdots \ell_n - 1$, where $\ell_i$ are small, distinct odd primes. 
 

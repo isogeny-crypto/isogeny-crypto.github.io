@@ -10,6 +10,9 @@ date: 2026-06-01
 
 The primary hurdle in building efficient signatures from the [CSIDH](../key-exchange/csidh.qmd) group action is that evaluating the group action can be slow, and the structure of the class group $\text{Cl}(R)$ is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.
 
+CSI-FiSh relies on the same hardness assumptions outlined in the 
+[CSIDH Mathematical Foundation](../key-exchange/csidh.qmd#sec-math-foundation).
+
 ---
 
 ## Key Mechanism
