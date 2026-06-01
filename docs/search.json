@@ -89,7 +89,7 @@
     "href": "protocols/key-exchange/csidh.html#references",
     "title": "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman",
     "section": "5 References",
-    "text": "5 References\n\n\n[CLMP18] Castryck, Wouter ; Lange, Tanja ; Martindale, Chloe ; Panny, Lorenz ; Renes, Joost: CSIDH: Commutative Supersingular Isogeny Diffie-Hellman. In: ASIACRYPT 2018 : Springer, 2018, pp. 395–427\n\n\n\nContributors: No GitHub history found yet.",
+    "text": "5 References\n\n\n[CLMP18] Castryck, Wouter ; Lange, Tanja ; Martindale, Chloe ; Panny, Lorenz ; Renes, Joost: CSIDH: Commutative Supersingular Isogeny Diffie-Hellman. In: ASIACRYPT 2018 : Springer, 2018, pp. 395–427\n\n\n\nContributors: [gkorpal?]",
     "crumbs": [
       "Key Exchange",
       "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman"
@@ -133,7 +133,7 @@
     "href": "protocols/digital-signature/csi-fish.html#references",
     "title": "CSI-FiSh: Isogeny-Based Signatures",
     "section": "3 References",
-    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT 2019 : Springer, 2019, pp. 227–255\n\n\n\nContributors: No GitHub history found yet.",
+    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT 2019 : Springer, 2019, pp. 227–255\n\n\n\nContributors: [gkorpal?]",
     "crumbs": [
       "Digital Signature",
       "CSI-FiSh: Isogeny-Based Signatures"
