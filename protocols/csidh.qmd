@@ -1,0 +1,57 @@
+---
+title: "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman"
+subtitle: "An overview of the post-quantum group action protocol"
+date: 2026-06-01
+---
+
+## Overview
+
+**CSIDH** (Commutative Supersingular Isogeny Diffie-Hellman), pronounced *sea-side*, is a post-quantum key exchange protocol proposed by Castryck, Lange, Martindale, Panny, and Renes in 2018. It serves as an isogeny-based analogue to traditional Diffie-Hellman key exchange, built on the framework of Couveignes, Rostovtsev, and Stolbunov (CRS).
+
+Unlike SIDH (which uses non-commutative endomorphism rings), CSIDH leverages a **commutative group action** by restricting to supersingular elliptic curves defined over a prime field $\mathbb{F}_p$ whose endomorphism rings are isomorphic to an order in an imaginary quadratic field.
+
+---
+
+## Mathematical Foundation
+
+Let $p$ be a prime of the form $p = 4 \cdot \ell_1 \cdot \ell_2 \cdots \ell_n - 1$, where $\ell_i$ are small, distinct odd primes. 
+
+### The Curve Space
+We consider the set $\mathcal{S}_R$ of $\mathbb{F}_p$-isomorphism classes of supersingular elliptic curves $E/\mathbb{F}_p$ whose $\mathbb{F}_p$-endomorphism ring $\text{End}_{\mathbb{F}_p}(E)$ is exactly the order $R = \mathbb{Z}[\pi]$, where $\pi$ is the Frobenius endomorphism satisfying $\pi^2 = -p$. These curves can be written in Montgomery form:
+
+$$E_A: y^2 = x^3 + Ax^2 + x$$
+
+### The Class Group Action
+The ideal class group $\text{Cl}(R)$ acts freely and transitively on the set $\mathcal{S}_R$. Given an ideal class $[\mathfrak{a}] \in \text{Cl}(R)$ and a curve class $[E] \in \mathcal{S}_R$, the group action is defined via the idealisogeny:
+
+$$[\mathfrak{a}] * E = E / E[\mathfrak{a}]$$
+
+Where $E[\mathfrak{a}]$ is the intersection of the kernels of all endomorphisms in $\mathfrak{a}$. Because $\text{Cl}(R)$ is an abelian group, the action commutes:
+
+$$[\mathfrak{a}] * ([\mathfrak{b}] * E) = ([\mathfrak{a}\mathfrak{b}]) * E = [\mathfrak{b}] * ([\mathfrak{a}] * E)$$
+
+---
+
+## Key Exchange Protocol
+
+The commutativity of the group action allows a direct translation of the classical Diffie-Hellman matrix or exponentiation paradigm.
+
+| Alice | Public | Bob |
+|:---:|:---:|:---:|
+| Chooses secret ideal $[\mathfrak{a}]$ | | Chooses secret ideal $[\mathfrak{b}]$ |
+| Computes $E_A = [\mathfrak{a}] * E_0$ | $\xrightarrow{\quad E_A \quad}$ | |
+| | $\xleftarrow{\quad E_B \quad}$ | Computes $E_B = [\mathfrak{b}] * E_0$ |
+| Computes $E_{BA} = [\mathfrak{a}] * E_B$ | | Computes $E_{AB} = [\mathfrak{b}] * E_A$ |
+
+> **Shared Secret:** Since the group action commutes, $E_{BA} = E_{AB}$. The Montgomery coefficient $A \in \mathbb{F}_p$ of this final curve serves as the shared cryptographic secret.
+
+---
+
+## Performance and Parameter Sets
+
+CSIDH parameters are evaluated by their quantum security levels (NIST categories) against advanced sieve algorithms like Kuperberg's hidden shift algorithm.
+
+| Parameter Set | Prime Bits ($\log_2 p$) | Public Key Size | Key Exchange Speed |
+|---|---|---|---|
+| **CSIDH-512** | 511 bits | 64 Bytes | ~30-100 ms |
+| **CSIDH-1024** | 1024 bits | 128 Bytes | ~200-500 ms |

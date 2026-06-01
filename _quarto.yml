@@ -21,9 +21,7 @@ website:
       - href: index.qmd
         text: Home
       - section: "Protocols"
-        contents:
-          - href: protocols/csidh.qmd
-            text: CSIDH
+        contents: "protocols/*.qmd"
 
 format:
   html:

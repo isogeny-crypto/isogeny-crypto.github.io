@@ -1,0 +1,57 @@
+[
+  {
+    "objectID": "protocols/csidh.html",
+    "href": "protocols/csidh.html",
+    "title": "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman",
+    "section": "",
+    "text": "CSIDH (Commutative Supersingular Isogeny Diffie-Hellman), pronounced sea-side, is a post-quantum key exchange protocol proposed by Castryck, Lange, Martindale, Panny, and Renes in 2018. It serves as an isogeny-based analogue to traditional Diffie-Hellman key exchange, built on the framework of Couveignes, Rostovtsev, and Stolbunov (CRS).\nUnlike SIDH (which uses non-commutative endomorphism rings), CSIDH leverages a commutative group action by restricting to supersingular elliptic curves defined over a prime field \\(\\mathbb{F}_p\\) whose endomorphism rings are isomorphic to an order in an imaginary quadratic field.",
+    "crumbs": [
+      "Protocols",
+      "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman"
+    ]
+  },
+  {
+    "objectID": "protocols/csidh.html#overview",
+    "href": "protocols/csidh.html#overview",
+    "title": "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman",
+    "section": "",
+    "text": "CSIDH (Commutative Supersingular Isogeny Diffie-Hellman), pronounced sea-side, is a post-quantum key exchange protocol proposed by Castryck, Lange, Martindale, Panny, and Renes in 2018. It serves as an isogeny-based analogue to traditional Diffie-Hellman key exchange, built on the framework of Couveignes, Rostovtsev, and Stolbunov (CRS).\nUnlike SIDH (which uses non-commutative endomorphism rings), CSIDH leverages a commutative group action by restricting to supersingular elliptic curves defined over a prime field \\(\\mathbb{F}_p\\) whose endomorphism rings are isomorphic to an order in an imaginary quadratic field.",
+    "crumbs": [
+      "Protocols",
+      "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman"
+    ]
+  },
+  {
+    "objectID": "protocols/csidh.html#mathematical-foundation",
+    "href": "protocols/csidh.html#mathematical-foundation",
+    "title": "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman",
+    "section": "2 Mathematical Foundation",
+    "text": "2 Mathematical Foundation\nLet \\(p\\) be a prime of the form \\(p = 4 \\cdot \\ell_1 \\cdot \\ell_2 \\cdots \\ell_n - 1\\), where \\(\\ell_i\\) are small, distinct odd primes.\n\n2.1 The Curve Space\nWe consider the set \\(\\mathcal{S}_R\\) of \\(\\mathbb{F}_p\\)-isomorphism classes of supersingular elliptic curves \\(E/\\mathbb{F}_p\\) whose \\(\\mathbb{F}_p\\)-endomorphism ring \\(\\text{End}_{\\mathbb{F}_p}(E)\\) is exactly the order \\(R = \\mathbb{Z}[\\pi]\\), where \\(\\pi\\) is the Frobenius endomorphism satisfying \\(\\pi^2 = -p\\). These curves can be written in Montgomery form:\n\\[E_A: y^2 = x^3 + Ax^2 + x\\]\n\n\n2.2 The Class Group Action\nThe ideal class group \\(\\text{Cl}(R)\\) acts freely and transitively on the set \\(\\mathcal{S}_R\\). Given an ideal class \\([\\mathfrak{a}] \\in \\text{Cl}(R)\\) and a curve class \\([E] \\in \\mathcal{S}_R\\), the group action is defined via the idealisogeny:\n\\[[\\mathfrak{a}] * E = E / E[\\mathfrak{a}]\\]\nWhere \\(E[\\mathfrak{a}]\\) is the intersection of the kernels of all endomorphisms in \\(\\mathfrak{a}\\). Because \\(\\text{Cl}(R)\\) is an abelian group, the action commutes:\n\\[[\\mathfrak{a}] * ([\\mathfrak{b}] * E) = ([\\mathfrak{a}\\mathfrak{b}]) * E = [\\mathfrak{b}] * ([\\mathfrak{a}] * E)\\]",
+    "crumbs": [
+      "Protocols",
+      "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman"
+    ]
+  },
+  {
+    "objectID": "protocols/csidh.html#key-exchange-protocol",
+    "href": "protocols/csidh.html#key-exchange-protocol",
+    "title": "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman",
+    "section": "3 Key Exchange Protocol",
+    "text": "3 Key Exchange Protocol\nThe commutativity of the group action allows a direct translation of the classical Diffie-Hellman matrix or exponentiation paradigm.\n\n\n\n\n\n\n\n\nAlice\nPublic\nBob\n\n\n\n\nChooses secret ideal \\([\\mathfrak{a}]\\)\n\nChooses secret ideal \\([\\mathfrak{b}]\\)\n\n\nComputes \\(E_A = [\\mathfrak{a}] * E_0\\)\n\\(\\xrightarrow{\\quad E_A \\quad}\\)\n\n\n\n\n\\(\\xleftarrow{\\quad E_B \\quad}\\)\nComputes \\(E_B = [\\mathfrak{b}] * E_0\\)\n\n\nComputes \\(E_{BA} = [\\mathfrak{a}] * E_B\\)\n\nComputes \\(E_{AB} = [\\mathfrak{b}] * E_A\\)\n\n\n\n\nShared Secret: Since the group action commutes, \\(E_{BA} = E_{AB}\\). The Montgomery coefficient \\(A \\in \\mathbb{F}_p\\) of this final curve serves as the shared cryptographic secret.",
+    "crumbs": [
+      "Protocols",
+      "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman"
+    ]
+  },
+  {
+    "objectID": "protocols/csidh.html#performance-and-parameter-sets",
+    "href": "protocols/csidh.html#performance-and-parameter-sets",
+    "title": "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman",
+    "section": "4 Performance and Parameter Sets",
+    "text": "4 Performance and Parameter Sets\nCSIDH parameters are evaluated by their quantum security levels (NIST categories) against advanced sieve algorithms like Kuperberg’s hidden shift algorithm.\n\n\n\n\n\n\n\n\n\nParameter Set\nPrime Bits (\\(\\log_2 p\\))\nPublic Key Size\nKey Exchange Speed\n\n\n\n\nCSIDH-512\n511 bits\n64 Bytes\n~30-100 ms\n\n\nCSIDH-1024\n1024 bits\n128 Bytes\n~200-500 ms",
+    "crumbs": [
+      "Protocols",
+      "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman"
+    ]
+  }
+]
