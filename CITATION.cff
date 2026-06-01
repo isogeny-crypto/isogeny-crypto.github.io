@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you reference this wiki in your research or documentation, please cite it using the following metadata."
-title: "Isogeny Cryptography Wiki"
+title: "Isogeny-based Cryptography Wiki"
 type: software
 authors:
   - family-names: "Korpal"
