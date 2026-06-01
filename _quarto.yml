@@ -34,3 +34,5 @@ format:
     html-math-method: mathjax  # Excellent screen-reader support for LaTeX
     minimal: false             # Keep true responsive navbar, but rely on bootstrap styling
     number-sections: true
+    csl: alpha.csl
+    bibliography: references.bib

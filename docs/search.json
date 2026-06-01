@@ -34,7 +34,7 @@
     "href": "protocols/csi-fish.html",
     "title": "CSI-FiSh: Isogeny-Based Signatures",
     "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren (Beullens et al. 2019).\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.",
     "crumbs": [
       "Protocols",
       "CSI-FiSh: Isogeny-Based Signatures"
@@ -45,7 +45,7 @@
     "href": "protocols/csi-fish.html#overview",
     "title": "CSI-FiSh: Isogeny-Based Signatures",
     "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren (Beullens et al. 2019).\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.",
     "crumbs": [
       "Protocols",
       "CSI-FiSh: Isogeny-Based Signatures"
@@ -67,7 +67,7 @@
     "href": "protocols/csi-fish.html#references",
     "title": "CSI-FiSh: Isogeny-Based Signatures",
     "section": "3 References",
-    "text": "3 References\n\n\nBeullens, Ward, Thorsten Kleinjung, and Frederik Vercauteren. 2019. “CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions.” ASIACRYPT 2019, 227–55.",
+    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT 2019 : Springer, 2019, pp. 227–255",
     "crumbs": [
       "Protocols",
       "CSI-FiSh: Isogeny-Based Signatures"
@@ -78,7 +78,7 @@
     "href": "protocols/csidh.html",
     "title": "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman",
     "section": "",
-    "text": "CSIDH (Commutative Supersingular Isogeny Diffie-Hellman) is a post-quantum key exchange protocol proposed by Castryck et al. (Castryck et al. 2018). It serves as an isogeny-based analogue to traditional Diffie-Hellman key exchange, built on the framework of Couveignes, Rostovtsev, and Stolbunov (CRS).\nBecause CSIDH provides a truly commutative group action, it is highly versatile and serves as the mathematical foundation for more advanced primitives, such as the isogeny-based signature scheme CSI-FiSh.\nUnlike SIDH (which uses non-commutative endomorphism rings), CSIDH leverages a commutative group action by restricting to supersingular elliptic curves defined over a prime field \\(\\mathbb{F}_p\\) whose endomorphism rings are isomorphic to an order in an imaginary quadratic field.",
+    "text": "CSIDH (Commutative Supersingular Isogeny Diffie-Hellman) is a post-quantum key exchange protocol proposed by Castryck et al. [CLMP18]. It serves as an isogeny-based analogue to traditional Diffie-Hellman key exchange, built on the framework of Couveignes, Rostovtsev, and Stolbunov (CRS).\nBecause CSIDH provides a truly commutative group action, it is highly versatile and serves as the mathematical foundation for more advanced primitives, such as the isogeny-based signature scheme CSI-FiSh.\nUnlike SIDH (which uses non-commutative endomorphism rings), CSIDH leverages a commutative group action by restricting to supersingular elliptic curves defined over a prime field \\(\\mathbb{F}_p\\) whose endomorphism rings are isomorphic to an order in an imaginary quadratic field.",
     "crumbs": [
       "Protocols",
       "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman"
@@ -89,7 +89,7 @@
     "href": "protocols/csidh.html#overview",
     "title": "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman",
     "section": "",
-    "text": "CSIDH (Commutative Supersingular Isogeny Diffie-Hellman) is a post-quantum key exchange protocol proposed by Castryck et al. (Castryck et al. 2018). It serves as an isogeny-based analogue to traditional Diffie-Hellman key exchange, built on the framework of Couveignes, Rostovtsev, and Stolbunov (CRS).\nBecause CSIDH provides a truly commutative group action, it is highly versatile and serves as the mathematical foundation for more advanced primitives, such as the isogeny-based signature scheme CSI-FiSh.\nUnlike SIDH (which uses non-commutative endomorphism rings), CSIDH leverages a commutative group action by restricting to supersingular elliptic curves defined over a prime field \\(\\mathbb{F}_p\\) whose endomorphism rings are isomorphic to an order in an imaginary quadratic field.",
+    "text": "CSIDH (Commutative Supersingular Isogeny Diffie-Hellman) is a post-quantum key exchange protocol proposed by Castryck et al. [CLMP18]. It serves as an isogeny-based analogue to traditional Diffie-Hellman key exchange, built on the framework of Couveignes, Rostovtsev, and Stolbunov (CRS).\nBecause CSIDH provides a truly commutative group action, it is highly versatile and serves as the mathematical foundation for more advanced primitives, such as the isogeny-based signature scheme CSI-FiSh.\nUnlike SIDH (which uses non-commutative endomorphism rings), CSIDH leverages a commutative group action by restricting to supersingular elliptic curves defined over a prime field \\(\\mathbb{F}_p\\) whose endomorphism rings are isomorphic to an order in an imaginary quadratic field.",
     "crumbs": [
       "Protocols",
       "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman"
@@ -133,7 +133,7 @@
     "href": "protocols/csidh.html#references",
     "title": "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman",
     "section": "5 References",
-    "text": "5 References\n\n\nCastryck, Wouter, Tanja Lange, Chloe Martindale, Lorenz Panny, and Joost Renes. 2018. “CSIDH: Commutative Supersingular Isogeny Diffie-Hellman.” ASIACRYPT 2018, 395–427.",
+    "text": "5 References\n\n\n[CLMP18] Castryck, Wouter ; Lange, Tanja ; Martindale, Chloe ; Panny, Lorenz ; Renes, Joost: CSIDH: Commutative Supersingular Isogeny Diffie-Hellman. In: ASIACRYPT 2018 : Springer, 2018, pp. 395–427",
     "crumbs": [
       "Protocols",
       "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman"

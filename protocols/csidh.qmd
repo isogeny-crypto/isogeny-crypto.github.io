@@ -2,7 +2,6 @@
 title: "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman"
 subtitle: "An overview of the post-quantum group action protocol"
 date: 2026-06-01
-bibliography: ../references.bib
 ---
 
 ## Overview
