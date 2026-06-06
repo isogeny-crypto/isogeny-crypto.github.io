@@ -294,7 +294,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./protocols/key-exchange/csidh.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CSIDH: Commutative Supersingular Isogeny Diffie-Hellman</span></a>
+ <span class="menu-text">CSIDH</span></a>
   </div>
 </li>
       </ul>
@@ -311,7 +311,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./protocols/digital-signature/csi-fish.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CSI-FiSh: Isogeny-Based Signatures</span></a>
+ <span class="menu-text">CSI-FiSh</span></a>
   </div>
 </li>
       </ul>
@@ -326,11 +326,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started"><span class="header-section-number">1</span> Getting Started</a>
-  <ul class="collapse">
-  <li><a href="#key-exchange" id="toc-key-exchange" class="nav-link" data-scroll-target="#key-exchange"><span class="header-section-number">1.1</span> Key Exchange</a></li>
-  <li><a href="#digital-signature" id="toc-digital-signature" class="nav-link" data-scroll-target="#digital-signature"><span class="header-section-number">1.2</span> Digital Signature</a></li>
-  </ul></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started"><span class="header-section-number">1</span> Getting Started</a></li>
   <li><a href="#contributing" id="toc-contributing" class="nav-link" data-scroll-target="#contributing"><span class="header-section-number">2</span> Contributing</a></li>
   </ul>
 </nav>
@@ -363,20 +359,45 @@ ul.task-list li input[type="checkbox"] {
 <hr>
 <section id="getting-started" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="getting-started"><span class="header-section-number">1</span> Getting Started</h2>
-<p>If you are new to cryptographic protocols, we recommend ….</p>
+<p>If you are not familiar with the concept of cryptographic protocols, we recommend referring to the <a href="https://toc.cryptobook.us/">notes by Dan Boneh and Victor Shoup</a>.</p>
+<p>This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes and digital signature schemes.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
 <section id="key-exchange" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="key-exchange"><span class="header-section-number">1.1</span> Key Exchange</h3>
 <ul>
-<li><strong><a href="./protocols/key-exchange/csidh.html">CSIDH</a></strong> – Commutative Supersingular Isogeny Diffie-Hellman (Key Exchange).</li>
+<li>SIDH (2011–2022)</li>
+<li><a href="./protocols/key-exchange/csidh.html">CSIDH</a> (2018)</li>
+<li>B-SIDH (2020–2022)</li>
+<li>SiGamal (2020)</li>
+<li>CSURF (2020)</li>
+<li>Séta (2021–2022)</li>
+<li>pSIDH (2022)</li>
+<li>M-SIDH (2023)</li>
+<li>FESTA (2023)</li>
+<li>LIT-SiGamal (2025)</li>
 </ul>
 </section>
+</div><div class="column" style="width:50%;">
 <section id="digital-signature" class="level3" data-number="1.2">
 <h3 data-number="1.2" class="anchored" data-anchor-id="digital-signature"><span class="header-section-number">1.2</span> Digital Signature</h3>
 <ul>
-<li><strong><a href="./protocols/digital-signature/csi-fish.html">CSI-FiSh</a></strong> – Efficient signatures using the Fiat-Shamir transform over a known class group.</li>
+<li>JS (2014)</li>
+<li>GPS (2017)</li>
+<li>SeaSign (2019)</li>
+<li><a href="./protocols/digital-signature/csi-fish.html">CSI-FiSh</a> (2019)</li>
+<li>Sashimi (2020)</li>
+<li>SQISign (2020)</li>
+<li>Calamari (2020)</li>
+<li>SIDH PoK (2022)</li>
+<li>SCALLOP (2023)</li>
+<li>CJSS (2023)</li>
+<li>SPIDER (2026)</li>
 </ul>
-<hr>
 </section>
+</div>
+</div>
+<hr>
 </section>
 <section id="contributing" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="contributing"><span class="header-section-number">2</span> Contributing</h2>

@@ -76,9 +76,9 @@ At build time, fetch_contributors.py dynamically queries the GitHub API to find 
 
 ## Deployment
 
-Deployment is handled entirely by GitHub Pages.
+Deployment is handled entirely by GitHub Pages. 
 
-The repository is configured to serve the site from the `/docs` directory on the main branch. Once you run `quarto render --clean`, simply commit and push your changes. GitHub Actions will automatically detect the updated docs folder and deploy the live site.
+The repository is configured to serve the site from the `/docs` directory on the main branch. We commit before running `quarto render --clean` so that the latest text modification dates are available via git. Then simply commit and push your changes. GitHub Actions will automatically detect the updated docs folder and deploy the live site.
 
 ```bash
 git add .

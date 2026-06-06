@@ -1,5 +1,5 @@
 ---
-title: "CSI-FiSh: Isogeny-Based Signatures"
+title: "CSI-FiSh"
 subtitle: "Efficient signatures from commutative group actions"
 date: 2026-06-01
 ---

@@ -1,6 +1,6 @@
 ---
-title: "CSIDH: Commutative Supersingular Isogeny Diffie-Hellman"
-subtitle: "An overview of the post-quantum group action protocol"
+title: "CSIDH"
+subtitle: "Commutative Supersingular Isogeny Diffie-Hellman"
 date: 2026-06-01
 ---
 
@@ -24,6 +24,7 @@ We consider the set $\mathcal{S}_R$ of $\mathbb{F}_p$-isomorphism classes of sup
 $$E_A: y^2 = x^3 + Ax^2 + x$$
 
 ### The Class Group Action
+
 The ideal class group $\text{Cl}(R)$ acts freely and transitively on the set $\mathcal{S}_R$. Given an ideal class $[\mathfrak{a}] \in \text{Cl}(R)$ and a curve class $[E] \in \mathcal{S}_R$, the group action is defined via the idealisogeny:
 
 $$[\mathfrak{a}] * E = E / E[\mathfrak{a}]$$
@@ -67,3 +68,4 @@ CSIDH parameters are evaluated by their quantum security levels (NIST categories
 
 ---
 {{< include ../../.contributors/csidh.md >}}
+
