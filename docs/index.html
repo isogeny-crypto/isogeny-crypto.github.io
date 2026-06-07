@@ -74,6 +74,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -373,9 +402,15 @@ ul.task-list li input[type="checkbox"] {
 <li>CSURF (2020)</li>
 <li>Séta (2021–2022)</li>
 <li>pSIDH (2022)</li>
-<li>M-SIDH (2023)</li>
+<li>BDKLP (2022)</li>
+<li>M(D)-SIDH (2023)</li>
 <li>FESTA (2023)</li>
+<li>binSIDH (2023)</li>
+<li>QFESTA (2024)</li>
+<li>SILBE (2024)</li>
+<li>POKÉ (2025)</li>
 <li>LIT-SiGamal (2025)</li>
+<li>PIKE (2026)</li>
 </ul>
 </section>
 </div><div class="column" style="width:50%;">
@@ -386,13 +421,30 @@ ul.task-list li input[type="checkbox"] {
 <li>GPS (2017)</li>
 <li>SeaSign (2019)</li>
 <li><a href="./protocols/digital-signature/csi-fish.html">CSI-FiSh</a> (2019)</li>
+<li>Lossy CSI-FiSh (2020)</li>
 <li>Sashimi (2020)</li>
 <li>SQISign (2020)</li>
 <li>Calamari (2020)</li>
 <li>SIDH PoK (2022)</li>
 <li>SCALLOP (2023)</li>
 <li>CJSS (2023)</li>
+<li>CSI-Otter (2023)</li>
+<li>SCALLOP-HD (2024)</li>
+<li>SQIsignHD (2024)</li>
+<li>AprèsSQI (2024)</li>
+<li>SQIsign2D-East (2024)</li>
+<li>SQIsign2D-West (2024)</li>
+<li>SQIPrime (2024)</li>
+<li>Erebor (2025)</li>
+<li>PRISM (2025)</li>
+<li>PEARL-SCALLOP (2025)</li>
+<li>Tanuki (2025)</li>
+<li>SQIsign2D<span class="math inline">\(^2\)</span> (2025)</li>
 <li>SPIDER (2026)</li>
+<li>ORCAS (2026)</li>
+<li>SQIsign2DPush (2026)</li>
+<li>WaterSQI (2026)</li>
+<li>PRISMO (2026)</li>
 </ul>
 </section>
 </div>
