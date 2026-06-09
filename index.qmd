@@ -30,6 +30,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes and
 - M(D)-SIDH (2023)
 - FESTA (2023)
 - binSIDH (2023)
+- terSIDH (2023)
 - QFESTA (2024)
 - SILBE (2024)
 - POKÉ (2025)
