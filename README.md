@@ -39,18 +39,22 @@ cd isogeny-crypto.github.io
 
 To spin up a local development server with hot-reloading:
 ```bash
+python3 fetch_contributors.py
 quarto preview
 ```
 Note: This utilizes a fast local cache and does not generate final production files.
 
 ### 3. Build for Production
 
-Before committing your changes to GitHub, you must compile the final site into the docs folder and trigger the Python script to fetch the latest contributors.
+Before committing your changes to GitHub, you must generate the contributor snippets and then compile the final site into the docs folder.
 
-Run a clean render to ensure no stale cache remains:
+Run the generator first, then perform a clean render to ensure no stale cache remains:
 ```bash
+python3 fetch_contributors.py
 quarto render --clean
 ```
+
+This repository also wires the generator into Quarto's `pre-render` step, but running it explicitly keeps local builds and fresh checkouts predictable.
 
 ## Key Configurations
 

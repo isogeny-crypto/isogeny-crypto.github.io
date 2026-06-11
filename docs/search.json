@@ -1,5 +1,49 @@
 [
   {
+    "objectID": "protocols/digital-signature/csi-fish.html",
+    "href": "protocols/digital-signature/csi-fish.html",
+    "title": "CSI-FiSh",
+    "section": "",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH Mathematical Foundation.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html#overview",
+    "href": "protocols/digital-signature/csi-fish.html#overview",
+    "title": "CSI-FiSh",
+    "section": "",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH Mathematical Foundation.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html#key-mechanism",
+    "href": "protocols/digital-signature/csi-fish.html#key-mechanism",
+    "title": "CSI-FiSh",
+    "section": "2 Key Mechanism",
+    "text": "2 Key Mechanism\nBy computing the exact structure of \\(\\text{Cl}(R)\\) for a 512-bit prime \\(p\\), CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical Fiat-Shamir transform to the isogeny setting.\n\nUnderlying Hard Problem: The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational CSIDH protocol.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html#references",
+    "href": "protocols/digital-signature/csi-fish.html#references",
+    "title": "CSI-FiSh",
+    "section": "3 References",
+    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT : Springer, 2019, pp. 227–255\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Isogeny-based Cryptography Wiki",
@@ -93,50 +137,6 @@
     "crumbs": [
       "Key Exchange",
       "CSIDH"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html",
-    "href": "protocols/digital-signature/csi-fish.html",
-    "title": "CSI-FiSh",
-    "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH Mathematical Foundation.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html#overview",
-    "href": "protocols/digital-signature/csi-fish.html#overview",
-    "title": "CSI-FiSh",
-    "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH Mathematical Foundation.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html#key-mechanism",
-    "href": "protocols/digital-signature/csi-fish.html#key-mechanism",
-    "title": "CSI-FiSh",
-    "section": "2 Key Mechanism",
-    "text": "2 Key Mechanism\nBy computing the exact structure of \\(\\text{Cl}(R)\\) for a 512-bit prime \\(p\\), CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical Fiat-Shamir transform to the isogeny setting.\n\nUnderlying Hard Problem: The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational CSIDH protocol.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html#references",
-    "href": "protocols/digital-signature/csi-fish.html#references",
-    "title": "CSI-FiSh",
-    "section": "3 References",
-    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT : Springer, 2019, pp. 227–255\n\n\n\nContributors: @gkorpal",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
     ]
   }
 ]
