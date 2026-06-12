@@ -102,10 +102,7 @@ At build time, `fetch_contributors.py` dynamically queries the GitHub API to fin
   1. Go to your [GitHub Developer Settings](https://github.com/settings/tokens).
   2. Generate a new "Personal access token (classic)" (no specific scopes are required if the repository is public).
   3. Update your local `GITHUB_TOKEN` environment variable.
-    ````
-    export GITHUB_TOKEN="ghp_your_copied_token_here"
-    quarto render --clean
-    ````
+
 
 **Usage Notes:**
 - Do not edit the hidden `.contributors/` folder manually.
