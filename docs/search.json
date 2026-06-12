@@ -1,46 +1,32 @@
 [
   {
-    "objectID": "protocols/digital-signature/csi-fish.html",
-    "href": "protocols/digital-signature/csi-fish.html",
-    "title": "CSI-FiSh",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Isogeny-based Cryptography Wiki",
     "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH Mathematical Foundation.",
+    "text": "Welcome to the Isogeny-based Cryptography Wiki. This site serves as an open-source, mathematically rigorous, and accessible repository of knowledge detailing post-quantum cryptographic protocols built on the hardness of finding isogenies between elliptic curves.",
     "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
+      "Home"
     ]
   },
   {
-    "objectID": "protocols/digital-signature/csi-fish.html#overview",
-    "href": "protocols/digital-signature/csi-fish.html#overview",
-    "title": "CSI-FiSh",
-    "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH Mathematical Foundation.",
+    "objectID": "index.html#getting-started",
+    "href": "index.html#getting-started",
+    "title": "Isogeny-based Cryptography Wiki",
+    "section": "1 Getting Started",
+    "text": "1 Getting Started\nIf you are not familiar with the concept of cryptographic protocols, we recommend referring to the notes by Dan Boneh and Victor Shoup.\nThis wiki aims to cover all peer-reviewed isogeny-based key exchange schemes and digital signature schemes.\n\n\n\n1.1 Key Exchange\n\nSIDH (2011–2022)\nCSIDH (2018)\nB-SIDH (2020–2022)\nSiGamal (2020)\nCSURF (2020)\nSéta (2021–2022)\nEJKM (2021)\npSIDH (2022–2023)\nBDKLP (2022)\nM(D)-SIDH (2023)\nFESTA (2023)\nbinSIDH (2023)\nterSIDH (2023)\nQFESTA (2024)\nSILBE (2024)\nPOKÉ (2025)\nLIT-SiGamal (2025)\nPIKE (2026)\n\n\n\n\n1.2 Digital Signature\n\nJS (2014)\nGPS (2017)\nSeaSign (2019)\nCSI-FiSh (2019)\nLossy CSI-FiSh (2020)\nSashimi (2020)\nSQISign (2020)\nCalamari (2020)\nSIDH PoK (2022)\nSCALLOP (2023)\nCJSS (2023)\nCSI-Otter (2023)\nSCALLOP-HD (2024)\nSQIsignHD (2024)\nAprèsSQI (2024)\nSQIsign2D-East (2024)\nSQIsign2D-West (2024)\nSQIPrime (2024)\nErebor (2025)\nPRISM (2025)\nPEARL-SCALLOP (2025)\nTanuki (2025)\nSQIsign2D\\(^2\\) (2025)\nSPIDER (2026)\nORCAS (2026)\nSQIsign2DPush (2026)\nWaterSQI (2026)\nPRISMO (2026)\nWombat (2026)",
     "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
+      "Home"
     ]
   },
   {
-    "objectID": "protocols/digital-signature/csi-fish.html#key-mechanism",
-    "href": "protocols/digital-signature/csi-fish.html#key-mechanism",
-    "title": "CSI-FiSh",
-    "section": "2 Key Mechanism",
-    "text": "2 Key Mechanism\nBy computing the exact structure of \\(\\text{Cl}(R)\\) for a 512-bit prime \\(p\\), CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical Fiat-Shamir transform to the isogeny setting.\n\nUnderlying Hard Problem: The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational CSIDH protocol.",
+    "objectID": "index.html#contributing",
+    "href": "index.html#contributing",
+    "title": "Isogeny-based Cryptography Wiki",
+    "section": "2 Contributing",
+    "text": "2 Contributing\nThis wiki is maintained by the isogeny-crypto organization. If you spot a mathematical error, want to expand on a protocol’s performance metrics, or wish to add a new primitive:\n\nFork the repository on GitHub.\nCreate your article using a .qmd file in the protocols/ directory.\nSubmit a Pull Request.",
     "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html#references",
-    "href": "protocols/digital-signature/csi-fish.html#references",
-    "title": "CSI-FiSh",
-    "section": "3 References",
-    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT : Springer, 2019, pp. 227–255\n\n\n\nContributors: Pending GitHub sync…",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
+      "Home"
     ]
   },
   {
@@ -110,36 +96,6 @@
     ]
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Isogeny-based Cryptography Wiki",
-    "section": "",
-    "text": "Welcome to the Isogeny-based Cryptography Wiki. This site serves as an open-source, mathematically rigorous, and accessible repository of knowledge detailing post-quantum cryptographic protocols built on the hardness of finding isogenies between elliptic curves.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#getting-started",
-    "href": "index.html#getting-started",
-    "title": "Isogeny-based Cryptography Wiki",
-    "section": "1 Getting Started",
-    "text": "1 Getting Started\nIf you are not familiar with the concept of cryptographic protocols, we recommend referring to the notes by Dan Boneh and Victor Shoup.\nThis wiki aims to cover all peer-reviewed isogeny-based key exchange schemes and digital signature schemes.\n\n\n\n1.1 Key Exchange\n\nSIDH (2011–2022)\nCSIDH (2018)\nB-SIDH (2020–2022)\nSiGamal (2020)\nCSURF (2020)\nSéta (2021–2022)\nEJKM (2021)\npSIDH (2022–2023)\nBDKLP (2022)\nM(D)-SIDH (2023)\nFESTA (2023)\nbinSIDH (2023)\nterSIDH (2023)\nQFESTA (2024)\nSILBE (2024)\nPOKÉ (2025)\nLIT-SiGamal (2025)\nPIKE (2026)\n\n\n\n\n1.2 Digital Signature\n\nJS (2014)\nGPS (2017)\nSeaSign (2019)\nCSI-FiSh (2019)\nLossy CSI-FiSh (2020)\nSashimi (2020)\nSQISign (2020)\nCalamari (2020)\nSIDH PoK (2022)\nSCALLOP (2023)\nCJSS (2023)\nCSI-Otter (2023)\nSCALLOP-HD (2024)\nSQIsignHD (2024)\nAprèsSQI (2024)\nSQIsign2D-East (2024)\nSQIsign2D-West (2024)\nSQIPrime (2024)\nErebor (2025)\nPRISM (2025)\nPEARL-SCALLOP (2025)\nTanuki (2025)\nSQIsign2D\\(^2\\) (2025)\nSPIDER (2026)\nORCAS (2026)\nSQIsign2DPush (2026)\nWaterSQI (2026)\nPRISMO (2026)\nWombat (2026)",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#contributing",
-    "href": "index.html#contributing",
-    "title": "Isogeny-based Cryptography Wiki",
-    "section": "2 Contributing",
-    "text": "2 Contributing\nThis wiki is maintained by the isogeny-crypto organization. If you spot a mathematical error, want to expand on a protocol’s performance metrics, or wish to add a new primitive:\n\nFork the repository on GitHub.\nCreate your article using a .qmd file in the protocols/ directory.\nSubmit a Pull Request.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
     "objectID": "protocols/key-exchange/sidh.html",
     "href": "protocols/key-exchange/sidh.html",
     "title": "SIDH",
@@ -170,6 +126,61 @@
     "crumbs": [
       "Key Exchange",
       "SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sidh.html#references",
+    "href": "protocols/key-exchange/sidh.html#references",
+    "title": "SIDH",
+    "section": "3 References",
+    "text": "3 References\n\n\n[JaFe11] Jao, David ; Feo, Luca De: Towards Quantum-Resistant Cryptosystems from Supersingular Elliptic Curve Isogenies. In: PQCrypto : Springer, 2011, pp. 19–34\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html",
+    "href": "protocols/digital-signature/csi-fish.html",
+    "title": "CSI-FiSh",
+    "section": "",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH Mathematical Foundation.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html#overview",
+    "href": "protocols/digital-signature/csi-fish.html#overview",
+    "title": "CSI-FiSh",
+    "section": "",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH Mathematical Foundation.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html#key-mechanism",
+    "href": "protocols/digital-signature/csi-fish.html#key-mechanism",
+    "title": "CSI-FiSh",
+    "section": "2 Key Mechanism",
+    "text": "2 Key Mechanism\nBy computing the exact structure of \\(\\text{Cl}(R)\\) for a 512-bit prime \\(p\\), CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical Fiat-Shamir transform to the isogeny setting.\n\nUnderlying Hard Problem: The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational CSIDH protocol.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html#references",
+    "href": "protocols/digital-signature/csi-fish.html#references",
+    "title": "CSI-FiSh",
+    "section": "3 References",
+    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT : Springer, 2019, pp. 227–255\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
     ]
   }
 ]
