@@ -7,11 +7,19 @@ from pathlib import Path
 # Set to your specific repository
 REPO = "isogeny-crypto/isogeny-crypto.github.io"
 
-# Skip during `quarto preview` — only run during `quarto render --clean`.
+# Skip during `quarto preview`.
 # Quarto sets QUARTO_PROJECT_RENDER_ALL=1 only on a full render.
-if os.environ.get("QUARTO_PROJECT_RENDER_ALL") != "1":
-    print("fetch_contributors.py: skipping in preview mode.")
+QUARTO_FULL_RENDER = os.environ.get("QUARTO_PROJECT_RENDER_ALL") == "1"
+CALLED_DIRECTLY = os.environ.get("QUARTO_PROJECT_OUTPUT_DIR") is None
+
+if not (QUARTO_FULL_RENDER or CALLED_DIRECTLY):
+    print("fetch_contributors.py: skipping in preview mode. ")
     raise SystemExit(0)
+
+if CALLED_DIRECTLY:
+    print("fetch_contributors.py: running standalone.")
+    
+###############
 
 os.makedirs(".contributors", exist_ok=True)
 qmd_files = Path("protocols").rglob("*.qmd")
