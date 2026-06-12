@@ -31,7 +31,15 @@ for file_path in qmd_files:
     url = f"https://api.github.com/repos/{REPO}/commits?path={file_path}"
     
     try:
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        # Setup headers
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        
+        # Check for GitHub Token to bypass the 60 requests/hr limit
+        github_token = os.environ.get("GITHUB_TOKEN")
+        if github_token:
+            headers['Authorization'] = f"token {github_token}"
+
+        req = urllib.request.Request(url, headers=headers)
         response = urllib.request.urlopen(req)
         commits = json.loads(response.read())
         

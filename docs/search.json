@@ -64,16 +64,6 @@
     ]
   },
   {
-    "objectID": "index.html#commutative-diagrams",
-    "href": "index.html#commutative-diagrams",
-    "title": "Isogeny-based Cryptography Wiki",
-    "section": "2 Commutative Diagrams",
-    "text": "2 Commutative Diagrams\nThe site supports client-side rendering of tikzcd diagrams. Use a fenced code block with the tikzcd class and write standard TikZ-CD syntax inside it.\nTo make a diagram larger, increase the spacing between nodes and/or apply a scale factor inside the tikzcd environment.\n\\begin{tikzcd}\n    A \\arrow[r, \"f\"] \\arrow[d, \"g\"'] & B \\arrow[d, \"h\"] \\\\\n    C \\arrow[r, \"k\"'] & D\n\\end{tikzcd}\nExample with larger spacing:\n\\begin{tikzcd}[row sep=large, column sep=large, scale=1.2, transform shape]\n  A \\arrow[r, \"f\"] \\arrow[d, \"g\"'] & B \\arrow[d, \"h\"] \\\\\n  C \\arrow[r, \"k\"'] & D\n\\end{tikzcd}\n\n\n\n2.1 Key Exchange\n\nSIDH (2011–2022)\nCSIDH (2018)\nB-SIDH (2020–2022)\nSiGamal (2020)\nCSURF (2020)\nSéta (2021–2022)\nEJKM (2021)\npSIDH (2022–2023)\nBDKLP (2022)\nM(D)-SIDH (2023)\nFESTA (2023)\nbinSIDH (2023)\nterSIDH (2023)\nQFESTA (2024)\nSILBE (2024)\nPOKÉ (2025)\nLIT-SiGamal (2025)\nPIKE (2026)\n\n\n\n\n2.2 Digital Signature\n\nJS (2014)\nGPS (2017)\nSeaSign (2019)\nCSI-FiSh (2019)\nLossy CSI-FiSh (2020)\nSashimi (2020)\nSQISign (2020)\nCalamari (2020)\nSIDH PoK (2022)\nSCALLOP (2023)\nCJSS (2023)\nCSI-Otter (2023)\nSCALLOP-HD (2024)\nSQIsignHD (2024)\nAprèsSQI (2024)\nSQIsign2D-East (2024)\nSQIsign2D-West (2024)\nSQIPrime (2024)\nErebor (2025)\nPRISM (2025)\nPEARL-SCALLOP (2025)\nTanuki (2025)\nSQIsign2D\\(^2\\) (2025)\nSPIDER (2026)\nORCAS (2026)\nSQIsign2DPush (2026)\nWaterSQI (2026)\nPRISMO (2026)\nWombat (2026)",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
     "objectID": "index.html#contributing",
     "href": "index.html#contributing",
     "title": "Isogeny-based Cryptography Wiki",
@@ -143,7 +133,7 @@
     "href": "protocols/key-exchange/csidh.html#references",
     "title": "CSIDH",
     "section": "5 References",
-    "text": "5 References\n\n\n[CLMP18] Castryck, Wouter ; Lange, Tanja ; Martindale, Chloe ; Panny, Lorenz ; Renes, Joost: CSIDH: Commutative Supersingular Isogeny Diffie-Hellman. In: ASIACRYPT : Springer, 2018, pp. 395–427\n\n\n\nContributors: Pending GitHub sync…",
+    "text": "5 References\n\n\n[CLMP18] Castryck, Wouter ; Lange, Tanja ; Martindale, Chloe ; Panny, Lorenz ; Renes, Joost: CSIDH: Commutative Supersingular Isogeny Diffie-Hellman. In: ASIACRYPT : Springer, 2018, pp. 395–427\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Key Exchange",
       "CSIDH"

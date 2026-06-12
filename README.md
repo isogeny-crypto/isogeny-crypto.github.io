@@ -92,8 +92,22 @@ curl -L -o alpha.csl https://raw.githubusercontent.com/citation-style-language/s
 
 ### Automated Contributor Tags
 
-At build time, fetch_contributors.py dynamically queries the GitHub API to find the commit history of every `.qmd` file and generates a markdown snippet.
+At build time, `fetch_contributors.py` dynamically queries the GitHub API to find the commit history of every `.qmd` file and generates a markdown snippet. To prevent API rate limit errors (HTTP 403), the script authenticates using a GitHub Personal Access Token.
 
+**Local Setup & Token Expiration:**
+- **Usage:** Before building the site locally, expose your token as an environment variable:
+  - Mac/Linux: `export GITHUB_TOKEN="your_token_here"`
+  - Windows: `$env:GITHUB_TOKEN="your_token_here"`
+- **Handling Expiration:** If builds suddenly start failing with `HTTP Error 403: rate limit exceeded`, your token has likely expired. To fix this:
+  1. Go to your [GitHub Developer Settings](https://github.com/settings/tokens).
+  2. Generate a new "Personal access token (classic)" (no specific scopes are required if the repository is public).
+  3. Update your local `GITHUB_TOKEN` environment variable.
+    ````
+    export GITHUB_TOKEN="ghp_your_copied_token_here"
+    quarto render --clean
+    ````
+
+**Usage Notes:**
 - Do not edit the hidden `.contributors/` folder manually.
 - Ensure the bottom of your article includes the shortcode: `{{< include ../../.contributors/filename.md >}}`.
 - Note: The script parses the remote GitHub repository. If you create a brand new file locally, the script will output "Pending GitHub sync" until your first push.
