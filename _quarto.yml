@@ -2,8 +2,11 @@ project:
   type: website
   output-dir: docs # Points directly to GitHub Pages deployment folder
   pre-render: python3 fetch_contributors.py
-
+  
 date-modified: last-modified
+
+filters:
+  - tikz.lua
 
 website:
   title: "Isogeny-based Cryptography Wiki"
@@ -28,12 +31,12 @@ website:
       - section: "Digital Signature"
         contents: "protocols/digital-signature/*.qmd"
 
+
+
 format:
   html:
     include-in-header:
-      - includes/tikzjax-header.html
-    include-after-body:
-      - includes/tikzjax-after-body.html
+      - tikzjax-header.html
     theme:
       light: cosmo
       dark: cyborg

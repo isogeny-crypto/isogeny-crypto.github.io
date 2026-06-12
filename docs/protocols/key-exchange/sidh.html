@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-06-01">
+<meta name="dcterms.date" content="2026-06-12">
 
-<title>CSI-FiSh – Isogeny-based Cryptography Wiki</title>
+<title>SIDH – Isogeny-based Cryptography Wiki</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -316,7 +316,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/digital-signature/csi-fish.html">Digital Signature</a></li><li class="breadcrumb-item"><a href="../../protocols/digital-signature/csi-fish.html">CSI-FiSh</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/csidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/sidh.html">SIDH</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -367,7 +367,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../protocols/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/sidh.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">SIDH</span></a>
   </div>
 </li>
@@ -384,7 +384,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../protocols/digital-signature/csi-fish.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../protocols/digital-signature/csi-fish.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSI-FiSh</span></a>
   </div>
 </li>
@@ -401,8 +401,11 @@ window.Quarto = {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
-  <li><a href="#key-mechanism" id="toc-key-mechanism" class="nav-link" data-scroll-target="#key-mechanism"><span class="header-section-number">2</span> Key Mechanism</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">3</span> References</a></li>
+  <li><a href="#protocol-design" id="toc-protocol-design" class="nav-link" data-scroll-target="#protocol-design"><span class="header-section-number">2</span> Protocol Design</a>
+  <ul class="collapse">
+  <li><a href="#public-parameters" id="toc-public-parameters" class="nav-link" data-scroll-target="#public-parameters"><span class="header-section-number">2.1</span> Public Parameters</a></li>
+  <li><a href="#key-exchange-execution" id="toc-key-exchange-execution" class="nav-link" data-scroll-target="#key-exchange-execution"><span class="header-section-number">2.2</span> Key Exchange Execution</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -410,10 +413,10 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/digital-signature/csi-fish.html">Digital Signature</a></li><li class="breadcrumb-item"><a href="../../protocols/digital-signature/csi-fish.html">CSI-FiSh</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/csidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/sidh.html">SIDH</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">CSI-FiSh</h1>
-<p class="subtitle lead">Efficient signatures from commutative group actions</p>
+<h1 class="title">SIDH</h1>
+<p class="subtitle lead">Supersingular Isogeny Diffie-Hellman</p>
 </div>
 
 
@@ -424,14 +427,14 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 1, 2026</p>
+      <p class="date">June 12, 2026</p>
     </div>
   </div>
   
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">June 6, 2026</p>
+      <p class="date-modified">June 12, 2026</p>
     </div>
   </div>
     
@@ -444,33 +447,105 @@ window.Quarto = {
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p><strong>CSI-FiSh</strong> (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren <span class="citation" data-cites="csifish">[<a href="#ref-csifish" role="doc-biblioref">BeKlVe19</a>]</span>.</p>
-<p>The primary hurdle in building efficient signatures from the <a href="../../protocols/key-exchange/csidh.html">CSIDH</a> group action is that evaluating the group action can be slow, and the structure of the class group <span class="math inline">\(\text{Cl}(R)\)</span> is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.</p>
-<p>CSI-FiSh relies on the same hardness assumptions outlined in the <a href="../../protocols/key-exchange/csidh.html#sec-math-foundation">CSIDH Mathematical Foundation</a>.</p>
-<hr>
+<p>The Supersingular Isogeny Diffie-Hellman (SIDH) protocol, introduced by Jao and De Feo <span class="citation" data-cites="sidh">[<a href="#ref-sidh" role="doc-biblioref">JaFe11</a>]</span>, was a NIST post-quantum key-exchange candidate.</p>
 </section>
-<section id="key-mechanism" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="key-mechanism"><span class="header-section-number">2</span> Key Mechanism</h2>
-<p>By computing the exact structure of <span class="math inline">\(\text{Cl}(R)\)</span> for a 512-bit prime <span class="math inline">\(p\)</span>, CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical <strong>Fiat-Shamir transform</strong> to the isogeny setting.</p>
+<section id="protocol-design" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="protocol-design"><span class="header-section-number">2</span> Protocol Design</h2>
+<section id="public-parameters" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="public-parameters"><span class="header-section-number">2.1</span> Public Parameters</h3>
+<p>Let <span class="math inline">\(p\)</span> be a prime of the form <span class="math inline">\(p = \ell_A^{e_A} \ell_B^{e_B} \cdot f \pm 1\)</span>, where <span class="math inline">\(\ell_A, \ell_B\)</span> are small distinct primes (typically <span class="math inline">\(\ell_A = 2, \ell_B = 3\)</span>), <span class="math inline">\(e_A, e_B\)</span> are large exponents, and <span class="math inline">\(f\)</span> is a small cofactor making <span class="math inline">\(p\)</span> prime.</p>
 <ul>
-<li><strong>Underlying Hard Problem:</strong> The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational <a href="../../protocols/key-exchange/csidh.html">CSIDH protocol</a>.</li>
+<li><strong>Base Curve:</strong> A supersingular elliptic curve <span class="math inline">\(E_0\)</span> over <span class="math inline">\(\mathbb{F}_{p^2}\)</span>.</li>
+<li><strong>Alice’s Torsion Basis:</strong> A basis <span class="math inline">\(\{P_A, Q_A\}\)</span> for the torsion subgroup <span class="math inline">\(E_0[\ell_A^{e_A}]\)</span>.</li>
+<li><strong>Bob’s Torsion Basis:</strong> A basis <span class="math inline">\(\{P_B, Q_B\}\)</span> for the torsion subgroup <span class="math inline">\(E_0[\ell_B^{e_B}]\)</span>.</li>
 </ul>
-<hr>
 </section>
-<section id="references" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="references"><span class="header-section-number">3</span> References</h2>
-<div id="refs" class="references csl-bib-body" role="list">
-<div id="ref-csifish" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[BeKlVe19] </div><div class="csl-right-inline"><span class="smallcaps">Beullens, Ward</span> ; <span class="smallcaps">Kleinjung, Thorsten</span> ; <span class="smallcaps">Vercauteren, Frederik</span>: <a href="https://eprint.iacr.org/2019/498"><span>CSI-FiSh</span>: <span>E</span>fficient <span>I</span>sogeny-<span>B</span>ased <span>S</span>ignatures from <span>C</span>ommutative <span>G</span>roup <span>A</span>ctions</a>. In: <em>ASIACRYPT</em>&nbsp;: Springer, 2019, pp.&nbsp;227–255</div>
-</div>
-</div>
-<hr>
-<p><strong>Contributors:</strong> Pending GitHub sync…</p>
+<section id="key-exchange-execution" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="key-exchange-execution"><span class="header-section-number">2.2</span> Key Exchange Execution</h3>
+<ol type="1">
+<li><strong>Alice’s Key Generation:</strong>
+<ul>
+<li>Chooses a secret integer <span class="math inline">\(m_A \in \mathbb{Z} / \ell_A^{e_A}\mathbb{Z}\)</span>.</li>
+<li>Defines her secret kernel generator <span class="math inline">\(R_A = P_A + [m_A]Q_A\)</span>.</li>
+<li>Computes the secret isogeny <span class="math inline">\(\phi_A: E_0 \to E_A \cong E_0 / \langle R_A \rangle\)</span>.</li>
+<li>Her <strong>Public Key</strong> is <span class="math inline">\((E_A, \phi_A(P_B), \phi_A(Q_B))\)</span>.</li>
+</ul></li>
+<li><strong>Bob’s Key Generation:</strong>
+<ul>
+<li>Chooses a secret integer <span class="math inline">\(m_B \in \mathbb{Z} / \ell_B^{e_B}\mathbb{Z}\)</span>.</li>
+<li>Defines his secret kernel generator <span class="math inline">\(R_B = P_B + [m_B]Q_B\)</span>.</li>
+<li>Computes the secret isogeny <span class="math inline">\(\phi_B: E_0 \to E_B \cong E_0 / \langle R_B \rangle\)</span>.</li>
+<li>His <strong>Public Key</strong> is <span class="math inline">\((E_B, \phi_B(P_A), \phi_B(Q_A))\)</span>.</li>
+</ul></li>
+<li><strong>Shared Secret Computation:</strong>
+<ul>
+<li>Alice receives <span class="math inline">\((E_B, \phi_B(P_A), \phi_B(Q_A))\)</span> and evaluates her secret linear combination on the received points to reconstruct the kernel on <span class="math inline">\(E_B\)</span>: <span class="math display">\[S_A = \phi_B(P_A) + [m_A]\phi_B(Q_A) = \phi_B(P_A + [m_A]Q_A) = \phi_B(R_A)\]</span></li>
+<li>She computes the secondary isogeny <span class="math inline">\(\phi_A': E_B \to E_{BA} \cong E_B / \langle \phi_B(R_A) \rangle\)</span>.</li>
+<li>Bob receives <span class="math inline">\((E_A, \phi_A(P_B), \phi_A(Q_B))\)</span> and analogously evaluates: <span class="math display">\[S_B = \phi_A(P_B) + [m_B]\phi_A(Q_B) = \phi_A(P_B + [m_B]Q_B) = \phi_A(R_B)\]</span></li>
+<li>He computes the secondary isogeny <span class="math inline">\(\phi_B': E_A \to E_{AB} \cong E_A / \langle \phi_A(R_B) \rangle\)</span>.</li>
+</ul></li>
+</ol>
+<p>By the isomorphism theorems for curves, the codomain curves are isomorphic: <span class="math display">\[E_{AB} \cong E_0 / \langle R_A, R_B \rangle \cong E_{BA}\]</span> The shared secret key is the <span class="math inline">\(j\)</span>-invariant <span class="math inline">\(j(E_{AB}) = j(E_{BA})\)</span>.</p>
+<div class="tikz-diagram"><script type="text/tikz">
+\usetikzlibrary{arrows.meta, bending, calc}
+\begin{tikzpicture}[
+  every node/.style={font=\small},
+  arr/.style={-{Stealth}, thick},
+  red arr/.style={arr, red},
+  blue arr/.style={arr, blue}
+]
+
+  % Nodes
+  \node (E0)  at (0,   0)    {$E_0$};
+  \node (EA)  at (5,   2.5)  {$E_A$};
+  \node (EB)  at (5,  -2.5)  {$E_B$};
+  \node (EBA) at (10,  0.15) {$E_{BA}$};
+  \node (EAB) at (10, -0.35) {$E_{AB}$};
+  \node at    (10,  -0.1)    {$\|$};
+
+  % E0 -> EA (red, solid)
+  \draw[red arr] (E0) -- node[above, sloped, font=\scriptsize]{
+    $\mathrm{ker}(\phi_A) = \langle [m_A]P_A + [n_A]Q_A \rangle$}
+    node[below, sloped, font=\scriptsize]{
+    $\phi_A(P_B), \phi_A(Q_B)$}
+    (EA);
+
+  % E0 -> EB (blue, solid)
+  \draw[blue arr] (E0) -- node[above, sloped, font=\scriptsize]{
+    $\phi_B(P_A), \phi_B(Q_A)$}
+    node[below, sloped, font=\scriptsize]{
+    $\mathrm{ker}(\phi_B) = \langle [m_B]P_B + [n_B]Q_B \rangle$}
+    (EB);
+
+  % EA <-> EB (dashed, red up blue down)
+  \draw[{Stealth}-, dashed, red,  thick] ($(EA)!0.05!(EB) + (-0.15,0)$)
+    -- ($(EA)!0.95!(EB) + (-0.15,0)$);
+  \draw[-{Stealth}, dashed, blue, thick] ($(EA)!0.05!(EB) + (0.15,0)$)
+    -- ($(EA)!0.95!(EB) + (0.15,0)$);
+
+  % EA -> EBA (blue, solid)
+  \draw[blue arr] (EA) -- node[above, sloped, font=\scriptsize]{
+    $\mathrm{ker}(\phi'_B) = \langle [m_B]\phi_A(P_B) + [n_B]\phi_A(Q_B) \rangle$}
+    (EBA);
+
+  % EB -> EAB (red, solid)
+  \draw[red arr] (EB) -- node[below, sloped, font=\scriptsize]{
+    $\mathrm{ker}(\phi'_A) = \langle [m_A]\phi_B(P_A) + [n_A]\phi_B(Q_A) \rangle$}
+    (EAB);
+
+\end{tikzpicture}
+</script></div>
+
 
 
 </section>
+</section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-sidh" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[JaFe11] </div><div class="csl-right-inline"><span class="smallcaps">Jao, David</span> ; <span class="smallcaps">Feo, Luca De</span>: <a href="https://eprint.iacr.org/archive/2011/506/20110918:024142"><span>T</span>owards <span>Q</span>uantum-<span>R</span>esistant <span>C</span>ryptosystems from <span>S</span>upersingular <span>E</span>lliptic <span>C</span>urve <span>I</span>sogenies</a>. In: <em>PQCrypto</em>&nbsp;: Springer, 2011, pp.&nbsp;19–34</div>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right

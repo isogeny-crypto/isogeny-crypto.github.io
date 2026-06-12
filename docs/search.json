@@ -37,40 +37,10 @@
     "href": "protocols/digital-signature/csi-fish.html#references",
     "title": "CSI-FiSh",
     "section": "3 References",
-    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT : Springer, 2019, pp. 227–255\n\n\n\nContributors: @gkorpal",
+    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT : Springer, 2019, pp. 227–255\n\n\n\nContributors: Pending GitHub sync…",
     "crumbs": [
       "Digital Signature",
       "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Isogeny-based Cryptography Wiki",
-    "section": "",
-    "text": "Welcome to the Isogeny-based Cryptography Wiki. This site serves as an open-source, mathematically rigorous, and accessible repository of knowledge detailing post-quantum cryptographic protocols built on the hardness of finding isogenies between elliptic curves.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#getting-started",
-    "href": "index.html#getting-started",
-    "title": "Isogeny-based Cryptography Wiki",
-    "section": "1 Getting Started",
-    "text": "1 Getting Started\nIf you are not familiar with the concept of cryptographic protocols, we recommend referring to the notes by Dan Boneh and Victor Shoup.\nThis wiki aims to cover all peer-reviewed isogeny-based key exchange schemes and digital signature schemes.\n\n\n\n1.1 Key Exchange\n\nSIDH (2011–2022)\nCSIDH (2018)\nB-SIDH (2020–2022)\nSiGamal (2020)\nCSURF (2020)\nSéta (2021–2022)\nEJKM (2021)\npSIDH (2022–2023)\nBDKLP (2022)\nM(D)-SIDH (2023)\nFESTA (2023)\nbinSIDH (2023)\nterSIDH (2023)\nQFESTA (2024)\nSILBE (2024)\nPOKÉ (2025)\nLIT-SiGamal (2025)\nPIKE (2026)\n\n\n\n\n1.2 Digital Signature\n\nJS (2014)\nGPS (2017)\nSeaSign (2019)\nCSI-FiSh (2019)\nLossy CSI-FiSh (2020)\nSashimi (2020)\nSQISign (2020)\nCalamari (2020)\nSIDH PoK (2022)\nSCALLOP (2023)\nCJSS (2023)\nCSI-Otter (2023)\nSCALLOP-HD (2024)\nSQIsignHD (2024)\nAprèsSQI (2024)\nSQIsign2D-East (2024)\nSQIsign2D-West (2024)\nSQIPrime (2024)\nErebor (2025)\nPRISM (2025)\nPEARL-SCALLOP (2025)\nTanuki (2025)\nSQIsign2D\\(^2\\) (2025)\nSPIDER (2026)\nORCAS (2026)\nSQIsign2DPush (2026)\nWaterSQI (2026)\nPRISMO (2026)\nWombat (2026)",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#contributing",
-    "href": "index.html#contributing",
-    "title": "Isogeny-based Cryptography Wiki",
-    "section": "2 Contributing",
-    "text": "2 Contributing\nThis wiki is maintained by the isogeny-crypto organization. If you spot a mathematical error, want to expand on a protocol’s performance metrics, or wish to add a new primitive:\n\nFork the repository on GitHub.\nCreate your article using a .qmd file in the protocols/ directory.\nSubmit a Pull Request.",
-    "crumbs": [
-      "Home"
     ]
   },
   {
@@ -111,7 +81,7 @@
     "href": "protocols/key-exchange/csidh.html#key-exchange-protocol",
     "title": "CSIDH",
     "section": "3 Key Exchange Protocol",
-    "text": "3 Key Exchange Protocol\nThe commutativity of the group action allows a direct translation of the classical Diffie-Hellman matrix or exponentiation paradigm.\n\n\n\n\n\n\n\n\nAlice\nPublic\nBob\n\n\n\n\nChooses secret ideal \\([\\mathfrak{a}]\\)\n\nChooses secret ideal \\([\\mathfrak{b}]\\)\n\n\nComputes \\(E_A = [\\mathfrak{a}] * E_0\\)\n\\(\\xrightarrow{\\quad E_A \\quad}\\)\n\n\n\n\n\\(\\xleftarrow{\\quad E_B \\quad}\\)\nComputes \\(E_B = [\\mathfrak{b}] * E_0\\)\n\n\nComputes \\(E_{BA} = [\\mathfrak{a}] * E_B\\)\n\nComputes \\(E_{AB} = [\\mathfrak{b}] * E_A\\)\n\n\n\n\nShared Secret: Since the group action commutes, \\(E_{BA} = E_{AB}\\). The Montgomery coefficient \\(A \\in \\mathbb{F}_p\\) of this final curve serves as the shared cryptographic secret.\n\n\\begin{tikzcd}[row sep=large, column sep=huge, scale=1.5, transform shape]\n&\nE_0\n  \\arrow[dl, swap, \"{[\\text{a}]}\"]\n  \\arrow[dr, \"{[\\mathfrak{b}]}\"]\n&\n\\\\\nE_A=[\\mathfrak{a}]*E_0\n  \\arrow[dr, swap, \"{[\\mathfrak{b}]}\"]\n&\n&\nE_B=[\\mathfrak{b}]*E_0\n  \\arrow[dl, \"{[\\mathfrak{a}]}\"]\n\\\\\n&\nE_{AB}=E_{BA}\n&\n\\end{tikzcd}\n\\[\nE_{AB}\n=\n[\\mathfrak b] * E_A\n=\n[\\mathfrak b] * ([\\mathfrak a] * E_0)\n=\n[\\mathfrak a] * ([\\mathfrak b] * E_0)\n=\n[\\mathfrak a] * E_B\n=\nE_{BA}.\n\\]",
+    "text": "3 Key Exchange Protocol\nThe commutativity of the group action allows a direct translation of the classical Diffie-Hellman matrix or exponentiation paradigm.\n\n\n\n\n\n\n\n\nAlice\nPublic\nBob\n\n\n\n\nChooses secret ideal \\([\\mathfrak{a}]\\)\n\nChooses secret ideal \\([\\mathfrak{b}]\\)\n\n\nComputes \\(E_A = [\\mathfrak{a}] * E_0\\)\n\\(\\xrightarrow{\\quad E_A \\quad}\\)\n\n\n\n\n\\(\\xleftarrow{\\quad E_B \\quad}\\)\nComputes \\(E_B = [\\mathfrak{b}] * E_0\\)\n\n\nComputes \\(E_{BA} = [\\mathfrak{a}] * E_B\\)\n\nComputes \\(E_{AB} = [\\mathfrak{b}] * E_A\\)\n\n\n\n\nShared Secret: Since the group action commutes, \\(E_{BA} = E_{AB}\\). The Montgomery coefficient \\(A \\in \\mathbb{F}_p\\) of this final curve serves as the shared cryptographic secret.\n\n\n\\[\nE_{AB}\n=\n[\\mathfrak b] * E_A\n=\n[\\mathfrak b] * ([\\mathfrak a] * E_0)\n=\n[\\mathfrak a] * ([\\mathfrak b] * E_0)\n=\n[\\mathfrak a] * E_B\n=\nE_{BA}.\n\\]",
     "crumbs": [
       "Key Exchange",
       "CSIDH"
@@ -133,10 +103,73 @@
     "href": "protocols/key-exchange/csidh.html#references",
     "title": "CSIDH",
     "section": "5 References",
-    "text": "5 References\n\n\n[CLMP18] Castryck, Wouter ; Lange, Tanja ; Martindale, Chloe ; Panny, Lorenz ; Renes, Joost: CSIDH: Commutative Supersingular Isogeny Diffie-Hellman. In: ASIACRYPT : Springer, 2018, pp. 395–427\n\n\n\nContributors: @gkorpal",
+    "text": "5 References\n\n\n[CLMP18] Castryck, Wouter ; Lange, Tanja ; Martindale, Chloe ; Panny, Lorenz ; Renes, Joost: CSIDH: Commutative Supersingular Isogeny Diffie-Hellman. In: ASIACRYPT : Springer, 2018, pp. 395–427\n\n\n\nContributors: Pending GitHub sync…",
     "crumbs": [
       "Key Exchange",
       "CSIDH"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Isogeny-based Cryptography Wiki",
+    "section": "",
+    "text": "Welcome to the Isogeny-based Cryptography Wiki. This site serves as an open-source, mathematically rigorous, and accessible repository of knowledge detailing post-quantum cryptographic protocols built on the hardness of finding isogenies between elliptic curves.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#getting-started",
+    "href": "index.html#getting-started",
+    "title": "Isogeny-based Cryptography Wiki",
+    "section": "1 Getting Started",
+    "text": "1 Getting Started\nIf you are not familiar with the concept of cryptographic protocols, we recommend referring to the notes by Dan Boneh and Victor Shoup.\nThis wiki aims to cover all peer-reviewed isogeny-based key exchange schemes and digital signature schemes.\n\n\n\n1.1 Key Exchange\n\nSIDH (2011–2022)\nCSIDH (2018)\nB-SIDH (2020–2022)\nSiGamal (2020)\nCSURF (2020)\nSéta (2021–2022)\nEJKM (2021)\npSIDH (2022–2023)\nBDKLP (2022)\nM(D)-SIDH (2023)\nFESTA (2023)\nbinSIDH (2023)\nterSIDH (2023)\nQFESTA (2024)\nSILBE (2024)\nPOKÉ (2025)\nLIT-SiGamal (2025)\nPIKE (2026)\n\n\n\n\n1.2 Digital Signature\n\nJS (2014)\nGPS (2017)\nSeaSign (2019)\nCSI-FiSh (2019)\nLossy CSI-FiSh (2020)\nSashimi (2020)\nSQISign (2020)\nCalamari (2020)\nSIDH PoK (2022)\nSCALLOP (2023)\nCJSS (2023)\nCSI-Otter (2023)\nSCALLOP-HD (2024)\nSQIsignHD (2024)\nAprèsSQI (2024)\nSQIsign2D-East (2024)\nSQIsign2D-West (2024)\nSQIPrime (2024)\nErebor (2025)\nPRISM (2025)\nPEARL-SCALLOP (2025)\nTanuki (2025)\nSQIsign2D\\(^2\\) (2025)\nSPIDER (2026)\nORCAS (2026)\nSQIsign2DPush (2026)\nWaterSQI (2026)\nPRISMO (2026)\nWombat (2026)",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#contributing",
+    "href": "index.html#contributing",
+    "title": "Isogeny-based Cryptography Wiki",
+    "section": "2 Contributing",
+    "text": "2 Contributing\nThis wiki is maintained by the isogeny-crypto organization. If you spot a mathematical error, want to expand on a protocol’s performance metrics, or wish to add a new primitive:\n\nFork the repository on GitHub.\nCreate your article using a .qmd file in the protocols/ directory.\nSubmit a Pull Request.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sidh.html",
+    "href": "protocols/key-exchange/sidh.html",
+    "title": "SIDH",
+    "section": "",
+    "text": "The Supersingular Isogeny Diffie-Hellman (SIDH) protocol, introduced by Jao and De Feo [JaFe11], was a NIST post-quantum key-exchange candidate.",
+    "crumbs": [
+      "Key Exchange",
+      "SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sidh.html#overview",
+    "href": "protocols/key-exchange/sidh.html#overview",
+    "title": "SIDH",
+    "section": "",
+    "text": "The Supersingular Isogeny Diffie-Hellman (SIDH) protocol, introduced by Jao and De Feo [JaFe11], was a NIST post-quantum key-exchange candidate.",
+    "crumbs": [
+      "Key Exchange",
+      "SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sidh.html#protocol-design",
+    "href": "protocols/key-exchange/sidh.html#protocol-design",
+    "title": "SIDH",
+    "section": "2 Protocol Design",
+    "text": "2 Protocol Design\n\n2.1 Public Parameters\nLet \\(p\\) be a prime of the form \\(p = \\ell_A^{e_A} \\ell_B^{e_B} \\cdot f \\pm 1\\), where \\(\\ell_A, \\ell_B\\) are small distinct primes (typically \\(\\ell_A = 2, \\ell_B = 3\\)), \\(e_A, e_B\\) are large exponents, and \\(f\\) is a small cofactor making \\(p\\) prime.\n\nBase Curve: A supersingular elliptic curve \\(E_0\\) over \\(\\mathbb{F}_{p^2}\\).\nAlice’s Torsion Basis: A basis \\(\\{P_A, Q_A\\}\\) for the torsion subgroup \\(E_0[\\ell_A^{e_A}]\\).\nBob’s Torsion Basis: A basis \\(\\{P_B, Q_B\\}\\) for the torsion subgroup \\(E_0[\\ell_B^{e_B}]\\).\n\n\n\n2.2 Key Exchange Execution\n\nAlice’s Key Generation:\n\nChooses a secret integer \\(m_A \\in \\mathbb{Z} / \\ell_A^{e_A}\\mathbb{Z}\\).\nDefines her secret kernel generator \\(R_A = P_A + [m_A]Q_A\\).\nComputes the secret isogeny \\(\\phi_A: E_0 \\to E_A \\cong E_0 / \\langle R_A \\rangle\\).\nHer Public Key is \\((E_A, \\phi_A(P_B), \\phi_A(Q_B))\\).\n\nBob’s Key Generation:\n\nChooses a secret integer \\(m_B \\in \\mathbb{Z} / \\ell_B^{e_B}\\mathbb{Z}\\).\nDefines his secret kernel generator \\(R_B = P_B + [m_B]Q_B\\).\nComputes the secret isogeny \\(\\phi_B: E_0 \\to E_B \\cong E_0 / \\langle R_B \\rangle\\).\nHis Public Key is \\((E_B, \\phi_B(P_A), \\phi_B(Q_A))\\).\n\nShared Secret Computation:\n\nAlice receives \\((E_B, \\phi_B(P_A), \\phi_B(Q_A))\\) and evaluates her secret linear combination on the received points to reconstruct the kernel on \\(E_B\\): \\[S_A = \\phi_B(P_A) + [m_A]\\phi_B(Q_A) = \\phi_B(P_A + [m_A]Q_A) = \\phi_B(R_A)\\]\nShe computes the secondary isogeny \\(\\phi_A': E_B \\to E_{BA} \\cong E_B / \\langle \\phi_B(R_A) \\rangle\\).\nBob receives \\((E_A, \\phi_A(P_B), \\phi_A(Q_B))\\) and analogously evaluates: \\[S_B = \\phi_A(P_B) + [m_B]\\phi_A(Q_B) = \\phi_A(P_B + [m_B]Q_B) = \\phi_A(R_B)\\]\nHe computes the secondary isogeny \\(\\phi_B': E_A \\to E_{AB} \\cong E_A / \\langle \\phi_A(R_B) \\rangle\\).\n\n\nBy the isomorphism theorems for curves, the codomain curves are isomorphic: \\[E_{AB} \\cong E_0 / \\langle R_A, R_B \\rangle \\cong E_{BA}\\] The shared secret key is the \\(j\\)-invariant \\(j(E_{AB}) = j(E_{BA})\\).",
+    "crumbs": [
+      "Key Exchange",
+      "SIDH"
     ]
   }
 ]

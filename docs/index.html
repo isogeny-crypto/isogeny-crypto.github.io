@@ -74,33 +74,23 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
+<script src="https://tikzjax.com/v1/tikzjax.js"></script>
+
 <style>
-.tikzjax-diagram {
-	display: block;
-	width: 100%;
-	max-width: 100%;
-	overflow-x: auto;
-	margin: 1.25rem 0;
-	color: var(--bs-body-color);
-}
+  .tikz-diagram {
+    display: flex;
+    justify-content: center;
+    margin: 1.5em auto;
+  }
 
-.tikzjax-diagram > div.page {
-	position: relative;
-	width: 100% !important;
-	height: auto !important;
-}
+  .tikz-diagram svg {
+    max-width: 100%;
+    height: auto;
+  }
 
-.tikzjax-diagram svg {
-	position: static !important;
-	display: block;
-	width: 100% !important;
-	max-width: 100%;
-	height: auto !important;
-}
-
-.quarto-dark .tikzjax-diagram {
-	filter: invert(1) hue-rotate(180deg);
-}
+  [data-bs-theme="dark"] .tikz-diagram svg {
+    filter: invert(1) hue-rotate(180deg);
+  }
 </style>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
@@ -355,6 +345,12 @@ window.Quarto = {
  <span class="menu-text">CSIDH</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./protocols/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SIDH</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -496,61 +492,6 @@ window.Quarto = {
 </section>
 
 </main> <!-- /main -->
-<script>
-(function () {
-  const tikzjaxScriptUrl = "https://tikzjax.com/v1/tikzjax.js";
-
-  function loadTikzJax() {
-    if (document.querySelector('script[src="' + tikzjaxScriptUrl + '"]')) {
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.src = tikzjaxScriptUrl;
-    document.head.appendChild(script);
-  }
-
-  function convertTikzCdBlocks() {
-    const selectors = [
-      "pre.tikzcd > code",
-      "pre > code.language-tikzcd",
-      "pre > code.tikzcd"
-    ];
-
-    for (const selector of selectors) {
-      document.querySelectorAll(selector).forEach(function (code) {
-        const pre = code.parentElement;
-        if (!pre || pre.dataset.tikzjaxConverted === "true") {
-          return;
-        }
-
-        pre.dataset.tikzjaxConverted = "true";
-
-        const diagram = document.createElement("div");
-        diagram.className = "tikzjax-diagram";
-
-        const tikzScript = document.createElement("script");
-        tikzScript.type = "text/tikz";
-        tikzScript.text = code.textContent.trim();
-
-        diagram.appendChild(tikzScript);
-        pre.replaceWith(diagram);
-      });
-    }
-  }
-
-  function init() {
-    convertTikzCdBlocks();
-    loadTikzJax();
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init, { once: true });
-  } else {
-    init();
-  }
-})();
-</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
