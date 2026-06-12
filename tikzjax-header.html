@@ -1,19 +1,47 @@
-<link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
-<script src="https://tikzjax.com/v1/tikzjax.js"></script>
+<!-- Preload the two heavy files at the same time <head> is parsed.
+     Even though tikzjax.js will fetch them from tikzjax.com,
+     the SW intercepts those requests and serves the cached local copies. -->
+<link rel="preload" href="/tikzjax-assets/tex.wasm.gz"     as="fetch" crossorigin>
+<link rel="preload" href="/tikzjax-assets/core.dump.gz"    as="fetch" crossorigin>
+
+<!-- Self-hosted fonts and main script -->
+<link rel="stylesheet" type="text/css" href="/tikzjax-assets/fonts.css">
+<script defer src="/tikzjax-assets/tikzjax.js"></script>
+
+<!-- Register Service Worker as early as possible -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' });
+  }
+</script>
 
 <style>
-  .tikz-diagram {
+.tikz-diagram {
     display: flex;
     justify-content: center;
     margin: 1.5em auto;
-  }
-
-  .tikz-diagram svg {
+}
+.tikz-diagram svg {
     max-width: 100%;
     height: auto;
-  }
-
-  .quarto-dark .tikz-diagram svg {
+}
+.quarto-dark .tikz-diagram svg {
     filter: invert(1) hue-rotate(180deg);
-  }
+}
+/* Shimmer skeleton while TeX compiles */
+.tikz-diagram:has(script[type="text/tikz"]) {
+    min-height: 80px;
+    background: linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%);
+    background-size: 200% 100%;
+    animation: tikz-shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+.quarto-dark .tikz-diagram:has(script[type="text/tikz"]) {
+    background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+}
+@keyframes tikz-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
 </style>

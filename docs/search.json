@@ -103,7 +103,7 @@
     "href": "protocols/key-exchange/csidh.html#references",
     "title": "CSIDH",
     "section": "5 References",
-    "text": "5 References\n\n\n[CLMP18] Castryck, Wouter ; Lange, Tanja ; Martindale, Chloe ; Panny, Lorenz ; Renes, Joost: CSIDH: Commutative Supersingular Isogeny Diffie-Hellman. In: ASIACRYPT : Springer, 2018, pp. 395–427\n\n\n\nContributors: Pending GitHub sync…",
+    "text": "5 References\n\n\n[CLMP18] Castryck, Wouter ; Lange, Tanja ; Martindale, Chloe ; Panny, Lorenz ; Renes, Joost: CSIDH: Commutative Supersingular Isogeny Diffie-Hellman. In: ASIACRYPT : Springer, 2018, pp. 395–427\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Key Exchange",
       "CSIDH"

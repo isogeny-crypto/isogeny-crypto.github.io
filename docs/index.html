@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.6">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -39,14 +39,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-8544972074f534daeda2a979ade908c6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-51be66d225d5824707e5188ed71ba064.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-8544972074f534daeda2a979ade908c6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-1723554e9fc7e938d4aa4d259221ca3d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-f5fc1807eb32d5c454332bc10d2d2f0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-1723554e9fc7e938d4aa4d259221ca3d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-df87436491e5880ce0ac64bc60648184.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-831d1bee07739574ec2b76f4ece217d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-df87436491e5880ce0ac64bc60648184.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": true,
@@ -73,24 +73,52 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
-<script src="https://tikzjax.com/v1/tikzjax.js"></script>
+<!-- Preload the two heavy files at the same time <head> is parsed.
+     Even though tikzjax.js will fetch them from tikzjax.com,
+     the SW intercepts those requests and serves the cached local copies. -->
+<link rel="preload" href="./tikzjax-assets/tex.wasm.gz" as="fetch" crossorigin="">
+<link rel="preload" href="./tikzjax-assets/core.dump.gz" as="fetch" crossorigin="">
+
+<!-- Self-hosted fonts and main script -->
+<link rel="stylesheet" type="text/css" href="./tikzjax-assets/fonts.css">
+<script defer="" src="./tikzjax-assets/tikzjax.js"></script>
+
+<!-- Register Service Worker as early as possible -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' });
+  }
+</script>
 
 <style>
-  .tikz-diagram {
+.tikz-diagram {
     display: flex;
     justify-content: center;
     margin: 1.5em auto;
-  }
-
-  .tikz-diagram svg {
+}
+.tikz-diagram svg {
     max-width: 100%;
     height: auto;
-  }
-
-  .quarto-dark .tikz-diagram svg {
+}
+.quarto-dark .tikz-diagram svg {
     filter: invert(1) hue-rotate(180deg);
-  }
+}
+/* Shimmer skeleton while TeX compiles */
+.tikz-diagram:has(script[type="text/tikz"]) {
+    min-height: 80px;
+    background: linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%);
+    background-size: 200% 100%;
+    animation: tikz-shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+.quarto-dark .tikz-diagram:has(script[type="text/tikz"]) {
+    background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+}
+@keyframes tikz-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
 </style>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
@@ -420,7 +448,7 @@ window.Quarto = {
 <section id="key-exchange" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="key-exchange"><span class="header-section-number">1.1</span> Key Exchange</h3>
 <ul>
-<li>SIDH (2011–2022)</li>
+<li><a href="./protocols/key-exchange/sidh.html">SIDH</a> (2011–2022)</li>
 <li><a href="./protocols/key-exchange/csidh.html">CSIDH</a> (2018)</li>
 <li>B-SIDH (2020–2022)</li>
 <li>SiGamal (2020)</li>
