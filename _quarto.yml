@@ -30,6 +30,10 @@ website:
 
 format:
   html:
+    include-in-header:
+      - includes/tikzjax-header.html
+    include-after-body:
+      - includes/tikzjax-after-body.html
     theme:
       light: cosmo
       dark: cyborg

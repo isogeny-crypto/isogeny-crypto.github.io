@@ -48,6 +48,41 @@ The commutativity of the group action allows a direct translation of the classic
 
 > **Shared Secret:** Since the group action commutes, $E_{BA} = E_{AB}$. The Montgomery coefficient $A \in \mathbb{F}_p$ of this final curve serves as the shared cryptographic secret.
 
+```{.tikzcd}
+\begin{tikzcd}[row sep=large, column sep=huge, scale=1.5, transform shape]
+&
+E_0
+  \arrow[dl, swap, "{[\text{a}]}"]
+  \arrow[dr, "{[\mathfrak{b}]}"]
+&
+\\
+E_A=[\mathfrak{a}]*E_0
+  \arrow[dr, swap, "{[\mathfrak{b}]}"]
+&
+&
+E_B=[\mathfrak{b}]*E_0
+  \arrow[dl, "{[\mathfrak{a}]}"]
+\\
+&
+E_{AB}=E_{BA}
+&
+\end{tikzcd}
+```
+
+$$
+E_{AB}
+=
+[\mathfrak b] * E_A
+=
+[\mathfrak b] * ([\mathfrak a] * E_0)
+=
+[\mathfrak a] * ([\mathfrak b] * E_0)
+=
+[\mathfrak a] * E_B
+=
+E_{BA}.
+$$
+
 ---
 
 ## Performance and Parameter Sets

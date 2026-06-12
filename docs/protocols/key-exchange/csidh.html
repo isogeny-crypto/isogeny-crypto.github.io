@@ -93,6 +93,35 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
+<style>
+.tikzjax-diagram {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	overflow-x: auto;
+	margin: 1.25rem 0;
+	color: var(--bs-body-color);
+}
+
+.tikzjax-diagram > div.page {
+	position: relative;
+	width: 100% !important;
+	height: auto !important;
+}
+
+.tikzjax-diagram svg {
+	position: static !important;
+	display: block;
+	width: 100% !important;
+	max-width: 100%;
+	height: auto !important;
+}
+
+.quarto-dark .tikzjax-diagram {
+	filter: invert(1) hue-rotate(180deg);
+}
+</style>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -489,6 +518,37 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p><strong>Shared Secret:</strong> Since the group action commutes, <span class="math inline">\(E_{BA} = E_{AB}\)</span>. The Montgomery coefficient <span class="math inline">\(A \in \mathbb{F}_p\)</span> of this final curve serves as the shared cryptographic secret.</p>
 </blockquote>
+<pre class="tikzcd"><code>\begin{tikzcd}[row sep=large, column sep=huge, scale=1.5, transform shape]
+&amp;
+E_0
+  \arrow[dl, swap, "{[\text{a}]}"]
+  \arrow[dr, "{[\mathfrak{b}]}"]
+&amp;
+\\
+E_A=[\mathfrak{a}]*E_0
+  \arrow[dr, swap, "{[\mathfrak{b}]}"]
+&amp;
+&amp;
+E_B=[\mathfrak{b}]*E_0
+  \arrow[dl, "{[\mathfrak{a}]}"]
+\\
+&amp;
+E_{AB}=E_{BA}
+&amp;
+\end{tikzcd}</code></pre>
+<p><span class="math display">\[
+E_{AB}
+=
+[\mathfrak b] * E_A
+=
+[\mathfrak b] * ([\mathfrak a] * E_0)
+=
+[\mathfrak a] * ([\mathfrak b] * E_0)
+=
+[\mathfrak a] * E_B
+=
+E_{BA}.
+\]</span></p>
 <hr>
 </section>
 <section id="performance-and-parameter-sets" class="level2" data-number="4">
@@ -534,12 +594,67 @@ window.Quarto = {
 </div>
 </div>
 <hr>
-<p><strong>Contributors:</strong> <a href="https://github.com/gkorpal">@gkorpal</a></p>
+<p><strong>Contributors:</strong> Pending GitHub sync…</p>
 
 
 </section>
 
 </main> <!-- /main -->
+<script>
+(function () {
+  const tikzjaxScriptUrl = "https://tikzjax.com/v1/tikzjax.js";
+
+  function loadTikzJax() {
+    if (document.querySelector('script[src="' + tikzjaxScriptUrl + '"]')) {
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = tikzjaxScriptUrl;
+    document.head.appendChild(script);
+  }
+
+  function convertTikzCdBlocks() {
+    const selectors = [
+      "pre.tikzcd > code",
+      "pre > code.language-tikzcd",
+      "pre > code.tikzcd"
+    ];
+
+    for (const selector of selectors) {
+      document.querySelectorAll(selector).forEach(function (code) {
+        const pre = code.parentElement;
+        if (!pre || pre.dataset.tikzjaxConverted === "true") {
+          return;
+        }
+
+        pre.dataset.tikzjaxConverted = "true";
+
+        const diagram = document.createElement("div");
+        diagram.className = "tikzjax-diagram";
+
+        const tikzScript = document.createElement("script");
+        tikzScript.type = "text/tikz";
+        tikzScript.text = code.textContent.trim();
+
+        diagram.appendChild(tikzScript);
+        pre.replaceWith(diagram);
+      });
+    }
+  }
+
+  function init() {
+    convertTikzCdBlocks();
+    loadTikzJax();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right

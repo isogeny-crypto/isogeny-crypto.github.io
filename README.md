@@ -4,7 +4,7 @@ Welcome to the source repository for the [isogeny-crypto.github.io](https://isog
 
 ## Tech Stack & Architecture
 
-This website is statically generated using Quarto. It leverages MathJax for fully accessible mathematical rendering and a custom Python pre-render hook to dynamically query the GitHub API for contributor attribution.
+This website is statically generated using Quarto. It leverages MathJax for fully accessible mathematical rendering, TikZJax for client-side commutative diagrams, and a custom Python pre-render hook to dynamically query the GitHub API for contributor attribution.
 
 ### Dependencies
 To build or preview this site locally, you must install the following:
@@ -25,6 +25,26 @@ Unlike lightweight alternatives, MathJax provides native screen-reader compatibi
 
 * Use standard `$` for inline math and `$$` for display equations.
 * The repository is configured to use `html-math-method: mathjax` globally. Do not override this setting in individual files.
+* For commutative diagrams, write fenced code blocks with the `tikzcd` class; the site converts them in the browser with TikZJax. Note that TikZJax supports only a subset of LaTeX fonts and math commands. In particular, \mathfrak` often fails to render.
+* To enlarge a diagram, use `row sep=...`, `column sep=...`, or `scale=...` inside the `tikzcd` environment.
+
+Example:
+
+```{.tikzcd}
+\begin{tikzcd}
+	A \arrow[r, "\phi"] \arrow[d] & B \arrow[d] \\
+	C \arrow[r] & D
+\end{tikzcd}
+```
+
+Larger example:
+
+```{.tikzcd}
+\begin{tikzcd}[row sep=large, column sep=large, scale=1.2, transform shape]
+  A \arrow[r, "\phi"] \arrow[d] & B \arrow[d] \\
+  C \arrow[r] & D
+\end{tikzcd}
+```
 
 ---
 
