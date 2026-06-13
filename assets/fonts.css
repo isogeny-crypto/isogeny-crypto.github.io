@@ -1,18 +1,5 @@
 /* fonts.css — rewritten with absolute URLs so it works regardless of where
-   this file is served from. Drop this at tikzjax-assets/fonts.css in your repo.
-
-   Root cause of the 404s: the original fonts.css uses relative paths
-   (../bakoma/ttf/cmmi10.ttf). When served from tikzjax.com/v1/ those resolve
-   to tikzjax.com/bakoma/ttf/ — correct. When self-hosted at
-   /tikzjax-assets/fonts.css they resolve to /bakoma/ttf/ — which doesn't exist.
-
-   OPTION A (this file): points at tikzjax.com/bakoma/ttf/ directly.
-   No font files needed in your repo. Fonts are still fetched from tikzjax.com
-   but are cached by the browser after the first visit.
-
-   OPTION B: replace every https://tikzjax.com/bakoma/ttf/ below with
-   /tikzjax-assets/bakoma/ttf/ and run scripts/download-tikzjax-fonts.sh
-   to put the TTF files in your repo for fully self-hosted fonts.
+   this file is served from.    
 */
 
 @font-face { font-family: cmb10;    src: url('https://tikzjax.com/bakoma/ttf/cmb10.ttf'); }
