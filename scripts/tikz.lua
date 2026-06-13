@@ -1,12 +1,7 @@
 local script_dir = pandoc.path.directory(PANDOC_SCRIPT_FILE)
 local project_dir = pandoc.path.directory(script_dir)
-local tikz2svg_path = pandoc.path.join({project_dir, "tikz2svg.mjs"})
 local cache_dir = pandoc.path.join({project_dir, ".tikz-cache"})
-
-local script_dir = pandoc.path.directory(PANDOC_SCRIPT_FILE)
-local project_dir = pandoc.path.directory(script_dir)
-local tikz2svg_path = pandoc.path.join({project_dir, "tikz2svg.mjs"})
-local cache_dir = pandoc.path.join({project_dir, ".tikz-cache"})
+local tikz2svg_path = pandoc.path.join({project_dir, "scripts", "tikz2svg.mjs"})
 
 -- Make sure the cache directory exists
 os.execute("mkdir -p " .. cache_dir)
@@ -20,6 +15,11 @@ local function hash(str)
   return string.format("%x", h)
 end
 
+-- Fix the relative fonts.css import baked in by node-tikzjax
+local function fix_font_path(svg)
+  return svg:gsub("@import url%(fonts%.css%)", "@import url(/assets/fonts.css)")
+end
+
 function CodeBlock(el)
   if el.classes:includes("tikz") then
     local key  = hash(el.text)
@@ -30,7 +30,7 @@ function CodeBlock(el)
     if f then
       local svg = f:read("*a")
       f:close()
-      return pandoc.RawBlock("html", '<div class="tikz-diagram">' .. svg .. '</div>')
+      return pandoc.RawBlock("html", '<div class="tikz-diagram">' .. fix_font_path(svg) .. '</div>')
     end
 
     -- Otherwise render and save to cache
@@ -42,6 +42,6 @@ function CodeBlock(el)
       out:close()
     end
 
-    return pandoc.RawBlock("html", '<div class="tikz-diagram">' .. svg .. '</div>')
+    return pandoc.RawBlock("html", '<div class="tikz-diagram">' .. fix_font_path(svg) .. '</div>')
   end
 end
