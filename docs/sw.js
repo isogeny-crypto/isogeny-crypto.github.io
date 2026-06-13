@@ -4,8 +4,10 @@ const CACHE = 'tikzjax-v1';
 
 // Map upstream URLs → your self-hosted paths
 const REMAP = {
-  'https://tikzjax.com/v1/tex.wasm':      '/tikzjax-assets/tex.wasm.gz',
-  'https://tikzjax.com/v1/core.dump.gz':  '/tikzjax-assets/core.dump.gz',
+  'https://s3.us-east-2.amazonaws.com/tikzjax.com/3f69afb974a1e83f66a36f7618f88a38c254034b.wasm':
+      '/tikzjax-assets/tex.wasm.gz',
+  'https://s3.us-east-2.amazonaws.com/tikzjax.com/b565ab0b474e8e557d954694b7379a57db669ac9.gz':
+      '/tikzjax-assets/core.dump.gz',
 };
 
 const PRECACHE = [
