@@ -1,6 +1,7 @@
 local script_dir = pandoc.path.directory(PANDOC_SCRIPT_FILE)
 local tikz2svg_path = pandoc.path.join({script_dir, "tikz2svg.mjs"})
-local cache_dir = pandoc.path.join({script_dir, ".tikz-cache"})
+local project_dir = pandoc.path.directory(pandoc.path.directory(PANDOC_SCRIPT_FILE))
+local cache_dir = pandoc.path.join({project_dir, ".tikz-cache"})
 
 -- Make sure the cache directory exists
 os.execute("mkdir -p " .. cache_dir)

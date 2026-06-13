@@ -1,24 +1,22 @@
 project:
   type: website
-  output-dir: docs # Points directly to GitHub Pages deployment folder
-  pre-render: python3 fetch_contributors.py
-  
+  output-dir: docs
+  pre-render: python3 scripts/fetch_contributors.py
+
 date-modified: last-modified
 
 filters:
-  - tikz.lua
+  - scripts/tikz.lua
 
 website:
   title: "Isogeny-based Cryptography Wiki"
   description: "An accessible reference for isogeny-based protocols."
-  
-  # Global search configuration
+
   search:
     location: sidebar
     type: overlay
     copy-button: true
 
-  # Wiki-style sidebar navigation
   sidebar:
     style: "docked"
     search: true
@@ -34,16 +32,15 @@ website:
 format:
   html:
     include-in-header:
-      - tikzjax-header.html
-    css: fonts.css 
+      - templates/tikzjax-header.html
     theme:
-      light: cosmo
-      dark: cyborg
-    toc: true                  # Table of contents on the right side
+      light: [cosmo, assets/fonts.css]
+      dark: [cyborg, assets/fonts.css]
+    toc: true
     toc-location: right
-    code-fold: true            # Keep implementation code tidy
-    html-math-method: mathjax  # Excellent screen-reader support for LaTeX
-    minimal: false             # Keep true responsive navbar, but rely on bootstrap styling
+    code-fold: true
+    html-math-method: mathjax
+    minimal: false
     number-sections: true
     csl: alpha.csl
     bibliography: references.bib

@@ -1,8 +1,7 @@
 /.quarto/
 /.contributors/
 /_site/
-.ipynb_checkpoints/
-**/*.quarto_ipynb
+/.tikz-cache/
+/docs/
 .DS_Store
 node_modules/
-.tikz-cache/
