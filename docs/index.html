@@ -73,15 +73,55 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<!-- Preload the two heavy files at the same time <head> is parsed.
-     Even though tikzjax.js will fetch them from tikzjax.com,
-     the SW intercepts those requests and serves the cached local copies. -->
-<link rel="preload" href="./tikzjax-assets/tex.wasm.gz" as="fetch" crossorigin="">
-<link rel="preload" href="./tikzjax-assets/core.dump.gz" as="fetch" crossorigin="">
+<!-- Dynamically Preload the two heavy files at the same time <head> is parsed. -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const hasTikz =
+    document.querySelector('script[type="text/tikz"]');
+
+  if (!hasTikz) return;
+
+  [
+    "/tikzjax-assets/tex.wasm.gz",
+    "/tikzjax-assets/core.dump.gz"
+  ].forEach(url => {
+    const link = document.createElement("link");
+
+    link.rel = "preload";
+    link.href = url;
+    link.as = "fetch";
+    link.crossOrigin = "anonymous";
+
+    document.head.appendChild(link);
+  });
+
+  const script = document.createElement("script");
+
+  script.src = "/tikzjax-assets/tikzjax.js";
+  script.defer = true;
+
+  document.head.appendChild(script);
+});
+</script>
 
 <!-- Self-hosted fonts and main script -->
 <link rel="stylesheet" type="text/css" href="./tikzjax-assets/fonts.css">
-<script defer="" src="./tikzjax-assets/tikzjax.js"></script>
+
+<!-- Dynamic Loader -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const hasTikz =
+    document.querySelector('script[type="text/tikz"]');
+
+  if (!hasTikz) return;
+
+  const script = document.createElement("script");
+  script.src = "/tikzjax-assets/tikzjax.js";
+  script.defer = true;
+
+  document.head.appendChild(script);
+});
+</script>
 
 <!-- Register Service Worker as early as possible -->
 <script>
