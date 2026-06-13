@@ -93,62 +93,8 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
-<!-- Dynamically Preload the two heavy files at the same time <head> is parsed. -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const hasTikz =
-    document.querySelector('script[type="text/tikz"]');
-
-  if (!hasTikz) return;
-
-  [
-    "/tikzjax-assets/tex.wasm.gz",
-    "/tikzjax-assets/core.dump.gz"
-  ].forEach(url => {
-    const link = document.createElement("link");
-
-    link.rel = "preload";
-    link.href = url;
-    link.as = "fetch";
-    link.crossOrigin = "anonymous";
-
-    document.head.appendChild(link);
-  });
-
-  const script = document.createElement("script");
-
-  script.src = "/tikzjax-assets/tikzjax.js";
-  script.defer = true;
-
-  document.head.appendChild(script);
-});
-</script>
-
-<!-- Self-hosted fonts and main script -->
+<!-- Self-hosted fonts for pre-rendered TikZ SVGs -->
 <link rel="stylesheet" type="text/css" href="../../tikzjax-assets/fonts.css">
-
-<!-- Dynamic Loader -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const hasTikz =
-    document.querySelector('script[type="text/tikz"]');
-
-  if (!hasTikz) return;
-
-  const script = document.createElement("script");
-  script.src = "/tikzjax-assets/tikzjax.js";
-  script.defer = true;
-
-  document.head.appendChild(script);
-});
-</script>
-
-<!-- Register Service Worker as early as possible -->
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js', { scope: '/' });
-  }
-</script>
 
 <style>
 .tikz-diagram {
@@ -162,22 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 .quarto-dark .tikz-diagram svg {
     filter: invert(1) hue-rotate(180deg);
-}
-/* Shimmer skeleton while TeX compiles */
-.tikz-diagram:has(script[type="text/tikz"]) {
-    min-height: 80px;
-    background: linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%);
-    background-size: 200% 100%;
-    animation: tikz-shimmer 1.5s infinite;
-    border-radius: 4px;
-}
-.quarto-dark .tikz-diagram:has(script[type="text/tikz"]) {
-    background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
-    background-size: 200% 100%;
-}
-@keyframes tikz-shimmer {
-    0%   { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
 }
 </style>
 
@@ -505,7 +435,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">June 12, 2026</p>
+      <p class="date-modified">June 13, 2026</p>
     </div>
   </div>
     
@@ -582,22 +512,7 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p><strong>Shared Secret:</strong> Since the group action commutes, <span class="math inline">\(E_{BA} = E_{AB}\)</span>. The Montgomery coefficient <span class="math inline">\(A \in \mathbb{F}_p\)</span> of this final curve serves as the shared cryptographic secret.</p>
 </blockquote>
-<div class="tikz-diagram"><script type="text/tikz">
-\usetikzlibrary{arrows.meta}
-\begin{tikzpicture}
-
-  \node (E0)  at (3, 4)  {$E_0$};
-  \node (EA)  at (0, 2)  {$E_A = [\mathfrak{a}] * E_0$};
-  \node (EB)  at (6, 2)  {$E_B = [\mathfrak{b}] * E_0$};
-  \node (EAB) at (3, 0)  {$E_{AB} = E_{BA}$};
-
-  \draw[-{Stealth}, thick] (E0)  -- node[left,  midway] {$[\mathfrak{a}]$} (EA);
-  \draw[-{Stealth}, thick] (E0)  -- node[right, midway] {$[\mathfrak{b}]$} (EB);
-  \draw[-{Stealth}, thick] (EA)  -- node[right, midway] {$[\mathfrak{b}]$} (EAB);
-  \draw[-{Stealth}, thick] (EB)  -- node[left,  midway] {$[\mathfrak{a}]$} (EAB);
-
-\end{tikzpicture}
-</script></div>
+<div class="tikz-diagram"><svg xmlns="http://www.w3.org/2000/svg" width="315.922" height="171.747" viewbox="-72 -72 236.942 128.81"><defs><style>@import url(../../tikzjax-assets/fonts.css);</style></defs><g stroke="#000" stroke-miterlimit="10" stroke-width=".4"><g stroke="none"><text x="-39.388" y="49.041" font-family="cmmi10" font-size="10" transform="translate(79.424 -111.144)">E</text><text x="-32.007" y="50.541" font-family="cmr7" font-size="7" transform="translate(79.424 -111.144)">0</text></g><g stroke="none"><text x="-39.388" y="49.041" font-family="cmmi10" font-size="10" transform="translate(-29.549 -54.405)">E</text><text x="-32.007" y="50.541" font-family="cmmi7" font-size="7" transform="translate(-29.549 -54.405)">A</text><text x="-22.715" y="49.041" font-family="cmr10" font-size="10" transform="translate(-29.549 -54.405)">=</text><text x="-12.159" y="49.041" font-family="cmr10" font-size="10" transform="translate(-29.549 -54.405)">[a]</text><text x=".618" y="49.041" font-family="cmsy10" font-size="10" transform="translate(-29.549 -54.405)">¤</text><text x="7.841" y="49.041" font-family="cmmi10" font-size="10" transform="translate(-29.549 -54.405)">E</text><text x="15.223" y="50.541" font-family="cmr7" font-size="7" transform="translate(-29.549 -54.405)">0</text></g><g stroke="none"><text x="-39.388" y="49.041" font-family="cmmi10" font-size="10" transform="translate(140.706 -54.405)">E</text><text x="-32.007" y="50.541" font-family="cmmi7" font-size="7" transform="translate(140.706 -54.405)">B</text><text x="-22.346" y="49.041" font-family="cmr10" font-size="10" transform="translate(140.706 -54.405)">=</text><text x="-11.79" y="49.041" font-family="cmr10" font-size="10" transform="translate(140.706 -54.405)">[b]</text><text x="1.543" y="49.041" font-family="cmsy10" font-size="10" transform="translate(140.706 -54.405)">¤</text><text x="8.765" y="49.041" font-family="cmmi10" font-size="10" transform="translate(140.706 -54.405)">E</text><text x="16.147" y="50.541" font-family="cmr7" font-size="7" transform="translate(140.706 -54.405)">0</text></g><g stroke="none"><text x="-39.388" y="49.041" font-family="cmmi10" font-size="10" transform="translate(58.413 2.667)">E</text><text x="-32.007" y="50.541" font-family="cmmi7" font-size="7" transform="translate(58.413 2.667)">AB</text><text x="-16.332" y="49.041" font-family="cmr10" font-size="10" transform="translate(58.413 2.667)">=</text><text x="-5.776" y="49.041" font-family="cmmi10" font-size="10" transform="translate(58.413 2.667)">E</text><text x="1.606" y="50.541" font-family="cmmi7" font-size="7" transform="translate(58.413 2.667)">B</text><text x="7.989" y="50.541" font-family="cmmi7" font-size="7" transform="translate(58.413 2.667)">A</text></g><g stroke-width=".8"><path fill="none" d="m36.503-58.46-59.667 39.774"></path><path stroke-width=".7999520000000001" d="m-25.649-17.03 4.343-1-2.024-.545.276-2.079Z"></path><text x="-39.388" y="49.041" stroke="none" font-family="cmr10" font-size="10" transform="translate(30.053 -83.97)">[a]</text></g><g stroke-width=".8"><path fill="none" d="m55.437-58.46 59.666 39.774"></path><path stroke-width=".7999520000000001" d="m117.588-17.03-2.594-3.624.276 2.079-2.025.545Z"></path><text x="-39.388" y="49.041" stroke="none" font-family="cmr10" font-size="10" transform="translate(130.108 -83.97)">[b]</text></g><g stroke-width=".8"><path fill="none" d="m-26.596.668 57.59 38.385"></path><path stroke-width=".7999520000000001" d="m33.48 40.71-2.595-3.625.276 2.079-2.025.545Z"></path><text x="-39.388" y="49.041" stroke="none" font-family="cmr10" font-size="10" transform="translate(47.037 -25.536)">[b]</text></g><g stroke-width=".8"><path fill="none" d="m118.536.668-57.59 38.385"></path><path stroke-width=".7999520000000001" d="m58.46 40.71 4.343-1.001-2.024-.545.276-2.079Z"></path><text x="-39.388" y="49.041" stroke="none" font-family="cmr10" font-size="10" transform="translate(113.124 -25.536)">[a]</text></g></g></svg></div>
 <p><span class="math display">\[
 E_{AB}
 =

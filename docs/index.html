@@ -73,62 +73,8 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<!-- Dynamically Preload the two heavy files at the same time <head> is parsed. -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const hasTikz =
-    document.querySelector('script[type="text/tikz"]');
-
-  if (!hasTikz) return;
-
-  [
-    "/tikzjax-assets/tex.wasm.gz",
-    "/tikzjax-assets/core.dump.gz"
-  ].forEach(url => {
-    const link = document.createElement("link");
-
-    link.rel = "preload";
-    link.href = url;
-    link.as = "fetch";
-    link.crossOrigin = "anonymous";
-
-    document.head.appendChild(link);
-  });
-
-  const script = document.createElement("script");
-
-  script.src = "/tikzjax-assets/tikzjax.js";
-  script.defer = true;
-
-  document.head.appendChild(script);
-});
-</script>
-
-<!-- Self-hosted fonts and main script -->
+<!-- Self-hosted fonts for pre-rendered TikZ SVGs -->
 <link rel="stylesheet" type="text/css" href="./tikzjax-assets/fonts.css">
-
-<!-- Dynamic Loader -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const hasTikz =
-    document.querySelector('script[type="text/tikz"]');
-
-  if (!hasTikz) return;
-
-  const script = document.createElement("script");
-  script.src = "/tikzjax-assets/tikzjax.js";
-  script.defer = true;
-
-  document.head.appendChild(script);
-});
-</script>
-
-<!-- Register Service Worker as early as possible -->
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js', { scope: '/' });
-  }
-</script>
 
 <style>
 .tikz-diagram {
@@ -142,22 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 .quarto-dark .tikz-diagram svg {
     filter: invert(1) hue-rotate(180deg);
-}
-/* Shimmer skeleton while TeX compiles */
-.tikz-diagram:has(script[type="text/tikz"]) {
-    min-height: 80px;
-    background: linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%);
-    background-size: 200% 100%;
-    animation: tikz-shimmer 1.5s infinite;
-    border-radius: 4px;
-}
-.quarto-dark .tikz-diagram:has(script[type="text/tikz"]) {
-    background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
-    background-size: 200% 100%;
-}
-@keyframes tikz-shimmer {
-    0%   { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
 }
 </style>
 

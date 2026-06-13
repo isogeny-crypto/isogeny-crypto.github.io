@@ -53,14 +53,14 @@ The commutativity of the group action allows a direct translation of the classic
 \begin{tikzpicture}
 
   \node (E0)  at (3, 4)  {$E_0$};
-  \node (EA)  at (0, 2)  {$E_A = [\mathfrak{a}] * E_0$};
-  \node (EB)  at (6, 2)  {$E_B = [\mathfrak{b}] * E_0$};
+  \node (EA)  at (0, 2)  {$E_A = [\mathrm{a}] * E_0$};
+  \node (EB)  at (6, 2)  {$E_B = [\mathrm{b}] * E_0$};
   \node (EAB) at (3, 0)  {$E_{AB} = E_{BA}$};
 
-  \draw[-{Stealth}, thick] (E0)  -- node[left,  midway] {$[\mathfrak{a}]$} (EA);
-  \draw[-{Stealth}, thick] (E0)  -- node[right, midway] {$[\mathfrak{b}]$} (EB);
-  \draw[-{Stealth}, thick] (EA)  -- node[right, midway] {$[\mathfrak{b}]$} (EAB);
-  \draw[-{Stealth}, thick] (EB)  -- node[left,  midway] {$[\mathfrak{a}]$} (EAB);
+  \draw[-{Stealth}, thick] (E0)  -- node[left,  midway] {$[\mathrm{a}]$} (EA);
+  \draw[-{Stealth}, thick] (E0)  -- node[right, midway] {$[\mathrm{b}]$} (EB);
+  \draw[-{Stealth}, thick] (EA)  -- node[right, midway] {$[\mathrm{b}]$} (EAB);
+  \draw[-{Stealth}, thick] (EB)  -- node[left,  midway] {$[\mathrm{a}]$} (EAB);
 
 \end{tikzpicture}
 ```

@@ -32,8 +32,7 @@ website:
         contents: "protocols/digital-signature/*.qmd"
 
 resources:
-  - tikzjax-assets/
-  - sw.js
+  - fonts.css
 
 format:
   html:

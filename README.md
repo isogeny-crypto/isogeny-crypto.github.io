@@ -4,7 +4,7 @@ Welcome to the source repository for the [isogeny-crypto.github.io](https://isog
 
 ## Tech Stack & Architecture
 
-This website is statically generated using Quarto. It leverages MathJax for fully accessible mathematical rendering, TikZJax for client-side diagrams rendered from pure TikZ, and a custom Python pre-render hook to dynamically query the GitHub API for contributor attribution.
+This website is statically generated using Quarto. It leverages MathJax for fully accessible mathematical rendering, `node-tikzjax` which compile TikZ diagrams to SVG at build time, and a custom Python pre-render hook to dynamically query the GitHub API for contributor attribution.
 
 ### Dependencies
 
@@ -12,7 +12,8 @@ To build or preview this site locally, you must install the following:
 
 1. **Quarto CLI**: The core HTML rendering engine.
 2. **Python 3**: Required to execute the `fetch_contributors.py` pre-render script.
-3. **Git**: For version control and repository syncing.
+3. **Node.js**: With `npm install` run once used by `tikz2svg.mjs` to pre-render `.tikz` blocks to SVG during `quarto render`.
+4. **Git**: For version control and repository syncing.
 
 Recommended Editor: Visual Studio Code with the official Quarto Extension for live previewing and integrated LaTeX support.
 
@@ -26,7 +27,7 @@ Unlike lightweight alternatives, MathJax provides native screen-reader compatibi
 
 - Use standard `$` for inline math and `$$` for display equations.
 - The repository is configured to use `html-math-method: mathjax` globally. Do not override this setting in individual files.
-- For diagrams, use fenced code blocks with the `.tikz` class (see below). TikZJax renders them client-side. Diagrams automatically centre and invert correctly in dark mode.
+- For diagrams, use fenced code blocks with the `.tikz` class (see below). Diagrams automatically centre and invert correctly in dark mode.
 - TikZJax supports only a subset of LaTeX fonts and math commands. In particular, `\mathfrak` can be unreliable; prefer `\mathrm` as a fallback.
 
 ### Writing TikZ Diagrams
