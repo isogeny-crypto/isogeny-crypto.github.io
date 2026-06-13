@@ -16,11 +16,31 @@ if not (QUARTO_FULL_RENDER or CALLED_DIRECTLY):
 if CALLED_DIRECTLY:
     print("fetch_contributors.py: running standalone.")
 
+def get_qmd_title(file_path):
+    """Extract the title field from a .qmd YAML frontmatter."""
+    with open(file_path, "r") as f:
+        lines = f.readlines()
+    in_frontmatter = False
+    for line in lines:
+        if line.strip() == "---":
+            in_frontmatter = not in_frontmatter
+            continue
+        if in_frontmatter and line.startswith("title:"):
+            return line.split(":", 1)[1].strip().strip('"').strip("'")
+    return file_path.stem  # fallback to filename stem if no title found
+
+def title_to_key(title):
+    """Lowercase the title for use as a snippet filename key."""
+    return title.strip().lower()
+
 os.makedirs(".contributors", exist_ok=True)
+
 # Create placeholder snippets for any .qmd files that don't have one yet,
 # so Quarto never fails on a missing include before the API fetch runs.
 for file_path in Path("protocols").rglob("*.qmd"):
-    snippet_path = Path(".contributors") / f"{file_path.stem}.md"
+    title = get_qmd_title(file_path)
+    key = title_to_key(title)
+    snippet_path = Path(".contributors") / f"{key}.md"
     if not snippet_path.exists():
         snippet_path.write_text("\n\n**Contributors:** Pending GitHub sync...\n")
 
@@ -43,7 +63,9 @@ for file_path in Path("protocols").rglob("*.qmd"):
         pass
 
     # 2. Fetch contributors
-    snippet_path = Path(".contributors") / f"{file_path.stem}.md"
+    title = get_qmd_title(file_path)
+    key = title_to_key(title)
+    snippet_path = Path(".contributors") / f"{key}.md"
     url = f"https://api.github.com/repos/{REPO}/commits?path={file_path}"
 
     try:
@@ -70,10 +92,3 @@ for file_path in Path("protocols").rglob("*.qmd"):
         print(f"Warning: could not fetch contributors for {file_path}: {e}")
         if not snippet_path.exists():
             snippet_path.write_text("\n\n**Contributors:** Pending GitHub sync...\n")
-
-    # # 3. Warn if the qmd file is missing its include line
-    # content = file_path.read_text()
-    # expected = f"{{{{< include ../../.contributors/{file_path.stem}.md >}}}}"
-    # if expected not in content:
-    #     print(f"WARNING: {file_path} is missing its contributor include line:")
-    #     print(f"  Add this at the bottom: {expected}")
