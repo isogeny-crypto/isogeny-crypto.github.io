@@ -28,5 +28,3 @@ By computing the exact structure of $\text{Cl}(R)$ for a 512-bit prime $p$, CSI-
 ::: {#refs}
 :::
 
----
-{{< include ../../.contributors/csi-fish.md >}}

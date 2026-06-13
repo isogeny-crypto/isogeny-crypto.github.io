@@ -17,6 +17,12 @@ if CALLED_DIRECTLY:
     print("fetch_contributors.py: running standalone.")
 
 os.makedirs(".contributors", exist_ok=True)
+# Create placeholder snippets for any .qmd files that don't have one yet,
+# so Quarto never fails on a missing include before the API fetch runs.
+for file_path in Path("protocols").rglob("*.qmd"):
+    snippet_path = Path(".contributors") / f"{file_path.stem}.md"
+    if not snippet_path.exists():
+        snippet_path.write_text("\n\n**Contributors:** Pending GitHub sync...\n")
 
 github_token = os.environ.get("GITHUB_TOKEN")
 headers = {"User-Agent": "Mozilla/5.0"}
@@ -65,9 +71,9 @@ for file_path in Path("protocols").rglob("*.qmd"):
         if not snippet_path.exists():
             snippet_path.write_text("\n\n**Contributors:** Pending GitHub sync...\n")
 
-    # 3. Warn if the qmd file is missing its include line
-    content = file_path.read_text()
-    expected = f"{{{{< include ../../.contributors/{file_path.stem}.md >}}}}"
-    if expected not in content:
-        print(f"WARNING: {file_path} is missing its contributor include line:")
-        print(f"  Add this at the bottom: {expected}")
+    # # 3. Warn if the qmd file is missing its include line
+    # content = file_path.read_text()
+    # expected = f"{{{{< include ../../.contributors/{file_path.stem}.md >}}}}"
+    # if expected not in content:
+    #     print(f"WARNING: {file_path} is missing its contributor include line:")
+    #     print(f"  Add this at the bottom: {expected}")

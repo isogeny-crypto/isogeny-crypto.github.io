@@ -7,6 +7,7 @@ date-modified: last-modified
 
 filters:
   - scripts/tikz.lua
+  - scripts/contributors.lua
 
 website:
   title: "Isogeny-based Cryptography Wiki"
@@ -34,8 +35,9 @@ format:
     include-in-header:
       - templates/tikzjax-header.html
     theme:
-      light: [cosmo, assets/fonts.css]
-      dark: [cyborg, assets/fonts.css]
+      light: cosmo
+      dark: cyborg
+    css: assets/fonts.css
     toc: true
     toc-location: right
     code-fold: true

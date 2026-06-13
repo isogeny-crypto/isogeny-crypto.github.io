@@ -97,6 +97,4 @@ CSIDH parameters are evaluated by their quantum security levels (NIST categories
 ::: {#refs}
 :::
 
----
-{{< include ../../.contributors/csidh.md >}}
 

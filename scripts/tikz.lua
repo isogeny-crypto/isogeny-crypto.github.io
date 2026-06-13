@@ -1,6 +1,11 @@
 local script_dir = pandoc.path.directory(PANDOC_SCRIPT_FILE)
-local tikz2svg_path = pandoc.path.join({script_dir, "tikz2svg.mjs"})
-local project_dir = pandoc.path.directory(pandoc.path.directory(PANDOC_SCRIPT_FILE))
+local project_dir = pandoc.path.directory(script_dir)
+local tikz2svg_path = pandoc.path.join({project_dir, "tikz2svg.mjs"})
+local cache_dir = pandoc.path.join({project_dir, ".tikz-cache"})
+
+local script_dir = pandoc.path.directory(PANDOC_SCRIPT_FILE)
+local project_dir = pandoc.path.directory(script_dir)
+local tikz2svg_path = pandoc.path.join({project_dir, "tikz2svg.mjs"})
 local cache_dir = pandoc.path.join({project_dir, ".tikz-cache"})
 
 -- Make sure the cache directory exists
