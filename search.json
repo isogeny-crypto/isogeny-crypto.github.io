@@ -63,17 +63,6 @@
     ]
   },
   {
-    "objectID": "protocols/key-exchange/sidh.html#references",
-    "href": "protocols/key-exchange/sidh.html#references",
-    "title": "SIDH",
-    "section": "3 References",
-    "text": "3 References\n\n\n[JaFe11] Jao, David ; Feo, Luca De: Towards Quantum-Resistant Cryptosystems from Supersingular Elliptic Curve Isogenies. In: PQCrypto : Springer, 2011, pp. 19–34\n\n\n\n\n\nContributors: @gkorpal",
-    "crumbs": [
-      "Key Exchange",
-      "SIDH"
-    ]
-  },
-  {
     "objectID": "protocols/digital-signature/csi-fish.html",
     "href": "protocols/digital-signature/csi-fish.html",
     "title": "CSI-FiSh",
@@ -101,17 +90,6 @@
     "title": "CSI-FiSh",
     "section": "2 Key Mechanism",
     "text": "2 Key Mechanism\nBy computing the exact structure of \\(\\text{Cl}(R)\\) for a 512-bit prime \\(p\\), CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical Fiat-Shamir transform to the isogeny setting.\n\nUnderlying Hard Problem: The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational CSIDH protocol.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html#references",
-    "href": "protocols/digital-signature/csi-fish.html#references",
-    "title": "CSI-FiSh",
-    "section": "3 References",
-    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT : Springer, 2019, pp. 227–255\n\n\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Digital Signature",
       "CSI-FiSh"
@@ -167,17 +145,6 @@
     "title": "CSIDH",
     "section": "4 Performance and Parameter Sets",
     "text": "4 Performance and Parameter Sets\nCSIDH parameters are evaluated by their quantum security levels (NIST categories) against advanced sieve algorithms like Kuperberg’s hidden shift algorithm.\n\n\n\n\n\n\n\n\n\nParameter Set\nPrime Bits (\\(\\log_2 p\\))\nPublic Key Size\nKey Exchange Speed\n\n\n\n\nCSIDH-512\n511 bits\n64 Bytes\n~30-100 ms\n\n\nCSIDH-1024\n1024 bits\n128 Bytes\n~200-500 ms",
-    "crumbs": [
-      "Key Exchange",
-      "CSIDH"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/csidh.html#references",
-    "href": "protocols/key-exchange/csidh.html#references",
-    "title": "CSIDH",
-    "section": "5 References",
-    "text": "5 References\n\n\n[CLMP18] Castryck, Wouter ; Lange, Tanja ; Martindale, Chloe ; Panny, Lorenz ; Renes, Joost: CSIDH: Commutative Supersingular Isogeny Diffie-Hellman. In: ASIACRYPT : Springer, 2018, pp. 395–427\n\n\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Key Exchange",
       "CSIDH"
