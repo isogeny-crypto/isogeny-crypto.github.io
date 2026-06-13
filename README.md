@@ -6,7 +6,7 @@ Welcome to the source repository for the [isogeny-crypto.github.io](https://isog
 
 This website is statically generated using Quarto. It leverages MathJax for fully accessible mathematical rendering, `node-tikzjax` to compile TikZ diagrams to SVG at build time, and a Python pre-render hook to dynamically query the GitHub API for contributor attribution.
 
-**Deployment is fully automated.** Pushing to `main` triggers a GitHub Actions workflow that installs dependencies, renders the site, and publishes it to GitHub Pages, no manual build step required.
+**Deployment is fully automated.** Pushing to `main` triggers a GitHub Actions workflow that installs dependencies, renders the site, and publishes it to GitHub Pages — no manual build step required.
 
 ### Dependencies
 
@@ -146,7 +146,7 @@ git push
 The GitHub Actions workflow (`.github/workflows/deploy.yml`) will then:
 
 1. Check out the repository with full Git history (needed for contributor date syncing).
-2. Install Node.js and Quarto.
+2. Install Python, Node.js, and Quarto.
 3. Run `npm ci` to install dependencies.
 4. Run `quarto render`, which triggers `fetch_contributors.py` automatically as a pre-render hook.
 5. Push the rendered `docs/` folder to the `gh-pages` branch, which GitHub Pages serves.
@@ -172,16 +172,14 @@ To refresh `alpha.csl` from upstream:
 curl -L -o alpha.csl https://raw.githubusercontent.com/citation-style-language/styles/master/din-1505-2-alphanumeric.csl
 ```
 
-### Automated contributor tags
+### Automated contributor attribution
 
-At build time, `fetch_contributors.py` queries the GitHub API for the commit history of every `.qmd` file and writes a small markdown snippet into the `.contributors/` directory. Quarto includes these snippets at the bottom of each article automatically via the `{{< include >}}` shortcode.
+At build time, `fetch_contributors.py` queries the GitHub API for the commit history of every `.qmd` file in `protocols/` and writes a small markdown snippet into the `.contributors/` directory, named after the page's title (e.g. `sidh.md`, `csi-fish.md`). The `contributors.lua` Pandoc filter then automatically appends the relevant snippet to the bottom of each rendered page, preceded by a horizontal rule.
+
+**This is fully automatic — no changes are needed to your `.qmd` files.** When you create a new protocol page, simply write your content and push; the contributor block will appear at the bottom after the first CI build.
 
 **Important notes:**
 
 - Do not edit `.contributors/` manually — it is regenerated on every full build and is gitignored.
-- When you create a new `.qmd` file, add this line at the very bottom of the file, replacing `filename` with your file's name (without `.qmd`):
-  ```
-  {{< include ../../.contributors/filename.md >}}
-  ```
-  If this line is missing, the build script will print a warning telling you exactly what to add.
 - New files will show "Pending GitHub sync..." until your first push, because the script queries the remote repository's commit history.
+- Contributor snippets are matched to pages by the `title:` field in each `.qmd`'s YAML frontmatter. Make sure every protocol page has a unique, stable title.

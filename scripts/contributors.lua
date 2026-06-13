@@ -2,12 +2,20 @@ local script_dir = pandoc.path.directory(PANDOC_SCRIPT_FILE)
 local project_dir = pandoc.path.directory(script_dir)
 local contributors_dir = pandoc.path.join({project_dir, ".contributors"})
 
+local function has_refs_div(blocks)
+  for _, block in ipairs(blocks) do
+    if block.t == "Div" and block.identifier == "refs" then
+      return true
+    end
+  end
+  return false
+end
+
 function Pandoc(doc)
   local title = doc.meta["title"]
   if not title then return doc end
   title = pandoc.utils.stringify(title)
 
-  -- Match snippet file by title (case-insensitive substring match on stem)
   local title_lower = title:lower()
   local matched_path = nil
 
@@ -21,6 +29,13 @@ function Pandoc(doc)
     end
   end
   handle:close()
+
+-- Insert {#refs} div if the document cites anything but has no refs block
+  if doc.meta["bibliography"] and not has_refs_div(doc.blocks) then
+    doc.blocks:insert(pandoc.HorizontalRule())
+    doc.blocks:insert(pandoc.Header(2, "References"))
+    doc.blocks:insert(pandoc.Div({}, pandoc.Attr("refs")))
+  end
 
   if not matched_path then return doc end
 

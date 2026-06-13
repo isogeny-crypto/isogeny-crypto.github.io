@@ -95,9 +95,3 @@ The shared secret key is the $j$-invariant $j(E_{AB}) = j(E_{BA})$.
 \end{tikzpicture}
 ```
 
----
-
-## References
-
-::: {#refs}
-:::
