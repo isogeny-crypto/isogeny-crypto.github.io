@@ -2,11 +2,12 @@
   "name": "isogeny-crypto.github.io",
   "version": "1.0.0",
   "description": "Welcome to the source repository for the [isogeny-crypto.github.io](https://isogeny-crypto.github.io) wiki. This repository contains the markdown source files, mathematical configurations, and build scripts used to generate our collaborative reference for isogeny-based cryptographic protocols.",
-  "main": "sw.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
+    "build": "quarto render",
+    "preview": "quarto preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

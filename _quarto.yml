@@ -31,13 +31,11 @@ website:
       - section: "Digital Signature"
         contents: "protocols/digital-signature/*.qmd"
 
-resources:
-  - fonts.css
-
 format:
   html:
     include-in-header:
       - tikzjax-header.html
+    css: fonts.css 
     theme:
       light: cosmo
       dark: cyborg

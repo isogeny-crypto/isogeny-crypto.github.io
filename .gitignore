@@ -5,3 +5,4 @@
 **/*.quarto_ipynb
 .DS_Store
 node_modules/
+.tikz-cache/

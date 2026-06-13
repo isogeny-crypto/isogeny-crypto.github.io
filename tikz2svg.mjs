@@ -21,7 +21,7 @@ process.stdin.on('end', async () => {
     const svg = await tex2svg(source, {
       tikzLibraries,
       embedFontCss: true,
-      fontCssUrl: '/tikzjax-assets/fonts.css', // reuse your self-hosted fonts
+      fontCssUrl: 'fonts.css', // reuse your self-hosted fonts
     });
     process.stdout.write(svg);
   } catch (err) {
