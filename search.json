@@ -67,7 +67,7 @@
     "href": "protocols/key-exchange/sidh.html#references",
     "title": "SIDH",
     "section": "3 References",
-    "text": "3 References\n\n\n[JaFe11] Jao, David ; Feo, Luca De: Towards Quantum-Resistant Cryptosystems from Supersingular Elliptic Curve Isogenies. In: PQCrypto : Springer, 2011, pp. 19–34",
+    "text": "3 References\n\n\n[JaFe11] Jao, David ; Feo, Luca De: Towards Quantum-Resistant Cryptosystems from Supersingular Elliptic Curve Isogenies. In: PQCrypto : Springer, 2011, pp. 19–34\n\n\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Key Exchange",
       "SIDH"
@@ -111,7 +111,7 @@
     "href": "protocols/digital-signature/csi-fish.html#references",
     "title": "CSI-FiSh",
     "section": "3 References",
-    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT : Springer, 2019, pp. 227–255",
+    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT : Springer, 2019, pp. 227–255\n\n\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Digital Signature",
       "CSI-FiSh"
@@ -177,7 +177,7 @@
     "href": "protocols/key-exchange/csidh.html#references",
     "title": "CSIDH",
     "section": "5 References",
-    "text": "5 References\n\n\n[CLMP18] Castryck, Wouter ; Lange, Tanja ; Martindale, Chloe ; Panny, Lorenz ; Renes, Joost: CSIDH: Commutative Supersingular Isogeny Diffie-Hellman. In: ASIACRYPT : Springer, 2018, pp. 395–427",
+    "text": "5 References\n\n\n[CLMP18] Castryck, Wouter ; Lange, Tanja ; Martindale, Chloe ; Panny, Lorenz ; Renes, Joost: CSIDH: Commutative Supersingular Isogeny Diffie-Hellman. In: ASIACRYPT : Springer, 2018, pp. 395–427\n\n\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Key Exchange",
       "CSIDH"
