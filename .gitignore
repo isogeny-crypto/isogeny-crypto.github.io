@@ -1,7 +1,0 @@
-/.quarto/
-/.contributors/
-/_site/
-.ipynb_checkpoints/
-**/*.quarto_ipynb
-.DS_Store
-node_modules/

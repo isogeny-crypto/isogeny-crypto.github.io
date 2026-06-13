@@ -30,6 +30,94 @@
     ]
   },
   {
+    "objectID": "protocols/key-exchange/sidh.html",
+    "href": "protocols/key-exchange/sidh.html",
+    "title": "SIDH",
+    "section": "",
+    "text": "The Supersingular Isogeny Diffie-Hellman (SIDH) protocol, introduced by Jao and De Feo [JaFe11], was a NIST post-quantum key-exchange candidate.",
+    "crumbs": [
+      "Key Exchange",
+      "SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sidh.html#overview",
+    "href": "protocols/key-exchange/sidh.html#overview",
+    "title": "SIDH",
+    "section": "",
+    "text": "The Supersingular Isogeny Diffie-Hellman (SIDH) protocol, introduced by Jao and De Feo [JaFe11], was a NIST post-quantum key-exchange candidate.",
+    "crumbs": [
+      "Key Exchange",
+      "SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sidh.html#protocol-design",
+    "href": "protocols/key-exchange/sidh.html#protocol-design",
+    "title": "SIDH",
+    "section": "2 Protocol Design",
+    "text": "2 Protocol Design\n\n2.1 Public Parameters\nLet \\(p\\) be a prime of the form \\(p = \\ell_A^{e_A} \\ell_B^{e_B} \\cdot f \\pm 1\\), where \\(\\ell_A, \\ell_B\\) are small distinct primes (typically \\(\\ell_A = 2, \\ell_B = 3\\)), \\(e_A, e_B\\) are large exponents, and \\(f\\) is a small cofactor making \\(p\\) prime.\n\nBase Curve: A supersingular elliptic curve \\(E_0\\) over \\(\\mathbb{F}_{p^2}\\).\nAlice’s Torsion Basis: A basis \\(\\{P_A, Q_A\\}\\) for the torsion subgroup \\(E_0[\\ell_A^{e_A}]\\).\nBob’s Torsion Basis: A basis \\(\\{P_B, Q_B\\}\\) for the torsion subgroup \\(E_0[\\ell_B^{e_B}]\\).\n\n\n\n2.2 Key Exchange Execution\n\nAlice’s Key Generation:\n\nChooses a secret integer \\(m_A \\in \\mathbb{Z} / \\ell_A^{e_A}\\mathbb{Z}\\).\nDefines her secret kernel generator \\(R_A = P_A + [m_A]Q_A\\).\nComputes the secret isogeny \\(\\phi_A: E_0 \\to E_A \\cong E_0 / \\langle R_A \\rangle\\).\nHer Public Key is \\((E_A, \\phi_A(P_B), \\phi_A(Q_B))\\).\n\nBob’s Key Generation:\n\nChooses a secret integer \\(m_B \\in \\mathbb{Z} / \\ell_B^{e_B}\\mathbb{Z}\\).\nDefines his secret kernel generator \\(R_B = P_B + [m_B]Q_B\\).\nComputes the secret isogeny \\(\\phi_B: E_0 \\to E_B \\cong E_0 / \\langle R_B \\rangle\\).\nHis Public Key is \\((E_B, \\phi_B(P_A), \\phi_B(Q_A))\\).\n\nShared Secret Computation:\n\nAlice receives \\((E_B, \\phi_B(P_A), \\phi_B(Q_A))\\) and evaluates her secret linear combination on the received points to reconstruct the kernel on \\(E_B\\): \\[S_A = \\phi_B(P_A) + [m_A]\\phi_B(Q_A) = \\phi_B(P_A + [m_A]Q_A) = \\phi_B(R_A)\\]\nShe computes the secondary isogeny \\(\\phi_A': E_B \\to E_{BA} \\cong E_B / \\langle \\phi_B(R_A) \\rangle\\).\nBob receives \\((E_A, \\phi_A(P_B), \\phi_A(Q_B))\\) and analogously evaluates: \\[S_B = \\phi_A(P_B) + [m_B]\\phi_A(Q_B) = \\phi_A(P_B + [m_B]Q_B) = \\phi_A(R_B)\\]\nHe computes the secondary isogeny \\(\\phi_B': E_A \\to E_{AB} \\cong E_A / \\langle \\phi_A(R_B) \\rangle\\).\n\n\nBy the isomorphism theorems for curves, the codomain curves are isomorphic: \\[E_{AB} \\cong E_0 / \\langle R_A, R_B \\rangle \\cong E_{BA}\\] The shared secret key is the \\(j\\)-invariant \\(j(E_{AB}) = j(E_{BA})\\).\nE0EAEBEBAEABkker(ÁA)=h[mA]PA+[nA]QAiÁA(PB);ÁA(QB)ÁB(PA);ÁB(QA)ker(ÁB)=h[mB]PB+[nB]QBiker(Á0B)=h[mB]ÁA(PB)+[nB]ÁA(QB)iker(Á0A)=h[mA]ÁB(PA)+[nA]ÁB(QA)i",
+    "crumbs": [
+      "Key Exchange",
+      "SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sidh.html#references",
+    "href": "protocols/key-exchange/sidh.html#references",
+    "title": "SIDH",
+    "section": "3 References",
+    "text": "3 References\n\n\n[JaFe11] Jao, David ; Feo, Luca De: Towards Quantum-Resistant Cryptosystems from Supersingular Elliptic Curve Isogenies. In: PQCrypto : Springer, 2011, pp. 19–34",
+    "crumbs": [
+      "Key Exchange",
+      "SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html",
+    "href": "protocols/digital-signature/csi-fish.html",
+    "title": "CSI-FiSh",
+    "section": "",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH Mathematical Foundation.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html#overview",
+    "href": "protocols/digital-signature/csi-fish.html#overview",
+    "title": "CSI-FiSh",
+    "section": "",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH Mathematical Foundation.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html#key-mechanism",
+    "href": "protocols/digital-signature/csi-fish.html#key-mechanism",
+    "title": "CSI-FiSh",
+    "section": "2 Key Mechanism",
+    "text": "2 Key Mechanism\nBy computing the exact structure of \\(\\text{Cl}(R)\\) for a 512-bit prime \\(p\\), CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical Fiat-Shamir transform to the isogeny setting.\n\nUnderlying Hard Problem: The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational CSIDH protocol.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html#references",
+    "href": "protocols/digital-signature/csi-fish.html#references",
+    "title": "CSI-FiSh",
+    "section": "3 References",
+    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT : Springer, 2019, pp. 227–255",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
     "objectID": "protocols/key-exchange/csidh.html",
     "href": "protocols/key-exchange/csidh.html",
     "title": "CSIDH",
@@ -89,98 +177,10 @@
     "href": "protocols/key-exchange/csidh.html#references",
     "title": "CSIDH",
     "section": "5 References",
-    "text": "5 References\n\n\n[CLMP18] Castryck, Wouter ; Lange, Tanja ; Martindale, Chloe ; Panny, Lorenz ; Renes, Joost: CSIDH: Commutative Supersingular Isogeny Diffie-Hellman. In: ASIACRYPT : Springer, 2018, pp. 395–427\n\n\n\nContributors: @gkorpal",
+    "text": "5 References\n\n\n[CLMP18] Castryck, Wouter ; Lange, Tanja ; Martindale, Chloe ; Panny, Lorenz ; Renes, Joost: CSIDH: Commutative Supersingular Isogeny Diffie-Hellman. In: ASIACRYPT : Springer, 2018, pp. 395–427",
     "crumbs": [
       "Key Exchange",
       "CSIDH"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/sidh.html",
-    "href": "protocols/key-exchange/sidh.html",
-    "title": "SIDH",
-    "section": "",
-    "text": "The Supersingular Isogeny Diffie-Hellman (SIDH) protocol, introduced by Jao and De Feo [JaFe11], was a NIST post-quantum key-exchange candidate.",
-    "crumbs": [
-      "Key Exchange",
-      "SIDH"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/sidh.html#overview",
-    "href": "protocols/key-exchange/sidh.html#overview",
-    "title": "SIDH",
-    "section": "",
-    "text": "The Supersingular Isogeny Diffie-Hellman (SIDH) protocol, introduced by Jao and De Feo [JaFe11], was a NIST post-quantum key-exchange candidate.",
-    "crumbs": [
-      "Key Exchange",
-      "SIDH"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/sidh.html#protocol-design",
-    "href": "protocols/key-exchange/sidh.html#protocol-design",
-    "title": "SIDH",
-    "section": "2 Protocol Design",
-    "text": "2 Protocol Design\n\n2.1 Public Parameters\nLet \\(p\\) be a prime of the form \\(p = \\ell_A^{e_A} \\ell_B^{e_B} \\cdot f \\pm 1\\), where \\(\\ell_A, \\ell_B\\) are small distinct primes (typically \\(\\ell_A = 2, \\ell_B = 3\\)), \\(e_A, e_B\\) are large exponents, and \\(f\\) is a small cofactor making \\(p\\) prime.\n\nBase Curve: A supersingular elliptic curve \\(E_0\\) over \\(\\mathbb{F}_{p^2}\\).\nAlice’s Torsion Basis: A basis \\(\\{P_A, Q_A\\}\\) for the torsion subgroup \\(E_0[\\ell_A^{e_A}]\\).\nBob’s Torsion Basis: A basis \\(\\{P_B, Q_B\\}\\) for the torsion subgroup \\(E_0[\\ell_B^{e_B}]\\).\n\n\n\n2.2 Key Exchange Execution\n\nAlice’s Key Generation:\n\nChooses a secret integer \\(m_A \\in \\mathbb{Z} / \\ell_A^{e_A}\\mathbb{Z}\\).\nDefines her secret kernel generator \\(R_A = P_A + [m_A]Q_A\\).\nComputes the secret isogeny \\(\\phi_A: E_0 \\to E_A \\cong E_0 / \\langle R_A \\rangle\\).\nHer Public Key is \\((E_A, \\phi_A(P_B), \\phi_A(Q_B))\\).\n\nBob’s Key Generation:\n\nChooses a secret integer \\(m_B \\in \\mathbb{Z} / \\ell_B^{e_B}\\mathbb{Z}\\).\nDefines his secret kernel generator \\(R_B = P_B + [m_B]Q_B\\).\nComputes the secret isogeny \\(\\phi_B: E_0 \\to E_B \\cong E_0 / \\langle R_B \\rangle\\).\nHis Public Key is \\((E_B, \\phi_B(P_A), \\phi_B(Q_A))\\).\n\nShared Secret Computation:\n\nAlice receives \\((E_B, \\phi_B(P_A), \\phi_B(Q_A))\\) and evaluates her secret linear combination on the received points to reconstruct the kernel on \\(E_B\\): \\[S_A = \\phi_B(P_A) + [m_A]\\phi_B(Q_A) = \\phi_B(P_A + [m_A]Q_A) = \\phi_B(R_A)\\]\nShe computes the secondary isogeny \\(\\phi_A': E_B \\to E_{BA} \\cong E_B / \\langle \\phi_B(R_A) \\rangle\\).\nBob receives \\((E_A, \\phi_A(P_B), \\phi_A(Q_B))\\) and analogously evaluates: \\[S_B = \\phi_A(P_B) + [m_B]\\phi_A(Q_B) = \\phi_A(P_B + [m_B]Q_B) = \\phi_A(R_B)\\]\nHe computes the secondary isogeny \\(\\phi_B': E_A \\to E_{AB} \\cong E_A / \\langle \\phi_A(R_B) \\rangle\\).\n\n\nBy the isomorphism theorems for curves, the codomain curves are isomorphic: \\[E_{AB} \\cong E_0 / \\langle R_A, R_B \\rangle \\cong E_{BA}\\] The shared secret key is the \\(j\\)-invariant \\(j(E_{AB}) = j(E_{BA})\\).\nE0EAEBEBAEABkker(ÁA)=h[mA]PA+[nA]QAiÁA(PB);ÁA(QB)ÁB(PA);ÁB(QA)ker(ÁB)=h[mB]PB+[nB]QBiker(Á0B)=h[mB]ÁA(PB)+[nB]ÁA(QB)iker(Á0A)=h[mA]ÁB(PA)+[nA]ÁB(QA)i",
-    "crumbs": [
-      "Key Exchange",
-      "SIDH"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/sidh.html#references",
-    "href": "protocols/key-exchange/sidh.html#references",
-    "title": "SIDH",
-    "section": "3 References",
-    "text": "3 References\n\n\n[JaFe11] Jao, David ; Feo, Luca De: Towards Quantum-Resistant Cryptosystems from Supersingular Elliptic Curve Isogenies. In: PQCrypto : Springer, 2011, pp. 19–34\n\n\n\nContributors: @gkorpal",
-    "crumbs": [
-      "Key Exchange",
-      "SIDH"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html",
-    "href": "protocols/digital-signature/csi-fish.html",
-    "title": "CSI-FiSh",
-    "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH Mathematical Foundation.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html#overview",
-    "href": "protocols/digital-signature/csi-fish.html#overview",
-    "title": "CSI-FiSh",
-    "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH Mathematical Foundation.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html#key-mechanism",
-    "href": "protocols/digital-signature/csi-fish.html#key-mechanism",
-    "title": "CSI-FiSh",
-    "section": "2 Key Mechanism",
-    "text": "2 Key Mechanism\nBy computing the exact structure of \\(\\text{Cl}(R)\\) for a 512-bit prime \\(p\\), CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical Fiat-Shamir transform to the isogeny setting.\n\nUnderlying Hard Problem: The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational CSIDH protocol.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html#references",
-    "href": "protocols/digital-signature/csi-fish.html#references",
-    "title": "CSI-FiSh",
-    "section": "3 References",
-    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT : Springer, 2019, pp. 227–255\n\n\n\nContributors: @gkorpal",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
     ]
   }
 ]
