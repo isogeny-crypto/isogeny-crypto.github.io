@@ -5,19 +5,13 @@ project:
 
 date-modified: last-modified
 
-filters:
-  - scripts/tikz.lua
-  - scripts/contributors.lua
-
 website:
   title: "Isogeny-based Cryptography Wiki"
   description: "An accessible reference for isogeny-based protocols."
-
   search:
     location: sidebar
     type: overlay
     copy-button: true
-
   sidebar:
     style: "docked"
     search: true
@@ -32,6 +26,9 @@ website:
 
 format:
   html:
+    filters:
+      - scripts/tikz.lua
+      - scripts/contributors.lua
     include-in-header:
       - templates/tikzjax-header.html
     theme:
