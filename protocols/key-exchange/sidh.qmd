@@ -58,8 +58,8 @@ The shared secret key is the $j$-invariant $j(E_{AB}) = j(E_{BA})$.
   \node (E0)  at (0,   0)    {$E_0$};
   \node (EA)  at (5,   2.5)  {$E_A$};
   \node (EB)  at (5,  -2.5)  {$E_B$};
-  \node (EBA) at (10,  0.15) {$E_{BA}$};
-  \node (EAB) at (10, -0.35) {$E_{AB}$};
+  \node (EAB) at (10,  0.15) {$E_{AB}$};
+  \node (EBA) at (10, -0.35) {$E_{BA}$};
   \node at    (10,  -0.1)    {$\|$};
 
   % E0 -> EA (red, solid)
@@ -82,15 +82,15 @@ The shared secret key is the $j$-invariant $j(E_{AB}) = j(E_{BA})$.
   \draw[-{Stealth}, dashed, red, thick] ($(EA)!0.05!(EB) + (0.15,0)$)
     -- ($(EA)!0.95!(EB) + (0.15,0)$);
 
-  % EA -> EBA (blue, solid)
+  % EA -> EAB (blue, solid)
   \draw[blue arr] (EA) -- node[above, sloped, font=\scriptsize]{
     $\mathrm{ker}(\phi'_B) = \langle [m_B]\phi_A(P_B) + [n_B]\phi_A(Q_B) \rangle$}
-    (EBA);
+    (EAB);
 
-  % EB -> EAB (red, solid)
+  % EB -> EBA (red, solid)
   \draw[red arr] (EB) -- node[below, sloped, font=\scriptsize]{
     $\mathrm{ker}(\phi'_A) = \langle [m_A]\phi_B(P_A) + [n_A]\phi_B(Q_A) \rangle$}
-    (EAB);
+    (EBA);
 
 \end{tikzpicture}
 ```
