@@ -54,7 +54,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes and
 - SCALLOP (2023)
 - CJSS (2023)
 - CSI-Otter (2023)
--JSD (2024)
+- JSD (2024)
 - SCALLOP-HD (2024)
 - SQIsignHD (2024)
 - AprèsSQI (2024)
