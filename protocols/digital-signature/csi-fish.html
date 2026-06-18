@@ -366,6 +366,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/festa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">FESTA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SIDH</span></a>
   </div>
@@ -430,7 +436,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">June 13, 2026</p>
+      <p class="date-modified">June 18, 2026</p>
     </div>
   </div>
     
@@ -445,8 +451,7 @@ window.Quarto = {
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
 <p><strong>CSI-FiSh</strong> (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren <span class="citation" data-cites="csifish">[<a href="#ref-csifish" role="doc-biblioref">BeKlVe19</a>]</span>.</p>
 <p>The primary hurdle in building efficient signatures from the <a href="../../protocols/key-exchange/csidh.html">CSIDH</a> group action is that evaluating the group action can be slow, and the structure of the class group <span class="math inline">\(\text{Cl}(R)\)</span> is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.</p>
-<p>CSI-FiSh relies on the same hardness assumptions outlined in the <a href="../../protocols/key-exchange/csidh.html#sec-math-foundation">CSIDH Mathematical Foundation</a>.</p>
-<hr>
+<p>CSI-FiSh relies on the same hardness assumptions outlined in the <a href="../../protocols/key-exchange/csidh.html#foundations">CSIDH</a>.</p>
 </section>
 <section id="key-mechanism" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="key-mechanism"><span class="header-section-number">2</span> Key Mechanism</h2>
@@ -456,7 +461,6 @@ window.Quarto = {
 </ul>
 
 
-<hr>
 </section>
 <section class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id=""><span class="header-section-number">3</span> References</h2>

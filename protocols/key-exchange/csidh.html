@@ -366,6 +366,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/festa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">FESTA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SIDH</span></a>
   </div>
@@ -400,14 +406,13 @@ window.Quarto = {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
-  <li><a href="#sec-math-foundation" id="toc-sec-math-foundation" class="nav-link" data-scroll-target="#sec-math-foundation"><span class="header-section-number">2</span> Mathematical Foundation</a>
+  <li><a href="#foundations" id="toc-foundations" class="nav-link" data-scroll-target="#foundations"><span class="header-section-number">2</span> Protocol Design</a>
   <ul class="collapse">
   <li><a href="#the-curve-space" id="toc-the-curve-space" class="nav-link" data-scroll-target="#the-curve-space"><span class="header-section-number">2.1</span> The Curve Space</a></li>
   <li><a href="#the-class-group-action" id="toc-the-class-group-action" class="nav-link" data-scroll-target="#the-class-group-action"><span class="header-section-number">2.2</span> The Class Group Action</a></li>
+  <li><a href="#key-exchange-protocol" id="toc-key-exchange-protocol" class="nav-link" data-scroll-target="#key-exchange-protocol"><span class="header-section-number">2.3</span> Key Exchange Protocol</a></li>
   </ul></li>
-  <li><a href="#key-exchange-protocol" id="toc-key-exchange-protocol" class="nav-link" data-scroll-target="#key-exchange-protocol"><span class="header-section-number">3</span> Key Exchange Protocol</a></li>
-  <li><a href="#performance-and-parameter-sets" id="toc-performance-and-parameter-sets" class="nav-link" data-scroll-target="#performance-and-parameter-sets"><span class="header-section-number">4</span> Performance and Parameter Sets</a></li>
-  <li><span class="header-section-number">5</span> References</li>
+  <li><span class="header-section-number">3</span> References</li>
   </ul>
 </nav>
     </div>
@@ -436,7 +441,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">June 13, 2026</p>
+      <p class="date-modified">June 18, 2026</p>
     </div>
   </div>
     
@@ -452,10 +457,9 @@ window.Quarto = {
 <p><strong>CSIDH</strong> (Commutative Supersingular Isogeny Diffie-Hellman) is a post-quantum key exchange protocol proposed by Castryck et al. <span class="citation" data-cites="csidh">[<a href="#ref-csidh" role="doc-biblioref">CLMP18</a>]</span>. It serves as an isogeny-based analogue to traditional Diffie-Hellman key exchange, built on the framework of Couveignes, Rostovtsev, and Stolbunov (CRS).</p>
 <p>Because CSIDH provides a truly commutative group action, it is highly versatile and serves as the mathematical foundation for more advanced primitives, such as the isogeny-based signature scheme <a href="../../protocols/digital-signature/csi-fish.html">CSI-FiSh</a>.</p>
 <p>Unlike SIDH (which uses non-commutative endomorphism rings), CSIDH leverages a <strong>commutative group action</strong> by restricting to supersingular elliptic curves defined over a prime field <span class="math inline">\(\mathbb{F}_p\)</span> whose endomorphism rings are isomorphic to an order in an imaginary quadratic field.</p>
-<hr>
 </section>
-<section id="sec-math-foundation" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="sec-math-foundation"><span class="header-section-number">2</span> Mathematical Foundation</h2>
+<section id="foundations" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="foundations"><span class="header-section-number">2</span> Protocol Design</h2>
 <p>Let <span class="math inline">\(p\)</span> be a prime of the form <span class="math inline">\(p = 4 \cdot \ell_1 \cdot \ell_2 \cdots \ell_n - 1\)</span>, where <span class="math inline">\(\ell_i\)</span> are small, distinct odd primes.</p>
 <section id="the-curve-space" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="the-curve-space"><span class="header-section-number">2.1</span> The Curve Space</h3>
@@ -468,11 +472,9 @@ window.Quarto = {
 <p><span class="math display">\[[\mathfrak{a}] * E = E / E[\mathfrak{a}]\]</span></p>
 <p>Where <span class="math inline">\(E[\mathfrak{a}]\)</span> is the intersection of the kernels of all endomorphisms in <span class="math inline">\(\mathfrak{a}\)</span>. Because <span class="math inline">\(\text{Cl}(R)\)</span> is an abelian group, the action commutes:</p>
 <p><span class="math display">\[[\mathfrak{a}] * ([\mathfrak{b}] * E) = ([\mathfrak{a}\mathfrak{b}]) * E = [\mathfrak{b}] * ([\mathfrak{a}] * E)\]</span></p>
-<hr>
 </section>
-</section>
-<section id="key-exchange-protocol" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="key-exchange-protocol"><span class="header-section-number">3</span> Key Exchange Protocol</h2>
+<section id="key-exchange-protocol" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="key-exchange-protocol"><span class="header-section-number">2.3</span> Key Exchange Protocol</h3>
 <p>The commutativity of the group action allows a direct translation of the classical Diffie-Hellman matrix or exponentiation paradigm.</p>
 <table class="caption-top table">
 <colgroup>
@@ -510,11 +512,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<blockquote class="blockquote">
-<p><strong>Shared Secret:</strong> Since the group action commutes, <span class="math inline">\(E_{BA} = E_{AB}\)</span>. The Montgomery coefficient <span class="math inline">\(A \in \mathbb{F}_p\)</span> of this final curve serves as the shared cryptographic secret.</p>
-</blockquote>
-<div class="tikz-diagram"><svg xmlns="http://www.w3.org/2000/svg" width="315.922" height="171.747" viewbox="-72 -72 236.942 128.81"><defs><style>@import url(../../assets/fonts.css);</style></defs><g stroke="#000" stroke-miterlimit="10" stroke-width=".4"><g stroke="none"><text x="-39.388" y="49.041" font-family="cmmi10" font-size="10" transform="translate(79.424 -111.144)">E</text><text x="-32.007" y="50.541" font-family="cmr7" font-size="7" transform="translate(79.424 -111.144)">0</text></g><g stroke="none"><text x="-39.388" y="49.041" font-family="cmmi10" font-size="10" transform="translate(-29.549 -54.405)">E</text><text x="-32.007" y="50.541" font-family="cmmi7" font-size="7" transform="translate(-29.549 -54.405)">A</text><text x="-22.715" y="49.041" font-family="cmr10" font-size="10" transform="translate(-29.549 -54.405)">=</text><text x="-12.159" y="49.041" font-family="cmr10" font-size="10" transform="translate(-29.549 -54.405)">[a]</text><text x=".618" y="49.041" font-family="cmsy10" font-size="10" transform="translate(-29.549 -54.405)">¤</text><text x="7.841" y="49.041" font-family="cmmi10" font-size="10" transform="translate(-29.549 -54.405)">E</text><text x="15.223" y="50.541" font-family="cmr7" font-size="7" transform="translate(-29.549 -54.405)">0</text></g><g stroke="none"><text x="-39.388" y="49.041" font-family="cmmi10" font-size="10" transform="translate(140.706 -54.405)">E</text><text x="-32.007" y="50.541" font-family="cmmi7" font-size="7" transform="translate(140.706 -54.405)">B</text><text x="-22.346" y="49.041" font-family="cmr10" font-size="10" transform="translate(140.706 -54.405)">=</text><text x="-11.79" y="49.041" font-family="cmr10" font-size="10" transform="translate(140.706 -54.405)">[b]</text><text x="1.543" y="49.041" font-family="cmsy10" font-size="10" transform="translate(140.706 -54.405)">¤</text><text x="8.765" y="49.041" font-family="cmmi10" font-size="10" transform="translate(140.706 -54.405)">E</text><text x="16.147" y="50.541" font-family="cmr7" font-size="7" transform="translate(140.706 -54.405)">0</text></g><g stroke="none"><text x="-39.388" y="49.041" font-family="cmmi10" font-size="10" transform="translate(58.413 2.667)">E</text><text x="-32.007" y="50.541" font-family="cmmi7" font-size="7" transform="translate(58.413 2.667)">AB</text><text x="-16.332" y="49.041" font-family="cmr10" font-size="10" transform="translate(58.413 2.667)">=</text><text x="-5.776" y="49.041" font-family="cmmi10" font-size="10" transform="translate(58.413 2.667)">E</text><text x="1.606" y="50.541" font-family="cmmi7" font-size="7" transform="translate(58.413 2.667)">B</text><text x="7.989" y="50.541" font-family="cmmi7" font-size="7" transform="translate(58.413 2.667)">A</text></g><g stroke-width=".8"><path fill="none" d="m36.503-58.46-59.667 39.774"></path><path stroke-width=".7999520000000001" d="m-25.649-17.03 4.343-1-2.024-.545.276-2.079Z"></path><text x="-39.388" y="49.041" stroke="none" font-family="cmr10" font-size="10" transform="translate(30.053 -83.97)">[a]</text></g><g stroke-width=".8"><path fill="none" d="m55.437-58.46 59.666 39.774"></path><path stroke-width=".7999520000000001" d="m117.588-17.03-2.594-3.624.276 2.079-2.025.545Z"></path><text x="-39.388" y="49.041" stroke="none" font-family="cmr10" font-size="10" transform="translate(130.108 -83.97)">[b]</text></g><g stroke-width=".8"><path fill="none" d="m-26.596.668 57.59 38.385"></path><path stroke-width=".7999520000000001" d="m33.48 40.71-2.595-3.625.276 2.079-2.025.545Z"></path><text x="-39.388" y="49.041" stroke="none" font-family="cmr10" font-size="10" transform="translate(47.037 -25.536)">[b]</text></g><g stroke-width=".8"><path fill="none" d="m118.536.668-57.59 38.385"></path><path stroke-width=".7999520000000001" d="m58.46 40.71 4.343-1.001-2.024-.545.276-2.079Z"></path><text x="-39.388" y="49.041" stroke="none" font-family="cmr10" font-size="10" transform="translate(113.124 -25.536)">[a]</text></g></g></svg></div>
-<p><span class="math display">\[
+<p><strong>Shared Secret:</strong> Since the group action commutes, <span class="math inline">\(E_{BA} = E_{AB}\)</span>. The Montgomery coefficient <span class="math inline">\(A \in \mathbb{F}_p\)</span> of this final curve serves as the shared cryptographic secret. <span class="math display">\[
 E_{AB}
 =
 [\mathfrak b] * E_A
@@ -527,47 +525,12 @@ E_{AB}
 =
 E_{BA}.
 \]</span></p>
-<hr>
-</section>
-<section id="performance-and-parameter-sets" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="performance-and-parameter-sets"><span class="header-section-number">4</span> Performance and Parameter Sets</h2>
-<p>CSIDH parameters are evaluated by their quantum security levels (NIST categories) against advanced sieve algorithms like Kuperberg’s hidden shift algorithm.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Parameter Set</th>
-<th>Prime Bits (<span class="math inline">\(\log_2 p\)</span>)</th>
-<th>Public Key Size</th>
-<th>Key Exchange Speed</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>CSIDH-512</strong></td>
-<td>511 bits</td>
-<td>64 Bytes</td>
-<td>~30-100 ms</td>
-</tr>
-<tr class="even">
-<td><strong>CSIDH-1024</strong></td>
-<td>1024 bits</td>
-<td>128 Bytes</td>
-<td>~200-500 ms</td>
-</tr>
-</tbody>
-</table>
 
 
-<hr>
 </section>
-<section class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id=""><span class="header-section-number">5</span> References</h2>
+</section>
+<section class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id=""><span class="header-section-number">3</span> References</h2>
 <div id="refs" class="references csl-bib-body" role="list">
 <div id="ref-csidh" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[CLMP18] </div><div class="csl-right-inline"><span class="smallcaps">Castryck, Wouter</span> ; <span class="smallcaps">Lange, Tanja</span> ; <span class="smallcaps">Martindale, Chloe</span> ; <span class="smallcaps">Panny, Lorenz</span> ; <span class="smallcaps">Renes, Joost</span>: <a href="https://eprint.iacr.org/2018/383"><span>CSIDH</span>: <span>C</span>ommutative <span>S</span>upersingular <span>I</span>sogeny <span>D</span>iffie-<span>H</span>ellman</a>. In: <em>ASIACRYPT</em>&nbsp;: Springer, 2018, pp.&nbsp;395–427</div>

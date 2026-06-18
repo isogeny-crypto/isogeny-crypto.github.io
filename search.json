@@ -30,6 +30,94 @@
     ]
   },
   {
+    "objectID": "protocols/key-exchange/festa.html",
+    "href": "protocols/key-exchange/festa.html",
+    "title": "FESTA",
+    "section": "",
+    "text": "FESTA is a public-key encryption (PKE) protocol that creatively repurposes the devastating attacks on the Supersingular Isogeny Diffie-Hellman (SIDH) protocol. While SIDH’s security was compromised by torsion-point attacks when auxiliary torsion information is revealed, FESTA relies on a novel trapdoor function where these very attacks are leveraged by the legitimate trapdoor holder to invert a one-way function.\nBy scaling the revealed torsion points with a secret matrix, FESTA prevents malicious attackers from utilizing the SIDH attacks [BaMaPo23]. Using standard transformations (like OAEP), this trapdoor mechanism enables the construction of an efficient IND-CCA secure PKE in the Quantum Random Oracle Model (QROM).",
+    "crumbs": [
+      "Key Exchange",
+      "FESTA"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/festa.html#overview",
+    "href": "protocols/key-exchange/festa.html#overview",
+    "title": "FESTA",
+    "section": "",
+    "text": "FESTA is a public-key encryption (PKE) protocol that creatively repurposes the devastating attacks on the Supersingular Isogeny Diffie-Hellman (SIDH) protocol. While SIDH’s security was compromised by torsion-point attacks when auxiliary torsion information is revealed, FESTA relies on a novel trapdoor function where these very attacks are leveraged by the legitimate trapdoor holder to invert a one-way function.\nBy scaling the revealed torsion points with a secret matrix, FESTA prevents malicious attackers from utilizing the SIDH attacks [BaMaPo23]. Using standard transformations (like OAEP), this trapdoor mechanism enables the construction of an efficient IND-CCA secure PKE in the Quantum Random Oracle Model (QROM).",
+    "crumbs": [
+      "Key Exchange",
+      "FESTA"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/festa.html#protocol-design",
+    "href": "protocols/key-exchange/festa.html#protocol-design",
+    "title": "FESTA",
+    "section": "2 Protocol Design",
+    "text": "2 Protocol Design\nThe foundation of FESTA is an injective trapdoor function evaluated over supersingular elliptic curves.\nE0EAE1E2µPbQb¶µRASA¶=Aµ'A(Pb)'A(Qb)¶Bµ'1(Pb)'1(Qb)¶Bµ'2(RA)'2(SA)¶'A'1'2Ã\n\n2.1 Global Parameters\n\n\\(E_0\\): A starting supersingular elliptic curve defined over \\(\\mathbb{F}_{p^2}\\) (chosen with \\(j(E_0) \\neq 0, 1728\\) to avoid non-trivial automorphisms).\n\\(\\langle P_b, Q_b \\rangle = E_0[2^b]\\): A canonical basis for the \\(2^b\\)-torsion on \\(E_0\\).\n\\(\\mathcal{M}_b\\): A set of commutative, invertible diagonal matrices over \\((\\mathbb{Z}/2^b\\mathbb{Z})^\\times\\) modulo \\(\\langle -I_2 \\rangle\\).\n\n\n\n2.2 Setup and Key Generation\nThe trapdoor key generation works as follows:\n\nCompute a secret \\(d_A\\)-isogeny \\(\\varphi_A: E_0 \\rightarrow E_A\\).\nSample a random matrix \\(A \\in \\mathcal{M}_b\\).\nCalculate the scaled torsion images on \\(E_A\\): \\[ \\begin{pmatrix} R_A \\\\ S_A \\end{pmatrix} = A \\begin{pmatrix} \\varphi_A(P_b) \\\\ \\varphi_A(Q_b) \\end{pmatrix} \\]\n\n\nSecret Key (Trapdoor): \\((A, \\varphi_A)\\).\nPublic Key: \\((E_A, R_A, S_A)\\).\n\n\n\n2.3 Function Evaluation (Forward Direction)\nTo evaluate the one-way function on an input consisting of two isogenies \\(\\varphi_1: E_0 \\rightarrow E_1\\) (degree \\(d_1\\)), \\(\\varphi_2: E_A \\rightarrow E_2\\) (degree \\(d_2\\)), and a matrix \\(B \\in \\mathcal{M}_b\\):\n\nCompute \\(\\varphi_1: E_0 \\rightarrow E_1\\) and \\(\\varphi_2: E_A \\rightarrow E_2\\).\nScale the torsion basis images under \\(\\varphi_1\\) by \\(B\\): \\[ \\begin{pmatrix} R_1 \\\\ S_1 \\end{pmatrix} = B \\begin{pmatrix} \\varphi_1(P_b) \\\\ \\varphi_1(Q_b) \\end{pmatrix} \\]\nScale the public torsion parameters under \\(\\varphi_2\\) by \\(B\\): \\[ \\begin{pmatrix} R_2 \\\\ S_2 \\end{pmatrix} = B \\begin{pmatrix} \\varphi_2(R_A) \\\\ \\varphi_2(S_A) \\end{pmatrix} \\]\n\n\nOutput: The tuple \\((E_1, R_1, S_1, E_2, R_2, S_2)\\).\n\nWithout the knowledge of \\(A\\), the scaling by \\(B\\) (and natively \\(A\\)) thoroughly obfuscates the torsion point information, blocking the SIDH attack machinery.\n\n\n2.4 Trapdoor Inversion\nThe trapdoor owner can invert the function by utilizing the commutativity of matrices \\(A\\) and \\(B\\):\n\nUndo the secret scaling on \\(E_2\\) by applying \\(d_1 A^{-1}\\): \\[ \\begin{pmatrix} R_2' \\\\ S_2' \\end{pmatrix} = d_1 A^{-1} \\begin{pmatrix} R_2 \\\\ S_2 \\end{pmatrix} \\] Because \\(A\\) and \\(B\\) commute, this effectively isolates the scaling to just \\(B\\), bridging the torsion mappings between \\(E_1\\) and \\(E_2\\).\nThe resulting points reflect the exact unscaled images of \\(R_1, S_1\\) under the bridging isogeny \\(\\psi := \\varphi_2 \\circ \\varphi_A \\circ \\hat{\\varphi}_1\\).\nInvoke an arbitrary torsion-point attack (e.g., Kani’s criterion generalizing to higher dimensions via (2,2)-isogenies) on \\((E_1, R_1, S_1, E_2, R_2', S_2')\\) to efficiently compute \\(\\psi\\).\nReconstruct the original kernels of \\(\\varphi_1, \\varphi_2\\) and the matrix \\(B\\) from \\(\\psi\\).",
+    "crumbs": [
+      "Key Exchange",
+      "FESTA"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/festa.html#security-assumptions",
+    "href": "protocols/key-exchange/festa.html#security-assumptions",
+    "title": "FESTA",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nFESTA introduces generalized hardness assumptions for the scaled-torsion setting:\n\nDecisional Isogeny with Scaled-Torsion (DIST): Distinguishing a curve and its scaled torsion images (via matrix \\(A\\)) from a random supersingular curve and random basis points.\nComputational Isogeny with Scaled-Torsion (CIST): Extracting the isogeny \\(\\varphi\\) given \\(E_0, E_1\\), the domain basis, and the scaled target basis \\(A(\\varphi(P_0), \\varphi(Q_0))^T\\).\nComputational Isogeny with Double Scaled-Torsion (CIST 2): Recovering two distinct isogenies \\(\\varphi, \\varphi'\\) given two instances of scaled target bases that use the same scaling matrix \\(A\\). Theorem 9 proves FESTA’s one-wayness reduces to the DIST and CIST 2 assumptions.",
+    "crumbs": [
+      "Key Exchange",
+      "FESTA"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/festa.html#progress",
+    "href": "protocols/key-exchange/festa.html#progress",
+    "title": "FESTA",
+    "section": "4 Progress",
+    "text": "4 Progress",
+    "crumbs": [
+      "Key Exchange",
+      "FESTA"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html",
+    "href": "protocols/digital-signature/csi-fish.html",
+    "title": "CSI-FiSh",
+    "section": "",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html#overview",
+    "href": "protocols/digital-signature/csi-fish.html#overview",
+    "title": "CSI-FiSh",
+    "section": "",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html#key-mechanism",
+    "href": "protocols/digital-signature/csi-fish.html#key-mechanism",
+    "title": "CSI-FiSh",
+    "section": "2 Key Mechanism",
+    "text": "2 Key Mechanism\nBy computing the exact structure of \\(\\text{Cl}(R)\\) for a 512-bit prime \\(p\\), CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical Fiat-Shamir transform to the isogeny setting.\n\nUnderlying Hard Problem: The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational CSIDH protocol.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
     "objectID": "protocols/key-exchange/sidh.html",
     "href": "protocols/key-exchange/sidh.html",
     "title": "SIDH",
@@ -56,43 +144,10 @@
     "href": "protocols/key-exchange/sidh.html#protocol-design",
     "title": "SIDH",
     "section": "2 Protocol Design",
-    "text": "2 Protocol Design\n\n2.1 Public Parameters\nLet \\(p\\) be a prime of the form \\(p = \\ell_A^{e_A} \\ell_B^{e_B} \\cdot f \\pm 1\\), where \\(\\ell_A, \\ell_B\\) are small distinct primes (typically \\(\\ell_A = 2, \\ell_B = 3\\)), \\(e_A, e_B\\) are large exponents, and \\(f\\) is a small cofactor making \\(p\\) prime.\n\nBase Curve: A supersingular elliptic curve \\(E_0\\) over \\(\\mathbb{F}_{p^2}\\).\nAlice’s Torsion Basis: A basis \\(\\{P_A, Q_A\\}\\) for the torsion subgroup \\(E_0[\\ell_A^{e_A}]\\).\nBob’s Torsion Basis: A basis \\(\\{P_B, Q_B\\}\\) for the torsion subgroup \\(E_0[\\ell_B^{e_B}]\\).\n\n\n\n2.2 Key Exchange Execution\n\nAlice’s Key Generation:\n\nChooses a secret integer \\(m_A \\in \\mathbb{Z} / \\ell_A^{e_A}\\mathbb{Z}\\).\nDefines her secret kernel generator \\(R_A = P_A + [m_A]Q_A\\).\nComputes the secret isogeny \\(\\phi_A: E_0 \\to E_A \\cong E_0 / \\langle R_A \\rangle\\).\nHer Public Key is \\((E_A, \\phi_A(P_B), \\phi_A(Q_B))\\).\n\nBob’s Key Generation:\n\nChooses a secret integer \\(m_B \\in \\mathbb{Z} / \\ell_B^{e_B}\\mathbb{Z}\\).\nDefines his secret kernel generator \\(R_B = P_B + [m_B]Q_B\\).\nComputes the secret isogeny \\(\\phi_B: E_0 \\to E_B \\cong E_0 / \\langle R_B \\rangle\\).\nHis Public Key is \\((E_B, \\phi_B(P_A), \\phi_B(Q_A))\\).\n\nShared Secret Computation:\n\nAlice receives \\((E_B, \\phi_B(P_A), \\phi_B(Q_A))\\) and evaluates her secret linear combination on the received points to reconstruct the kernel on \\(E_B\\): \\[S_A = \\phi_B(P_A) + [m_A]\\phi_B(Q_A) = \\phi_B(P_A + [m_A]Q_A) = \\phi_B(R_A)\\]\nShe computes the secondary isogeny \\(\\phi_A': E_B \\to E_{BA} \\cong E_B / \\langle \\phi_B(R_A) \\rangle\\).\nBob receives \\((E_A, \\phi_A(P_B), \\phi_A(Q_B))\\) and analogously evaluates: \\[S_B = \\phi_A(P_B) + [m_B]\\phi_A(Q_B) = \\phi_A(P_B + [m_B]Q_B) = \\phi_A(R_B)\\]\nHe computes the secondary isogeny \\(\\phi_B': E_A \\to E_{AB} \\cong E_A / \\langle \\phi_A(R_B) \\rangle\\).\n\n\nBy the isomorphism theorems for curves, the codomain curves are isomorphic: \\[E_{AB} \\cong E_0 / \\langle R_A, R_B \\rangle \\cong E_{BA}\\] The shared secret key is the \\(j\\)-invariant \\(j(E_{AB}) = j(E_{BA})\\).\nE0EAEBEABEBAkker(ÁA)=h[mA]PA+[nA]QAiÁA(PB);ÁA(QB)ÁB(PA);ÁB(QA)ker(ÁB)=h[mB]PB+[nB]QBiker(Á0B)=h[mB]ÁA(PB)+[nB]ÁA(QB)iker(Á0A)=h[mA]ÁB(PA)+[nA]ÁB(QA)i",
+    "text": "2 Protocol Design\nE0EAEBEABEBAkker(ÁA)=h[mA]PA+[nA]QAiÁA(PB);ÁA(QB)ÁB(PA);ÁB(QA)ker(ÁB)=h[mB]PB+[nB]QBiker(Á0B)=h[mB]ÁA(PB)+[nB]ÁA(QB)iker(Á0A)=h[mA]ÁB(PA)+[nA]ÁB(QA)i\n\n2.1 Public Parameters\nLet \\(p\\) be a prime of the form \\(p = \\ell_A^{e_A} \\ell_B^{e_B} \\cdot f \\pm 1\\), where \\(\\ell_A, \\ell_B\\) are small distinct primes (typically \\(\\ell_A = 2, \\ell_B = 3\\)), \\(e_A, e_B\\) are large exponents, and \\(f\\) is a small cofactor making \\(p\\) prime.\n\nBase Curve: A supersingular elliptic curve \\(E_0\\) over \\(\\mathbb{F}_{p^2}\\).\nAlice’s Torsion Basis: A basis \\(\\{P_A, Q_A\\}\\) for the torsion subgroup \\(E_0[\\ell_A^{e_A}]\\).\nBob’s Torsion Basis: A basis \\(\\{P_B, Q_B\\}\\) for the torsion subgroup \\(E_0[\\ell_B^{e_B}]\\).\n\n\n\n2.2 Key Exchange Execution\n\nAlice’s Key Generation:\n\nChooses a secret integer \\(m_A \\in \\mathbb{Z} / \\ell_A^{e_A}\\mathbb{Z}\\).\nDefines her secret kernel generator \\(R_A = P_A + [m_A]Q_A\\).\nComputes the secret isogeny \\(\\phi_A: E_0 \\to E_A \\cong E_0 / \\langle R_A \\rangle\\).\nHer Public Key is \\((E_A, \\phi_A(P_B), \\phi_A(Q_B))\\).\n\nBob’s Key Generation:\n\nChooses a secret integer \\(m_B \\in \\mathbb{Z} / \\ell_B^{e_B}\\mathbb{Z}\\).\nDefines his secret kernel generator \\(R_B = P_B + [m_B]Q_B\\).\nComputes the secret isogeny \\(\\phi_B: E_0 \\to E_B \\cong E_0 / \\langle R_B \\rangle\\).\nHis Public Key is \\((E_B, \\phi_B(P_A), \\phi_B(Q_A))\\).\n\nShared Secret Computation:\n\nAlice receives \\((E_B, \\phi_B(P_A), \\phi_B(Q_A))\\) and evaluates her secret linear combination on the received points to reconstruct the kernel on \\(E_B\\): \\[S_A = \\phi_B(P_A) + [m_A]\\phi_B(Q_A) = \\phi_B(P_A + [m_A]Q_A) = \\phi_B(R_A)\\]\nShe computes the secondary isogeny \\(\\phi_A': E_B \\to E_{BA} \\cong E_B / \\langle \\phi_B(R_A) \\rangle\\).\nBob receives \\((E_A, \\phi_A(P_B), \\phi_A(Q_B))\\) and analogously evaluates: \\[S_B = \\phi_A(P_B) + [m_B]\\phi_A(Q_B) = \\phi_A(P_B + [m_B]Q_B) = \\phi_A(R_B)\\]\nHe computes the secondary isogeny \\(\\phi_B': E_A \\to E_{AB} \\cong E_A / \\langle \\phi_A(R_B) \\rangle\\).\n\n\nBy the isomorphism theorems for curves, the codomain curves are isomorphic: \\[E_{AB} \\cong E_0 / \\langle R_A, R_B \\rangle \\cong E_{BA}\\] The shared secret key is the \\(j\\)-invariant \\(j(E_{AB}) = j(E_{BA})\\).",
     "crumbs": [
       "Key Exchange",
       "SIDH"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html",
-    "href": "protocols/digital-signature/csi-fish.html",
-    "title": "CSI-FiSh",
-    "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH Mathematical Foundation.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html#overview",
-    "href": "protocols/digital-signature/csi-fish.html#overview",
-    "title": "CSI-FiSh",
-    "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH Mathematical Foundation.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html#key-mechanism",
-    "href": "protocols/digital-signature/csi-fish.html#key-mechanism",
-    "title": "CSI-FiSh",
-    "section": "2 Key Mechanism",
-    "text": "2 Key Mechanism\nBy computing the exact structure of \\(\\text{Cl}(R)\\) for a 512-bit prime \\(p\\), CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical Fiat-Shamir transform to the isogeny setting.\n\nUnderlying Hard Problem: The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational CSIDH protocol.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
     ]
   },
   {
@@ -118,33 +173,11 @@
     ]
   },
   {
-    "objectID": "protocols/key-exchange/csidh.html#sec-math-foundation",
-    "href": "protocols/key-exchange/csidh.html#sec-math-foundation",
+    "objectID": "protocols/key-exchange/csidh.html#foundations",
+    "href": "protocols/key-exchange/csidh.html#foundations",
     "title": "CSIDH",
-    "section": "2 Mathematical Foundation",
-    "text": "2 Mathematical Foundation\nLet \\(p\\) be a prime of the form \\(p = 4 \\cdot \\ell_1 \\cdot \\ell_2 \\cdots \\ell_n - 1\\), where \\(\\ell_i\\) are small, distinct odd primes.\n\n2.1 The Curve Space\nWe consider the set \\(\\mathcal{S}_R\\) of \\(\\mathbb{F}_p\\)-isomorphism classes of supersingular elliptic curves \\(E/\\mathbb{F}_p\\) whose \\(\\mathbb{F}_p\\)-endomorphism ring \\(\\text{End}_{\\mathbb{F}_p}(E)\\) is exactly the order \\(R = \\mathbb{Z}[\\pi]\\), where \\(\\pi\\) is the Frobenius endomorphism satisfying \\(\\pi^2 = -p\\). These curves can be written in Montgomery form:\n\\[E_A: y^2 = x^3 + Ax^2 + x\\]\n\n\n2.2 The Class Group Action\nThe ideal class group \\(\\text{Cl}(R)\\) acts freely and transitively on the set \\(\\mathcal{S}_R\\). Given an ideal class \\([\\mathfrak{a}] \\in \\text{Cl}(R)\\) and a curve class \\([E] \\in \\mathcal{S}_R\\), the group action is defined via the idealisogeny:\n\\[[\\mathfrak{a}] * E = E / E[\\mathfrak{a}]\\]\nWhere \\(E[\\mathfrak{a}]\\) is the intersection of the kernels of all endomorphisms in \\(\\mathfrak{a}\\). Because \\(\\text{Cl}(R)\\) is an abelian group, the action commutes:\n\\[[\\mathfrak{a}] * ([\\mathfrak{b}] * E) = ([\\mathfrak{a}\\mathfrak{b}]) * E = [\\mathfrak{b}] * ([\\mathfrak{a}] * E)\\]",
-    "crumbs": [
-      "Key Exchange",
-      "CSIDH"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/csidh.html#key-exchange-protocol",
-    "href": "protocols/key-exchange/csidh.html#key-exchange-protocol",
-    "title": "CSIDH",
-    "section": "3 Key Exchange Protocol",
-    "text": "3 Key Exchange Protocol\nThe commutativity of the group action allows a direct translation of the classical Diffie-Hellman matrix or exponentiation paradigm.\n\n\n\n\n\n\n\n\nAlice\nPublic\nBob\n\n\n\n\nChooses secret ideal \\([\\mathfrak{a}]\\)\n\nChooses secret ideal \\([\\mathfrak{b}]\\)\n\n\nComputes \\(E_A = [\\mathfrak{a}] * E_0\\)\n\\(\\xrightarrow{\\quad E_A \\quad}\\)\n\n\n\n\n\\(\\xleftarrow{\\quad E_B \\quad}\\)\nComputes \\(E_B = [\\mathfrak{b}] * E_0\\)\n\n\nComputes \\(E_{BA} = [\\mathfrak{a}] * E_B\\)\n\nComputes \\(E_{AB} = [\\mathfrak{b}] * E_A\\)\n\n\n\n\nShared Secret: Since the group action commutes, \\(E_{BA} = E_{AB}\\). The Montgomery coefficient \\(A \\in \\mathbb{F}_p\\) of this final curve serves as the shared cryptographic secret.\n\nE0EA=[a]¤E0EB=[b]¤E0EAB=EBA[a][b][b][a]\n\\[\nE_{AB}\n=\n[\\mathfrak b] * E_A\n=\n[\\mathfrak b] * ([\\mathfrak a] * E_0)\n=\n[\\mathfrak a] * ([\\mathfrak b] * E_0)\n=\n[\\mathfrak a] * E_B\n=\nE_{BA}.\n\\]",
-    "crumbs": [
-      "Key Exchange",
-      "CSIDH"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/csidh.html#performance-and-parameter-sets",
-    "href": "protocols/key-exchange/csidh.html#performance-and-parameter-sets",
-    "title": "CSIDH",
-    "section": "4 Performance and Parameter Sets",
-    "text": "4 Performance and Parameter Sets\nCSIDH parameters are evaluated by their quantum security levels (NIST categories) against advanced sieve algorithms like Kuperberg’s hidden shift algorithm.\n\n\n\n\n\n\n\n\n\nParameter Set\nPrime Bits (\\(\\log_2 p\\))\nPublic Key Size\nKey Exchange Speed\n\n\n\n\nCSIDH-512\n511 bits\n64 Bytes\n~30-100 ms\n\n\nCSIDH-1024\n1024 bits\n128 Bytes\n~200-500 ms",
+    "section": "2 Protocol Design",
+    "text": "2 Protocol Design\nLet \\(p\\) be a prime of the form \\(p = 4 \\cdot \\ell_1 \\cdot \\ell_2 \\cdots \\ell_n - 1\\), where \\(\\ell_i\\) are small, distinct odd primes.\n\n2.1 The Curve Space\nWe consider the set \\(\\mathcal{S}_R\\) of \\(\\mathbb{F}_p\\)-isomorphism classes of supersingular elliptic curves \\(E/\\mathbb{F}_p\\) whose \\(\\mathbb{F}_p\\)-endomorphism ring \\(\\text{End}_{\\mathbb{F}_p}(E)\\) is exactly the order \\(R = \\mathbb{Z}[\\pi]\\), where \\(\\pi\\) is the Frobenius endomorphism satisfying \\(\\pi^2 = -p\\). These curves can be written in Montgomery form:\n\\[E_A: y^2 = x^3 + Ax^2 + x\\]\n\n\n2.2 The Class Group Action\nThe ideal class group \\(\\text{Cl}(R)\\) acts freely and transitively on the set \\(\\mathcal{S}_R\\). Given an ideal class \\([\\mathfrak{a}] \\in \\text{Cl}(R)\\) and a curve class \\([E] \\in \\mathcal{S}_R\\), the group action is defined via the idealisogeny:\n\\[[\\mathfrak{a}] * E = E / E[\\mathfrak{a}]\\]\nWhere \\(E[\\mathfrak{a}]\\) is the intersection of the kernels of all endomorphisms in \\(\\mathfrak{a}\\). Because \\(\\text{Cl}(R)\\) is an abelian group, the action commutes:\n\\[[\\mathfrak{a}] * ([\\mathfrak{b}] * E) = ([\\mathfrak{a}\\mathfrak{b}]) * E = [\\mathfrak{b}] * ([\\mathfrak{a}] * E)\\]\n\n\n2.3 Key Exchange Protocol\nThe commutativity of the group action allows a direct translation of the classical Diffie-Hellman matrix or exponentiation paradigm.\n\n\n\n\n\n\n\n\nAlice\nPublic\nBob\n\n\n\n\nChooses secret ideal \\([\\mathfrak{a}]\\)\n\nChooses secret ideal \\([\\mathfrak{b}]\\)\n\n\nComputes \\(E_A = [\\mathfrak{a}] * E_0\\)\n\\(\\xrightarrow{\\quad E_A \\quad}\\)\n\n\n\n\n\\(\\xleftarrow{\\quad E_B \\quad}\\)\nComputes \\(E_B = [\\mathfrak{b}] * E_0\\)\n\n\nComputes \\(E_{BA} = [\\mathfrak{a}] * E_B\\)\n\nComputes \\(E_{AB} = [\\mathfrak{b}] * E_A\\)\n\n\n\nShared Secret: Since the group action commutes, \\(E_{BA} = E_{AB}\\). The Montgomery coefficient \\(A \\in \\mathbb{F}_p\\) of this final curve serves as the shared cryptographic secret. \\[\nE_{AB}\n=\n[\\mathfrak b] * E_A\n=\n[\\mathfrak b] * ([\\mathfrak a] * E_0)\n=\n[\\mathfrak a] * ([\\mathfrak b] * E_0)\n=\n[\\mathfrak a] * E_B\n=\nE_{BA}.\n\\]",
     "crumbs": [
       "Key Exchange",
       "CSIDH"
