@@ -8,42 +8,7 @@ date: 2026-06-12
 
 The Supersingular Isogeny Diffie-Hellman (SIDH) protocol, introduced by Jao and De Feo [@sidh], was a NIST post-quantum key-exchange candidate. 
 
----
-
 ## Protocol Design
-
-### Public Parameters
-Let $p$ be a prime of the form $p = \ell_A^{e_A} \ell_B^{e_B} \cdot f \pm 1$, where $\ell_A, \ell_B$ are small distinct primes (typically $\ell_A = 2, \ell_B = 3$), $e_A, e_B$ are large exponents, and $f$ is a small cofactor making $p$ prime.
-
-* **Base Curve:** A supersingular elliptic curve $E_0$ over $\mathbb{F}_{p^2}$.
-* **Alice's Torsion Basis:** A basis $\{P_A, Q_A\}$ for the torsion subgroup $E_0[\ell_A^{e_A}]$.
-* **Bob's Torsion Basis:** A basis $\{P_B, Q_B\}$ for the torsion subgroup $E_0[\ell_B^{e_B}]$.
-
-### Key Exchange Execution
-
-1. **Alice's Key Generation:**
-   * Chooses a secret integer $m_A \in \mathbb{Z} / \ell_A^{e_A}\mathbb{Z}$.
-   * Defines her secret kernel generator $R_A = P_A + [m_A]Q_A$.
-   * Computes the secret isogeny $\phi_A: E_0 \to E_A \cong E_0 / \langle R_A \rangle$.
-   * Her **Public Key** is $(E_A, \phi_A(P_B), \phi_A(Q_B))$.
-
-2. **Bob's Key Generation:**
-   * Chooses a secret integer $m_B \in \mathbb{Z} / \ell_B^{e_B}\mathbb{Z}$.
-   * Defines his secret kernel generator $R_B = P_B + [m_B]Q_B$.
-   * Computes the secret isogeny $\phi_B: E_0 \to E_B \cong E_0 / \langle R_B \rangle$.
-   * His **Public Key** is $(E_B, \phi_B(P_A), \phi_B(Q_A))$.
-
-3. **Shared Secret Computation:**
-   * Alice receives $(E_B, \phi_B(P_A), \phi_B(Q_A))$ and evaluates her secret linear combination on the received points to reconstruct the kernel on $E_B$:
-     $$S_A = \phi_B(P_A) + [m_A]\phi_B(Q_A) = \phi_B(P_A + [m_A]Q_A) = \phi_B(R_A)$$
-   * She computes the secondary isogeny $\phi_A': E_B \to E_{BA} \cong E_B / \langle \phi_B(R_A) \rangle$.
-   * Bob receives $(E_A, \phi_A(P_B), \phi_A(Q_B))$ and analogously evaluates:
-     $$S_B = \phi_A(P_B) + [m_B]\phi_A(Q_B) = \phi_A(P_B + [m_B]Q_B) = \phi_A(R_B)$$
-   * He computes the secondary isogeny $\phi_B': E_A \to E_{AB} \cong E_A / \langle \phi_A(R_B) \rangle$.
-
-By the isomorphism theorems for curves, the codomain curves are isomorphic:
-$$E_{AB} \cong E_0 / \langle R_A, R_B \rangle \cong E_{BA}$$
-The shared secret key is the $j$-invariant $j(E_{AB}) = j(E_{BA})$.
 
 ```{.tikz}
 \usetikzlibrary{arrows.meta, bending, calc}
@@ -94,4 +59,39 @@ The shared secret key is the $j$-invariant $j(E_{AB}) = j(E_{BA})$.
 
 \end{tikzpicture}
 ```
+
+### Public Parameters
+Let $p$ be a prime of the form $p = \ell_A^{e_A} \ell_B^{e_B} \cdot f \pm 1$, where $\ell_A, \ell_B$ are small distinct primes (typically $\ell_A = 2, \ell_B = 3$), $e_A, e_B$ are large exponents, and $f$ is a small cofactor making $p$ prime.
+
+* **Base Curve:** A supersingular elliptic curve $E_0$ over $\mathbb{F}_{p^2}$.
+* **Alice's Torsion Basis:** A basis $\{P_A, Q_A\}$ for the torsion subgroup $E_0[\ell_A^{e_A}]$.
+* **Bob's Torsion Basis:** A basis $\{P_B, Q_B\}$ for the torsion subgroup $E_0[\ell_B^{e_B}]$.
+
+### Key Exchange Execution
+
+1. **Alice's Key Generation:**
+   * Chooses a secret integer $m_A \in \mathbb{Z} / \ell_A^{e_A}\mathbb{Z}$.
+   * Defines her secret kernel generator $R_A = P_A + [m_A]Q_A$.
+   * Computes the secret isogeny $\phi_A: E_0 \to E_A \cong E_0 / \langle R_A \rangle$.
+   * Her **Public Key** is $(E_A, \phi_A(P_B), \phi_A(Q_B))$.
+
+2. **Bob's Key Generation:**
+   * Chooses a secret integer $m_B \in \mathbb{Z} / \ell_B^{e_B}\mathbb{Z}$.
+   * Defines his secret kernel generator $R_B = P_B + [m_B]Q_B$.
+   * Computes the secret isogeny $\phi_B: E_0 \to E_B \cong E_0 / \langle R_B \rangle$.
+   * His **Public Key** is $(E_B, \phi_B(P_A), \phi_B(Q_A))$.
+
+3. **Shared Secret Computation:**
+   * Alice receives $(E_B, \phi_B(P_A), \phi_B(Q_A))$ and evaluates her secret linear combination on the received points to reconstruct the kernel on $E_B$:
+     $$S_A = \phi_B(P_A) + [m_A]\phi_B(Q_A) = \phi_B(P_A + [m_A]Q_A) = \phi_B(R_A)$$
+   * She computes the secondary isogeny $\phi_A': E_B \to E_{BA} \cong E_B / \langle \phi_B(R_A) \rangle$.
+   * Bob receives $(E_A, \phi_A(P_B), \phi_A(Q_B))$ and analogously evaluates:
+     $$S_B = \phi_A(P_B) + [m_B]\phi_A(Q_B) = \phi_A(P_B + [m_B]Q_B) = \phi_A(R_B)$$
+   * He computes the secondary isogeny $\phi_B': E_A \to E_{AB} \cong E_A / \langle \phi_A(R_B) \rangle$.
+
+By the isomorphism theorems for curves, the codomain curves are isomorphic:
+$$E_{AB} \cong E_0 / \langle R_A, R_B \rangle \cong E_{BA}$$
+The shared secret key is the $j$-invariant $j(E_{AB}) = j(E_{BA})$.
+
+
 

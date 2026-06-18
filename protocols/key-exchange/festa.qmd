@@ -1,0 +1,103 @@
+---
+title: "FESTA"
+subtitle: "Fast Encryption from Supersingular Torsion Attacks"
+date: 2026-06-18
+---
+
+## Overview
+
+FESTA is a public-key encryption (PKE) protocol that creatively repurposes the devastating attacks on the Supersingular Isogeny Diffie-Hellman (SIDH) protocol. While SIDH's security was compromised by torsion-point attacks when auxiliary torsion information is revealed, FESTA relies on a novel trapdoor function where these very attacks are leveraged by the legitimate trapdoor holder to invert a one-way function. 
+
+By scaling the revealed torsion points with a secret matrix, FESTA prevents malicious attackers from utilizing the SIDH attacks [@festa]. Using standard transformations (like OAEP), this trapdoor mechanism enables the construction of an efficient IND-CCA secure PKE in the Quantum Random Oracle Model (QROM).
+
+## Protocol Design
+
+The foundation of FESTA is an injective trapdoor function evaluated over supersingular elliptic curves.
+
+```{.tikz}
+\usetikzlibrary{arrows.meta, bending, calc}
+\begin{tikzpicture}[
+  every node/.style={font=\small},
+  arr/.style={-{Stealth}, thick},
+  red arr/.style={arr, red},
+  blue arr/.style={arr, blue}
+]
+
+  % Nodes
+  \node (E0) at (0,   0)  {$E_0$};
+  \node (EA) at (6,   0)  {$E_A$};
+  \node (E1) at (-1.5,-3) {$E_1$};
+  \node (E2) at (7.5, -3) {$E_2$};
+
+  % Labels above E0 and EA (closer to nodes)
+  \node at (0,1.0) {$\left(\begin{array}{c} P_b \\ Q_b \end{array}\right)$};
+  \node at (6,1.1) {$\left(\begin{array}{c} R_A \\ S_A \end{array}\right) = \mathbf{A}\left(\begin{array}{c} \varphi_A(P_b) \\ \varphi_A(Q_b) \end{array}\right)$};
+
+  % Labels below E1 and E2 (closer to nodes)
+  \node at (-1.5,-3.8) {$\mathbf{B}\left(\begin{array}{c} \varphi_1(P_b) \\ \varphi_1(Q_b) \end{array}\right)$};
+  \node at (7.5,-3.8)  {$\mathbf{B}\left(\begin{array}{c} \varphi_2(R_A) \\ \varphi_2(S_A) \end{array}\right)$};
+
+  % Top arrow: E0 -> EA
+  \draw[red arr] (E0) -- node[above, font=\small]{$\varphi_A$} (EA);
+
+  % Left arrow: E0 -> E1
+  \draw[blue arr] (E0) -- node[left, font=\small]{$\varphi_1$} (E1);
+
+  % Right arrow: EA -> E2
+  \draw[blue arr] (EA) -- node[right, font=\small]{$\varphi_2$} (E2);
+
+  % Dashed teal trapezoid arrow: long flat top parallel to and just below E0-EA, short diagonal drops to E1/E2
+  \draw[-{Stealth}, dashed, thick, color={rgb,255:red,0;green,128;blue,128}]
+    (-1.0,-2.6) -- (0.3,-0.5) -- (5.7,-0.5) -- (7.0,-2.6);
+  \node[color={rgb,255:red,0;green,128;blue,128}] at (3,-0.2) {$\psi$};
+
+\end{tikzpicture}
+```
+
+### Global Parameters
+* $E_0$: A starting supersingular elliptic curve defined over $\mathbb{F}_{p^2}$ (chosen with $j(E_0) \neq 0, 1728$ to avoid non-trivial automorphisms).
+* $\langle P_b, Q_b \rangle = E_0[2^b]$: A canonical basis for the $2^b$-torsion on $E_0$.
+* $\mathcal{M}_b$: A set of commutative, invertible diagonal matrices over $(\mathbb{Z}/2^b\mathbb{Z})^\times$ modulo $\langle -I_2 \rangle$.
+
+### Setup and Key Generation
+The trapdoor key generation works as follows:
+
+1.  Compute a secret $d_A$-isogeny $\varphi_A: E_0 \rightarrow E_A$.
+2.  Sample a random matrix $A \in \mathcal{M}_b$.
+3.  Calculate the scaled torsion images on $E_A$: 
+    $$ \begin{pmatrix} R_A \\ S_A \end{pmatrix} = A \begin{pmatrix} \varphi_A(P_b) \\ \varphi_A(Q_b) \end{pmatrix} $$
+* **Secret Key (Trapdoor)**: $(A, \varphi_A)$.
+* **Public Key**: $(E_A, R_A, S_A)$.
+
+### Function Evaluation (Forward Direction)
+To evaluate the one-way function on an input consisting of two isogenies $\varphi_1: E_0 \rightarrow E_1$ (degree $d_1$), $\varphi_2: E_A \rightarrow E_2$ (degree $d_2$), and a matrix $B \in \mathcal{M}_b$:
+
+1.  Compute $\varphi_1: E_0 \rightarrow E_1$ and $\varphi_2: E_A \rightarrow E_2$.
+2.  Scale the torsion basis images under $\varphi_1$ by $B$: 
+    $$ \begin{pmatrix} R_1 \\ S_1 \end{pmatrix} = B \begin{pmatrix} \varphi_1(P_b) \\ \varphi_1(Q_b) \end{pmatrix} $$ 
+3.  Scale the public torsion parameters under $\varphi_2$ by $B$:
+    $$ \begin{pmatrix} R_2 \\ S_2 \end{pmatrix} = B \begin{pmatrix} \varphi_2(R_A) \\ \varphi_2(S_A) \end{pmatrix} $$ 
+* **Output**: The tuple $(E_1, R_1, S_1, E_2, R_2, S_2)$.
+
+Without the knowledge of $A$, the scaling by $B$ (and natively $A$) thoroughly obfuscates the torsion point information, blocking the SIDH attack machinery.
+
+### Trapdoor Inversion 
+The trapdoor owner can invert the function by utilizing the commutativity of matrices $A$ and $B$:
+
+1.  Undo the secret scaling on $E_2$ by applying $d_1 A^{-1}$:
+    $$ \begin{pmatrix} R_2' \\ S_2' \end{pmatrix} = d_1 A^{-1} \begin{pmatrix} R_2 \\ S_2 \end{pmatrix} $$ 
+    Because $A$ and $B$ commute, this effectively isolates the scaling to just $B$, bridging the torsion mappings between $E_1$ and $E_2$.
+2.  The resulting points reflect the exact unscaled images of $R_1, S_1$ under the bridging isogeny $\psi := \varphi_2 \circ \varphi_A \circ \hat{\varphi}_1$.
+3.  Invoke an arbitrary torsion-point attack (e.g., Kani's criterion generalizing to higher dimensions via (2,2)-isogenies) on $(E_1, R_1, S_1, E_2, R_2', S_2')$ to efficiently compute $\psi$.
+4.  Reconstruct the original kernels of $\varphi_1, \varphi_2$ and the matrix $B$ from $\psi$.
+
+## Security Assumptions
+
+FESTA introduces generalized hardness assumptions for the scaled-torsion setting:
+
+* **Decisional Isogeny with Scaled-Torsion (DIST):** Distinguishing a curve and its scaled torsion images (via matrix $A$) from a random supersingular curve and random basis points.
+* **Computational Isogeny with Scaled-Torsion (CIST):** Extracting the isogeny $\varphi$ given $E_0, E_1$, the domain basis, and the scaled target basis $A(\varphi(P_0), \varphi(Q_0))^T$.
+* **Computational Isogeny with Double Scaled-Torsion (CIST 2):** Recovering two distinct isogenies $\varphi, \varphi'$ given two instances of scaled target bases that use the *same* scaling matrix $A$. Theorem 9 proves FESTA's one-wayness reduces to the DIST and CIST 2 assumptions.
+
+## Progress
+

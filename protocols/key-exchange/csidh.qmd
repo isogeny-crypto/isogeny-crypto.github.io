@@ -12,9 +12,9 @@ Because CSIDH provides a truly commutative group action, it is highly versatile 
 
 Unlike SIDH (which uses non-commutative endomorphism rings), CSIDH leverages a **commutative group action** by restricting to supersingular elliptic curves defined over a prime field $\mathbb{F}_p$ whose endomorphism rings are isomorphic to an order in an imaginary quadratic field.
 
----
 
-## Mathematical Foundation {#sec-math-foundation}
+
+## Protocol Design {#foundations}
 
 Let $p$ be a prime of the form $p = 4 \cdot \ell_1 \cdot \ell_2 \cdots \ell_n - 1$, where $\ell_i$ are small, distinct odd primes. 
 
@@ -33,9 +33,7 @@ Where $E[\mathfrak{a}]$ is the intersection of the kernels of all endomorphisms 
 
 $$[\mathfrak{a}] * ([\mathfrak{b}] * E) = ([\mathfrak{a}\mathfrak{b}]) * E = [\mathfrak{b}] * ([\mathfrak{a}] * E)$$
 
----
-
-## Key Exchange Protocol
+### Key Exchange Protocol
 
 The commutativity of the group action allows a direct translation of the classical Diffie-Hellman matrix or exponentiation paradigm.
 
@@ -46,25 +44,7 @@ The commutativity of the group action allows a direct translation of the classic
 | | $\xleftarrow{\quad E_B \quad}$ | Computes $E_B = [\mathfrak{b}] * E_0$ |
 | Computes $E_{BA} = [\mathfrak{a}] * E_B$ | | Computes $E_{AB} = [\mathfrak{b}] * E_A$ |
 
-> **Shared Secret:** Since the group action commutes, $E_{BA} = E_{AB}$. The Montgomery coefficient $A \in \mathbb{F}_p$ of this final curve serves as the shared cryptographic secret.
-
-```{.tikz}
-\usetikzlibrary{arrows.meta}
-\begin{tikzpicture}
-
-  \node (E0)  at (3, 4)  {$E_0$};
-  \node (EA)  at (0, 2)  {$E_A = [\mathrm{a}] * E_0$};
-  \node (EB)  at (6, 2)  {$E_B = [\mathrm{b}] * E_0$};
-  \node (EAB) at (3, 0)  {$E_{AB} = E_{BA}$};
-
-  \draw[-{Stealth}, thick] (E0)  -- node[left,  midway] {$[\mathrm{a}]$} (EA);
-  \draw[-{Stealth}, thick] (E0)  -- node[right, midway] {$[\mathrm{b}]$} (EB);
-  \draw[-{Stealth}, thick] (EA)  -- node[right, midway] {$[\mathrm{b}]$} (EAB);
-  \draw[-{Stealth}, thick] (EB)  -- node[left,  midway] {$[\mathrm{a}]$} (EAB);
-
-\end{tikzpicture}
-```
-
+**Shared Secret:** Since the group action commutes, $E_{BA} = E_{AB}$. The Montgomery coefficient $A \in \mathbb{F}_p$ of this final curve serves as the shared cryptographic secret.
 $$
 E_{AB}
 =
@@ -79,15 +59,5 @@ E_{AB}
 E_{BA}.
 $$
 
----
-
-## Performance and Parameter Sets
-
-CSIDH parameters are evaluated by their quantum security levels (NIST categories) against advanced sieve algorithms like Kuperberg's hidden shift algorithm.
-
-| Parameter Set | Prime Bits ($\log_2 p$) | Public Key Size | Key Exchange Speed |
-|---|---|---|---|
-| **CSIDH-512** | 511 bits | 64 Bytes | ~30-100 ms |
-| **CSIDH-1024** | 1024 bits | 128 Bytes | ~200-500 ms |
 
 
