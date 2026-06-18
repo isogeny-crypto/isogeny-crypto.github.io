@@ -55,6 +55,7 @@ The foundation of FESTA is an injective trapdoor function evaluated over supersi
 ```
 
 ### Global Parameters
+* $p$: A prime defined as $2^b d_1 (d_A)_{sf} d_2 f - 1$, where $d_1, d_2, d_A$ are smooth numbers and $(d_A)_{sf}$ is the square free part of $d_A$.
 * $E_0$: A starting supersingular elliptic curve defined over $\mathbb{F}_{p^2}$ (chosen with $j(E_0) \neq 0, 1728$ to avoid non-trivial automorphisms).
 * $\langle P_b, Q_b \rangle = E_0[2^b]$: A canonical basis for the $2^b$-torsion on $E_0$.
 * $\mathcal{M}_b$: A set of commutative, invertible diagonal matrices over $(\mathbb{Z}/2^b\mathbb{Z})^\times$ modulo $\langle -I_2 \rangle$.
