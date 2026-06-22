@@ -46,4 +46,4 @@ Because CSIDH naturally affords efficient public-key validation, it avoids vulne
 
 TODO
 
-2023/793 and 2020/118
+2023/793 and 2020/1188
