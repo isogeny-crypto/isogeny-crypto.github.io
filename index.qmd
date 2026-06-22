@@ -12,7 +12,7 @@ Welcome to the **Isogeny-based Cryptography Wiki**. This site serves as an open-
 
 If you are not familiar with the concept of cryptographic protocols, we recommend referring to the [notes by Dan Boneh and Victor Shoup](https://toc.cryptobook.us/).
 
-This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes and digital signature schemes.
+This wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption schemes and digital signature schemes.
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -31,6 +31,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes and
 - [FESTA](protocols/key-exchange/festa.qmd) (2023)
 - binSIDH/terSIDH (2023)
 - [QFESTA](protocols/key-exchange/qfesta.qmd) (2024)
+- TOGA (2024)
 - SILBE (2024)
 - POKÉ (2025)
 - LIT-SiGamal (2025)
