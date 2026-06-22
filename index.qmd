@@ -29,9 +29,8 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes and
 - BDKLP (2022)
 - M(D)-SIDH (2023)
 - [FESTA](protocols/key-exchange/festa.qmd) (2023)
-- binSIDH (2023)
-- terSIDH (2023)
-- QFESTA (2024)
+- binSIDH/terSIDH (2023)
+- [QFESTA](protocols/key-exchange/qfesta.qmd) (2024)
 - SILBE (2024)
 - POKÉ (2025)
 - LIT-SiGamal (2025)
@@ -69,8 +68,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes and
 - SPIDER (2026)
 - ORCAS (2026)
 - SQIsign2DPush (2026)
-- WaterSQI (2026)
-- PRISMO (2026)
+- WaterSQI/PRISMO (2026)
 - Wombat (2026)
 :::
 ::::

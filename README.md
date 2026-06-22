@@ -183,3 +183,16 @@ At build time, `fetch_contributors.py` queries the GitHub API for the commit his
 - Do not edit `.contributors/` manually — it is regenerated on every full build and is gitignored.
 - New files will show "Pending GitHub sync..." until your first push, because the script queries the remote repository's commit history.
 - Contributor snippets are matched to pages by the `title:` field in each `.qmd`'s YAML frontmatter. Make sure every protocol page has a unique, stable title.
+
+## Template 
+
+Upload the paper to an LLM model (I used Google Gemini Pro) with the following prompt:
+
+```
+Study the attached file and generate a qmd format detailed and precise description of the new protocol introduced. Target audience is researcher working isogeny-based cryptography. Organize information in following headings:
+1. Overview
+2. Protocol Design
+3. Security Assumptions
+```
+
+Iterate until you get a good initial draft. Then proof read and make necessary edits like adding `tikz` diagram (generated from screenshot using Anthropic Claude Sonnet) of the protocol, references, and hyperlinks.

@@ -6,9 +6,14 @@ date: 2026-06-12
 
 ## Overview
 
-The Supersingular Isogeny Diffie-Hellman (SIDH) protocol, introduced by Jao and De Feo [@sidh], was a NIST post-quantum key-exchange candidate. 
+>  It was a [NIST PQC competition](https://sike.org/) candidate but is now broken. 
+
+The Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange protocol designed to be secure against quantum computer attacks. Diffie-Hellman-type protocols inherently require commutativity to establish a shared secret [@sidh]. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input. 
 
 ## Protocol Design
+
+The protocol dictates that Alice and Bob conduct random walks on two distinct isogeny graphs (of degrees $\ell_A$ and $\ell_B$ respectively) and use auxiliary points to arrive at an isomorphic destination curve.
+
 
 ```{.tikz}
 \usetikzlibrary{arrows.meta, bending, calc}
@@ -23,8 +28,8 @@ The Supersingular Isogeny Diffie-Hellman (SIDH) protocol, introduced by Jao and 
   \node (E0)  at (0,   0)    {$E_0$};
   \node (EA)  at (5,   2.5)  {$E_A$};
   \node (EB)  at (5,  -2.5)  {$E_B$};
-  \node (EAB) at (10,  0.15) {$E_{AB}$};
-  \node (EBA) at (10, -0.35) {$E_{BA}$};
+  \node (EBA) at (10,  0.15) {$E_{BA}$};
+  \node (EAB) at (10, -0.35) {$E_{AB}$};
   \node at    (10,  -0.1)    {$\|$};
 
   % E0 -> EA (red, solid)
@@ -47,51 +52,50 @@ The Supersingular Isogeny Diffie-Hellman (SIDH) protocol, introduced by Jao and 
   \draw[-{Stealth}, dashed, red, thick] ($(EA)!0.05!(EB) + (0.15,0)$)
     -- ($(EA)!0.95!(EB) + (0.15,0)$);
 
-  % EA -> EAB (blue, solid)
+  % EA -> EBA (blue, solid)
   \draw[blue arr] (EA) -- node[above, sloped, font=\scriptsize]{
     $\mathrm{ker}(\phi'_B) = \langle [m_B]\phi_A(P_B) + [n_B]\phi_A(Q_B) \rangle$}
-    (EAB);
+    (EBA);
 
-  % EB -> EBA (red, solid)
+  % EB -> EAB (red, solid)
   \draw[red arr] (EB) -- node[below, sloped, font=\scriptsize]{
     $\mathrm{ker}(\phi'_A) = \langle [m_A]\phi_B(P_A) + [n_A]\phi_B(Q_A) \rangle$}
-    (EBA);
+    (EAB);
 
 \end{tikzpicture}
 ```
 
-### Public Parameters
-Let $p$ be a prime of the form $p = \ell_A^{e_A} \ell_B^{e_B} \cdot f \pm 1$, where $\ell_A, \ell_B$ are small distinct primes (typically $\ell_A = 2, \ell_B = 3$), $e_A, e_B$ are large exponents, and $f$ is a small cofactor making $p$ prime.
+### Public Parameters Setup
+* The scheme is defined over a finite field $\mathbb{F}_{p^2}$ where the prime $p$ is of the form $p = \ell_A^{e_A} \ell_B^{e_B} \cdot f \pm 1$. Here, $\ell_A$ and $\ell_B$ are small primes (typically 2 and 3), and $f$ is a small cofactor.
+* A base supersingular curve $E_0$ defined over $\mathbb{F}_{p^2}$ is fixed as a public parameter.
+* Two sets of bases are published: $\{P_A, Q_A\}$, which generates the torsion group $E_0[\ell_A^{e_A}]$, and $\{P_B, Q_B\}$, which generates $E_0[\ell_B^{e_B}]$.
 
-* **Base Curve:** A supersingular elliptic curve $E_0$ over $\mathbb{F}_{p^2}$.
-* **Alice's Torsion Basis:** A basis $\{P_A, Q_A\}$ for the torsion subgroup $E_0[\ell_A^{e_A}]$.
-* **Bob's Torsion Basis:** A basis $\{P_B, Q_B\}$ for the torsion subgroup $E_0[\ell_B^{e_B}]$.
+### Alice's Key Generation
+* Alice chooses two random elements $m_A, n_A \in \mathbb{Z}/\ell_A^{e_A}\mathbb{Z}$, ensuring they are not both divisible by $\ell_A$.
+* She computes a secret isogeny $\phi_A : E_0 \rightarrow E_A$ characterized by the kernel $K_A := \langle [m_A]P_A + [n_A]Q_A \rangle$.
+* To allow Bob to complete the exchange, she evaluates her secret isogeny on Bob's basis points, yielding $\phi_A(P_B)$ and $\phi_A(Q_B)$.
+* Alice's public key sent to Bob is the tuple $(E_A, \phi_A(P_B), \phi_A(Q_B))$.
 
-### Key Exchange Execution
+### Bob's Key Generation
+* Bob correspondingly selects random elements $m_B, n_B \in \mathbb{Z}/\ell_B^{e_B}\mathbb{Z}$.
+* He computes his secret isogeny $\phi_B : E_0 \rightarrow E_B$ defined by the kernel $K_B := \langle [m_B]P_B + [n_B]Q_B \rangle$.
+* Bob evaluates his isogeny on Alice's basis points to produce $\phi_B(P_A)$ and $\phi_B(Q_A)$.
+* Bob's public key sent to Alice is the tuple $(E_B, \phi_B(P_A), \phi_B(Q_A))$.
 
-1. **Alice's Key Generation:**
-   * Chooses a secret integer $m_A \in \mathbb{Z} / \ell_A^{e_A}\mathbb{Z}$.
-   * Defines her secret kernel generator $R_A = P_A + [m_A]Q_A$.
-   * Computes the secret isogeny $\phi_A: E_0 \to E_A \cong E_0 / \langle R_A \rangle$.
-   * Her **Public Key** is $(E_A, \phi_A(P_B), \phi_A(Q_B))$.
+### Shared Key Derivation
+* Upon receiving Bob's public key, Alice calculates a new isogeny $\phi'_A : E_B \rightarrow E_{AB}$ utilizing the evaluated points Bob sent. Her new kernel is $\langle [m_A]\phi_B(P_A) + [n_A]\phi_B(Q_A) \rangle$.
+* Concurrently, Bob computes a new isogeny $\phi'_B : E_A \rightarrow E_{BA}$ utilizing Alice's evaluated points, with the kernel $\langle [m_B]\phi_A(P_B) + [n_B]\phi_A(Q_B) \rangle$.
+* The curves $E_{AB}$ and $E_{BA}$ are isomorphic, allowing both parties to establish a common shared key by computing the $j$-invariant $j(E_{AB})$.
 
-2. **Bob's Key Generation:**
-   * Chooses a secret integer $m_B \in \mathbb{Z} / \ell_B^{e_B}\mathbb{Z}$.
-   * Defines his secret kernel generator $R_B = P_B + [m_B]Q_B$.
-   * Computes the secret isogeny $\phi_B: E_0 \to E_B \cong E_0 / \langle R_B \rangle$.
-   * His **Public Key** is $(E_B, \phi_B(P_A), \phi_B(Q_A))$.
+## Security Assumptions
 
-3. **Shared Secret Computation:**
-   * Alice receives $(E_B, \phi_B(P_A), \phi_B(Q_A))$ and evaluates her secret linear combination on the received points to reconstruct the kernel on $E_B$:
-     $$S_A = \phi_B(P_A) + [m_A]\phi_B(Q_A) = \phi_B(P_A + [m_A]Q_A) = \phi_B(R_A)$$
-   * She computes the secondary isogeny $\phi_A': E_B \to E_{BA} \cong E_B / \langle \phi_B(R_A) \rangle$.
-   * Bob receives $(E_A, \phi_A(P_B), \phi_A(Q_B))$ and analogously evaluates:
-     $$S_B = \phi_A(P_B) + [m_B]\phi_A(Q_B) = \phi_A(P_B + [m_B]Q_B) = \phi_A(R_B)$$
-   * He computes the secondary isogeny $\phi_B': E_A \to E_{AB} \cong E_A / \langle \phi_A(R_B) \rangle$.
+* **Hardness Problem:** The scheme relies on the conjectured difficulty of finding an isogeny between two supersingular elliptic curves. 
+* **Auxiliary Input Security:** A unique characteristic of SIDH is the publication of the evaluated torsion basis points (the auxiliary input required for commutativity). The authors state that providing these outputs does not appear to make the underlying problem of finding the secret isogenies any easier.
+* **Resistance to Quantum Group Actions:** Because the protocol is not fundamentally based on an abelian group action, it is completely immune to the subexponential quantum attacks that rendered ordinary isogeny networks insecure.
 
-By the isomorphism theorems for curves, the codomain curves are isomorphic:
-$$E_{AB} \cong E_0 / \langle R_A, R_B \rangle \cong E_{BA}$$
-The shared secret key is the $j$-invariant $j(E_{AB}) = j(E_{BA})$.
+## Progress
+
+TODO
 
 
 

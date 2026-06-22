@@ -1,0 +1,125 @@
+---
+title: "QFESTA"
+subtitle: "Quaternion Fast Encryption from Supersingular Torsion Attacks"
+date: 2026-06-22
+---
+
+## Overview
+
+QFESTA (Quaternion Fast Encapsulation from Supersingular Torsion Attacks) is a new isogeny-based public-key encryption (PKE) and key encapsulation mechanism (KEM) based on the [FESTA](/protocols/key-exchange/festa.qmd) protocol [@qfesta]. 
+
+FESTA uses the SIDH attack machinery for decryption, which natively imposes strong smoothness constraints on the degrees of the underlying isogenies ($d_A, d_1, d_2$), forcing them to be large and leading to significant data sizes and computational overhead. To circumvent these limitations, QFESTA introduces a novel technique leveraging quaternion algebras to compute the codomain and point images of non-smooth degree isogenies from a special starting curve. This eliminates the smoothness restriction for degrees $d_A$ and $d_1$, vastly shrinking parameter sizes.
+
+## Protocol Design
+
+The main innovation in QFESTA's design is the sub-algorithm `RandIsogImages`, which evaluates non-smooth degree isogenies using Kani's lemma and quaternion endomorphisms. Finally, to achieve indistinguishability against chosen ciphertext attacks (IND-CCA) in the quantum random oracle model (QROM), the core One-Way Chosen Plaintext Attack (OW-CPA) secure PKE is wrapped using the Fujisaki-Okamoto ($FO^{\not\perp}$) transform.
+
+### The `RandIsogImages` Algorithm
+Given a special supersingular elliptic curve $E_0/\mathbb{F}_{p^2}$ with $j$-invariant 1728, its known maximal order $\mathcal{O}_0 \cong \text{End}(E_0)$, and an target non-smooth isogeny degree $d$:
+
+```{.tikz}
+\usetikzlibrary{arrows.meta, bending}
+\begin{tikzpicture}[
+  every node/.style={font=\large},
+  arr/.style={-{Stealth}, thick}
+]
+
+  % Nodes
+  \node (E0) at (0,0) {$E_0$};
+  \node (EA) at (6,0) {$E_A$};
+
+  % Top arc (red, solid): E0 -> EA, labeled tau: d-isogeny
+  \draw[arr, red] (E0) to[bend left=35] node[above, font=\normalsize, yshift=2pt]{$\tau: d\mathrm{-isogeny}$} (EA);
+
+  % Bottom arc (black, dashed): EA -> E0, labeled rho: (D-d)-isogeny
+  \draw[arr, dashed] (EA) to[bend left=35] node[below, font=\normalsize, yshift=-2pt]{$\rho: (D-d)\mathrm{-isogeny}$} (E0);
+
+  % alpha: a smooth elongated self-loop at E0, turning near EA with a rounded (non-pointed) tip
+  \draw[arr]
+    (E0) .. controls (1.8,0.5) and (3.6,0.5) .. (4.7,0.35)
+         .. controls (5.35,0.2) and (5.35,-0.2) .. (4.7,-0.35)
+         .. controls (3.6,-0.5) and (1.8,-0.5) .. (E0);
+  \node[font=\normalsize] at (3,0) {$\alpha$};
+
+\end{tikzpicture}
+```
+
+* A smooth integer $D = 2^{3a}$ is chosen such that $E_0[D] \subset E_0(\mathbb{F}_{p^2})$ and $D - d \approx p$.
+* The algorithm computes an element $\alpha \in \mathcal{O}_0$ with a reduced norm of $d(D-d)$ using an extension of Cornacchia's algorithm (`FullRepresentInteger`).
+* The quaternion element $\alpha$ is formally decomposed into $\hat{\rho} \circ \tau$, where $\tau$ and $\rho$ are isogenies of degrees $d$ and $D-d$, respectively.
+* By leveraging Kani's lemma (via SIDH attack components like `CodomainByKani` and `EvalByKani`), the algorithm extracts the codomain of $\tau$ and the images of arbitrary torsion points under $\tau$ entirely through (2,2)-isogeny chains.
+
+### Key Generation
+
+```{.tikz}
+\usetikzlibrary{arrows.meta, bending, calc}
+\begin{tikzpicture}[
+  every node/.style={font=\small},
+  arr/.style={-{Stealth}, thick},
+  red arr/.style={arr, red},
+  blue arr/.style={arr, blue}
+]
+
+  % Nodes
+  \node (E0)  at (0,   0)  {$E_0$};
+  \node (EA1) at (3.2, 0)  {$E_{A,1}$};
+  \node (EA)  at (6.4, 0)  {$E_A$};
+  \node (E1)  at (0,  -4)  {$E_1$};
+  \node (E2)  at (6.4,-4)  {$E_2$};
+
+  % Top row factorization: E0 -> EA1 -> EA
+  \draw[red arr] (E0)  -- node[below, font=\small, yshift=1pt]{{\footnotesize{$\phi_{A,1}: d_{A,1}\mathrm{-isogeny}$}}} (EA1);
+  \draw[red arr] (EA1) -- node[below, font=\small, yshift=1pt, xshift=-12pt]{{\footnotesize{$\phi_{A,2}: 3^b\mathrm{-isogeny}$}}} (EA);
+
+  % Top arc: E0 -> EA (overall isogeny), bends well above the straight-line labels
+  \draw[red arr] (E0) to[bend left=25] node[above, font=\small, yshift=1pt]{$\phi_A$} (EA);
+
+  % Labels above E0 and EA, placed above the arc's peak
+  \node at (0,1.6) {$\left(\begin{array}{c} P_0 \\ Q_0 \end{array}\right)$};
+  \node at (6.9,1.6) {$\left(\begin{array}{c} R_A \\ S_A \end{array}\right) = \mathbf{A}\left(\begin{array}{c} \phi_A(P_0) \\ \phi_A(Q_0) \end{array}\right)$};
+
+  % Labels below E1 and E2
+  \node at (0,-4.9) {$\left(\begin{array}{c} R_1 \\ S_1 \end{array}\right) = \mathbf{B}\left(\begin{array}{c} \phi_1(P_0) \\ \phi_1(Q_0) \end{array}\right)$};
+  \node at (6.4,-4.9)  {$\left(\begin{array}{c} R_2 \\ S_2 \end{array}\right) = \mathbf{B}\left(\begin{array}{c} \phi_2(R_A) \\ \phi_2(S_A) \end{array}\right)$};
+
+  % Left arrow: E0 -> E1
+  \draw[blue arr] (E0) -- node[left, font=\small]{$\phi_1: d_1\mathrm{-isogeny}$} (E1);
+
+  % Right arrow: EA -> E2
+  \draw[blue arr] (EA) -- node[right, font=\small]{$\phi_2: 3^{2b}\mathrm{-isogeny}$} (E2);
+
+  % Dashed bracket 1 (psi_1): from below E0 across to just before EA1
+  \draw[dashed, thick] (0.4,-0.6) -- (2.9,-0.6);
+  \draw[-{Stealth}, dashed, thick] (0.4,-0.6) -- (0.4,-3.55);
+  \node[font=\small] at (1.6,-1.0) {$\psi_1$};
+
+  % Dashed bracket 2 (psi_2): from just after EA1 across to below EA, then drops to E2
+  % Gap between 2.9 and 3.5 makes the line visibly break right below EA1
+  \draw[dashed, thick] (3.5,-0.6) -- (6.0,-0.6);
+  \draw[-{Stealth}, dashed, thick] (6.0,-0.6) -- (6.0,-3.55);
+  \node[font=\small] at (4.8,-1.0) {$\psi_2$};
+
+\end{tikzpicture}
+```
+
+* **Parameters:** Uses a system parameter set containing $(p, a, b, d_{A,1}, d_1, E_0, \mathcal{O}_0, P_0, Q_0)$.
+* **Secret Isogeny $\phi_A$:** A random non-smooth degree $d_{A,1}$-isogeny is generated from $E_0 \to E_{A,1}$ via `RandIsogImages`, followed by a random $3^b$-isogeny to the final public curve $E_A$.
+* **Masking:** Torsion points on $E_A$ are masked using a randomly sampled matrix $\mathbf{A} \in M_2(\mathbb{Z}/2^{3a}\mathbb{Z})$.
+* **Keys:** The public key `pk` consists of the curve $E_A$ and the masked points $(R_A, S_A)$. The secret key `sk` contains the isogeny path representations and the matrix $\mathbf{A}$.
+
+### Encryption and Decryption
+* **Encryption:** To encrypt a message $m \in \{0, 1\}^{3a-2}$, the sender encodes it into a diagonal masking matrix $\mathbf{B} = \text{diag}(s_B, s_B^{-1})$ where $s_B = 2m+1$. The sender generates a $d_1$-isogeny to a curve $E_1$ using `RandIsogImages` and a $3^{2b}$-isogeny from $E_A$ to $E_2$. The output ciphertext encapsulates these curves and points masked by $\mathbf{B}$.
+* **Decryption:** Utilizing the secret isogeny $\phi_A$ and the `EvalByKani` algorithm, the receiver can reconstruct the commutative diagrams necessary to unmask the points and solve a discrete logarithm (via Weil or Tate pairings) to retrieve the matrix $\mathbf{B}$, and consequently the message $m$.
+
+## Security Assumptions
+
+The core OW-CPA security of the QFESTA PKE relies on specialized variants of FESTA's distinguishing and computational problems. 
+
+* **Pseudorandomness of `RandIsogImages`:** The foundational assumption assumes that the codomain elliptic curve $E_1$ and its mapped torsion points $(P_1, Q_1)$ produced by `RandIsogImages` are computationally indistinguishable from a tuple drawn uniformly at random from valid configurations.
+* **Variant DIST Problem:** The security proof extends this to the public keys themselves, assuming an adversary cannot distinguish the legitimate masked points $(R_A, S_A)$ on $E_A$ from uniformly random torsion points.
+* **Hardness of Isogeny Recovery:** Finding the secret isogenies ($\phi_A, \phi_1, \phi_2$) given the degrees ($d_A, d_1, d_2$) requires $O(2^{\lambda})$ operations classically and $O(2^{\lambda/2})$ operations via quantum attacks (using Grover's algorithm or meet-in-the-middle strategies), satisfying the targeted security levels.
+* **Resistance to Castryck-Vercauteren Attack:** This specific polynomial-time attack is circumvented by carefully selecting the public basis $(P_0, Q_0) \in E_0[2^{3a}]$. The protocol computes endomorphism representations of these points and verifies that the shortest vector in the resulting Euclidean lattice has a norm greater than $2^{1.5\lambda}$, guaranteeing security against $\lambda$-bit complexity attacks.
+
+## Progress
+
+TODO
