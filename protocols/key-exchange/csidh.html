@@ -372,6 +372,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/qfesta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">QFESTA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SIDH</span></a>
   </div>
@@ -406,13 +412,22 @@ window.Quarto = {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
-  <li><a href="#foundations" id="toc-foundations" class="nav-link" data-scroll-target="#foundations"><span class="header-section-number">2</span> Protocol Design</a>
+  <li><a href="#protocol-design" id="toc-protocol-design" class="nav-link" data-scroll-target="#protocol-design"><span class="header-section-number">2</span> Protocol Design</a>
   <ul class="collapse">
-  <li><a href="#the-curve-space" id="toc-the-curve-space" class="nav-link" data-scroll-target="#the-curve-space"><span class="header-section-number">2.1</span> The Curve Space</a></li>
-  <li><a href="#the-class-group-action" id="toc-the-class-group-action" class="nav-link" data-scroll-target="#the-class-group-action"><span class="header-section-number">2.2</span> The Class Group Action</a></li>
-  <li><a href="#key-exchange-protocol" id="toc-key-exchange-protocol" class="nav-link" data-scroll-target="#key-exchange-protocol"><span class="header-section-number">2.3</span> Key Exchange Protocol</a></li>
+  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters"><span class="header-section-number">2.1</span> Parameters</a></li>
+  <li><a href="#endomorphism-ring-isogenies" id="toc-endomorphism-ring-isogenies" class="nav-link" data-scroll-target="#endomorphism-ring-isogenies"><span class="header-section-number">2.2</span> Endomorphism Ring &amp; Isogenies</a></li>
+  <li><a href="#private-key" id="toc-private-key" class="nav-link" data-scroll-target="#private-key"><span class="header-section-number">2.3</span> Private Key</a></li>
+  <li><a href="#public-key" id="toc-public-key" class="nav-link" data-scroll-target="#public-key"><span class="header-section-number">2.4</span> Public Key</a></li>
+  <li><a href="#key-exchange" id="toc-key-exchange" class="nav-link" data-scroll-target="#key-exchange"><span class="header-section-number">2.5</span> Key Exchange</a></li>
   </ul></li>
-  <li><span class="header-section-number">3</span> References</li>
+  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a>
+  <ul class="collapse">
+  <li><a href="#key-recovery-problem" id="toc-key-recovery-problem" class="nav-link" data-scroll-target="#key-recovery-problem"><span class="header-section-number">3.1</span> Key Recovery Problem</a></li>
+  <li><a href="#quantum-security" id="toc-quantum-security" class="nav-link" data-scroll-target="#quantum-security"><span class="header-section-number">3.2</span> Quantum Security</a></li>
+  <li><a href="#chosen-ciphertext-security" id="toc-chosen-ciphertext-security" class="nav-link" data-scroll-target="#chosen-ciphertext-security"><span class="header-section-number">3.3</span> Chosen-Ciphertext Security</a></li>
+  </ul></li>
+  <li><a href="#progress" id="toc-progress" class="nav-link" data-scroll-target="#progress"><span class="header-section-number">4</span> Progress</a></li>
+  <li><span class="header-section-number">5</span> References</li>
   </ul>
 </nav>
     </div>
@@ -441,7 +456,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">June 18, 2026</p>
+      <p class="date-modified">June 22, 2026</p>
     </div>
   </div>
     
@@ -454,83 +469,57 @@ window.Quarto = {
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p><strong>CSIDH</strong> (Commutative Supersingular Isogeny Diffie-Hellman) is a post-quantum key exchange protocol proposed by Castryck et al. <span class="citation" data-cites="csidh">[<a href="#ref-csidh" role="doc-biblioref">CLMP18</a>]</span>. It serves as an isogeny-based analogue to traditional Diffie-Hellman key exchange, built on the framework of Couveignes, Rostovtsev, and Stolbunov (CRS).</p>
-<p>Because CSIDH provides a truly commutative group action, it is highly versatile and serves as the mathematical foundation for more advanced primitives, such as the isogeny-based signature scheme <a href="../../protocols/digital-signature/csi-fish.html">CSI-FiSh</a>.</p>
-<p>Unlike SIDH (which uses non-commutative endomorphism rings), CSIDH leverages a <strong>commutative group action</strong> by restricting to supersingular elliptic curves defined over a prime field <span class="math inline">\(\mathbb{F}_p\)</span> whose endomorphism rings are isomorphic to an order in an imaginary quadratic field.</p>
+<p>CSIDH is a post-quantum commutative group action that enables efficient non-interactive key exchange <span class="citation" data-cites="csidh">[<a href="#ref-csidh" role="doc-biblioref">CLMP18</a>]</span>. The construction adapts the layout of earlier cryptosystems proposed by <a href="https://eprint.iacr.org/2006/291">Couveignes</a> and <a href="https://eprint.iacr.org/2006/145">Rostovtsev-Stolbunov</a>, but replaces the use of ordinary elliptic curves with supersingular elliptic curves defined over a large prime field <span class="math inline">\(\mathbb{F}_p\)</span> . A key advantage of using supersingular curves over <span class="math inline">\(\mathbb{F}_p\)</span> (for <span class="math inline">\(p \ge 5\)</span>) is that they always have exactly <span class="math inline">\(p + 1\)</span> rational points, which trivially yields the highly composite order needed for efficiency.</p>
 </section>
-<section id="foundations" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="foundations"><span class="header-section-number">2</span> Protocol Design</h2>
-<p>Let <span class="math inline">\(p\)</span> be a prime of the form <span class="math inline">\(p = 4 \cdot \ell_1 \cdot \ell_2 \cdots \ell_n - 1\)</span>, where <span class="math inline">\(\ell_i\)</span> are small, distinct odd primes.</p>
-<section id="the-curve-space" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="the-curve-space"><span class="header-section-number">2.1</span> The Curve Space</h3>
-<p>We consider the set <span class="math inline">\(\mathcal{S}_R\)</span> of <span class="math inline">\(\mathbb{F}_p\)</span>-isomorphism classes of supersingular elliptic curves <span class="math inline">\(E/\mathbb{F}_p\)</span> whose <span class="math inline">\(\mathbb{F}_p\)</span>-endomorphism ring <span class="math inline">\(\text{End}_{\mathbb{F}_p}(E)\)</span> is exactly the order <span class="math inline">\(R = \mathbb{Z}[\pi]\)</span>, where <span class="math inline">\(\pi\)</span> is the Frobenius endomorphism satisfying <span class="math inline">\(\pi^2 = -p\)</span>. These curves can be written in Montgomery form:</p>
-<p><span class="math display">\[E_A: y^2 = x^3 + Ax^2 + x\]</span></p>
+<section id="protocol-design" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="protocol-design"><span class="header-section-number">2</span> Protocol Design</h2>
+<p>The core of the CSIDH protocol is based on the free and transitive action of the ideal-class group <span class="math inline">\(cl(\mathcal{O})\)</span> on the set of <span class="math inline">\(\mathbb{F}_p\)</span>-isomorphism classes of supersingular elliptic curves with an <span class="math inline">\(\mathbb{F}_p\)</span>-rational endomorphism ring isomorphic to <span class="math inline">\(\mathcal{O}\)</span>.</p>
+<section id="parameters" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="parameters"><span class="header-section-number">2.1</span> Parameters</h3>
+<p>The protocol fixes a large prime <span class="math inline">\(p\)</span> of the form <span class="math inline">\(4 \cdot \ell_1 \cdots \ell_n - 1\)</span>, where <span class="math inline">\(\ell_i\)</span> are small, distinct odd primes. The base curve is defined as <span class="math inline">\(E_0 : y^2 = x^3 + x\)</span> over <span class="math inline">\(\mathbb{F}_p\)</span>. The requirement that <span class="math inline">\(p \equiv 3 \pmod 4\)</span> ensures that <span class="math inline">\(E_0\)</span> is supersingular and permits the use of efficient Montgomery arithmetic.</p>
 </section>
-<section id="the-class-group-action" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="the-class-group-action"><span class="header-section-number">2.2</span> The Class Group Action</h3>
-<p>The ideal class group <span class="math inline">\(\text{Cl}(R)\)</span> acts freely and transitively on the set <span class="math inline">\(\mathcal{S}_R\)</span>. Given an ideal class <span class="math inline">\([\mathfrak{a}] \in \text{Cl}(R)\)</span> and a curve class <span class="math inline">\([E] \in \mathcal{S}_R\)</span>, the group action is defined via the idealisogeny:</p>
-<p><span class="math display">\[[\mathfrak{a}] * E = E / E[\mathfrak{a}]\]</span></p>
-<p>Where <span class="math inline">\(E[\mathfrak{a}]\)</span> is the intersection of the kernels of all endomorphisms in <span class="math inline">\(\mathfrak{a}\)</span>. Because <span class="math inline">\(\text{Cl}(R)\)</span> is an abelian group, the action commutes:</p>
-<p><span class="math display">\[[\mathfrak{a}] * ([\mathfrak{b}] * E) = ([\mathfrak{a}\mathfrak{b}]) * E = [\mathfrak{b}] * ([\mathfrak{a}] * E)\]</span></p>
+<section id="endomorphism-ring-isogenies" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="endomorphism-ring-isogenies"><span class="header-section-number">2.2</span> Endomorphism Ring &amp; Isogenies</h3>
+<p>The Frobenius endomorphism <span class="math inline">\(\pi\)</span> of <span class="math inline">\(E_0\)</span> satisfies <span class="math inline">\(\pi^2 = -p\)</span>, giving an <span class="math inline">\(\mathbb{F}_p\)</span>-rational endomorphism ring of <span class="math inline">\(\mathcal{O} = \mathbb{Z}[\pi]\)</span>. Because <span class="math inline">\(\pi^2 - 1 \equiv 0 \pmod{\ell_i}\)</span>, the ideals <span class="math inline">\(\ell_i\mathcal{O}\)</span> split into Elkies primes <span class="math inline">\(\mathfrak{l}_i = (\ell_i, \pi - 1)\)</span> and <span class="math inline">\(\bar{\mathfrak{l}}_i = (\ell_i, \pi + 1)\)</span>. The isogenies for <span class="math inline">\(\mathfrak{l}_i\)</span> can be evaluated efficiently because their kernels are generated by points of order <span class="math inline">\(\ell_i\)</span> that lie in the kernel of <span class="math inline">\(\pi - 1\)</span>, meaning they are rational over the base field <span class="math inline">\(\mathbb{F}_p\)</span>.</p>
 </section>
-<section id="key-exchange-protocol" class="level3" data-number="2.3">
-<h3 data-number="2.3" class="anchored" data-anchor-id="key-exchange-protocol"><span class="header-section-number">2.3</span> Key Exchange Protocol</h3>
-<p>The commutativity of the group action allows a direct translation of the classical Diffie-Hellman matrix or exponentiation paradigm.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Alice</th>
-<th style="text-align: center;">Public</th>
-<th style="text-align: center;">Bob</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">Chooses secret ideal <span class="math inline">\([\mathfrak{a}]\)</span></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Chooses secret ideal <span class="math inline">\([\mathfrak{b}]\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">Computes <span class="math inline">\(E_A = [\mathfrak{a}] * E_0\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\xrightarrow{\quad E_A \quad}\)</span></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><span class="math inline">\(\xleftarrow{\quad E_B \quad}\)</span></td>
-<td style="text-align: center;">Computes <span class="math inline">\(E_B = [\mathfrak{b}] * E_0\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">Computes <span class="math inline">\(E_{BA} = [\mathfrak{a}] * E_B\)</span></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Computes <span class="math inline">\(E_{AB} = [\mathfrak{b}] * E_A\)</span></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Shared Secret:</strong> Since the group action commutes, <span class="math inline">\(E_{BA} = E_{AB}\)</span>. The Montgomery coefficient <span class="math inline">\(A \in \mathbb{F}_p\)</span> of this final curve serves as the shared cryptographic secret. <span class="math display">\[
-E_{AB}
-=
-[\mathfrak b] * E_A
-=
-[\mathfrak b] * ([\mathfrak a] * E_0)
-=
-[\mathfrak a] * ([\mathfrak b] * E_0)
-=
-[\mathfrak a] * E_B
-=
-E_{BA}.
-\]</span></p>
+<section id="private-key" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="private-key"><span class="header-section-number">2.3</span> Private Key</h3>
+<p>A private key is constructed as an exponent vector <span class="math inline">\((e_1, \dots, e_n)\)</span> with each <span class="math inline">\(e_i \in \{-m, \dots, m\}\)</span>, representing the ideal class <span class="math inline">\([\mathfrak{l}_1^{e_1} \mathfrak{l}_2^{e_2} \cdots \mathfrak{l}_n^{e_n}] \in cl(\mathcal{O})\)</span>.</p>
+</section>
+<section id="public-key" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="public-key"><span class="header-section-number">2.4</span> Public Key</h3>
+<p>An individual’s public key (e.g., Alice’s key <span class="math inline">\(A\)</span>) is the Montgomery coefficient of the curve <span class="math inline">\(E_A : y^2 = x^3 + Ax^2 + x\)</span>, which is obtained by applying the action of the secret key <span class="math inline">\([a]\)</span> to the base curve <span class="math inline">\(E_0\)</span>.</p>
+</section>
+<section id="key-exchange" class="level3" data-number="2.5">
+<h3 data-number="2.5" class="anchored" data-anchor-id="key-exchange"><span class="header-section-number">2.5</span> Key Exchange</h3>
+<p>When Alice receives Bob’s public key <span class="math inline">\(B\)</span>, she first verifies that the curve <span class="math inline">\(E_B\)</span> is supersingular. She then applies her secret ideal class action <span class="math inline">\([\mathfrak{a}]\)</span> to compute <span class="math inline">\([\mathfrak{a}]E_B = [\mathfrak{a}][\mathfrak{b}]E_0\)</span>. The shared secret is the unique Montgomery coefficient <span class="math inline">\(S\)</span> corresponding to the combined curve <span class="math inline">\([\mathfrak{a}][\mathfrak{b}]E_0\)</span>.</p>
+</section>
+</section>
+<section id="security-assumptions" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
+<p>The security of the CSIDH protocol relies on the hardness of an isogeny-finding problem analogous to the classical discrete logarithm problem.</p>
+<section id="key-recovery-problem" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="key-recovery-problem"><span class="header-section-number">3.1</span> Key Recovery Problem</h3>
+<p>The fundamental computational assumption is that given two supersingular elliptic curves <span class="math inline">\(E\)</span> and <span class="math inline">\(E'\)</span> over <span class="math inline">\(\mathbb{F}_p\)</span> with the same <span class="math inline">\(\mathbb{F}_p\)</span>-rational endomorphism ring <span class="math inline">\(\mathcal{O}\)</span>, it is computationally infeasible to find an ideal <span class="math inline">\(\mathfrak{a}\)</span> such that <span class="math inline">\([\mathfrak{a}]E = E'\)</span>.</p>
+</section>
+<section id="quantum-security" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="quantum-security"><span class="header-section-number">3.2</span> Quantum Security</h3>
+<p>Breaking the scheme translates to solving an instance of the abelian hidden-shift problem. This problem can be addressed using subexponential-time quantum algorithms, such as those proposed by Kuperberg. The precise asymptotic complexity depends heavily on the cost of computing the isogeny oracle; combinations of algorithms yield bounds in the realm of <span class="math inline">\(L_p[1/2, 1/\sqrt{2}]\)</span>.</p>
+</section>
+<section id="chosen-ciphertext-security" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="chosen-ciphertext-security"><span class="header-section-number">3.3</span> Chosen-Ciphertext Security</h3>
+<p>Because CSIDH naturally affords efficient public-key validation, it avoids vulnerabilities related to the reuse of dishonest keys. This validation allows CSIDH to securely achieve non-interactive key exchange without resorting to additional chosen-ciphertext attack (CCA) transformations like the Fujisaki-Okamoto transform.</p>
+</section>
+</section>
+<section id="progress" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="progress"><span class="header-section-number">4</span> Progress</h2>
+<p>TODO</p>
+<p>2023/793 and 2020/118</p>
 
 
 </section>
-</section>
-<section class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id=""><span class="header-section-number">3</span> References</h2>
+<section class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id=""><span class="header-section-number">5</span> References</h2>
 <div id="refs" class="references csl-bib-body" role="list">
 <div id="ref-csidh" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[CLMP18] </div><div class="csl-right-inline"><span class="smallcaps">Castryck, Wouter</span> ; <span class="smallcaps">Lange, Tanja</span> ; <span class="smallcaps">Martindale, Chloe</span> ; <span class="smallcaps">Panny, Lorenz</span> ; <span class="smallcaps">Renes, Joost</span>: <a href="https://eprint.iacr.org/2018/383"><span>CSIDH</span>: <span>C</span>ommutative <span>S</span>upersingular <span>I</span>sogeny <span>D</span>iffie-<span>H</span>ellman</a>. In: <em>ASIACRYPT</em>&nbsp;: Springer, 2018, pp.&nbsp;395–427</div>
