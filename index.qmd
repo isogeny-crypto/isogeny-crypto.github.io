@@ -6,8 +6,6 @@ date-modified: ""
 
 Welcome to the **Isogeny-based Cryptography Wiki**. This site serves as an open-source, mathematically rigorous, and accessible repository of knowledge detailing post-quantum cryptographic protocols built on the hardness of finding isogenies between elliptic curves.
 
----
-
 ## Getting Started
 
 If you are not familiar with the concept of cryptographic protocols, we recommend referring to the [notes by Dan Boneh and Victor Shoup](https://toc.cryptobook.us/).
@@ -77,8 +75,6 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption 
 - Wombat (2026)
 :::
 ::::
-
----
 
 ## Contributing
 

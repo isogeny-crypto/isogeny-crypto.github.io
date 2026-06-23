@@ -11,6 +11,16 @@ local function has_refs_div(blocks)
   return false
 end
 
+local function has_citations(doc)
+  local found = false
+  doc:walk({
+    Cite = function(_)
+      found = true
+    end
+  })
+  return found
+end
+
 function Pandoc(doc)
   local title = doc.meta["title"]
   if not title then return doc end
@@ -31,7 +41,7 @@ function Pandoc(doc)
   handle:close()
 
 -- Insert {#refs} div if the document cites anything but has no refs block
-  if doc.meta["bibliography"] and not has_refs_div(doc.blocks) then
+  if doc.meta["bibliography"] and has_citations(doc) and not has_refs_div(doc.blocks) then
     doc.blocks:insert(pandoc.Header(2, pandoc.Inlines("References")))
     doc.blocks:insert(pandoc.Div({}, pandoc.Attr("refs")))
   end
