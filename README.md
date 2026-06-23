@@ -189,10 +189,10 @@ At build time, `fetch_contributors.py` queries the GitHub API for the commit his
 Upload the paper to an LLM model (I used Google Gemini Pro) with the following prompt:
 
 ```
-Study the attached file and generate a qmd format detailed and precise description of the new protocol introduced. Target audience is researcher working isogeny-based cryptography. Organize information in following headings:
+Study the attached file and generate a detailed, concrete description of the newly introduced protocol in Quarto Markdown (.qmd) format. The target audience is researchers working in isogeny-based cryptography. Organize the information under the following headings:
 1. Overview
 2. Protocol Design
 3. Security Assumptions
 ```
 
-Iterate until you get a good initial draft. Then proof read and make necessary edits like adding `tikz` diagram (generated from screenshot using Anthropic Claude Sonnet) of the protocol, references, and hyperlinks.
+Iterate until you get a good initial draft. Then proof read and make necessary edits like adding references, hyperlinks, and `tikz` diagram (generated from screenshot using Anthropic Claude Sonnet) of the protocol.

@@ -1,0 +1,30 @@
+---
+title: "B-SIDH"
+subtitle: "Supersingular Isogeny Diffie-Hellman using Twisted Torsion"
+date: 2026-06-23
+---
+
+## Overview
+
+> Broken by the same attacks that broke SIDH. 
+
+B-SIDH (pronounced "B-side") is a novel instantiation that significantly improves upon the original [SIDH](/protocols/key-exchange/sidh.qmd) protocol. It bypasses previous restrictions on the shape of the underlying prime field by permitting parties to operate simultaneously within the $(p+1)$-torsion of a supersingular elliptic curve and the $(p-1)$-torsion of its quadratic twist [@bsidh]. 
+
+## Protocol Design
+
+The mechanics of B-SIDH heavily exploit the properties of quadratic twists and twist-agnostic arithmetic:
+
+* **Torsion Spaces:** In typical SIDH, both Alice and Bob work in the $(p+1)$-torsion of curves where the Frobenius trace $t_2 = -2p$. In B-SIDH, one party (e.g., Alice) selects a secret isogeny degree $M$ dividing $p+1$, taking her secret kernel from the $(p+1)$-torsion. Bob selects a coprime degree $N$ dividing $p-1$, operating in the $(p-1)$-torsion of the quadratic twist (where $t_2 = 2p$). 
+* **Twist-Agnostic Arithmetic:** The protocol utilizes Montgomery curves of the form $E_{A,B}: By^2 = x^3 + Ax^2 + x$ and their twists $E^t_{A,\gamma B}: \gamma By^2 = x^3 + Ax^2 + x$. The isomorphism between these curves over $\mathbb{F}_{p^4}$ is given by $\sigma(x, y) = (x, \delta y)$. Since Montgomery arithmetic relies solely on $x$-coordinates and the curve constant $A$ (ignoring the $B$ coefficient and $y$-coordinates), the twisting morphism leaves $x$-coordinates completely unchanged. Thus, computations natively process points from both curves seamlessly over $\mathbb{F}_{p^2}$.
+* **Composite Degree Isogenies:** Because $p-1$ and $p+1$ are engineered to be smooth but may contain larger prime factors than traditional SIDH, computing secret isogenies often requires composing walks of multiple prime degrees ($l$-isogenies). Evaluating these larger $l$-isogenies in practice is accelerated using [$\sqrt{\text{élu}}$](https://velusqrt.isogeny.org/), bypassing the traditional Vélu's formulas.
+
+## Security Assumptions
+
+B-SIDH relies on different security assumptions compared to standard SIDH, primarily because it alters the nature of the isogeny walks:
+
+* **Multiple Edge Sets:** Unlike SIDH, where walks are restricted to a single $l$-isogeny graph, B-SIDH requires switching between multiple $l$-isogeny graphs. Security assumes that navigating multiple edge sets does not weaken the underlying supersingular isogeny problem, as long as the total number of destination nodes remains comparable to SIDH.
+* **Full-Length Walks:** The reduction in prime size means that Alice and Bob's secret walks cover nearly the entire graph (almost full-length), compared to the half-length walks in standard SIDH. 
+
+## Progress
+
+TODO
