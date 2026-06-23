@@ -14,7 +14,7 @@
     "href": "index.html#getting-started",
     "title": "Isogeny-based Cryptography Wiki",
     "section": "1 Getting Started",
-    "text": "1 Getting Started\nIf you are not familiar with the concept of cryptographic protocols, we recommend referring to the notes by Dan Boneh and Victor Shoup.\nThis wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption schemes and digital signature schemes.\n\n\n\n1.1 Key Exchange\n\nSIDH (2011–2022)\nCSIDH (2018)\nB-SIDH (2020–2022)\nSiGamal (2020)\nCSURF (2020)\nSéta (2021–2022)\nEJKM (2021)\npSIDH (2022–2023)\nBDKLP (2022)\nM(D)-SIDH (2023)\nFESTA (2023)\nbinSIDH/terSIDH (2023)\nQFESTA (2024)\nTOGA-UE (2024)\nBIN-UE/COM-UE (2024)\nSILBE (2024)\nPOKÉ (2025)\nLIT-SiGamal (2025)\nPIKE (2026)\n\n\n\n\n1.2 Digital Signature\n\nJS (2014)\nGPS (2017)\nSeaSign (2019)\nCSI-FiSh (2019)\nLossy CSI-FiSh (2020)\nSashimi (2020)\nSQISign (2020)\nCalamari (2020)\nIAS (2021)\nSIDH PoK (2022)\nSCALLOP (2023)\nCJSS (2023)\nCSI-Otter (2023)\nJSD (2024)\nSCALLOP-HD (2024)\nSQIsignHD (2024)\nAprèsSQI (2024)\nSQIsign2D-East (2024)\nSQIsign2D-West (2024)\nSQIPrime (2024)\nErebor/Durian (2025)\nPRISM (2025)\nPEARL-SCALLOP (2025)\nTanuki (2025)\nSQIsign2D\\(^2\\) (2025)\nSPIDER (2026)\nORCAS (2026)\nSQIsign2DPush (2026)\nWaterSQI/PRISMO (2026)\nWombat (2026)",
+    "text": "1 Getting Started\nIf you are not familiar with the concept of cryptographic protocols, we recommend referring to the notes by Dan Boneh and Victor Shoup.\nThis wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption schemes and digital signature schemes.\n\n\n\n1.1 Key Exchange\n\nSIDH (2011–2022)\n\\(k\\)-SIDH (2017-2022)\nCSIDH (2018)\nB-SIDH (2020–2022)\nSiGamal (2020)\nCSURF (2020)\nSHealS/HealS (2021-2022)\nSimS (2021)\nSéta (2021–2022)\nEJKM (2021)\npSIDH (2022–2023)\nBDKLP (2022)\nM(D)-SIDH (2023)\nFESTA (2023)\nbinSIDH/terSIDH (2023)\nQFESTA (2024)\nTOGA-UE (2024)\nBIN-UE/COM-UE (2024)\nSILBE (2024)\nPOKÉ (2025)\nLIT-SiGamal (2025)\nPIKE (2026)\n\n\n\n\n1.2 Digital Signature\n\nJS (2014)\nGPS (2017)\nSeaSign (2019)\nCSI-FiSh (2019)\nLossy CSI-FiSh (2020)\nSashimi (2020)\nSQISign (2020)\nCalamari (2020)\nIAS (2021)\nSIDH PoK (2022)\nSCALLOP (2023)\nCJSS (2023)\nCSI-Otter (2023)\nJSD (2024)\nSCALLOP-HD (2024)\nSQIsignHD (2024)\nAprèsSQI (2024)\nSQIsign2D-East (2024)\nSQIsign2D-West (2024)\nSQIPrime (2024)\nErebor/Durian (2025)\nPRISM (2025)\nPEARL-SCALLOP (2025)\nTanuki (2025)\nSQIsign2D\\(^2\\) (2025)\nSPIDER (2026)\nORCAS (2026)\nSQIsign2DPush (2026)\nWaterSQI/PRISMO (2026)\nWombat (2026)",
     "crumbs": [
       "Home"
     ]
@@ -85,6 +85,94 @@
     ]
   },
   {
+    "objectID": "protocols/key-exchange/sidh.html",
+    "href": "protocols/key-exchange/sidh.html",
+    "title": "SIDH",
+    "section": "",
+    "text": "It was a NIST PQC competition candidate but is now broken.\n\nThe Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange protocol designed to be secure against quantum computer attacks. Diffie-Hellman-type protocols inherently require commutativity to establish a shared secret [JaFe11]. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input.",
+    "crumbs": [
+      "Key Exchange",
+      "SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sidh.html#overview",
+    "href": "protocols/key-exchange/sidh.html#overview",
+    "title": "SIDH",
+    "section": "",
+    "text": "It was a NIST PQC competition candidate but is now broken.\n\nThe Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange protocol designed to be secure against quantum computer attacks. Diffie-Hellman-type protocols inherently require commutativity to establish a shared secret [JaFe11]. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input.",
+    "crumbs": [
+      "Key Exchange",
+      "SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sidh.html#protocol-design",
+    "href": "protocols/key-exchange/sidh.html#protocol-design",
+    "title": "SIDH",
+    "section": "2 Protocol Design",
+    "text": "2 Protocol Design\nThe protocol dictates that Alice and Bob conduct random walks on two distinct isogeny graphs (of degrees \\(\\ell_A\\) and \\(\\ell_B\\) respectively) and use auxiliary points to arrive at an isomorphic destination curve.\nE0EAEBEBAEABkker(ÁA)=h[mA]PA+[nA]QAiÁA(PB);ÁA(QB)ÁB(PA);ÁB(QA)ker(ÁB)=h[mB]PB+[nB]QBiker(Á0B)=h[mB]ÁA(PB)+[nB]ÁA(QB)iker(Á0A)=h[mA]ÁB(PA)+[nA]ÁB(QA)i\n\n2.1 Public Parameters Setup\n\nThe scheme is defined over a finite field \\(\\mathbb{F}_{p^2}\\) where the prime \\(p\\) is of the form \\(p = \\ell_A^{e_A} \\ell_B^{e_B} \\cdot f \\pm 1\\). Here, \\(\\ell_A\\) and \\(\\ell_B\\) are small primes (typically 2 and 3), and \\(f\\) is a small cofactor.\nA base supersingular curve \\(E_0\\) defined over \\(\\mathbb{F}_{p^2}\\) is fixed as a public parameter.\nTwo sets of bases are published: \\(\\{P_A, Q_A\\}\\), which generates the torsion group \\(E_0[\\ell_A^{e_A}]\\), and \\(\\{P_B, Q_B\\}\\), which generates \\(E_0[\\ell_B^{e_B}]\\).\n\n\n\n2.2 Alice’s Key Generation\n\nAlice chooses two random elements \\(m_A, n_A \\in \\mathbb{Z}/\\ell_A^{e_A}\\mathbb{Z}\\), ensuring they are not both divisible by \\(\\ell_A\\).\nShe computes a secret isogeny \\(\\phi_A : E_0 \\rightarrow E_A\\) characterized by the kernel \\(K_A := \\langle [m_A]P_A + [n_A]Q_A \\rangle\\).\nTo allow Bob to complete the exchange, she evaluates her secret isogeny on Bob’s basis points, yielding \\(\\phi_A(P_B)\\) and \\(\\phi_A(Q_B)\\).\nAlice’s public key sent to Bob is the tuple \\((E_A, \\phi_A(P_B), \\phi_A(Q_B))\\).\n\n\n\n2.3 Bob’s Key Generation\n\nBob correspondingly selects random elements \\(m_B, n_B \\in \\mathbb{Z}/\\ell_B^{e_B}\\mathbb{Z}\\).\nHe computes his secret isogeny \\(\\phi_B : E_0 \\rightarrow E_B\\) defined by the kernel \\(K_B := \\langle [m_B]P_B + [n_B]Q_B \\rangle\\).\nBob evaluates his isogeny on Alice’s basis points to produce \\(\\phi_B(P_A)\\) and \\(\\phi_B(Q_A)\\).\nBob’s public key sent to Alice is the tuple \\((E_B, \\phi_B(P_A), \\phi_B(Q_A))\\).\n\n\n\n2.4 Shared Key Derivation\n\nUpon receiving Bob’s public key, Alice calculates a new isogeny \\(\\phi'_A : E_B \\rightarrow E_{AB}\\) utilizing the evaluated points Bob sent. Her new kernel is \\(\\langle [m_A]\\phi_B(P_A) + [n_A]\\phi_B(Q_A) \\rangle\\).\nConcurrently, Bob computes a new isogeny \\(\\phi'_B : E_A \\rightarrow E_{BA}\\) utilizing Alice’s evaluated points, with the kernel \\(\\langle [m_B]\\phi_A(P_B) + [n_B]\\phi_A(Q_B) \\rangle\\).\nThe curves \\(E_{AB}\\) and \\(E_{BA}\\) are isomorphic, allowing both parties to establish a common shared key by computing the \\(j\\)-invariant \\(j(E_{AB})\\).",
+    "crumbs": [
+      "Key Exchange",
+      "SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sidh.html#security-assumptions",
+    "href": "protocols/key-exchange/sidh.html#security-assumptions",
+    "title": "SIDH",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\n\nHardness Problem: The scheme relies on the conjectured difficulty of finding an isogeny between two supersingular elliptic curves.\nAuxiliary Input Security: A unique characteristic of SIDH is the publication of the evaluated torsion basis points (the auxiliary input required for commutativity). The authors state that providing these outputs does not appear to make the underlying problem of finding the secret isogenies any easier.\nResistance to Quantum Group Actions: Because the protocol is not fundamentally based on an abelian group action, it is completely immune to the subexponential quantum attacks that rendered ordinary isogeny networks insecure.",
+    "crumbs": [
+      "Key Exchange",
+      "SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sidh.html#progress",
+    "href": "protocols/key-exchange/sidh.html#progress",
+    "title": "SIDH",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html",
+    "href": "protocols/digital-signature/csi-fish.html",
+    "title": "CSI-FiSh",
+    "section": "",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html#overview",
+    "href": "protocols/digital-signature/csi-fish.html#overview",
+    "title": "CSI-FiSh",
+    "section": "",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html#key-mechanism",
+    "href": "protocols/digital-signature/csi-fish.html#key-mechanism",
+    "title": "CSI-FiSh",
+    "section": "2 Key Mechanism",
+    "text": "2 Key Mechanism\nBy computing the exact structure of \\(\\text{Cl}(R)\\) for a 512-bit prime \\(p\\), CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical Fiat-Shamir transform to the isogeny setting.\n\nUnderlying Hard Problem: The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational CSIDH protocol.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
     "objectID": "protocols/key-exchange/qfesta.html",
     "href": "protocols/key-exchange/qfesta.html",
     "title": "QFESTA",
@@ -140,91 +228,58 @@
     ]
   },
   {
-    "objectID": "protocols/digital-signature/csi-fish.html",
-    "href": "protocols/digital-signature/csi-fish.html",
-    "title": "CSI-FiSh",
+    "objectID": "protocols/key-exchange/bsidh.html",
+    "href": "protocols/key-exchange/bsidh.html",
+    "title": "B-SIDH",
     "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html#overview",
-    "href": "protocols/digital-signature/csi-fish.html#overview",
-    "title": "CSI-FiSh",
-    "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html#key-mechanism",
-    "href": "protocols/digital-signature/csi-fish.html#key-mechanism",
-    "title": "CSI-FiSh",
-    "section": "2 Key Mechanism",
-    "text": "2 Key Mechanism\nBy computing the exact structure of \\(\\text{Cl}(R)\\) for a 512-bit prime \\(p\\), CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical Fiat-Shamir transform to the isogeny setting.\n\nUnderlying Hard Problem: The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational CSIDH protocol.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/sidh.html",
-    "href": "protocols/key-exchange/sidh.html",
-    "title": "SIDH",
-    "section": "",
-    "text": "It was a NIST PQC competition candidate but is now broken.\n\nThe Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange protocol designed to be secure against quantum computer attacks. Diffie-Hellman-type protocols inherently require commutativity to establish a shared secret [JaFe11]. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input.",
+    "text": "Broken by the same attacks that broke SIDH.\n\nB-SIDH (pronounced “B-side”) is a novel instantiation that significantly improves upon the original SIDH protocol. It bypasses previous restrictions on the shape of the underlying prime field by permitting parties to operate simultaneously within the \\((p+1)\\)-torsion of a supersingular elliptic curve and the \\((p-1)\\)-torsion of its quadratic twist [Cost20].",
     "crumbs": [
       "Key Exchange",
-      "SIDH"
+      "B-SIDH"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/sidh.html#overview",
-    "href": "protocols/key-exchange/sidh.html#overview",
-    "title": "SIDH",
+    "objectID": "protocols/key-exchange/bsidh.html#overview",
+    "href": "protocols/key-exchange/bsidh.html#overview",
+    "title": "B-SIDH",
     "section": "",
-    "text": "It was a NIST PQC competition candidate but is now broken.\n\nThe Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange protocol designed to be secure against quantum computer attacks. Diffie-Hellman-type protocols inherently require commutativity to establish a shared secret [JaFe11]. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input.",
+    "text": "Broken by the same attacks that broke SIDH.\n\nB-SIDH (pronounced “B-side”) is a novel instantiation that significantly improves upon the original SIDH protocol. It bypasses previous restrictions on the shape of the underlying prime field by permitting parties to operate simultaneously within the \\((p+1)\\)-torsion of a supersingular elliptic curve and the \\((p-1)\\)-torsion of its quadratic twist [Cost20].",
     "crumbs": [
       "Key Exchange",
-      "SIDH"
+      "B-SIDH"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/sidh.html#protocol-design",
-    "href": "protocols/key-exchange/sidh.html#protocol-design",
-    "title": "SIDH",
+    "objectID": "protocols/key-exchange/bsidh.html#protocol-design",
+    "href": "protocols/key-exchange/bsidh.html#protocol-design",
+    "title": "B-SIDH",
     "section": "2 Protocol Design",
-    "text": "2 Protocol Design\nThe protocol dictates that Alice and Bob conduct random walks on two distinct isogeny graphs (of degrees \\(\\ell_A\\) and \\(\\ell_B\\) respectively) and use auxiliary points to arrive at an isomorphic destination curve.\nE0EAEBEBAEABkker(ÁA)=h[mA]PA+[nA]QAiÁA(PB);ÁA(QB)ÁB(PA);ÁB(QA)ker(ÁB)=h[mB]PB+[nB]QBiker(Á0B)=h[mB]ÁA(PB)+[nB]ÁA(QB)iker(Á0A)=h[mA]ÁB(PA)+[nA]ÁB(QA)i\n\n2.1 Public Parameters Setup\n\nThe scheme is defined over a finite field \\(\\mathbb{F}_{p^2}\\) where the prime \\(p\\) is of the form \\(p = \\ell_A^{e_A} \\ell_B^{e_B} \\cdot f \\pm 1\\). Here, \\(\\ell_A\\) and \\(\\ell_B\\) are small primes (typically 2 and 3), and \\(f\\) is a small cofactor.\nA base supersingular curve \\(E_0\\) defined over \\(\\mathbb{F}_{p^2}\\) is fixed as a public parameter.\nTwo sets of bases are published: \\(\\{P_A, Q_A\\}\\), which generates the torsion group \\(E_0[\\ell_A^{e_A}]\\), and \\(\\{P_B, Q_B\\}\\), which generates \\(E_0[\\ell_B^{e_B}]\\).\n\n\n\n2.2 Alice’s Key Generation\n\nAlice chooses two random elements \\(m_A, n_A \\in \\mathbb{Z}/\\ell_A^{e_A}\\mathbb{Z}\\), ensuring they are not both divisible by \\(\\ell_A\\).\nShe computes a secret isogeny \\(\\phi_A : E_0 \\rightarrow E_A\\) characterized by the kernel \\(K_A := \\langle [m_A]P_A + [n_A]Q_A \\rangle\\).\nTo allow Bob to complete the exchange, she evaluates her secret isogeny on Bob’s basis points, yielding \\(\\phi_A(P_B)\\) and \\(\\phi_A(Q_B)\\).\nAlice’s public key sent to Bob is the tuple \\((E_A, \\phi_A(P_B), \\phi_A(Q_B))\\).\n\n\n\n2.3 Bob’s Key Generation\n\nBob correspondingly selects random elements \\(m_B, n_B \\in \\mathbb{Z}/\\ell_B^{e_B}\\mathbb{Z}\\).\nHe computes his secret isogeny \\(\\phi_B : E_0 \\rightarrow E_B\\) defined by the kernel \\(K_B := \\langle [m_B]P_B + [n_B]Q_B \\rangle\\).\nBob evaluates his isogeny on Alice’s basis points to produce \\(\\phi_B(P_A)\\) and \\(\\phi_B(Q_A)\\).\nBob’s public key sent to Alice is the tuple \\((E_B, \\phi_B(P_A), \\phi_B(Q_A))\\).\n\n\n\n2.4 Shared Key Derivation\n\nUpon receiving Bob’s public key, Alice calculates a new isogeny \\(\\phi'_A : E_B \\rightarrow E_{AB}\\) utilizing the evaluated points Bob sent. Her new kernel is \\(\\langle [m_A]\\phi_B(P_A) + [n_A]\\phi_B(Q_A) \\rangle\\).\nConcurrently, Bob computes a new isogeny \\(\\phi'_B : E_A \\rightarrow E_{BA}\\) utilizing Alice’s evaluated points, with the kernel \\(\\langle [m_B]\\phi_A(P_B) + [n_B]\\phi_A(Q_B) \\rangle\\).\nThe curves \\(E_{AB}\\) and \\(E_{BA}\\) are isomorphic, allowing both parties to establish a common shared key by computing the \\(j\\)-invariant \\(j(E_{AB})\\).",
+    "text": "2 Protocol Design\nThe mechanics of B-SIDH heavily exploit the properties of quadratic twists and twist-agnostic arithmetic:\n\nTorsion Spaces: In typical SIDH, both Alice and Bob work in the \\((p+1)\\)-torsion of curves where the Frobenius trace \\(t_2 = -2p\\). In B-SIDH, one party (e.g., Alice) selects a secret isogeny degree \\(M\\) dividing \\(p+1\\), taking her secret kernel from the \\((p+1)\\)-torsion. Bob selects a coprime degree \\(N\\) dividing \\(p-1\\), operating in the \\((p-1)\\)-torsion of the quadratic twist (where \\(t_2 = 2p\\)).\nTwist-Agnostic Arithmetic: The protocol utilizes Montgomery curves of the form \\(E_{A,B}: By^2 = x^3 + Ax^2 + x\\) and their twists \\(E^t_{A,\\gamma B}: \\gamma By^2 = x^3 + Ax^2 + x\\). The isomorphism between these curves over \\(\\mathbb{F}_{p^4}\\) is given by \\(\\sigma(x, y) = (x, \\delta y)\\). Since Montgomery arithmetic relies solely on \\(x\\)-coordinates and the curve constant \\(A\\) (ignoring the \\(B\\) coefficient and \\(y\\)-coordinates), the twisting morphism leaves \\(x\\)-coordinates completely unchanged. Thus, computations natively process points from both curves seamlessly over \\(\\mathbb{F}_{p^2}\\).\nComposite Degree Isogenies: Because \\(p-1\\) and \\(p+1\\) are engineered to be smooth but may contain larger prime factors than traditional SIDH, computing secret isogenies often requires composing walks of multiple prime degrees (\\(l\\)-isogenies). Evaluating these larger \\(l\\)-isogenies in practice is accelerated using \\(\\sqrt{\\text{élu}}\\), bypassing the traditional Vélu’s formulas.",
     "crumbs": [
       "Key Exchange",
-      "SIDH"
+      "B-SIDH"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/sidh.html#security-assumptions",
-    "href": "protocols/key-exchange/sidh.html#security-assumptions",
-    "title": "SIDH",
+    "objectID": "protocols/key-exchange/bsidh.html#security-assumptions",
+    "href": "protocols/key-exchange/bsidh.html#security-assumptions",
+    "title": "B-SIDH",
     "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\n\nHardness Problem: The scheme relies on the conjectured difficulty of finding an isogeny between two supersingular elliptic curves.\nAuxiliary Input Security: A unique characteristic of SIDH is the publication of the evaluated torsion basis points (the auxiliary input required for commutativity). The authors state that providing these outputs does not appear to make the underlying problem of finding the secret isogenies any easier.\nResistance to Quantum Group Actions: Because the protocol is not fundamentally based on an abelian group action, it is completely immune to the subexponential quantum attacks that rendered ordinary isogeny networks insecure.",
+    "text": "3 Security Assumptions\nB-SIDH relies on different security assumptions compared to standard SIDH, primarily because it alters the nature of the isogeny walks:\n\nMultiple Edge Sets: Unlike SIDH, where walks are restricted to a single \\(l\\)-isogeny graph, B-SIDH requires switching between multiple \\(l\\)-isogeny graphs. Security assumes that navigating multiple edge sets does not weaken the underlying supersingular isogeny problem, as long as the total number of destination nodes remains comparable to SIDH.\nFull-Length Walks: The reduction in prime size means that Alice and Bob’s secret walks cover nearly the entire graph (almost full-length), compared to the half-length walks in standard SIDH.",
     "crumbs": [
       "Key Exchange",
-      "SIDH"
+      "B-SIDH"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/sidh.html#progress",
-    "href": "protocols/key-exchange/sidh.html#progress",
-    "title": "SIDH",
+    "objectID": "protocols/key-exchange/bsidh.html#progress",
+    "href": "protocols/key-exchange/bsidh.html#progress",
+    "title": "B-SIDH",
     "section": "4 Progress",
     "text": "4 Progress\nTODO",
     "crumbs": [
       "Key Exchange",
-      "SIDH"
+      "B-SIDH"
     ]
   },
   {

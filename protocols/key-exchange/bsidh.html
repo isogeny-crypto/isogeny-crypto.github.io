@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-06-01">
+<meta name="dcterms.date" content="2026-06-23">
 
-<title>CSIDH – Isogeny-based Cryptography Wiki</title>
+<title>B-SIDH – Isogeny-based Cryptography Wiki</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -315,7 +315,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/csidh.html">CSIDH</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">B-SIDH</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -360,13 +360,13 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../protocols/key-exchange/bsidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/bsidh.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">B-SIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../protocols/key-exchange/csidh.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../protocols/key-exchange/csidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSIDH</span></a>
   </div>
 </li>
@@ -418,20 +418,8 @@ window.Quarto = {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
-  <li><a href="#protocol-design" id="toc-protocol-design" class="nav-link" data-scroll-target="#protocol-design"><span class="header-section-number">2</span> Protocol Design</a>
-  <ul class="collapse">
-  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters"><span class="header-section-number">2.1</span> Parameters</a></li>
-  <li><a href="#endomorphism-ring-isogenies" id="toc-endomorphism-ring-isogenies" class="nav-link" data-scroll-target="#endomorphism-ring-isogenies"><span class="header-section-number">2.2</span> Endomorphism Ring &amp; Isogenies</a></li>
-  <li><a href="#private-key" id="toc-private-key" class="nav-link" data-scroll-target="#private-key"><span class="header-section-number">2.3</span> Private Key</a></li>
-  <li><a href="#public-key" id="toc-public-key" class="nav-link" data-scroll-target="#public-key"><span class="header-section-number">2.4</span> Public Key</a></li>
-  <li><a href="#key-exchange" id="toc-key-exchange" class="nav-link" data-scroll-target="#key-exchange"><span class="header-section-number">2.5</span> Key Exchange</a></li>
-  </ul></li>
-  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a>
-  <ul class="collapse">
-  <li><a href="#key-recovery-problem" id="toc-key-recovery-problem" class="nav-link" data-scroll-target="#key-recovery-problem"><span class="header-section-number">3.1</span> Key Recovery Problem</a></li>
-  <li><a href="#quantum-security" id="toc-quantum-security" class="nav-link" data-scroll-target="#quantum-security"><span class="header-section-number">3.2</span> Quantum Security</a></li>
-  <li><a href="#chosen-ciphertext-security" id="toc-chosen-ciphertext-security" class="nav-link" data-scroll-target="#chosen-ciphertext-security"><span class="header-section-number">3.3</span> Chosen-Ciphertext Security</a></li>
-  </ul></li>
+  <li><a href="#protocol-design" id="toc-protocol-design" class="nav-link" data-scroll-target="#protocol-design"><span class="header-section-number">2</span> Protocol Design</a></li>
+  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a></li>
   <li><a href="#progress" id="toc-progress" class="nav-link" data-scroll-target="#progress"><span class="header-section-number">4</span> Progress</a></li>
   <li><span class="header-section-number">5</span> References</li>
   </ul>
@@ -441,10 +429,10 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/csidh.html">CSIDH</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">B-SIDH</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">CSIDH</h1>
-<p class="subtitle lead">Commutative Supersingular Isogeny Diffie-Hellman</p>
+<h1 class="title">B-SIDH</h1>
+<p class="subtitle lead">Supersingular Isogeny Diffie-Hellman using Twisted Torsion</p>
 </div>
 
 
@@ -455,7 +443,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 1, 2026</p>
+      <p class="date">June 23, 2026</p>
     </div>
   </div>
   
@@ -475,60 +463,39 @@ window.Quarto = {
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>CSIDH is a post-quantum commutative group action that enables efficient non-interactive key exchange <span class="citation" data-cites="csidh">[<a href="#ref-csidh" role="doc-biblioref">CLMP18</a>]</span>. The construction adapts the layout of earlier cryptosystems proposed by <a href="https://eprint.iacr.org/2006/291">Couveignes</a> and <a href="https://eprint.iacr.org/2006/145">Rostovtsev-Stolbunov</a>, but replaces the use of ordinary elliptic curves with supersingular elliptic curves defined over a large prime field <span class="math inline">\(\mathbb{F}_p\)</span> . A key advantage of using supersingular curves over <span class="math inline">\(\mathbb{F}_p\)</span> (for <span class="math inline">\(p \ge 5\)</span>) is that they always have exactly <span class="math inline">\(p + 1\)</span> rational points, which trivially yields the highly composite order needed for efficiency.</p>
+<blockquote class="blockquote">
+<p>Broken by the same attacks that broke SIDH.</p>
+</blockquote>
+<p>B-SIDH (pronounced “B-side”) is a novel instantiation that significantly improves upon the original <a href="../../protocols/key-exchange/sidh.html">SIDH</a> protocol. It bypasses previous restrictions on the shape of the underlying prime field by permitting parties to operate simultaneously within the <span class="math inline">\((p+1)\)</span>-torsion of a supersingular elliptic curve and the <span class="math inline">\((p-1)\)</span>-torsion of its quadratic twist <span class="citation" data-cites="bsidh">[<a href="#ref-bsidh" role="doc-biblioref">Cost20</a>]</span>.</p>
 </section>
 <section id="protocol-design" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="protocol-design"><span class="header-section-number">2</span> Protocol Design</h2>
-<p>The core of the CSIDH protocol is based on the free and transitive action of the ideal-class group <span class="math inline">\(cl(\mathcal{O})\)</span> on the set of <span class="math inline">\(\mathbb{F}_p\)</span>-isomorphism classes of supersingular elliptic curves with an <span class="math inline">\(\mathbb{F}_p\)</span>-rational endomorphism ring isomorphic to <span class="math inline">\(\mathcal{O}\)</span>.</p>
-<section id="parameters" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="parameters"><span class="header-section-number">2.1</span> Parameters</h3>
-<p>The protocol fixes a large prime <span class="math inline">\(p\)</span> of the form <span class="math inline">\(4 \cdot \ell_1 \cdots \ell_n - 1\)</span>, where <span class="math inline">\(\ell_i\)</span> are small, distinct odd primes. The base curve is defined as <span class="math inline">\(E_0 : y^2 = x^3 + x\)</span> over <span class="math inline">\(\mathbb{F}_p\)</span>. The requirement that <span class="math inline">\(p \equiv 3 \pmod 4\)</span> ensures that <span class="math inline">\(E_0\)</span> is supersingular and permits the use of efficient Montgomery arithmetic.</p>
-</section>
-<section id="endomorphism-ring-isogenies" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="endomorphism-ring-isogenies"><span class="header-section-number">2.2</span> Endomorphism Ring &amp; Isogenies</h3>
-<p>The Frobenius endomorphism <span class="math inline">\(\pi\)</span> of <span class="math inline">\(E_0\)</span> satisfies <span class="math inline">\(\pi^2 = -p\)</span>, giving an <span class="math inline">\(\mathbb{F}_p\)</span>-rational endomorphism ring of <span class="math inline">\(\mathcal{O} = \mathbb{Z}[\pi]\)</span>. Because <span class="math inline">\(\pi^2 - 1 \equiv 0 \pmod{\ell_i}\)</span>, the ideals <span class="math inline">\(\ell_i\mathcal{O}\)</span> split into Elkies primes <span class="math inline">\(\mathfrak{l}_i = (\ell_i, \pi - 1)\)</span> and <span class="math inline">\(\bar{\mathfrak{l}}_i = (\ell_i, \pi + 1)\)</span>. The isogenies for <span class="math inline">\(\mathfrak{l}_i\)</span> can be evaluated efficiently because their kernels are generated by points of order <span class="math inline">\(\ell_i\)</span> that lie in the kernel of <span class="math inline">\(\pi - 1\)</span>, meaning they are rational over the base field <span class="math inline">\(\mathbb{F}_p\)</span>.</p>
-</section>
-<section id="private-key" class="level3" data-number="2.3">
-<h3 data-number="2.3" class="anchored" data-anchor-id="private-key"><span class="header-section-number">2.3</span> Private Key</h3>
-<p>A private key is constructed as an exponent vector <span class="math inline">\((e_1, \dots, e_n)\)</span> with each <span class="math inline">\(e_i \in \{-m, \dots, m\}\)</span>, representing the ideal class <span class="math inline">\([\mathfrak{l}_1^{e_1} \mathfrak{l}_2^{e_2} \cdots \mathfrak{l}_n^{e_n}] \in cl(\mathcal{O})\)</span>.</p>
-</section>
-<section id="public-key" class="level3" data-number="2.4">
-<h3 data-number="2.4" class="anchored" data-anchor-id="public-key"><span class="header-section-number">2.4</span> Public Key</h3>
-<p>An individual’s public key (e.g., Alice’s key <span class="math inline">\(A\)</span>) is the Montgomery coefficient of the curve <span class="math inline">\(E_A : y^2 = x^3 + Ax^2 + x\)</span>, which is obtained by applying the action of the secret key <span class="math inline">\([a]\)</span> to the base curve <span class="math inline">\(E_0\)</span>.</p>
-</section>
-<section id="key-exchange" class="level3" data-number="2.5">
-<h3 data-number="2.5" class="anchored" data-anchor-id="key-exchange"><span class="header-section-number">2.5</span> Key Exchange</h3>
-<p>When Alice receives Bob’s public key <span class="math inline">\(B\)</span>, she first verifies that the curve <span class="math inline">\(E_B\)</span> is supersingular. She then applies her secret ideal class action <span class="math inline">\([\mathfrak{a}]\)</span> to compute <span class="math inline">\([\mathfrak{a}]E_B = [\mathfrak{a}][\mathfrak{b}]E_0\)</span>. The shared secret is the unique Montgomery coefficient <span class="math inline">\(S\)</span> corresponding to the combined curve <span class="math inline">\([\mathfrak{a}][\mathfrak{b}]E_0\)</span>.</p>
-</section>
+<p>The mechanics of B-SIDH heavily exploit the properties of quadratic twists and twist-agnostic arithmetic:</p>
+<ul>
+<li><strong>Torsion Spaces:</strong> In typical SIDH, both Alice and Bob work in the <span class="math inline">\((p+1)\)</span>-torsion of curves where the Frobenius trace <span class="math inline">\(t_2 = -2p\)</span>. In B-SIDH, one party (e.g., Alice) selects a secret isogeny degree <span class="math inline">\(M\)</span> dividing <span class="math inline">\(p+1\)</span>, taking her secret kernel from the <span class="math inline">\((p+1)\)</span>-torsion. Bob selects a coprime degree <span class="math inline">\(N\)</span> dividing <span class="math inline">\(p-1\)</span>, operating in the <span class="math inline">\((p-1)\)</span>-torsion of the quadratic twist (where <span class="math inline">\(t_2 = 2p\)</span>).</li>
+<li><strong>Twist-Agnostic Arithmetic:</strong> The protocol utilizes Montgomery curves of the form <span class="math inline">\(E_{A,B}: By^2 = x^3 + Ax^2 + x\)</span> and their twists <span class="math inline">\(E^t_{A,\gamma B}: \gamma By^2 = x^3 + Ax^2 + x\)</span>. The isomorphism between these curves over <span class="math inline">\(\mathbb{F}_{p^4}\)</span> is given by <span class="math inline">\(\sigma(x, y) = (x, \delta y)\)</span>. Since Montgomery arithmetic relies solely on <span class="math inline">\(x\)</span>-coordinates and the curve constant <span class="math inline">\(A\)</span> (ignoring the <span class="math inline">\(B\)</span> coefficient and <span class="math inline">\(y\)</span>-coordinates), the twisting morphism leaves <span class="math inline">\(x\)</span>-coordinates completely unchanged. Thus, computations natively process points from both curves seamlessly over <span class="math inline">\(\mathbb{F}_{p^2}\)</span>.</li>
+<li><strong>Composite Degree Isogenies:</strong> Because <span class="math inline">\(p-1\)</span> and <span class="math inline">\(p+1\)</span> are engineered to be smooth but may contain larger prime factors than traditional SIDH, computing secret isogenies often requires composing walks of multiple prime degrees (<span class="math inline">\(l\)</span>-isogenies). Evaluating these larger <span class="math inline">\(l\)</span>-isogenies in practice is accelerated using <a href="https://velusqrt.isogeny.org/"><span class="math inline">\(\sqrt{\text{élu}}\)</span></a>, bypassing the traditional Vélu’s formulas.</li>
+</ul>
 </section>
 <section id="security-assumptions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
-<p>The security of the CSIDH protocol relies on the hardness of an isogeny-finding problem analogous to the classical discrete logarithm problem.</p>
-<section id="key-recovery-problem" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="key-recovery-problem"><span class="header-section-number">3.1</span> Key Recovery Problem</h3>
-<p>The fundamental computational assumption is that given two supersingular elliptic curves <span class="math inline">\(E\)</span> and <span class="math inline">\(E'\)</span> over <span class="math inline">\(\mathbb{F}_p\)</span> with the same <span class="math inline">\(\mathbb{F}_p\)</span>-rational endomorphism ring <span class="math inline">\(\mathcal{O}\)</span>, it is computationally infeasible to find an ideal <span class="math inline">\(\mathfrak{a}\)</span> such that <span class="math inline">\([\mathfrak{a}]E = E'\)</span>.</p>
-</section>
-<section id="quantum-security" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="quantum-security"><span class="header-section-number">3.2</span> Quantum Security</h3>
-<p>Breaking the scheme translates to solving an instance of the abelian hidden-shift problem. This problem can be addressed using subexponential-time quantum algorithms, such as those proposed by Kuperberg. The precise asymptotic complexity depends heavily on the cost of computing the isogeny oracle; combinations of algorithms yield bounds in the realm of <span class="math inline">\(L_p[1/2, 1/\sqrt{2}]\)</span>.</p>
-</section>
-<section id="chosen-ciphertext-security" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="chosen-ciphertext-security"><span class="header-section-number">3.3</span> Chosen-Ciphertext Security</h3>
-<p>Because CSIDH naturally affords efficient public-key validation, it avoids vulnerabilities related to the reuse of dishonest keys. This validation allows CSIDH to securely achieve non-interactive key exchange without resorting to additional chosen-ciphertext attack (CCA) transformations like the Fujisaki-Okamoto transform.</p>
-</section>
+<p>B-SIDH relies on different security assumptions compared to standard SIDH, primarily because it alters the nature of the isogeny walks:</p>
+<ul>
+<li><strong>Multiple Edge Sets:</strong> Unlike SIDH, where walks are restricted to a single <span class="math inline">\(l\)</span>-isogeny graph, B-SIDH requires switching between multiple <span class="math inline">\(l\)</span>-isogeny graphs. Security assumes that navigating multiple edge sets does not weaken the underlying supersingular isogeny problem, as long as the total number of destination nodes remains comparable to SIDH.</li>
+<li><strong>Full-Length Walks:</strong> The reduction in prime size means that Alice and Bob’s secret walks cover nearly the entire graph (almost full-length), compared to the half-length walks in standard SIDH.</li>
+</ul>
 </section>
 <section id="progress" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="progress"><span class="header-section-number">4</span> Progress</h2>
 <p>TODO</p>
-<p>2023/793 and 2020/1188</p>
 
 
 </section>
 <section class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id=""><span class="header-section-number">5</span> References</h2>
 <div id="refs" class="references csl-bib-body" role="list">
-<div id="ref-csidh" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[CLMP18] </div><div class="csl-right-inline"><span class="smallcaps">Castryck, Wouter</span> ; <span class="smallcaps">Lange, Tanja</span> ; <span class="smallcaps">Martindale, Chloe</span> ; <span class="smallcaps">Panny, Lorenz</span> ; <span class="smallcaps">Renes, Joost</span>: <a href="https://eprint.iacr.org/2018/383"><span>CSIDH</span>: <span>C</span>ommutative <span>S</span>upersingular <span>I</span>sogeny <span>D</span>iffie-<span>H</span>ellman</a>. In: <em>ASIACRYPT</em>&nbsp;: Springer, 2018, pp.&nbsp;395–427</div>
+<div id="ref-bsidh" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Cost20] </div><div class="csl-right-inline"><span class="smallcaps">Costello, Craig</span>: <a href="https://eprint.iacr.org/2019/1145"><span>B-SIDH</span>: Supersingular isogeny <span>D</span>iffie-<span>H</span>ellman using twisted torsion</a>. In: <em>ASIACRYPT</em>&nbsp;: Springer, 2020, pp.&nbsp;440–463</div>
 </div>
 </div>
 <hr>
