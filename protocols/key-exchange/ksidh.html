@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-06-01">
+<meta name="dcterms.date" content="2026-06-24">
 
-<title>CSIDH – Isogeny-based Cryptography Wiki</title>
+<title>k-SIDH – Isogeny-based Cryptography Wiki</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -315,7 +315,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/csidh.html">CSIDH</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/ksidh.html"><span class="math inline">\(k\)</span>-SIDH</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -366,7 +366,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../protocols/key-exchange/csidh.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../protocols/key-exchange/csidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSIDH</span></a>
   </div>
 </li>
@@ -378,7 +378,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../protocols/key-exchange/ksidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/ksidh.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="math inline">\(k\)</span>-SIDH</span></a>
   </div>
 </li>
@@ -426,18 +426,12 @@ window.Quarto = {
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
   <li><a href="#protocol-design" id="toc-protocol-design" class="nav-link" data-scroll-target="#protocol-design"><span class="header-section-number">2</span> Protocol Design</a>
   <ul class="collapse">
-  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters"><span class="header-section-number">2.1</span> Parameters</a></li>
-  <li><a href="#endomorphism-ring-isogenies" id="toc-endomorphism-ring-isogenies" class="nav-link" data-scroll-target="#endomorphism-ring-isogenies"><span class="header-section-number">2.2</span> Endomorphism Ring &amp; Isogenies</a></li>
-  <li><a href="#private-key" id="toc-private-key" class="nav-link" data-scroll-target="#private-key"><span class="header-section-number">2.3</span> Private Key</a></li>
-  <li><a href="#public-key" id="toc-public-key" class="nav-link" data-scroll-target="#public-key"><span class="header-section-number">2.4</span> Public Key</a></li>
-  <li><a href="#key-exchange" id="toc-key-exchange" class="nav-link" data-scroll-target="#key-exchange"><span class="header-section-number">2.5</span> Key Exchange</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">2.1</span> Setup</a></li>
+  <li><a href="#key-generation" id="toc-key-generation" class="nav-link" data-scroll-target="#key-generation"><span class="header-section-number">2.2</span> Key Generation</a></li>
+  <li><a href="#communication" id="toc-communication" class="nav-link" data-scroll-target="#communication"><span class="header-section-number">2.3</span> Communication</a></li>
+  <li><a href="#verification" id="toc-verification" class="nav-link" data-scroll-target="#verification"><span class="header-section-number">2.4</span> Verification</a></li>
   </ul></li>
-  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a>
-  <ul class="collapse">
-  <li><a href="#key-recovery-problem" id="toc-key-recovery-problem" class="nav-link" data-scroll-target="#key-recovery-problem"><span class="header-section-number">3.1</span> Key Recovery Problem</a></li>
-  <li><a href="#quantum-security" id="toc-quantum-security" class="nav-link" data-scroll-target="#quantum-security"><span class="header-section-number">3.2</span> Quantum Security</a></li>
-  <li><a href="#chosen-ciphertext-security" id="toc-chosen-ciphertext-security" class="nav-link" data-scroll-target="#chosen-ciphertext-security"><span class="header-section-number">3.3</span> Chosen-Ciphertext Security</a></li>
-  </ul></li>
+  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a></li>
   <li><a href="#progress" id="toc-progress" class="nav-link" data-scroll-target="#progress"><span class="header-section-number">4</span> Progress</a></li>
   <li><span class="header-section-number">5</span> References</li>
   </ul>
@@ -447,10 +441,10 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/csidh.html">CSIDH</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/ksidh.html"><span class="math inline">\(k\)</span>-SIDH</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">CSIDH</h1>
-<p class="subtitle lead">Commutative Supersingular Isogeny Diffie-Hellman</p>
+<h1 class="title"><span class="math inline">\(k\)</span>-SIDH</h1>
+<p class="subtitle lead">Multiple Instances of SIDH</p>
 </div>
 
 
@@ -461,14 +455,14 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 1, 2026</p>
+      <p class="date">June 24, 2026</p>
     </div>
   </div>
   
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">June 23, 2026</p>
+      <p class="date-modified">June 24, 2026</p>
     </div>
   </div>
     
@@ -481,60 +475,101 @@ window.Quarto = {
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>CSIDH is a post-quantum commutative group action that enables efficient non-interactive key exchange <span class="citation" data-cites="csidh">[<a href="#ref-csidh" role="doc-biblioref">CLMP18</a>]</span>. The construction adapts the layout of earlier cryptosystems proposed by <a href="https://eprint.iacr.org/2006/291">Couveignes</a> and <a href="https://eprint.iacr.org/2006/145">Rostovtsev-Stolbunov</a>, but replaces the use of ordinary elliptic curves with supersingular elliptic curves defined over a large prime field <span class="math inline">\(\mathbb{F}_p\)</span> . A key advantage of using supersingular curves over <span class="math inline">\(\mathbb{F}_p\)</span> (for <span class="math inline">\(p \ge 5\)</span>) is that they always have exactly <span class="math inline">\(p + 1\)</span> rational points, which trivially yields the highly composite order needed for efficiency.</p>
+<blockquote class="blockquote">
+<p>Broken by the same attacks that broke SIDH.</p>
+</blockquote>
+<p>The <strong><span class="math inline">\(k\)</span>-SIDH</strong> protocol introduces a generic transformation designed to secure <a href="../../protocols/key-exchange/sidh.html">SIDH</a> key agreement against active attacks in the static-static setting <span class="citation" data-cites="ksidh">[<a href="#ref-ksidh" role="doc-biblioref">AzJaLe17</a>]</span>.</p>
+<p>In a standard SIDH static-static key exchange, a malicious participant can mount an adaptive attack by sending specialized, manipulated public torsion points. By observing whether the subsequent key validation succeeds or fails, the attacker can iteratively leak the honest party’s static private key. Extant countermeasures, such as the Fujisaki-Okamoto transform, enforce indirect validation by requiring the untrusted party to disclose their private key. While secure, this precludes the use of static-static drop-in replacements.</p>
+<p>To thwart these attacks without exposing private keys, <span class="math inline">\(k\)</span>-SIDH uses a multiple instances model. Instead of a single key, each party generates <span class="math inline">\(k\)</span> different keys. During the exchange, the participants perform key agreement using all <span class="math inline">\(k^2\)</span> combinations of their individual keys. The resulting <span class="math inline">\(k^2\)</span> shared secrets are hashed together. If a malicious, modified public key is used, it will almost certainly cause at least one of the <span class="math inline">\(k^2\)</span> key derivations to fail, causing the final hashed validation to fail. This expands the space of failure outcomes exponentially, rendering it computationally infeasible for an attacker to predict the correct final hash and salvage the attack.</p>
 </section>
 <section id="protocol-design" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="protocol-design"><span class="header-section-number">2</span> Protocol Design</h2>
-<p>The core of the CSIDH protocol is based on the free and transitive action of the ideal-class group <span class="math inline">\(cl(\mathcal{O})\)</span> on the set of <span class="math inline">\(\mathbb{F}_p\)</span>-isomorphism classes of supersingular elliptic curves with an <span class="math inline">\(\mathbb{F}_p\)</span>-rational endomorphism ring isomorphic to <span class="math inline">\(\mathcal{O}\)</span>.</p>
-<section id="parameters" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="parameters"><span class="header-section-number">2.1</span> Parameters</h3>
-<p>The protocol fixes a large prime <span class="math inline">\(p\)</span> of the form <span class="math inline">\(4 \cdot \ell_1 \cdots \ell_n - 1\)</span>, where <span class="math inline">\(\ell_i\)</span> are small, distinct odd primes. The base curve is defined as <span class="math inline">\(E_0 : y^2 = x^3 + x\)</span> over <span class="math inline">\(\mathbb{F}_p\)</span>. The requirement that <span class="math inline">\(p \equiv 3 \pmod 4\)</span> ensures that <span class="math inline">\(E_0\)</span> is supersingular and permits the use of efficient Montgomery arithmetic.</p>
+<p>The <span class="math inline">\(k\)</span>-SIDH key agreement process requires both parties (Alice and Bob) to perform <span class="math inline">\(k^2\)</span> pairwise derivations.</p>
+<section id="setup" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">2.1</span> Setup</h3>
+<p>The global parameters <span class="math inline">\(gp\)</span> are identical to standard SIDH:</p>
+<ul>
+<li>A preimage-resistant hash function <span class="math inline">\(H\)</span>.</li>
+<li>A prime number <span class="math inline">\(p = 2^m 3^n f \pm 1\)</span>.</li>
+<li>A supersingular elliptic curve <span class="math inline">\(E/\mathbb{F}_{p^2}\)</span>.</li>
+<li>Fixed, independent torsion bases: <span class="math inline">\(P_A, Q_A \in E[2^m]\)</span> and <span class="math inline">\(P_B, Q_B \in E[3^n]\)</span>.</li>
+</ul>
 </section>
-<section id="endomorphism-ring-isogenies" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="endomorphism-ring-isogenies"><span class="header-section-number">2.2</span> Endomorphism Ring &amp; Isogenies</h3>
-<p>The Frobenius endomorphism <span class="math inline">\(\pi\)</span> of <span class="math inline">\(E_0\)</span> satisfies <span class="math inline">\(\pi^2 = -p\)</span>, giving an <span class="math inline">\(\mathbb{F}_p\)</span>-rational endomorphism ring of <span class="math inline">\(\mathcal{O} = \mathbb{Z}[\pi]\)</span>. Because <span class="math inline">\(\pi^2 - 1 \equiv 0 \pmod{\ell_i}\)</span>, the ideals <span class="math inline">\(\ell_i\mathcal{O}\)</span> split into Elkies primes <span class="math inline">\(\mathfrak{l}_i = (\ell_i, \pi - 1)\)</span> and <span class="math inline">\(\bar{\mathfrak{l}}_i = (\ell_i, \pi + 1)\)</span>. The isogenies for <span class="math inline">\(\mathfrak{l}_i\)</span> can be evaluated efficiently because their kernels are generated by points of order <span class="math inline">\(\ell_i\)</span> that lie in the kernel of <span class="math inline">\(\pi - 1\)</span>, meaning they are rational over the base field <span class="math inline">\(\mathbb{F}_p\)</span>.</p>
+<section id="key-generation" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="key-generation"><span class="header-section-number">2.2</span> Key Generation</h3>
+<section id="alices-key-generation" class="level4" data-number="2.2.1">
+<h4 data-number="2.2.1" class="anchored" data-anchor-id="alices-key-generation"><span class="header-section-number">2.2.1</span> Alice’s Key Generation</h4>
+<ol type="1">
+<li>Alice generates <span class="math inline">\(k\)</span> random private keys: <span class="math inline">\(\alpha_i \in_R \mathbb{Z}/2^m\mathbb{Z}\)</span> for <span class="math inline">\(1 \le i \le k\)</span>.</li>
+<li>For each key, she computes a <span class="math inline">\(2^m\)</span>-isogeny: <span class="math inline">\(\phi_{Ai}: E \rightarrow E_{Ai} = E / \langle P_A + [\alpha_i]Q_A \rangle\)</span>.</li>
+<li>She projects Bob’s torsion bases through each isogeny: <span class="math inline">\(R_i = \phi_{Ai}(P_B)\)</span> and <span class="math inline">\(S_i = \phi_{Ai}(Q_B)\)</span>.</li>
+<li>Her public key is the set of <span class="math inline">\(k\)</span> tuples: <span class="math inline">\(\{(E_{Ai}, R_i, S_i)\}_{i=1}^k\)</span>.</li>
+</ol>
 </section>
-<section id="private-key" class="level3" data-number="2.3">
-<h3 data-number="2.3" class="anchored" data-anchor-id="private-key"><span class="header-section-number">2.3</span> Private Key</h3>
-<p>A private key is constructed as an exponent vector <span class="math inline">\((e_1, \dots, e_n)\)</span> with each <span class="math inline">\(e_i \in \{-m, \dots, m\}\)</span>, representing the ideal class <span class="math inline">\([\mathfrak{l}_1^{e_1} \mathfrak{l}_2^{e_2} \cdots \mathfrak{l}_n^{e_n}] \in cl(\mathcal{O})\)</span>.</p>
+<section id="bobs-key-generation" class="level4" data-number="2.2.2">
+<h4 data-number="2.2.2" class="anchored" data-anchor-id="bobs-key-generation"><span class="header-section-number">2.2.2</span> Bob’s Key Generation</h4>
+<ol type="1">
+<li>Bob generates <span class="math inline">\(k\)</span> random private keys: <span class="math inline">\(\beta_j \in_R \mathbb{Z}/3^n\mathbb{Z}\)</span> for <span class="math inline">\(1 \le j \le k\)</span>.</li>
+<li>For each key, he computes a <span class="math inline">\(3^n\)</span>-isogeny: <span class="math inline">\(\phi_{Bj}: E \rightarrow E_{Bj} = E / \langle P_B + [\beta_j]Q_B \rangle\)</span>.</li>
+<li>He projects Alice’s torsion bases through each isogeny: <span class="math inline">\(U_j = \phi_{Bj}(P_A)\)</span> and <span class="math inline">\(V_j = \phi_{Bj}(Q_A)\)</span>.</li>
+<li>His public key is the set of <span class="math inline">\(k\)</span> tuples: <span class="math inline">\(\{(E_{Bj}, U_j, V_j)\}_{j=1}^k\)</span>.</li>
+</ol>
 </section>
-<section id="public-key" class="level3" data-number="2.4">
-<h3 data-number="2.4" class="anchored" data-anchor-id="public-key"><span class="header-section-number">2.4</span> Public Key</h3>
-<p>An individual’s public key (e.g., Alice’s key <span class="math inline">\(A\)</span>) is the Montgomery coefficient of the curve <span class="math inline">\(E_A : y^2 = x^3 + Ax^2 + x\)</span>, which is obtained by applying the action of the secret key <span class="math inline">\([a]\)</span> to the base curve <span class="math inline">\(E_0\)</span>.</p>
 </section>
-<section id="key-exchange" class="level3" data-number="2.5">
-<h3 data-number="2.5" class="anchored" data-anchor-id="key-exchange"><span class="header-section-number">2.5</span> Key Exchange</h3>
-<p>When Alice receives Bob’s public key <span class="math inline">\(B\)</span>, she first verifies that the curve <span class="math inline">\(E_B\)</span> is supersingular. She then applies her secret ideal class action <span class="math inline">\([\mathfrak{a}]\)</span> to compute <span class="math inline">\([\mathfrak{a}]E_B = [\mathfrak{a}][\mathfrak{b}]E_0\)</span>. The shared secret is the unique Montgomery coefficient <span class="math inline">\(S\)</span> corresponding to the combined curve <span class="math inline">\([\mathfrak{a}][\mathfrak{b}]E_0\)</span>.</p>
+<section id="communication" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="communication"><span class="header-section-number">2.3</span> Communication</h3>
+<p>Alice and Bob exchange their respective lists of <span class="math inline">\(k\)</span> public keys.</p>
+<section id="alices-computation" class="level4" data-number="2.3.1">
+<h4 data-number="2.3.1" class="anchored" data-anchor-id="alices-computation"><span class="header-section-number">2.3.1</span> Alice’s Computation</h4>
+<ol type="1">
+<li>For every pair <span class="math inline">\((i, j)\)</span> where <span class="math inline">\(1 \le i, j \le k\)</span>, Alice uses Bob’s <span class="math inline">\(i\)</span>-th public key and her <span class="math inline">\(j\)</span>-th private key to compute the <span class="math inline">\(k^2\)</span> shared curves: <span class="math display">\[E_{BiAj} = E_{Bi} / \langle U_i + [\alpha_j]V_i \rangle\]</span></li>
+<li>She extracts the j-invariants to form the shared secrets: <span class="math inline">\(z_{i,j} = j(E_{BiAj})\)</span>.</li>
+<li>She computes the combined hash: <span class="math inline">\(h = H(z_{1,1}, \dots, z_{k,k})\)</span>.</li>
+</ol>
+</section>
+<section id="bobs-computation" class="level4" data-number="2.3.2">
+<h4 data-number="2.3.2" class="anchored" data-anchor-id="bobs-computation"><span class="header-section-number">2.3.2</span> Bob’s Computation</h4>
+<ol type="1">
+<li>For every pair <span class="math inline">\((i, j)\)</span>, Bob uses Alice’s <span class="math inline">\(j\)</span>-th public key and his <span class="math inline">\(i\)</span>-th private key to compute: <span class="math display">\[E_{AjBi} = E_{Aj} / \langle R_j + [\beta_i]S_j \rangle\]</span></li>
+<li>He extracts the j-invariants: <span class="math inline">\(z'_{i,j} = j(E_{AjBi})\)</span>.</li>
+<li>He computes the combined hash: <span class="math inline">\(h' = H(z'_{1,1}, \dots, z'_{k,k})\)</span>.</li>
+</ol>
+</section>
+</section>
+<section id="verification" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="verification"><span class="header-section-number">2.4</span> Verification</h3>
+<ol type="1">
+<li><strong>Validation:</strong> Both parties perform validation tests on the received public keys. Alice verifies that for each <span class="math inline">\(j\)</span>, <span class="math inline">\(U_j\)</span> and <span class="math inline">\(V_j\)</span> are independent points of order <span class="math inline">\(2^m\)</span> on <span class="math inline">\(E_{Bj}\)</span> and that the Weil pairing holds: <span class="math display">\[e_{2^m}(U_j, V_j) = e_{2^m}(P_A, Q_A)^{3^n}\]</span> Bob performs the analogous checks.</li>
+<li><strong>Key Confirmation:</strong>
+<ul>
+<li>Alice sends <span class="math inline">\(H(H(h))\)</span> to Bob. Bob verifies it equals <span class="math inline">\(H(H(h'))\)</span>.</li>
+<li>Bob sends <span class="math inline">\(H(h')\)</span> to Alice. Alice verifies it equals <span class="math inline">\(H(h)\)</span>.</li>
+</ul></li>
+<li><strong>Termination:</strong> If any public key pair fails validation, or if the hashes mismatch, the protocol terminates. Otherwise, they continue with <span class="math inline">\(h = h'\)</span> as their shared secret key.</li>
+</ol>
 </section>
 </section>
 <section id="security-assumptions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
-<p>The security of the CSIDH protocol relies on the hardness of an isogeny-finding problem analogous to the classical discrete logarithm problem.</p>
-<section id="key-recovery-problem" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="key-recovery-problem"><span class="header-section-number">3.1</span> Key Recovery Problem</h3>
-<p>The fundamental computational assumption is that given two supersingular elliptic curves <span class="math inline">\(E\)</span> and <span class="math inline">\(E'\)</span> over <span class="math inline">\(\mathbb{F}_p\)</span> with the same <span class="math inline">\(\mathbb{F}_p\)</span>-rational endomorphism ring <span class="math inline">\(\mathcal{O}\)</span>, it is computationally infeasible to find an ideal <span class="math inline">\(\mathfrak{a}\)</span> such that <span class="math inline">\([\mathfrak{a}]E = E'\)</span>.</p>
-</section>
-<section id="quantum-security" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="quantum-security"><span class="header-section-number">3.2</span> Quantum Security</h3>
-<p>Breaking the scheme translates to solving an instance of the abelian hidden-shift problem. This problem can be addressed using subexponential-time quantum algorithms, such as those proposed by Kuperberg. The precise asymptotic complexity depends heavily on the cost of computing the isogeny oracle; combinations of algorithms yield bounds in the realm of <span class="math inline">\(L_p[1/2, 1/\sqrt{2}]\)</span>.</p>
-</section>
-<section id="chosen-ciphertext-security" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="chosen-ciphertext-security"><span class="header-section-number">3.3</span> Chosen-Ciphertext Security</h3>
-<p>Because CSIDH naturally affords efficient public-key validation, it avoids vulnerabilities related to the reuse of dishonest keys. This validation allows CSIDH to securely achieve non-interactive key exchange without resorting to additional chosen-ciphertext attack (CCA) transformations like the Fujisaki-Okamoto transform.</p>
-</section>
+<p>The security of the <span class="math inline">\(k\)</span>-SIDH protocol relies on the following foundational assumptions:</p>
+<ol type="1">
+<li><strong>Intractability of the Supersingular Isogeny (SSI) Problem:</strong> The underlying primitive relies on the hardness of finding an isogeny of a specific degree with a cyclic kernel between two known supersingular elliptic curves defined over <span class="math inline">\(\mathbb{F}_{p^2}\)</span>.</li>
+<li><strong>Irreducibility of SIDH:</strong> The multiple-instances transformation requires the underlying key establishment to be <em>irreducible</em>. A protocol is irreducible if it is computationally infeasible for a malicious participant to craft a modified public key that successfully passes all public validation tests while generating the exact same shared secret across multiple different honest private keys. The authors prove that if an attacker could violate this irreducibility in SIDH, they could use that capability to efficiently solve the SSI problem.</li>
+<li><strong>Preimage Resistance of the Hash Function:</strong> The hash function <span class="math inline">\(H\)</span> must be strong and preimage-resistant. Since a dishonest Bob only receives <span class="math inline">\(H(h)\)</span> (or <span class="math inline">\(H(H(h))\)</span>), he must guess the entirety of the <span class="math inline">\(k\)</span>-element preimage correctly. The hash prevents the attacker from successfully testing failures instance-by-instance.</li>
+<li><strong>No Curve Manipulation:</strong> The proof model primarily addresses adversaries that manipulate elliptic curve torsion points. It relies on the heuristic assumption that the curves themselves are not being maliciously generated or manipulated in unverified ways, noting that there are no known active attacks exploiting manipulated curves directly in this context.</li>
+</ol>
 </section>
 <section id="progress" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="progress"><span class="header-section-number">4</span> Progress</h2>
-<p>TODO</p>
-<p>2023/793 and 2020/1188</p>
+<p>TODO 2019/890</p>
 
 
 </section>
 <section class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id=""><span class="header-section-number">5</span> References</h2>
 <div id="refs" class="references csl-bib-body" role="list">
-<div id="ref-csidh" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[CLMP18] </div><div class="csl-right-inline"><span class="smallcaps">Castryck, Wouter</span> ; <span class="smallcaps">Lange, Tanja</span> ; <span class="smallcaps">Martindale, Chloe</span> ; <span class="smallcaps">Panny, Lorenz</span> ; <span class="smallcaps">Renes, Joost</span>: <a href="https://eprint.iacr.org/2018/383"><span>CSIDH</span>: <span>C</span>ommutative <span>S</span>upersingular <span>I</span>sogeny <span>D</span>iffie-<span>H</span>ellman</a>. In: <em>ASIACRYPT</em>&nbsp;: Springer, 2018, pp.&nbsp;395–427</div>
+<div id="ref-ksidh" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[AzJaLe17] </div><div class="csl-right-inline"><span class="smallcaps">Azarderakhsh, Reza</span> ; <span class="smallcaps">Jao, David</span> ; <span class="smallcaps">Leonar, Christopher</span>: <a href="https://link.springer.com/chapter/10.1007/978-3-319-72565-9_3">Post-quantum static-static key agreement using multiple protocol instances</a>. In: <em>SAC</em>&nbsp;: Springer, 2017, pp.&nbsp;45–63</div>
 </div>
 </div>
 <hr>
