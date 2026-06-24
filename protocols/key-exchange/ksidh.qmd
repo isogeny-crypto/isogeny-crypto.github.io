@@ -1,0 +1,79 @@
+---
+title: "$k$-SIDH"
+subtitle: "Multiple Instances of SIDH"
+date: 2026-06-24
+---
+
+## Overview
+
+> Broken by the same attacks that broke SIDH. 
+
+The **$k$-SIDH** protocol introduces a generic transformation designed to secure [SIDH](/protocols/key-exchange/sidh.qmd) key agreement against active attacks in the static-static setting [@ksidh]. 
+
+In a standard SIDH static-static key exchange, a malicious participant can mount an adaptive attack by sending specialized, manipulated public torsion points. By observing whether the subsequent key validation succeeds or fails, the attacker can iteratively leak the honest party's static private key. Extant countermeasures, such as the Fujisaki-Okamoto transform, enforce indirect validation by requiring the untrusted party to disclose their private key. While secure, this precludes the use of static-static drop-in replacements.
+
+To thwart these attacks without exposing private keys, $k$-SIDH uses a multiple instances model. Instead of a single key, each party generates $k$ different keys. During the exchange, the participants perform key agreement using all $k^2$ combinations of their individual keys. The resulting $k^2$ shared secrets are hashed together. If a malicious, modified public key is used, it will almost certainly cause at least one of the $k^2$ key derivations to fail, causing the final hashed validation to fail. This expands the space of failure outcomes exponentially, rendering it computationally infeasible for an attacker to predict the correct final hash and salvage the attack. 
+
+## Protocol Design
+
+The $k$-SIDH key agreement process requires both parties (Alice and Bob) to perform $k^2$ pairwise derivations. 
+
+### Setup
+The global parameters $gp$ are identical to standard SIDH:
+
+- A preimage-resistant hash function $H$.
+- A prime number $p = 2^m 3^n f \pm 1$.
+- A supersingular elliptic curve $E/\mathbb{F}_{p^2}$.
+- Fixed, independent torsion bases: $P_A, Q_A \in E[2^m]$ and $P_B, Q_B \in E[3^n]$.
+
+### Key Generation
+
+#### Alice's Key Generation
+1. Alice generates $k$ random private keys: $\alpha_i \in_R \mathbb{Z}/2^m\mathbb{Z}$ for $1 \le i \le k$.
+2. For each key, she computes a $2^m$-isogeny: $\phi_{Ai}: E \rightarrow E_{Ai} = E / \langle P_A + [\alpha_i]Q_A \rangle$.
+3. She projects Bob's torsion bases through each isogeny: $R_i = \phi_{Ai}(P_B)$ and $S_i = \phi_{Ai}(Q_B)$.
+4. Her public key is the set of $k$ tuples: $\{(E_{Ai}, R_i, S_i)\}_{i=1}^k$.
+
+#### Bob's Key Generation
+1. Bob generates $k$ random private keys: $\beta_j \in_R \mathbb{Z}/3^n\mathbb{Z}$ for $1 \le j \le k$.
+2. For each key, he computes a $3^n$-isogeny: $\phi_{Bj}: E \rightarrow E_{Bj} = E / \langle P_B + [\beta_j]Q_B \rangle$.
+3. He projects Alice's torsion bases through each isogeny: $U_j = \phi_{Bj}(P_A)$ and $V_j = \phi_{Bj}(Q_A)$.
+4. His public key is the set of $k$ tuples: $\{(E_{Bj}, U_j, V_j)\}_{j=1}^k$.
+
+### Communication
+Alice and Bob exchange their respective lists of $k$ public keys. 
+
+#### Alice's Computation
+1. For every pair $(i, j)$ where $1 \le i, j \le k$, Alice uses Bob's $i$-th public key and her $j$-th private key to compute the $k^2$ shared curves:
+   $$E_{BiAj} = E_{Bi} / \langle U_i + [\alpha_j]V_i \rangle$$
+2. She extracts the j-invariants to form the shared secrets: $z_{i,j} = j(E_{BiAj})$.
+3. She computes the combined hash: $h = H(z_{1,1}, \dots, z_{k,k})$.
+
+#### Bob's Computation
+1. For every pair $(i, j)$, Bob uses Alice's $j$-th public key and his $i$-th private key to compute:
+   $$E_{AjBi} = E_{Aj} / \langle R_j + [\beta_i]S_j \rangle$$
+2. He extracts the j-invariants: $z'_{i,j} = j(E_{AjBi})$.
+3. He computes the combined hash: $h' = H(z'_{1,1}, \dots, z'_{k,k})$.
+
+### Verification
+1. **Validation:** Both parties perform validation tests on the received public keys. Alice verifies that for each $j$, $U_j$ and $V_j$ are independent points of order $2^m$ on $E_{Bj}$ and that the Weil pairing holds: 
+$$e_{2^m}(U_j, V_j) = e_{2^m}(P_A, Q_A)^{3^n}$$
+Bob performs the analogous checks.
+2. **Key Confirmation:** 
+    - Alice sends $H(H(h))$ to Bob. Bob verifies it equals $H(H(h'))$.
+    - Bob sends $H(h')$ to Alice. Alice verifies it equals $H(h)$.
+3. **Termination:** If any public key pair fails validation, or if the hashes mismatch, the protocol terminates. Otherwise, they continue with $h = h'$ as their shared secret key.
+
+## Security Assumptions
+
+The security of the $k$-SIDH protocol relies on the following foundational assumptions:
+
+1. **Intractability of the Supersingular Isogeny (SSI) Problem:** The underlying primitive relies on the hardness of finding an isogeny of a specific degree with a cyclic kernel between two known supersingular elliptic curves defined over $\mathbb{F}_{p^2}$.
+2. **Irreducibility of SIDH:** The multiple-instances transformation requires the underlying key establishment to be *irreducible*. A protocol is irreducible if it is computationally infeasible for a malicious participant to craft a modified public key that successfully passes all public validation tests while generating the exact same shared secret across multiple different honest private keys. The authors prove that if an attacker could violate this irreducibility in SIDH, they could use that capability to efficiently solve the SSI problem.
+3. **Preimage Resistance of the Hash Function:** The hash function $H$ must be strong and preimage-resistant. Since a dishonest Bob only receives $H(h)$ (or $H(H(h))$), he must guess the entirety of the $k$-element preimage correctly. The hash prevents the attacker from successfully testing failures instance-by-instance.
+4. **No Curve Manipulation:** The proof model primarily addresses adversaries that manipulate elliptic curve torsion points. It relies on the heuristic assumption that the curves themselves are not being maliciously generated or manipulated in unverified ways, noting that there are no known active attacks exploiting manipulated curves directly in this context.
+
+## Progress
+
+TODO
+2019/890

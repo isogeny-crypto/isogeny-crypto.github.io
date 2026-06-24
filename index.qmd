@@ -17,7 +17,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption 
 ### Key Exchange
 
 - [SIDH](protocols/key-exchange/sidh.qmd)  (2011--2022)
-- $k$-SIDH (2017-2022)
+- [$k$-SIDH](protocols/key-exchange/ksidh.qmd) (2017-2022)
 - [CSIDH](protocols/key-exchange/csidh.qmd) (2018)
 - [B-SIDH](protocols/key-exchange/bsidh.qmd) (2020--2022)
 - SiGamal (2020)
