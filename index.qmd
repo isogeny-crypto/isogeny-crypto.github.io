@@ -86,6 +86,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption 
 - SQIsign2DPush (2026)
 - WaterSQI (2026)
 - PRISMO (2026)
+- SQInstructor (2026)
 :::
 :::
 
