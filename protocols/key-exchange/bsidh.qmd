@@ -12,11 +12,32 @@ B-SIDH (pronounced "B-side") is a novel instantiation that significantly improve
 
 ## Protocol Design
 
-The mechanics of B-SIDH heavily exploit the properties of quadratic twists and twist-agnostic arithmetic:
+The B-SIDH protocol structurally mimics the traditional SIDH walk-through but instantiates the operations such that Alice and Bob work in opposite quadratic twists using degrees $M$ and $N$, respectively, where $M |(p+1)$ and $N | (p-1)$. 
 
-* **Torsion Spaces:** In typical SIDH, both Alice and Bob work in the $(p+1)$-torsion of curves where the Frobenius trace $t_2 = -2p$. In B-SIDH, one party (e.g., Alice) selects a secret isogeny degree $M$ dividing $p+1$, taking her secret kernel from the $(p+1)$-torsion. Bob selects a coprime degree $N$ dividing $p-1$, operating in the $(p-1)$-torsion of the quadratic twist (where $t_2 = 2p$). 
-* **Twist-Agnostic Arithmetic:** The protocol utilizes Montgomery curves of the form $E_{A,B}: By^2 = x^3 + Ax^2 + x$ and their twists $E^t_{A,\gamma B}: \gamma By^2 = x^3 + Ax^2 + x$. The isomorphism between these curves over $\mathbb{F}_{p^4}$ is given by $\sigma(x, y) = (x, \delta y)$. Since Montgomery arithmetic relies solely on $x$-coordinates and the curve constant $A$ (ignoring the $B$ coefficient and $y$-coordinates), the twisting morphism leaves $x$-coordinates completely unchanged. Thus, computations natively process points from both curves seamlessly over $\mathbb{F}_{p^2}$.
-* **Composite Degree Isogenies:** Because $p-1$ and $p+1$ are engineered to be smooth but may contain larger prime factors than traditional SIDH, computing secret isogenies often requires composing walks of multiple prime degrees ($l$-isogenies). Evaluating these larger $l$-isogenies in practice is accelerated using [$\sqrt{\text{élu}}$](https://velusqrt.isogeny.org/), bypassing the traditional Vélu's formulas.
+### Public Parameters
+Unlike traditional SIDH, which requires primes of the restrictive form $p = f \cdot 2^a 3^b - 1$ (forcing both parties' smooth degrees to divide $p+1$), B-SIDH selects a prime $p$ such that both $p+1$ and $p-1$ are engineered to be smooth, allowing for significantly smaller primes.
+
+The protocol specifies a starting supersingular curve $E_0 / \mathbb{F}_{p^2}$. It also establishes a basis $\{P_A, Q_A\}$ for the $M$-torsion in $E_0(\mathbb{F}_{p^2})$ and a basis $\{P_B, Q_B\}$ for the $N$-torsion corresponding to the quadratic twist. Because Montgomery arithmetic is twist-agnostic, coordinates from both sets are processed identically using their $x$-coordinates over $\mathbb{F}_{p^2}$.
+
+### Alice's Key Generation
+* Alice chooses two secret integers $(\alpha_A, \beta_A) \in \mathbb{Z}/M\mathbb{Z} \times \mathbb{Z}/M\mathbb{Z}$.
+* She computes her secret point $S_A = [\alpha_A]P_A + [\beta_A]Q_A$ of order $M$ from the $(p+1)$-torsion.
+* She uses $S_A$ to compute her secret $M$-isogeny $\phi_A : E_0 \rightarrow E_A$, where $E_A = E_0 / \langle S_A \rangle$. Because $p+1$ is engineered to be smooth but may contain larger prime factors than traditional SIDH, computing her secret isogeny requires composing walks of multiple prime degrees ($l$-isogenies). Evaluating these larger $l$-isogenies in practice is accelerated using [$\sqrt{élu}$](https://velusqrt.isogeny.org/).
+* During the isogeny computation, she maps Bob's basis points $P_B$ and $Q_B$ through $\phi_A$. 
+* **Alice's Public Key:** $PK_A = (E_A, \phi_A(P_B), \phi_A(Q_B))$.
+
+### Bob's Key Generation
+* Bob chooses two secret integers $(\alpha_B, \beta_B) \in \mathbb{Z}/N\mathbb{Z} \times \mathbb{Z}/N\mathbb{Z}$.
+* He computes his secret point $S_B = [\alpha_B]P_B + [\beta_B]Q_B$ of order $N$ from the $(p-1)$-torsion (on the quadratic twist).
+* He uses $S_B$ to compute his secret $N$-isogeny $\phi_B : E_0 \rightarrow E_B$, where $E_B = E_0 / \langle S_B \rangle$. Just like Alice, Bob's $N$-isogeny computation involves larger prime factors from $p-1$ and applies the same [$\sqrt{élu}$](https://velusqrt.isogeny.org/).
+* During his isogeny computation, he maps Alice's basis points $P_A$ and $Q_A$ through $\phi_B$.
+* **Bob's Public Key:** $PK_B = (E_B, \phi_B(P_A), \phi_B(Q_A))$.
+
+### Shared Secret Computation
+* **Alice:** Upon receiving $PK_B$, Alice uses her secret integers to compute a new point $S'_A = [\alpha_A]\phi_B(P_A) + [\beta_A]\phi_B(Q_A)$ of order $M$ on curve $E_B$. She computes the $M$-isogeny $\phi'_A: E_B \rightarrow E_B / \langle S'_A \rangle$.
+* **Bob:** Upon receiving $PK_A$, Bob uses his secret integers to compute a new point $S'_B = [\alpha_B]\phi_A(P_B) + [\beta_B]\phi_A(Q_B)$ of order $N$ on curve $E_A$. He computes the $N$-isogeny $\phi'_B: E_A \rightarrow E_A / \langle S'_B \rangle$.
+* Both parties successfully arrive at the same shared secret by computing the j-invariant of their respective final image curves, as $E_B / \langle S'_A \rangle \cong E_A / \langle S'_B \rangle$.
+
 
 ## Security Assumptions
 

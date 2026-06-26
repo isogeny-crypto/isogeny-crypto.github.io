@@ -190,9 +190,9 @@ Upload the paper to an LLM model (I used Google Gemini Pro) with the following p
 
 ```
 Study the attached file and generate a detailed, concrete description of the newly introduced protocol in Quarto Markdown (.qmd) format. The target audience is researchers working in isogeny-based cryptography. Organize the information under the following headings:
-1. Overview
-2. Protocol Design
-3. Security Assumptions
+1. Overview (the protocol highlights or selling points)
+2. Protocol Design (walk through the protocol)
+3. Security Assumptions (what problems are assumed hard)
 ```
 
 Iterate until you get a good initial draft. Then proof read and make necessary edits like adding references, hyperlinks, and `tikz` diagram (generated from screenshot using Anthropic Claude Sonnet) of the protocol.
