@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-06-23">
+<meta name="dcterms.date" content="2026-06-26">
 
-<title>B-SIDH – Isogeny-based Cryptography Wiki</title>
+<title>CSURF – Isogeny-based Cryptography Wiki</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -315,7 +315,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">B-SIDH</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/csurf.html">CSURF</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -360,7 +360,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../protocols/key-exchange/bsidh.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../protocols/key-exchange/bsidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">B-SIDH</span></a>
   </div>
 </li>
@@ -372,7 +372,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../protocols/key-exchange/csurf.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/csurf.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">CSURF</span></a>
   </div>
 </li>
@@ -432,12 +432,15 @@ window.Quarto = {
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
   <li><a href="#protocol-design" id="toc-protocol-design" class="nav-link" data-scroll-target="#protocol-design"><span class="header-section-number">2</span> Protocol Design</a>
   <ul class="collapse">
-  <li><a href="#public-parameters" id="toc-public-parameters" class="nav-link" data-scroll-target="#public-parameters"><span class="header-section-number">2.1</span> Public Parameters</a></li>
-  <li><a href="#alices-key-generation" id="toc-alices-key-generation" class="nav-link" data-scroll-target="#alices-key-generation"><span class="header-section-number">2.2</span> Alice’s Key Generation</a></li>
-  <li><a href="#bobs-key-generation" id="toc-bobs-key-generation" class="nav-link" data-scroll-target="#bobs-key-generation"><span class="header-section-number">2.3</span> Bob’s Key Generation</a></li>
-  <li><a href="#shared-secret-computation" id="toc-shared-secret-computation" class="nav-link" data-scroll-target="#shared-secret-computation"><span class="header-section-number">2.4</span> Shared Secret Computation</a></li>
+  <li><a href="#curve-representation" id="toc-curve-representation" class="nav-link" data-scroll-target="#curve-representation"><span class="header-section-number">2.1</span> Curve Representation</a></li>
+  <li><a href="#key-exchange" id="toc-key-exchange" class="nav-link" data-scroll-target="#key-exchange"><span class="header-section-number">2.2</span> Key Exchange</a></li>
   </ul></li>
-  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a></li>
+  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a>
+  <ul class="collapse">
+  <li><a href="#hard-homogeneous-spaces" id="toc-hard-homogeneous-spaces" class="nav-link" data-scroll-target="#hard-homogeneous-spaces"><span class="header-section-number">3.1</span> Hard Homogeneous Spaces</a></li>
+  <li><a href="#quantum-resistance" id="toc-quantum-resistance" class="nav-link" data-scroll-target="#quantum-resistance"><span class="header-section-number">3.2</span> Quantum Resistance</a></li>
+  <li><a href="#the-mathbbz_3-factor-and-equivalent-security" id="toc-the-mathbbz_3-factor-and-equivalent-security" class="nav-link" data-scroll-target="#the-mathbbz_3-factor-and-equivalent-security"><span class="header-section-number">3.3</span> The <span class="math inline">\(\mathbb{Z}_3\)</span> Factor and Equivalent Security</a></li>
+  </ul></li>
   <li><a href="#progress" id="toc-progress" class="nav-link" data-scroll-target="#progress"><span class="header-section-number">4</span> Progress</a></li>
   <li><span class="header-section-number">5</span> References</li>
   </ul>
@@ -447,10 +450,10 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">B-SIDH</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/csurf.html">CSURF</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">B-SIDH</h1>
-<p class="subtitle lead">Supersingular Isogeny Diffie-Hellman using Twisted Torsion</p>
+<h1 class="title">CSURF</h1>
+<p class="subtitle lead">CSIDH on the surface</p>
 </div>
 
 
@@ -461,7 +464,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 23, 2026</p>
+      <p class="date">June 26, 2026</p>
     </div>
   </div>
   
@@ -481,55 +484,47 @@ window.Quarto = {
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<blockquote class="blockquote">
-<p>Broken by the same attacks that broke SIDH.</p>
-</blockquote>
-<p>B-SIDH (pronounced “B-side”) is a novel instantiation that significantly improves upon the original <a href="../../protocols/key-exchange/sidh.html">SIDH</a> protocol. It bypasses previous restrictions on the shape of the underlying prime field by permitting parties to operate simultaneously within the <span class="math inline">\((p+1)\)</span>-torsion of a supersingular elliptic curve and the <span class="math inline">\((p-1)\)</span>-torsion of its quadratic twist <span class="citation" data-cites="bsidh">[<a href="#ref-bsidh" role="doc-biblioref">Cost20</a>]</span>.</p>
+<p>The CSURF protocol is a variant of the <a href="../../protocols/key-exchange/csidh.html">CSIDH</a> protocol, designed to operate on the “surface” of the supersingular isogeny graph rather than the “floor” <span class="citation" data-cites="csurf">[<a href="#ref-csurf" role="doc-biblioref">CaDe20</a>]</span>. CSURF utilizes supersingular elliptic curves over a finite prime field <span class="math inline">\(\mathbb{F}_p\)</span> (where <span class="math inline">\(p \equiv 3 \pmod 4\)</span>) whose endomorphism rings are isomorphic to the maximal order <span class="math inline">\(\mathbb{Z}[(1+\sqrt{-p})/2]\)</span>. This is in contrast to original CSIDH, which relies on curves with the non-maximal endomorphism ring <span class="math inline">\(\mathbb{Z}[\sqrt{-p}]\)</span> (the floor).</p>
+<p>A key operational advantage of CSURF is unlocked when the prime satisfies <span class="math inline">\(p \equiv 7 \pmod 8\)</span>. In this setting, horizontal 2-isogenies can be efficiently computed to evaluate the class group action. This efficiency stems from the fact that computing these 2-isogenies requires little more than a single exponentiation in the base field <span class="math inline">\(\mathbb{F}_p\)</span>. Additionally, moving to the surface eliminates the redundant <span class="math inline">\(\mathbb{Z}_3\)</span> factor present in the acting ideal-class group of standard CSIDH, which provides no extra security.</p>
 </section>
 <section id="protocol-design" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="protocol-design"><span class="header-section-number">2</span> Protocol Design</h2>
-<p>The B-SIDH protocol structurally mimics the traditional SIDH walk-through but instantiates the operations such that Alice and Bob work in opposite quadratic twists using degrees <span class="math inline">\(M\)</span> and <span class="math inline">\(N\)</span>, respectively, where <span class="math inline">\(M |(p+1)\)</span> and <span class="math inline">\(N | (p-1)\)</span>.</p>
-<section id="public-parameters" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="public-parameters"><span class="header-section-number">2.1</span> Public Parameters</h3>
-<p>Unlike traditional SIDH, which requires primes of the restrictive form <span class="math inline">\(p = f \cdot 2^a 3^b - 1\)</span> (forcing both parties’ smooth degrees to divide <span class="math inline">\(p+1\)</span>), B-SIDH selects a prime <span class="math inline">\(p\)</span> such that both <span class="math inline">\(p+1\)</span> and <span class="math inline">\(p-1\)</span> are engineered to be smooth, allowing for significantly smaller primes.</p>
-<p>The protocol specifies a starting supersingular curve <span class="math inline">\(E_0 / \mathbb{F}_{p^2}\)</span>. It also establishes a basis <span class="math inline">\(\{P_A, Q_A\}\)</span> for the <span class="math inline">\(M\)</span>-torsion in <span class="math inline">\(E_0(\mathbb{F}_{p^2})\)</span> and a basis <span class="math inline">\(\{P_B, Q_B\}\)</span> for the <span class="math inline">\(N\)</span>-torsion corresponding to the quadratic twist. Because Montgomery arithmetic is twist-agnostic, coordinates from both sets are processed identically using their <span class="math inline">\(x\)</span>-coordinates over <span class="math inline">\(\mathbb{F}_{p^2}\)</span>.</p>
+<section id="curve-representation" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="curve-representation"><span class="header-section-number">2.1</span> Curve Representation</h3>
+<p>CSURF relies on a tweaked Montgomery curve representation. The set of valid public keys is defined by the set <span class="math display">\[S_p^- = \{A \in \mathbb{F}_p \mid y^2 = x^3 + Ax^2 - x \text{ is supersingular}\}\]</span> This adjusted equation, <span class="math inline">\(y^2 = x^3 + Ax^2 - x\)</span>, allows any curve on the surface to be uniquely represented by its coefficient <span class="math inline">\(A\)</span>. Crucially, the set <span class="math inline">\(S_p^-\)</span> contains <span class="math inline">\(0\)</span>, making the curve <span class="math inline">\(y^2 = x^3 - x\)</span> an ideal, natural starting curve <span class="math inline">\(s_0\)</span> for the protocol.</p>
 </section>
-<section id="alices-key-generation" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="alices-key-generation"><span class="header-section-number">2.2</span> Alice’s Key Generation</h3>
+<section id="key-exchange" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="key-exchange"><span class="header-section-number">2.2</span> Key Exchange</h3>
+<p>The CSURF protocol models a hard homogeneous space, where a finite commutative group acts freely and transitively on a set. The acting group is the ideal-class group <span class="math inline">\(\mathcal{C}l(\mathbb{Z}[(1+\sqrt{-p})/2])\)</span> acting on the set <span class="math inline">\(S_p^-\)</span> of tweaked Montgomery coefficients.</p>
+<p>The steps for a non-interactive key exchange between two parties, Alice and Bob, proceed as follows:</p>
+<ol type="1">
+<li><strong>Public Parameters:</strong> The system establishes a large prime <span class="math inline">\(p \equiv 7 \pmod 8\)</span> constructed as <span class="math inline">\(p = 4 \cdot \prod_{i=1}^n \ell_i - 1\)</span>, where <span class="math inline">\(\ell_i\)</span> are small distinct odd primes, alongside the starting prime <span class="math inline">\(\ell_0 = 2\)</span>. The base curve coefficient is <span class="math inline">\(E_0 = 0 \in S_p^-\)</span>.</li>
+<li><strong>Private Key Generation:</strong> Alice secretely samples a vector of exponents <span class="math inline">\((e_0, e_1, \dots, e_n)\)</span> from a designated range. This vector represents an ideal class <span class="math inline">\([\mathfrak{a}] = [\mathfrak{l}_0^{e_0}\mathfrak{l}_1^{e_1} \dots \mathfrak{l}_n^{e_n}]\)</span> in the class group <span class="math inline">\(\mathcal{C}l(\mathbb{Z}[(1+\sqrt{-p})/2])\)</span>. For <span class="math inline">\(\ell_0=2\)</span>, the exponent <span class="math inline">\(e_0\)</span> can be sampled from a much larger interval because 2-isogenies are very fast to compute. Bob similarly samples his own secret exponent vector to form ideal <span class="math inline">\([\mathfrak{b}]\)</span>.</li>
+<li><strong>Public Key Evaluation:</strong> Alice computes her public key by evaluating the class group action on the starting curve: <span class="math inline">\(E_A = [\mathfrak{a}] E_0\)</span>.
 <ul>
-<li>Alice chooses two secret integers <span class="math inline">\((\alpha_A, \beta_A) \in \mathbb{Z}/M\mathbb{Z} \times \mathbb{Z}/M\mathbb{Z}\)</span>.</li>
-<li>She computes her secret point <span class="math inline">\(S_A = [\alpha_A]P_A + [\beta_A]Q_A\)</span> of order <span class="math inline">\(M\)</span> from the <span class="math inline">\((p+1)\)</span>-torsion.</li>
-<li>She uses <span class="math inline">\(S_A\)</span> to compute her secret <span class="math inline">\(M\)</span>-isogeny <span class="math inline">\(\phi_A : E_0 \rightarrow E_A\)</span>, where <span class="math inline">\(E_A = E_0 / \langle S_A \rangle\)</span>. Because <span class="math inline">\(p+1\)</span> is engineered to be smooth but may contain larger prime factors than traditional SIDH, computing her secret isogeny requires composing walks of multiple prime degrees (<span class="math inline">\(l\)</span>-isogenies). Evaluating these larger <span class="math inline">\(l\)</span>-isogenies in practice is accelerated using <a href="https://velusqrt.isogeny.org/"><span class="math inline">\(\sqrt{élu}\)</span></a>.</li>
-<li>During the isogeny computation, she maps Bob’s basis points <span class="math inline">\(P_B\)</span> and <span class="math inline">\(Q_B\)</span> through <span class="math inline">\(\phi_A\)</span>.</li>
-<li><strong>Alice’s Public Key:</strong> <span class="math inline">\(PK_A = (E_A, \phi_A(P_B), \phi_A(Q_B))\)</span>.</li>
-</ul>
-</section>
-<section id="bobs-key-generation" class="level3" data-number="2.3">
-<h3 data-number="2.3" class="anchored" data-anchor-id="bobs-key-generation"><span class="header-section-number">2.3</span> Bob’s Key Generation</h3>
-<ul>
-<li>Bob chooses two secret integers <span class="math inline">\((\alpha_B, \beta_B) \in \mathbb{Z}/N\mathbb{Z} \times \mathbb{Z}/N\mathbb{Z}\)</span>.</li>
-<li>He computes his secret point <span class="math inline">\(S_B = [\alpha_B]P_B + [\beta_B]Q_B\)</span> of order <span class="math inline">\(N\)</span> from the <span class="math inline">\((p-1)\)</span>-torsion (on the quadratic twist).</li>
-<li>He uses <span class="math inline">\(S_B\)</span> to compute his secret <span class="math inline">\(N\)</span>-isogeny <span class="math inline">\(\phi_B : E_0 \rightarrow E_B\)</span>, where <span class="math inline">\(E_B = E_0 / \langle S_B \rangle\)</span>. Just like Alice, Bob’s <span class="math inline">\(N\)</span>-isogeny computation involves larger prime factors from <span class="math inline">\(p-1\)</span> and applies the same <a href="https://velusqrt.isogeny.org/"><span class="math inline">\(\sqrt{élu}\)</span></a>.</li>
-<li>During his isogeny computation, he maps Alice’s basis points <span class="math inline">\(P_A\)</span> and <span class="math inline">\(Q_A\)</span> through <span class="math inline">\(\phi_B\)</span>.</li>
-<li><strong>Bob’s Public Key:</strong> <span class="math inline">\(PK_B = (E_B, \phi_B(P_A), \phi_B(Q_A))\)</span>.</li>
-</ul>
-</section>
-<section id="shared-secret-computation" class="level3" data-number="2.4">
-<h3 data-number="2.4" class="anchored" data-anchor-id="shared-secret-computation"><span class="header-section-number">2.4</span> Shared Secret Computation</h3>
-<ul>
-<li><strong>Alice:</strong> Upon receiving <span class="math inline">\(PK_B\)</span>, Alice uses her secret integers to compute a new point <span class="math inline">\(S'_A = [\alpha_A]\phi_B(P_A) + [\beta_A]\phi_B(Q_A)\)</span> of order <span class="math inline">\(M\)</span> on curve <span class="math inline">\(E_B\)</span>. She computes the <span class="math inline">\(M\)</span>-isogeny <span class="math inline">\(\phi'_A: E_B \rightarrow E_B / \langle S'_A \rangle\)</span>.</li>
-<li><strong>Bob:</strong> Upon receiving <span class="math inline">\(PK_A\)</span>, Bob uses his secret integers to compute a new point <span class="math inline">\(S'_B = [\alpha_B]\phi_A(P_B) + [\beta_B]\phi_A(Q_B)\)</span> of order <span class="math inline">\(N\)</span> on curve <span class="math inline">\(E_A\)</span>. He computes the <span class="math inline">\(N\)</span>-isogeny <span class="math inline">\(\phi'_B: E_A \rightarrow E_A / \langle S'_B \rangle\)</span>.</li>
-<li>Both parties successfully arrive at the same shared secret by computing the j-invariant of their respective final image curves, as <span class="math inline">\(E_B / \langle S'_A \rangle \cong E_A / \langle S'_B \rangle\)</span>.</li>
-</ul>
+<li><em>Action Evaluation:</em> To evaluate <span class="math inline">\([\mathfrak{a}] E_0\)</span>, Alice computes a chain of isogenies. Because 2-isogenies are extremely efficient, they are evaluated first without needing to push through points.</li>
+<li>For the odd primes <span class="math inline">\(\ell_i\)</span>, Alice generates points of order <span class="math inline">\(\ell_i\)</span> and uses tweaked Montgomery ladder arithmetic and Vélu’s formulas (requiring just a few sign flips from standard formulas) to compute the odd-degree isogenies and move across the surface graph.</li>
+<li>Bob performs the same group action evaluation to compute his public key <span class="math inline">\(E_B = [\mathfrak{b}] E_0\)</span>.</li>
+</ul></li>
+<li><strong>Key Exchange:</strong> Alice and Bob exchange their public keys <span class="math inline">\(E_A\)</span> and <span class="math inline">\(E_B\)</span> over a public channel.</li>
+<li><strong>Shared Secret:</strong> Alice computes the shared secret by applying her private group action to Bob’s public key: <span class="math inline">\(S = [\mathfrak{a}] E_B\)</span>. Bob does the corresponding calculation: <span class="math inline">\(S = [\mathfrak{b}] E_A\)</span>. By the commutativity of the class group action, both arrive at the exact same curve coefficient <span class="math inline">\(S \in S_p^-\)</span>, which serves as their shared secret.</li>
+</ol>
 </section>
 </section>
 <section id="security-assumptions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
-<p>B-SIDH relies on different security assumptions compared to standard SIDH, primarily because it alters the nature of the isogeny walks:</p>
-<ul>
-<li><strong>Multiple Edge Sets:</strong> Unlike SIDH, where walks are restricted to a single <span class="math inline">\(l\)</span>-isogeny graph, B-SIDH requires switching between multiple <span class="math inline">\(l\)</span>-isogeny graphs. Security assumes that navigating multiple edge sets does not weaken the underlying supersingular isogeny problem, as long as the total number of destination nodes remains comparable to SIDH.</li>
-<li><strong>Full-Length Walks:</strong> The reduction in prime size means that Alice and Bob’s secret walks cover nearly the entire graph (almost full-length), compared to the half-length walks in standard SIDH.</li>
-</ul>
+<section id="hard-homogeneous-spaces" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="hard-homogeneous-spaces"><span class="header-section-number">3.1</span> Hard Homogeneous Spaces</h3>
+<p>The security of CSURF is rooted in the framework of Hard Homogeneous Spaces originally proposed by Couveignes and Rostovtsev-Stolbunov. The fundamental security assumption is the hardness of the parallelization problem: given a starting element <span class="math inline">\(s_0\)</span> and elements <span class="math inline">\(s_1, s_2 \in S\)</span>, it must be computationally infeasible to find <span class="math inline">\(g_1 g_2 * s_0\)</span> where <span class="math inline">\(s_1 = g_1 * s_0\)</span> and <span class="math inline">\(s_2 = g_2 * s_0\)</span>.</p>
+</section>
+<section id="quantum-resistance" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="quantum-resistance"><span class="header-section-number">3.2</span> Quantum Resistance</h3>
+<p>Because the action relies on isogenies of elliptic curves rather than standard cyclic group exponentiation, it does not succumb to Shor’s polynomial-time quantum algorithm. The most efficient known quantum attack against the hard homogeneous space constructed by CSURF is Kuperberg’s algorithm for finding hidden shifts, which operates in subexponential time.</p>
+</section>
+<section id="the-mathbbz_3-factor-and-equivalent-security" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="the-mathbbz_3-factor-and-equivalent-security"><span class="header-section-number">3.3</span> The <span class="math inline">\(\mathbb{Z}_3\)</span> Factor and Equivalent Security</h3>
+<p>A specific topological quirk of the isogeny graph when <span class="math inline">\(p \equiv 3 \pmod 8\)</span> (the standard CSIDH setting) is the presence of a <span class="math inline">\(\mathbb{Z}_3\)</span> factor in the ideal class group <span class="math inline">\(\mathcal{C}l(\mathbb{Z}[\sqrt{-p}])\)</span>. Operating on the surface inherently avoids this redundant factor, matching the security profile of standard CSIDH.</p>
+</section>
 </section>
 <section id="progress" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="progress"><span class="header-section-number">4</span> Progress</h2>
@@ -540,8 +535,8 @@ window.Quarto = {
 <section class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id=""><span class="header-section-number">5</span> References</h2>
 <div id="refs" class="references csl-bib-body" role="list">
-<div id="ref-bsidh" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[Cost20] </div><div class="csl-right-inline"><span class="smallcaps">Costello, Craig</span>: <a href="https://eprint.iacr.org/2019/1145"><span>B-SIDH</span>: Supersingular isogeny <span>D</span>iffie-<span>H</span>ellman using twisted torsion</a>. In: <em>ASIACRYPT</em>&nbsp;: Springer, 2020, pp.&nbsp;440–463</div>
+<div id="ref-csurf" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[CaDe20] </div><div class="csl-right-inline"><span class="smallcaps">Castryck, Wouter</span> ; <span class="smallcaps">Decru, Thomas</span>: <a href="https://eprint.iacr.org/2019/1404"><span>CSIDH</span> on the surface</a>. In: <em>PQCrypto</em>&nbsp;: Springer, 2020, pp.&nbsp;111–129</div>
 </div>
 </div>
 <hr>

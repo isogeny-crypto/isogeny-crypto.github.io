@@ -14,7 +14,7 @@
     "href": "index.html#getting-started",
     "title": "Isogeny-based Cryptography Wiki",
     "section": "1 Getting Started",
-    "text": "1 Getting Started\nIf you are not familiar with the concept of cryptographic protocols, we recommend referring to the notes by Dan Boneh and Victor Shoup.\nThis wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption schemes and digital signature schemes.\n\n\n\n1.1 Key Exchange\n\nSIDH (2011–2022)\n\\(k\\)-SIDH (2017-2022)\nCSIDH (2018)\nB-SIDH (2020–2022)\nSiGamal (2020)\nCSURF (2020)\nSHealS/HealS (2021-2022)\nSimS (2021)\nSéta (2021–2022)\nEJKM (2021)\npSIDH (2022–2023)\nBDKLP (2022)\nM(D)-SIDH (2023)\nFESTA (2023)\nbinSIDH/terSIDH (2023)\nQFESTA (2024)\nTOGA-UE (2024)\nBIN-UE/COM-UE (2024)\nSILBE (2024)\nPOKÉ (2025)\nLIT-SiGamal (2025)\nPIKE (2026)\n\n\n\n\n1.2 Digital Signature\n\nJS (2014)\nGPS (2017)\nSeaSign (2019)\nCSI-FiSh (2019)\nLossy CSI-FiSh (2020)\nSashimi (2020)\nSQISign (2020)\nCalamari (2020)\nIAS (2021)\nSIDH PoK (2022)\nSCALLOP (2023)\nCJSS (2023)\nCSI-Otter (2023)\nJSD (2024)\nSCALLOP-HD (2024)\nSQIsignHD (2024)\nAprèsSQI (2024)\nSQIsign2D-East (2024)\nSQIsign2D-West (2024)\nSQIPrime (2024)\nErebor/Durian (2025)\nPRISM (2025)\nPEARL-SCALLOP (2025)\nTanuki (2025)\nSQIsign2D\\(^2\\) (2025)\nSPIDER (2026)\nORCAS (2026)\nSQIsign2DPush (2026)\nWaterSQI/PRISMO (2026)\nWombat (2026)",
+    "text": "1 Getting Started\nIf you are not familiar with the concept of cryptographic protocols, we recommend referring to the notes by Dan Boneh and Victor Shoup.\nThis wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption schemes and digital signature schemes.\n\n\n\n1.1 Key Exchange\n\nSIDH (2011–2022)\n\\(k\\)-SIDH (2017-2022)\nCSIDH (2018)\nCSURF (2020)\nB-SIDH (2020–2022)\nSiGamal (2020)\nC-SiGamal (2020)\nSHealS (2021-2022)\nHealS (2021-2022)\nSimS (2021)\nSéta (2021–2022)\nEJKM (2021)\npSIDH (2022–2023)\nBDKLP (2022)\nM-SIDH (2023)\nMD-SIDH (2023)\nFESTA (2023)\nbinSIDH (2023)\nterSIDH (2023)\nQFESTA (2024)\nTOGA-UE (2024)\nBIN-UE (2024)\nCOM-UE (2024)\nSILBE (2024)\nPOKÉ (2025)\nLIT-SiGamal (2025)\nPIKE (2026)\n\n\n\n\n1.2 Digital Signature\n\nJS (2014)\nGPS (2017)\nSeaSign (2019)\nCSI-FiSh (2019)\nSashimi (2020)\nLossy CSI-FiSh (2020)\nSQISign (2020)\nCalamari (2020)\nIAS (2021)\nSIDH PoK (2022)\nSCALLOP (2023)\nCJSS (2023)\nCSI-Otter (2023)\nJSD (2024)\nSCALLOP-HD (2024)\nSQIsignHD (2024)\nAprèsSQI (2024)\nSQIsign2D-East (2024)\nSQIsign2D-West (2024)\nSQIPrime (2024)\nErebor/Durian (2025)\nPRISM (2025)\nPEARL-SCALLOP (2025)\nTanuki (2025)\nSQIsign2D\\(^2\\) (2025)\nSPIDER (2026)\nORCAS (2026)\nSQIsign2DPush (2026)\nWaterSQI (2026)\nPRISMO (2026)\nWombat (2026)",
     "crumbs": [
       "Home"
     ]
@@ -78,153 +78,65 @@
     "href": "protocols/key-exchange/csidh.html#progress",
     "title": "CSIDH",
     "section": "4 Progress",
-    "text": "4 Progress\nTODO\n2023/793 and 2020/1188",
+    "text": "4 Progress\nTODO\n2023/793 and 2020/1188 and 2018/537 and 2019/1202",
     "crumbs": [
       "Key Exchange",
       "CSIDH"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/bsidh.html",
-    "href": "protocols/key-exchange/bsidh.html",
-    "title": "B-SIDH",
+    "objectID": "protocols/key-exchange/festa.html",
+    "href": "protocols/key-exchange/festa.html",
+    "title": "FESTA",
     "section": "",
-    "text": "Broken by the same attacks that broke SIDH.\n\nB-SIDH (pronounced “B-side”) is a novel instantiation that significantly improves upon the original SIDH protocol. It bypasses previous restrictions on the shape of the underlying prime field by permitting parties to operate simultaneously within the \\((p+1)\\)-torsion of a supersingular elliptic curve and the \\((p-1)\\)-torsion of its quadratic twist [Cost20].",
+    "text": "FESTA is a public-key encryption (PKE) protocol that creatively repurposes the devastating attacks on the SIDH protocol. While SIDH’s security was compromised by torsion-point attacks when auxiliary torsion information is revealed, FESTA relies on a novel trapdoor function where these very attacks are leveraged by the legitimate trapdoor holder to invert a one-way function [BaMaPo23].",
     "crumbs": [
       "Key Exchange",
-      "B-SIDH"
+      "FESTA"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/bsidh.html#overview",
-    "href": "protocols/key-exchange/bsidh.html#overview",
-    "title": "B-SIDH",
+    "objectID": "protocols/key-exchange/festa.html#overview",
+    "href": "protocols/key-exchange/festa.html#overview",
+    "title": "FESTA",
     "section": "",
-    "text": "Broken by the same attacks that broke SIDH.\n\nB-SIDH (pronounced “B-side”) is a novel instantiation that significantly improves upon the original SIDH protocol. It bypasses previous restrictions on the shape of the underlying prime field by permitting parties to operate simultaneously within the \\((p+1)\\)-torsion of a supersingular elliptic curve and the \\((p-1)\\)-torsion of its quadratic twist [Cost20].",
+    "text": "FESTA is a public-key encryption (PKE) protocol that creatively repurposes the devastating attacks on the SIDH protocol. While SIDH’s security was compromised by torsion-point attacks when auxiliary torsion information is revealed, FESTA relies on a novel trapdoor function where these very attacks are leveraged by the legitimate trapdoor holder to invert a one-way function [BaMaPo23].",
     "crumbs": [
       "Key Exchange",
-      "B-SIDH"
+      "FESTA"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/bsidh.html#protocol-design",
-    "href": "protocols/key-exchange/bsidh.html#protocol-design",
-    "title": "B-SIDH",
+    "objectID": "protocols/key-exchange/festa.html#protocol-design",
+    "href": "protocols/key-exchange/festa.html#protocol-design",
+    "title": "FESTA",
     "section": "2 Protocol Design",
-    "text": "2 Protocol Design\nThe mechanics of B-SIDH heavily exploit the properties of quadratic twists and twist-agnostic arithmetic:\n\nTorsion Spaces: In typical SIDH, both Alice and Bob work in the \\((p+1)\\)-torsion of curves where the Frobenius trace \\(t_2 = -2p\\). In B-SIDH, one party (e.g., Alice) selects a secret isogeny degree \\(M\\) dividing \\(p+1\\), taking her secret kernel from the \\((p+1)\\)-torsion. Bob selects a coprime degree \\(N\\) dividing \\(p-1\\), operating in the \\((p-1)\\)-torsion of the quadratic twist (where \\(t_2 = 2p\\)).\nTwist-Agnostic Arithmetic: The protocol utilizes Montgomery curves of the form \\(E_{A,B}: By^2 = x^3 + Ax^2 + x\\) and their twists \\(E^t_{A,\\gamma B}: \\gamma By^2 = x^3 + Ax^2 + x\\). The isomorphism between these curves over \\(\\mathbb{F}_{p^4}\\) is given by \\(\\sigma(x, y) = (x, \\delta y)\\). Since Montgomery arithmetic relies solely on \\(x\\)-coordinates and the curve constant \\(A\\) (ignoring the \\(B\\) coefficient and \\(y\\)-coordinates), the twisting morphism leaves \\(x\\)-coordinates completely unchanged. Thus, computations natively process points from both curves seamlessly over \\(\\mathbb{F}_{p^2}\\).\nComposite Degree Isogenies: Because \\(p-1\\) and \\(p+1\\) are engineered to be smooth but may contain larger prime factors than traditional SIDH, computing secret isogenies often requires composing walks of multiple prime degrees (\\(l\\)-isogenies). Evaluating these larger \\(l\\)-isogenies in practice is accelerated using \\(\\sqrt{\\text{élu}}\\), bypassing the traditional Vélu’s formulas.",
+    "text": "2 Protocol Design\nThe foundation of FESTA is an injective trapdoor function evaluated over supersingular elliptic curves. By scaling the revealed torsion points with a secret matrix, FESTA prevents malicious attackers from utilizing the SIDH attacks. Using standard transformations (like OAEP), this trapdoor mechanism enables the construction of an efficient IND-CCA secure PKE in the Quantum Random Oracle Model (QROM).\nE0EAE1E2µPbQb¶µRASA¶=Aµ'A(Pb)'A(Qb)¶Bµ'1(Pb)'1(Qb)¶Bµ'2(RA)'2(SA)¶'A'1'2Ã\n\n2.1 Global Parameters\n\n\\(p\\): A prime defined as \\(2^b d_1 (d_A)_{sf} d_2 f - 1\\), where \\(d_1, d_2, d_A\\) are smooth numbers and \\((d_A)_{sf}\\) is the square free part of \\(d_A\\).\n\\(E_0\\): A starting supersingular elliptic curve defined over \\(\\mathbb{F}_{p^2}\\) (chosen with \\(j(E_0) \\neq 0, 1728\\) to avoid non-trivial automorphisms).\n\\(\\langle P_b, Q_b \\rangle = E_0[2^b]\\): A canonical basis for the \\(2^b\\)-torsion on \\(E_0\\).\n\\(\\mathcal{M}_b\\): A set of commutative, invertible diagonal matrices over \\((\\mathbb{Z}/2^b\\mathbb{Z})^\\times\\) modulo \\(\\langle -I_2 \\rangle\\).\n\n\n\n2.2 Setup and Key Generation\nThe trapdoor key generation works as follows:\n\nCompute a secret \\(d_A\\)-isogeny \\(\\varphi_A: E_0 \\rightarrow E_A\\).\nSample a random matrix \\(\\mathbf{A} \\in \\mathcal{M}_b\\).\nCalculate the scaled torsion images on \\(E_A\\): \\[ \\begin{pmatrix} R_A \\\\ S_A \\end{pmatrix} = \\mathbf{A} \\begin{pmatrix} \\varphi_A(P_b) \\\\ \\varphi_A(Q_b) \\end{pmatrix} \\]\n\n\nSecret Key (Trapdoor): \\((\\mathbf{A}, \\varphi_A)\\).\nPublic Key: \\((E_A, R_A, S_A)\\).\n\n\n\n2.3 Function Evaluation (Forward Direction)\nTo evaluate the one-way function on an input consisting of two isogenies \\(\\varphi_1: E_0 \\rightarrow E_1\\) (degree \\(d_1\\)), \\(\\varphi_2: E_A \\rightarrow E_2\\) (degree \\(d_2\\)), and a matrix \\(\\mathbf{B} \\in \\mathcal{M}_b\\):\n\nCompute \\(\\varphi_1: E_0 \\rightarrow E_1\\) and \\(\\varphi_2: E_A \\rightarrow E_2\\).\nScale the torsion basis images under \\(\\varphi_1\\) by \\(\\mathbf{B}\\): \\[ \\begin{pmatrix} R_1 \\\\ S_1 \\end{pmatrix} = \\mathbf{B} \\begin{pmatrix} \\varphi_1(P_b) \\\\ \\varphi_1(Q_b) \\end{pmatrix} \\]\nScale the public torsion parameters under \\(\\varphi_2\\) by \\(\\mathbf{B}\\): \\[ \\begin{pmatrix} R_2 \\\\ S_2 \\end{pmatrix} = \\mathbf{B} \\begin{pmatrix} \\varphi_2(R_A) \\\\ \\varphi_2(S_A) \\end{pmatrix} \\]\n\n\nOutput: The tuple \\((E_1, R_1, S_1, E_2, R_2, S_2)\\).\n\nWithout the knowledge of \\(\\mathbf{A}\\), the scaling by \\(\\mathbf{B}\\) (and natively \\(\\mathbf{A}\\)) thoroughly obfuscates the torsion point information, blocking the SIDH attack machinery.\n\n\n2.4 Trapdoor Inversion\nThe trapdoor owner can invert the function by utilizing the commutativity of matrices \\(\\mathbf{A}\\) and \\(\\mathbf{B}\\):\n\nUndo the secret scaling on \\(E_2\\) by applying \\(d_1 \\mathbf{A}^{-1}\\): \\[ \\begin{pmatrix} R_2' \\\\ S_2' \\end{pmatrix} = d_1 \\mathbf{A}^{-1} \\begin{pmatrix} R_2 \\\\ S_2 \\end{pmatrix} \\] Because \\(\\mathbf{A}\\) and \\(\\mathbf{B}\\) commute, this effectively isolates the scaling to just \\(\\mathbf{B}\\), bridging the torsion mappings between \\(E_1\\) and \\(E_2\\).\nThe resulting points reflect the exact unscaled images of \\(R_1, S_1\\) under the bridging isogeny \\(\\psi := \\varphi_2 \\circ \\varphi_A \\circ \\hat{\\varphi}_1\\).\nInvoke an arbitrary torsion-point attack (e.g., Kani’s criterion generalizing to higher dimensions via (2,2)-isogenies) on \\((E_1, R_1, S_1, E_2, R_2', S_2')\\) to efficiently compute \\(\\psi\\).\nReconstruct the original kernels of \\(\\varphi_1, \\varphi_2\\) and the matrix \\(\\mathbf{B}\\) from \\(\\psi\\).",
     "crumbs": [
       "Key Exchange",
-      "B-SIDH"
+      "FESTA"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/bsidh.html#security-assumptions",
-    "href": "protocols/key-exchange/bsidh.html#security-assumptions",
-    "title": "B-SIDH",
+    "objectID": "protocols/key-exchange/festa.html#security-assumptions",
+    "href": "protocols/key-exchange/festa.html#security-assumptions",
+    "title": "FESTA",
     "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nB-SIDH relies on different security assumptions compared to standard SIDH, primarily because it alters the nature of the isogeny walks:\n\nMultiple Edge Sets: Unlike SIDH, where walks are restricted to a single \\(l\\)-isogeny graph, B-SIDH requires switching between multiple \\(l\\)-isogeny graphs. Security assumes that navigating multiple edge sets does not weaken the underlying supersingular isogeny problem, as long as the total number of destination nodes remains comparable to SIDH.\nFull-Length Walks: The reduction in prime size means that Alice and Bob’s secret walks cover nearly the entire graph (almost full-length), compared to the half-length walks in standard SIDH.",
+    "text": "3 Security Assumptions\nFESTA introduces generalized hardness assumptions for the scaled-torsion setting:\n\nDecisional Isogeny with Scaled-Torsion (DIST): Distinguishing a curve and its scaled torsion images (via matrix \\(A\\)) from a random supersingular curve and random basis points.\nComputational Isogeny with Scaled-Torsion (CIST): Extracting the isogeny \\(\\varphi\\) given \\(E_0, E_1\\), the domain basis, and the scaled target basis \\(\\mathbf{A}(\\varphi(P_0), \\varphi(Q_0))^T\\).\nComputational Isogeny with Double Scaled-Torsion (CIST\\(^2\\)): Recovering two distinct isogenies \\(\\varphi, \\varphi'\\) given two instances of scaled target bases that use the same scaling matrix \\(\\mathbf{A}\\).",
     "crumbs": [
       "Key Exchange",
-      "B-SIDH"
+      "FESTA"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/bsidh.html#progress",
-    "href": "protocols/key-exchange/bsidh.html#progress",
-    "title": "B-SIDH",
+    "objectID": "protocols/key-exchange/festa.html#progress",
+    "href": "protocols/key-exchange/festa.html#progress",
+    "title": "FESTA",
     "section": "4 Progress",
     "text": "4 Progress\nTODO",
     "crumbs": [
       "Key Exchange",
-      "B-SIDH"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/qfesta.html",
-    "href": "protocols/key-exchange/qfesta.html",
-    "title": "QFESTA",
-    "section": "",
-    "text": "QFESTA (Quaternion Fast Encapsulation from Supersingular Torsion Attacks) is a new isogeny-based public-key encryption (PKE) and key encapsulation mechanism (KEM) based on the FESTA protocol [NaOn24].\nFESTA uses the SIDH attack machinery for decryption, which natively imposes strong smoothness constraints on the degrees of the underlying isogenies (\\(d_A, d_1, d_2\\)), forcing them to be large and leading to significant data sizes and computational overhead. To circumvent these limitations, QFESTA introduces a novel technique leveraging quaternion algebras to compute the codomain and point images of non-smooth degree isogenies from a special starting curve. This eliminates the smoothness restriction for degrees \\(d_A\\) and \\(d_1\\), vastly shrinking parameter sizes.",
-    "crumbs": [
-      "Key Exchange",
-      "QFESTA"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/qfesta.html#overview",
-    "href": "protocols/key-exchange/qfesta.html#overview",
-    "title": "QFESTA",
-    "section": "",
-    "text": "QFESTA (Quaternion Fast Encapsulation from Supersingular Torsion Attacks) is a new isogeny-based public-key encryption (PKE) and key encapsulation mechanism (KEM) based on the FESTA protocol [NaOn24].\nFESTA uses the SIDH attack machinery for decryption, which natively imposes strong smoothness constraints on the degrees of the underlying isogenies (\\(d_A, d_1, d_2\\)), forcing them to be large and leading to significant data sizes and computational overhead. To circumvent these limitations, QFESTA introduces a novel technique leveraging quaternion algebras to compute the codomain and point images of non-smooth degree isogenies from a special starting curve. This eliminates the smoothness restriction for degrees \\(d_A\\) and \\(d_1\\), vastly shrinking parameter sizes.",
-    "crumbs": [
-      "Key Exchange",
-      "QFESTA"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/qfesta.html#protocol-design",
-    "href": "protocols/key-exchange/qfesta.html#protocol-design",
-    "title": "QFESTA",
-    "section": "2 Protocol Design",
-    "text": "2 Protocol Design\nThe main innovation in QFESTA’s design is the sub-algorithm RandIsogImages, which evaluates non-smooth degree isogenies using Kani’s lemma and quaternion endomorphisms. Finally, to achieve indistinguishability against chosen ciphertext attacks (IND-CCA) in the quantum random oracle model (QROM), the core One-Way Chosen Plaintext Attack (OW-CPA) secure PKE is wrapped using the Fujisaki-Okamoto (\\(FO^{\\not\\perp}\\)) transform.\n\n2.1 The RandIsogImages Algorithm\nGiven a special supersingular elliptic curve \\(E_0/\\mathbb{F}_{p^2}\\) with \\(j\\)-invariant 1728, its known maximal order \\(\\mathcal{O}_0 \\cong \\text{End}(E_0)\\), and an target non-smooth isogeny degree \\(d\\):\nE0EA¿:d¡isogeny½:(D¡d)¡isogeny®\n\nA smooth integer \\(D = 2^{3a}\\) is chosen such that \\(E_0[D] \\subset E_0(\\mathbb{F}_{p^2})\\) and \\(D - d \\approx p\\).\nThe algorithm computes an element \\(\\alpha \\in \\mathcal{O}_0\\) with a reduced norm of \\(d(D-d)\\) using an extension of Cornacchia’s algorithm (FullRepresentInteger).\nThe quaternion element \\(\\alpha\\) is formally decomposed into \\(\\hat{\\rho} \\circ \\tau\\), where \\(\\tau\\) and \\(\\rho\\) are isogenies of degrees \\(d\\) and \\(D-d\\), respectively.\nBy leveraging Kani’s lemma (via SIDH attack components like CodomainByKani and EvalByKani), the algorithm extracts the codomain of \\(\\tau\\) and the images of arbitrary torsion points under \\(\\tau\\) entirely through (2,2)-isogeny chains.\n\n\n\n2.2 Key Generation\nE0EA;1EAE1E2ÁA;1:dA;1¡isogenyÁA;2:3b¡isogenyÁAµP0Q0¶µRASA¶=AµÁA(P0)ÁA(Q0)¶µR1S1¶=BµÁ1(P0)Á1(Q0)¶µR2S2¶=BµÁ2(RA)Á2(SA)¶Á1:d1¡isogenyÁ2:32b¡isogenyÃ1Ã2\n\nParameters: Uses a system parameter set containing \\((p, a, b, d_{A,1}, d_1, E_0, \\mathcal{O}_0, P_0, Q_0)\\).\nSecret Isogeny \\(\\phi_A\\): A random non-smooth degree \\(d_{A,1}\\)-isogeny is generated from \\(E_0 \\to E_{A,1}\\) via RandIsogImages, followed by a random \\(3^b\\)-isogeny to the final public curve \\(E_A\\).\nMasking: Torsion points on \\(E_A\\) are masked using a randomly sampled matrix \\(\\mathbf{A} \\in M_2(\\mathbb{Z}/2^{3a}\\mathbb{Z})\\).\nKeys: The public key pk consists of the curve \\(E_A\\) and the masked points \\((R_A, S_A)\\). The secret key sk contains the isogeny path representations and the matrix \\(\\mathbf{A}\\).\n\n\n\n2.3 Encryption and Decryption\n\nEncryption: To encrypt a message \\(m \\in \\{0, 1\\}^{3a-2}\\), the sender encodes it into a diagonal masking matrix \\(\\mathbf{B} = \\text{diag}(s_B, s_B^{-1})\\) where \\(s_B = 2m+1\\). The sender generates a \\(d_1\\)-isogeny to a curve \\(E_1\\) using RandIsogImages and a \\(3^{2b}\\)-isogeny from \\(E_A\\) to \\(E_2\\). The output ciphertext encapsulates these curves and points masked by \\(\\mathbf{B}\\).\nDecryption: Utilizing the secret isogeny \\(\\phi_A\\) and the EvalByKani algorithm, the receiver can reconstruct the commutative diagrams necessary to unmask the points and solve a discrete logarithm (via Weil or Tate pairings) to retrieve the matrix \\(\\mathbf{B}\\), and consequently the message \\(m\\).",
-    "crumbs": [
-      "Key Exchange",
-      "QFESTA"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/qfesta.html#security-assumptions",
-    "href": "protocols/key-exchange/qfesta.html#security-assumptions",
-    "title": "QFESTA",
-    "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nThe core OW-CPA security of the QFESTA PKE relies on specialized variants of FESTA’s distinguishing and computational problems.\n\nPseudorandomness of RandIsogImages: The foundational assumption assumes that the codomain elliptic curve \\(E_1\\) and its mapped torsion points \\((P_1, Q_1)\\) produced by RandIsogImages are computationally indistinguishable from a tuple drawn uniformly at random from valid configurations.\nVariant DIST Problem: The security proof extends this to the public keys themselves, assuming an adversary cannot distinguish the legitimate masked points \\((R_A, S_A)\\) on \\(E_A\\) from uniformly random torsion points.\nHardness of Isogeny Recovery: Finding the secret isogenies (\\(\\phi_A, \\phi_1, \\phi_2\\)) given the degrees (\\(d_A, d_1, d_2\\)) requires \\(O(2^{\\lambda})\\) operations classically and \\(O(2^{\\lambda/2})\\) operations via quantum attacks (using Grover’s algorithm or meet-in-the-middle strategies), satisfying the targeted security levels.\nResistance to Castryck-Vercauteren Attack: This specific polynomial-time attack is circumvented by carefully selecting the public basis \\((P_0, Q_0) \\in E_0[2^{3a}]\\). The protocol computes endomorphism representations of these points and verifies that the shortest vector in the resulting Euclidean lattice has a norm greater than \\(2^{1.5\\lambda}\\), guaranteeing security against \\(\\lambda\\)-bit complexity attacks.",
-    "crumbs": [
-      "Key Exchange",
-      "QFESTA"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/qfesta.html#progress",
-    "href": "protocols/key-exchange/qfesta.html#progress",
-    "title": "QFESTA",
-    "section": "4 Progress",
-    "text": "4 Progress\nTODO",
-    "crumbs": [
-      "Key Exchange",
-      "QFESTA"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html",
-    "href": "protocols/digital-signature/csi-fish.html",
-    "title": "CSI-FiSh",
-    "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html#overview",
-    "href": "protocols/digital-signature/csi-fish.html#overview",
-    "title": "CSI-FiSh",
-    "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "protocols/digital-signature/csi-fish.html#key-mechanism",
-    "href": "protocols/digital-signature/csi-fish.html#key-mechanism",
-    "title": "CSI-FiSh",
-    "section": "2 Key Mechanism",
-    "text": "2 Key Mechanism\nBy computing the exact structure of \\(\\text{Cl}(R)\\) for a 512-bit prime \\(p\\), CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical Fiat-Shamir transform to the isogeny setting.\n\nUnderlying Hard Problem: The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational CSIDH protocol.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
+      "FESTA"
     ]
   },
   {
@@ -283,58 +195,201 @@
     ]
   },
   {
-    "objectID": "protocols/key-exchange/festa.html",
-    "href": "protocols/key-exchange/festa.html",
-    "title": "FESTA",
+    "objectID": "protocols/digital-signature/csi-fish.html",
+    "href": "protocols/digital-signature/csi-fish.html",
+    "title": "CSI-FiSh",
     "section": "",
-    "text": "FESTA is a public-key encryption (PKE) protocol that creatively repurposes the devastating attacks on the SIDH protocol. While SIDH’s security was compromised by torsion-point attacks when auxiliary torsion information is revealed, FESTA relies on a novel trapdoor function where these very attacks are leveraged by the legitimate trapdoor holder to invert a one-way function [BaMaPo23].",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH.",
     "crumbs": [
-      "Key Exchange",
-      "FESTA"
+      "Digital Signature",
+      "CSI-FiSh"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/festa.html#overview",
-    "href": "protocols/key-exchange/festa.html#overview",
-    "title": "FESTA",
+    "objectID": "protocols/digital-signature/csi-fish.html#overview",
+    "href": "protocols/digital-signature/csi-fish.html#overview",
+    "title": "CSI-FiSh",
     "section": "",
-    "text": "FESTA is a public-key encryption (PKE) protocol that creatively repurposes the devastating attacks on the SIDH protocol. While SIDH’s security was compromised by torsion-point attacks when auxiliary torsion information is revealed, FESTA relies on a novel trapdoor function where these very attacks are leveraged by the legitimate trapdoor holder to invert a one-way function [BaMaPo23].",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH.",
     "crumbs": [
-      "Key Exchange",
-      "FESTA"
+      "Digital Signature",
+      "CSI-FiSh"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/festa.html#protocol-design",
-    "href": "protocols/key-exchange/festa.html#protocol-design",
-    "title": "FESTA",
+    "objectID": "protocols/digital-signature/csi-fish.html#key-mechanism",
+    "href": "protocols/digital-signature/csi-fish.html#key-mechanism",
+    "title": "CSI-FiSh",
+    "section": "2 Key Mechanism",
+    "text": "2 Key Mechanism\nBy computing the exact structure of \\(\\text{Cl}(R)\\) for a 512-bit prime \\(p\\), CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical Fiat-Shamir transform to the isogeny setting.\n\nUnderlying Hard Problem: The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational CSIDH protocol.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/qfesta.html",
+    "href": "protocols/key-exchange/qfesta.html",
+    "title": "QFESTA",
+    "section": "",
+    "text": "QFESTA (Quaternion Fast Encapsulation from Supersingular Torsion Attacks) is a new isogeny-based public-key encryption (PKE) and key encapsulation mechanism (KEM) based on the FESTA protocol [NaOn24].\nFESTA uses the SIDH attack machinery for decryption, which natively imposes strong smoothness constraints on the degrees of the underlying isogenies (\\(d_A, d_1, d_2\\)), forcing them to be large and leading to significant data sizes and computational overhead. To circumvent these limitations, QFESTA introduces a novel technique leveraging quaternion algebras to compute the codomain and point images of non-smooth degree isogenies from a special starting curve. This eliminates the smoothness restriction for degrees \\(d_A\\) and \\(d_1\\), vastly shrinking parameter sizes.",
+    "crumbs": [
+      "Key Exchange",
+      "QFESTA"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/qfesta.html#overview",
+    "href": "protocols/key-exchange/qfesta.html#overview",
+    "title": "QFESTA",
+    "section": "",
+    "text": "QFESTA (Quaternion Fast Encapsulation from Supersingular Torsion Attacks) is a new isogeny-based public-key encryption (PKE) and key encapsulation mechanism (KEM) based on the FESTA protocol [NaOn24].\nFESTA uses the SIDH attack machinery for decryption, which natively imposes strong smoothness constraints on the degrees of the underlying isogenies (\\(d_A, d_1, d_2\\)), forcing them to be large and leading to significant data sizes and computational overhead. To circumvent these limitations, QFESTA introduces a novel technique leveraging quaternion algebras to compute the codomain and point images of non-smooth degree isogenies from a special starting curve. This eliminates the smoothness restriction for degrees \\(d_A\\) and \\(d_1\\), vastly shrinking parameter sizes.",
+    "crumbs": [
+      "Key Exchange",
+      "QFESTA"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/qfesta.html#protocol-design",
+    "href": "protocols/key-exchange/qfesta.html#protocol-design",
+    "title": "QFESTA",
     "section": "2 Protocol Design",
-    "text": "2 Protocol Design\nThe foundation of FESTA is an injective trapdoor function evaluated over supersingular elliptic curves. By scaling the revealed torsion points with a secret matrix, FESTA prevents malicious attackers from utilizing the SIDH attacks. Using standard transformations (like OAEP), this trapdoor mechanism enables the construction of an efficient IND-CCA secure PKE in the Quantum Random Oracle Model (QROM).\nE0EAE1E2µPbQb¶µRASA¶=Aµ'A(Pb)'A(Qb)¶Bµ'1(Pb)'1(Qb)¶Bµ'2(RA)'2(SA)¶'A'1'2Ã\n\n2.1 Global Parameters\n\n\\(p\\): A prime defined as \\(2^b d_1 (d_A)_{sf} d_2 f - 1\\), where \\(d_1, d_2, d_A\\) are smooth numbers and \\((d_A)_{sf}\\) is the square free part of \\(d_A\\).\n\\(E_0\\): A starting supersingular elliptic curve defined over \\(\\mathbb{F}_{p^2}\\) (chosen with \\(j(E_0) \\neq 0, 1728\\) to avoid non-trivial automorphisms).\n\\(\\langle P_b, Q_b \\rangle = E_0[2^b]\\): A canonical basis for the \\(2^b\\)-torsion on \\(E_0\\).\n\\(\\mathcal{M}_b\\): A set of commutative, invertible diagonal matrices over \\((\\mathbb{Z}/2^b\\mathbb{Z})^\\times\\) modulo \\(\\langle -I_2 \\rangle\\).\n\n\n\n2.2 Setup and Key Generation\nThe trapdoor key generation works as follows:\n\nCompute a secret \\(d_A\\)-isogeny \\(\\varphi_A: E_0 \\rightarrow E_A\\).\nSample a random matrix \\(\\mathbf{A} \\in \\mathcal{M}_b\\).\nCalculate the scaled torsion images on \\(E_A\\): \\[ \\begin{pmatrix} R_A \\\\ S_A \\end{pmatrix} = \\mathbf{A} \\begin{pmatrix} \\varphi_A(P_b) \\\\ \\varphi_A(Q_b) \\end{pmatrix} \\]\n\n\nSecret Key (Trapdoor): \\((\\mathbf{A}, \\varphi_A)\\).\nPublic Key: \\((E_A, R_A, S_A)\\).\n\n\n\n2.3 Function Evaluation (Forward Direction)\nTo evaluate the one-way function on an input consisting of two isogenies \\(\\varphi_1: E_0 \\rightarrow E_1\\) (degree \\(d_1\\)), \\(\\varphi_2: E_A \\rightarrow E_2\\) (degree \\(d_2\\)), and a matrix \\(\\mathbf{B} \\in \\mathcal{M}_b\\):\n\nCompute \\(\\varphi_1: E_0 \\rightarrow E_1\\) and \\(\\varphi_2: E_A \\rightarrow E_2\\).\nScale the torsion basis images under \\(\\varphi_1\\) by \\(\\mathbf{B}\\): \\[ \\begin{pmatrix} R_1 \\\\ S_1 \\end{pmatrix} = \\mathbf{B} \\begin{pmatrix} \\varphi_1(P_b) \\\\ \\varphi_1(Q_b) \\end{pmatrix} \\]\nScale the public torsion parameters under \\(\\varphi_2\\) by \\(\\mathbf{B}\\): \\[ \\begin{pmatrix} R_2 \\\\ S_2 \\end{pmatrix} = \\mathbf{B} \\begin{pmatrix} \\varphi_2(R_A) \\\\ \\varphi_2(S_A) \\end{pmatrix} \\]\n\n\nOutput: The tuple \\((E_1, R_1, S_1, E_2, R_2, S_2)\\).\n\nWithout the knowledge of \\(\\mathbf{A}\\), the scaling by \\(\\mathbf{B}\\) (and natively \\(\\mathbf{A}\\)) thoroughly obfuscates the torsion point information, blocking the SIDH attack machinery.\n\n\n2.4 Trapdoor Inversion\nThe trapdoor owner can invert the function by utilizing the commutativity of matrices \\(\\mathbf{A}\\) and \\(\\mathbf{B}\\):\n\nUndo the secret scaling on \\(E_2\\) by applying \\(d_1 \\mathbf{A}^{-1}\\): \\[ \\begin{pmatrix} R_2' \\\\ S_2' \\end{pmatrix} = d_1 \\mathbf{A}^{-1} \\begin{pmatrix} R_2 \\\\ S_2 \\end{pmatrix} \\] Because \\(\\mathbf{A}\\) and \\(\\mathbf{B}\\) commute, this effectively isolates the scaling to just \\(\\mathbf{B}\\), bridging the torsion mappings between \\(E_1\\) and \\(E_2\\).\nThe resulting points reflect the exact unscaled images of \\(R_1, S_1\\) under the bridging isogeny \\(\\psi := \\varphi_2 \\circ \\varphi_A \\circ \\hat{\\varphi}_1\\).\nInvoke an arbitrary torsion-point attack (e.g., Kani’s criterion generalizing to higher dimensions via (2,2)-isogenies) on \\((E_1, R_1, S_1, E_2, R_2', S_2')\\) to efficiently compute \\(\\psi\\).\nReconstruct the original kernels of \\(\\varphi_1, \\varphi_2\\) and the matrix \\(\\mathbf{B}\\) from \\(\\psi\\).",
+    "text": "2 Protocol Design\nThe main innovation in QFESTA’s design is the sub-algorithm RandIsogImages, which evaluates non-smooth degree isogenies using Kani’s lemma and quaternion endomorphisms. Finally, to achieve indistinguishability against chosen ciphertext attacks (IND-CCA) in the quantum random oracle model (QROM), the core One-Way Chosen Plaintext Attack (OW-CPA) secure PKE is wrapped using the Fujisaki-Okamoto (\\(FO^{\\not\\perp}\\)) transform.\n\n2.1 The RandIsogImages Algorithm\nGiven a special supersingular elliptic curve \\(E_0/\\mathbb{F}_{p^2}\\) with \\(j\\)-invariant 1728, its known maximal order \\(\\mathcal{O}_0 \\cong \\text{End}(E_0)\\), and an target non-smooth isogeny degree \\(d\\):\nE0EA¿:d¡isogeny½:(D¡d)¡isogeny®\n\nA smooth integer \\(D = 2^{3a}\\) is chosen such that \\(E_0[D] \\subset E_0(\\mathbb{F}_{p^2})\\) and \\(D - d \\approx p\\).\nThe algorithm computes an element \\(\\alpha \\in \\mathcal{O}_0\\) with a reduced norm of \\(d(D-d)\\) using an extension of Cornacchia’s algorithm (FullRepresentInteger).\nThe quaternion element \\(\\alpha\\) is formally decomposed into \\(\\hat{\\rho} \\circ \\tau\\), where \\(\\tau\\) and \\(\\rho\\) are isogenies of degrees \\(d\\) and \\(D-d\\), respectively.\nBy leveraging Kani’s lemma (via SIDH attack components like CodomainByKani and EvalByKani), the algorithm extracts the codomain of \\(\\tau\\) and the images of arbitrary torsion points under \\(\\tau\\) entirely through (2,2)-isogeny chains.\n\n\n\n2.2 Key Generation\nE0EA;1EAE1E2ÁA;1:dA;1¡isogenyÁA;2:3b¡isogenyÁAµP0Q0¶µRASA¶=AµÁA(P0)ÁA(Q0)¶µR1S1¶=BµÁ1(P0)Á1(Q0)¶µR2S2¶=BµÁ2(RA)Á2(SA)¶Á1:d1¡isogenyÁ2:32b¡isogenyÃ1Ã2\n\nParameters: Uses a system parameter set containing \\((p, a, b, d_{A,1}, d_1, E_0, \\mathcal{O}_0, P_0, Q_0)\\).\nSecret Isogeny \\(\\phi_A\\): A random non-smooth degree \\(d_{A,1}\\)-isogeny is generated from \\(E_0 \\to E_{A,1}\\) via RandIsogImages, followed by a random \\(3^b\\)-isogeny to the final public curve \\(E_A\\).\nMasking: Torsion points on \\(E_A\\) are masked using a randomly sampled matrix \\(\\mathbf{A} \\in M_2(\\mathbb{Z}/2^{3a}\\mathbb{Z})\\).\nKeys: The public key pk consists of the curve \\(E_A\\) and the masked points \\((R_A, S_A)\\). The secret key sk contains the isogeny path representations and the matrix \\(\\mathbf{A}\\).\n\n\n\n2.3 Encryption and Decryption\n\nEncryption: To encrypt a message \\(m \\in \\{0, 1\\}^{3a-2}\\), the sender encodes it into a diagonal masking matrix \\(\\mathbf{B} = \\text{diag}(s_B, s_B^{-1})\\) where \\(s_B = 2m+1\\). The sender generates a \\(d_1\\)-isogeny to a curve \\(E_1\\) using RandIsogImages and a \\(3^{2b}\\)-isogeny from \\(E_A\\) to \\(E_2\\). The output ciphertext encapsulates these curves and points masked by \\(\\mathbf{B}\\).\nDecryption: Utilizing the secret isogeny \\(\\phi_A\\) and the EvalByKani algorithm, the receiver can reconstruct the commutative diagrams necessary to unmask the points and solve a discrete logarithm (via Weil or Tate pairings) to retrieve the matrix \\(\\mathbf{B}\\), and consequently the message \\(m\\).",
     "crumbs": [
       "Key Exchange",
-      "FESTA"
+      "QFESTA"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/festa.html#security-assumptions",
-    "href": "protocols/key-exchange/festa.html#security-assumptions",
-    "title": "FESTA",
+    "objectID": "protocols/key-exchange/qfesta.html#security-assumptions",
+    "href": "protocols/key-exchange/qfesta.html#security-assumptions",
+    "title": "QFESTA",
     "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nFESTA introduces generalized hardness assumptions for the scaled-torsion setting:\n\nDecisional Isogeny with Scaled-Torsion (DIST): Distinguishing a curve and its scaled torsion images (via matrix \\(A\\)) from a random supersingular curve and random basis points.\nComputational Isogeny with Scaled-Torsion (CIST): Extracting the isogeny \\(\\varphi\\) given \\(E_0, E_1\\), the domain basis, and the scaled target basis \\(\\mathbf{A}(\\varphi(P_0), \\varphi(Q_0))^T\\).\nComputational Isogeny with Double Scaled-Torsion (CIST\\(^2\\)): Recovering two distinct isogenies \\(\\varphi, \\varphi'\\) given two instances of scaled target bases that use the same scaling matrix \\(\\mathbf{A}\\).",
+    "text": "3 Security Assumptions\nThe core OW-CPA security of the QFESTA PKE relies on specialized variants of FESTA’s distinguishing and computational problems.\n\nPseudorandomness of RandIsogImages: The foundational assumption assumes that the codomain elliptic curve \\(E_1\\) and its mapped torsion points \\((P_1, Q_1)\\) produced by RandIsogImages are computationally indistinguishable from a tuple drawn uniformly at random from valid configurations.\nVariant DIST Problem: The security proof extends this to the public keys themselves, assuming an adversary cannot distinguish the legitimate masked points \\((R_A, S_A)\\) on \\(E_A\\) from uniformly random torsion points.\nHardness of Isogeny Recovery: Finding the secret isogenies (\\(\\phi_A, \\phi_1, \\phi_2\\)) given the degrees (\\(d_A, d_1, d_2\\)) requires \\(O(2^{\\lambda})\\) operations classically and \\(O(2^{\\lambda/2})\\) operations via quantum attacks (using Grover’s algorithm or meet-in-the-middle strategies), satisfying the targeted security levels.\nResistance to Castryck-Vercauteren Attack: This specific polynomial-time attack is circumvented by carefully selecting the public basis \\((P_0, Q_0) \\in E_0[2^{3a}]\\). The protocol computes endomorphism representations of these points and verifies that the shortest vector in the resulting Euclidean lattice has a norm greater than \\(2^{1.5\\lambda}\\), guaranteeing security against \\(\\lambda\\)-bit complexity attacks.",
     "crumbs": [
       "Key Exchange",
-      "FESTA"
+      "QFESTA"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/festa.html#progress",
-    "href": "protocols/key-exchange/festa.html#progress",
-    "title": "FESTA",
+    "objectID": "protocols/key-exchange/qfesta.html#progress",
+    "href": "protocols/key-exchange/qfesta.html#progress",
+    "title": "QFESTA",
     "section": "4 Progress",
     "text": "4 Progress\nTODO",
     "crumbs": [
       "Key Exchange",
-      "FESTA"
+      "QFESTA"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/bsidh.html",
+    "href": "protocols/key-exchange/bsidh.html",
+    "title": "B-SIDH",
+    "section": "",
+    "text": "Broken by the same attacks that broke SIDH.\n\nB-SIDH (pronounced “B-side”) is a novel instantiation that significantly improves upon the original SIDH protocol. It bypasses previous restrictions on the shape of the underlying prime field by permitting parties to operate simultaneously within the \\((p+1)\\)-torsion of a supersingular elliptic curve and the \\((p-1)\\)-torsion of its quadratic twist [Cost20].",
+    "crumbs": [
+      "Key Exchange",
+      "B-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/bsidh.html#overview",
+    "href": "protocols/key-exchange/bsidh.html#overview",
+    "title": "B-SIDH",
+    "section": "",
+    "text": "Broken by the same attacks that broke SIDH.\n\nB-SIDH (pronounced “B-side”) is a novel instantiation that significantly improves upon the original SIDH protocol. It bypasses previous restrictions on the shape of the underlying prime field by permitting parties to operate simultaneously within the \\((p+1)\\)-torsion of a supersingular elliptic curve and the \\((p-1)\\)-torsion of its quadratic twist [Cost20].",
+    "crumbs": [
+      "Key Exchange",
+      "B-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/bsidh.html#protocol-design",
+    "href": "protocols/key-exchange/bsidh.html#protocol-design",
+    "title": "B-SIDH",
+    "section": "2 Protocol Design",
+    "text": "2 Protocol Design\nThe B-SIDH protocol structurally mimics the traditional SIDH walk-through but instantiates the operations such that Alice and Bob work in opposite quadratic twists using degrees \\(M\\) and \\(N\\), respectively, where \\(M |(p+1)\\) and \\(N | (p-1)\\).\n\n2.1 Public Parameters\nUnlike traditional SIDH, which requires primes of the restrictive form \\(p = f \\cdot 2^a 3^b - 1\\) (forcing both parties’ smooth degrees to divide \\(p+1\\)), B-SIDH selects a prime \\(p\\) such that both \\(p+1\\) and \\(p-1\\) are engineered to be smooth, allowing for significantly smaller primes.\nThe protocol specifies a starting supersingular curve \\(E_0 / \\mathbb{F}_{p^2}\\). It also establishes a basis \\(\\{P_A, Q_A\\}\\) for the \\(M\\)-torsion in \\(E_0(\\mathbb{F}_{p^2})\\) and a basis \\(\\{P_B, Q_B\\}\\) for the \\(N\\)-torsion corresponding to the quadratic twist. Because Montgomery arithmetic is twist-agnostic, coordinates from both sets are processed identically using their \\(x\\)-coordinates over \\(\\mathbb{F}_{p^2}\\).\n\n\n2.2 Alice’s Key Generation\n\nAlice chooses two secret integers \\((\\alpha_A, \\beta_A) \\in \\mathbb{Z}/M\\mathbb{Z} \\times \\mathbb{Z}/M\\mathbb{Z}\\).\nShe computes her secret point \\(S_A = [\\alpha_A]P_A + [\\beta_A]Q_A\\) of order \\(M\\) from the \\((p+1)\\)-torsion.\nShe uses \\(S_A\\) to compute her secret \\(M\\)-isogeny \\(\\phi_A : E_0 \\rightarrow E_A\\), where \\(E_A = E_0 / \\langle S_A \\rangle\\). Because \\(p+1\\) is engineered to be smooth but may contain larger prime factors than traditional SIDH, computing her secret isogeny requires composing walks of multiple prime degrees (\\(l\\)-isogenies). Evaluating these larger \\(l\\)-isogenies in practice is accelerated using \\(\\sqrt{élu}\\).\nDuring the isogeny computation, she maps Bob’s basis points \\(P_B\\) and \\(Q_B\\) through \\(\\phi_A\\).\nAlice’s Public Key: \\(PK_A = (E_A, \\phi_A(P_B), \\phi_A(Q_B))\\).\n\n\n\n2.3 Bob’s Key Generation\n\nBob chooses two secret integers \\((\\alpha_B, \\beta_B) \\in \\mathbb{Z}/N\\mathbb{Z} \\times \\mathbb{Z}/N\\mathbb{Z}\\).\nHe computes his secret point \\(S_B = [\\alpha_B]P_B + [\\beta_B]Q_B\\) of order \\(N\\) from the \\((p-1)\\)-torsion (on the quadratic twist).\nHe uses \\(S_B\\) to compute his secret \\(N\\)-isogeny \\(\\phi_B : E_0 \\rightarrow E_B\\), where \\(E_B = E_0 / \\langle S_B \\rangle\\). Just like Alice, Bob’s \\(N\\)-isogeny computation involves larger prime factors from \\(p-1\\) and applies the same \\(\\sqrt{élu}\\).\nDuring his isogeny computation, he maps Alice’s basis points \\(P_A\\) and \\(Q_A\\) through \\(\\phi_B\\).\nBob’s Public Key: \\(PK_B = (E_B, \\phi_B(P_A), \\phi_B(Q_A))\\).\n\n\n\n2.4 Shared Secret Computation\n\nAlice: Upon receiving \\(PK_B\\), Alice uses her secret integers to compute a new point \\(S'_A = [\\alpha_A]\\phi_B(P_A) + [\\beta_A]\\phi_B(Q_A)\\) of order \\(M\\) on curve \\(E_B\\). She computes the \\(M\\)-isogeny \\(\\phi'_A: E_B \\rightarrow E_B / \\langle S'_A \\rangle\\).\nBob: Upon receiving \\(PK_A\\), Bob uses his secret integers to compute a new point \\(S'_B = [\\alpha_B]\\phi_A(P_B) + [\\beta_B]\\phi_A(Q_B)\\) of order \\(N\\) on curve \\(E_A\\). He computes the \\(N\\)-isogeny \\(\\phi'_B: E_A \\rightarrow E_A / \\langle S'_B \\rangle\\).\nBoth parties successfully arrive at the same shared secret by computing the j-invariant of their respective final image curves, as \\(E_B / \\langle S'_A \\rangle \\cong E_A / \\langle S'_B \\rangle\\).",
+    "crumbs": [
+      "Key Exchange",
+      "B-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/bsidh.html#security-assumptions",
+    "href": "protocols/key-exchange/bsidh.html#security-assumptions",
+    "title": "B-SIDH",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nB-SIDH relies on different security assumptions compared to standard SIDH, primarily because it alters the nature of the isogeny walks:\n\nMultiple Edge Sets: Unlike SIDH, where walks are restricted to a single \\(l\\)-isogeny graph, B-SIDH requires switching between multiple \\(l\\)-isogeny graphs. Security assumes that navigating multiple edge sets does not weaken the underlying supersingular isogeny problem, as long as the total number of destination nodes remains comparable to SIDH.\nFull-Length Walks: The reduction in prime size means that Alice and Bob’s secret walks cover nearly the entire graph (almost full-length), compared to the half-length walks in standard SIDH.",
+    "crumbs": [
+      "Key Exchange",
+      "B-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/bsidh.html#progress",
+    "href": "protocols/key-exchange/bsidh.html#progress",
+    "title": "B-SIDH",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "B-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/csurf.html",
+    "href": "protocols/key-exchange/csurf.html",
+    "title": "CSURF",
+    "section": "",
+    "text": "The CSURF protocol is a variant of the CSIDH protocol, designed to operate on the “surface” of the supersingular isogeny graph rather than the “floor” [CaDe20]. CSURF utilizes supersingular elliptic curves over a finite prime field \\(\\mathbb{F}_p\\) (where \\(p \\equiv 3 \\pmod 4\\)) whose endomorphism rings are isomorphic to the maximal order \\(\\mathbb{Z}[(1+\\sqrt{-p})/2]\\). This is in contrast to original CSIDH, which relies on curves with the non-maximal endomorphism ring \\(\\mathbb{Z}[\\sqrt{-p}]\\) (the floor).\nA key operational advantage of CSURF is unlocked when the prime satisfies \\(p \\equiv 7 \\pmod 8\\). In this setting, horizontal 2-isogenies can be efficiently computed to evaluate the class group action. This efficiency stems from the fact that computing these 2-isogenies requires little more than a single exponentiation in the base field \\(\\mathbb{F}_p\\). Additionally, moving to the surface eliminates the redundant \\(\\mathbb{Z}_3\\) factor present in the acting ideal-class group of standard CSIDH, which provides no extra security.",
+    "crumbs": [
+      "Key Exchange",
+      "CSURF"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/csurf.html#overview",
+    "href": "protocols/key-exchange/csurf.html#overview",
+    "title": "CSURF",
+    "section": "",
+    "text": "The CSURF protocol is a variant of the CSIDH protocol, designed to operate on the “surface” of the supersingular isogeny graph rather than the “floor” [CaDe20]. CSURF utilizes supersingular elliptic curves over a finite prime field \\(\\mathbb{F}_p\\) (where \\(p \\equiv 3 \\pmod 4\\)) whose endomorphism rings are isomorphic to the maximal order \\(\\mathbb{Z}[(1+\\sqrt{-p})/2]\\). This is in contrast to original CSIDH, which relies on curves with the non-maximal endomorphism ring \\(\\mathbb{Z}[\\sqrt{-p}]\\) (the floor).\nA key operational advantage of CSURF is unlocked when the prime satisfies \\(p \\equiv 7 \\pmod 8\\). In this setting, horizontal 2-isogenies can be efficiently computed to evaluate the class group action. This efficiency stems from the fact that computing these 2-isogenies requires little more than a single exponentiation in the base field \\(\\mathbb{F}_p\\). Additionally, moving to the surface eliminates the redundant \\(\\mathbb{Z}_3\\) factor present in the acting ideal-class group of standard CSIDH, which provides no extra security.",
+    "crumbs": [
+      "Key Exchange",
+      "CSURF"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/csurf.html#protocol-design",
+    "href": "protocols/key-exchange/csurf.html#protocol-design",
+    "title": "CSURF",
+    "section": "2 Protocol Design",
+    "text": "2 Protocol Design\n\n2.1 Curve Representation\nCSURF relies on a tweaked Montgomery curve representation. The set of valid public keys is defined by the set \\[S_p^- = \\{A \\in \\mathbb{F}_p \\mid y^2 = x^3 + Ax^2 - x \\text{ is supersingular}\\}\\] This adjusted equation, \\(y^2 = x^3 + Ax^2 - x\\), allows any curve on the surface to be uniquely represented by its coefficient \\(A\\). Crucially, the set \\(S_p^-\\) contains \\(0\\), making the curve \\(y^2 = x^3 - x\\) an ideal, natural starting curve \\(s_0\\) for the protocol.\n\n\n2.2 Key Exchange\nThe CSURF protocol models a hard homogeneous space, where a finite commutative group acts freely and transitively on a set. The acting group is the ideal-class group \\(\\mathcal{C}l(\\mathbb{Z}[(1+\\sqrt{-p})/2])\\) acting on the set \\(S_p^-\\) of tweaked Montgomery coefficients.\nThe steps for a non-interactive key exchange between two parties, Alice and Bob, proceed as follows:\n\nPublic Parameters: The system establishes a large prime \\(p \\equiv 7 \\pmod 8\\) constructed as \\(p = 4 \\cdot \\prod_{i=1}^n \\ell_i - 1\\), where \\(\\ell_i\\) are small distinct odd primes, alongside the starting prime \\(\\ell_0 = 2\\). The base curve coefficient is \\(E_0 = 0 \\in S_p^-\\).\nPrivate Key Generation: Alice secretely samples a vector of exponents \\((e_0, e_1, \\dots, e_n)\\) from a designated range. This vector represents an ideal class \\([\\mathfrak{a}] = [\\mathfrak{l}_0^{e_0}\\mathfrak{l}_1^{e_1} \\dots \\mathfrak{l}_n^{e_n}]\\) in the class group \\(\\mathcal{C}l(\\mathbb{Z}[(1+\\sqrt{-p})/2])\\). For \\(\\ell_0=2\\), the exponent \\(e_0\\) can be sampled from a much larger interval because 2-isogenies are very fast to compute. Bob similarly samples his own secret exponent vector to form ideal \\([\\mathfrak{b}]\\).\nPublic Key Evaluation: Alice computes her public key by evaluating the class group action on the starting curve: \\(E_A = [\\mathfrak{a}] E_0\\).\n\nAction Evaluation: To evaluate \\([\\mathfrak{a}] E_0\\), Alice computes a chain of isogenies. Because 2-isogenies are extremely efficient, they are evaluated first without needing to push through points.\nFor the odd primes \\(\\ell_i\\), Alice generates points of order \\(\\ell_i\\) and uses tweaked Montgomery ladder arithmetic and Vélu’s formulas (requiring just a few sign flips from standard formulas) to compute the odd-degree isogenies and move across the surface graph.\nBob performs the same group action evaluation to compute his public key \\(E_B = [\\mathfrak{b}] E_0\\).\n\nKey Exchange: Alice and Bob exchange their public keys \\(E_A\\) and \\(E_B\\) over a public channel.\nShared Secret: Alice computes the shared secret by applying her private group action to Bob’s public key: \\(S = [\\mathfrak{a}] E_B\\). Bob does the corresponding calculation: \\(S = [\\mathfrak{b}] E_A\\). By the commutativity of the class group action, both arrive at the exact same curve coefficient \\(S \\in S_p^-\\), which serves as their shared secret.",
+    "crumbs": [
+      "Key Exchange",
+      "CSURF"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/csurf.html#security-assumptions",
+    "href": "protocols/key-exchange/csurf.html#security-assumptions",
+    "title": "CSURF",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\n\n3.1 Hard Homogeneous Spaces\nThe security of CSURF is rooted in the framework of Hard Homogeneous Spaces originally proposed by Couveignes and Rostovtsev-Stolbunov. The fundamental security assumption is the hardness of the parallelization problem: given a starting element \\(s_0\\) and elements \\(s_1, s_2 \\in S\\), it must be computationally infeasible to find \\(g_1 g_2 * s_0\\) where \\(s_1 = g_1 * s_0\\) and \\(s_2 = g_2 * s_0\\).\n\n\n3.2 Quantum Resistance\nBecause the action relies on isogenies of elliptic curves rather than standard cyclic group exponentiation, it does not succumb to Shor’s polynomial-time quantum algorithm. The most efficient known quantum attack against the hard homogeneous space constructed by CSURF is Kuperberg’s algorithm for finding hidden shifts, which operates in subexponential time.\n\n\n3.3 The \\(\\mathbb{Z}_3\\) Factor and Equivalent Security\nA specific topological quirk of the isogeny graph when \\(p \\equiv 3 \\pmod 8\\) (the standard CSIDH setting) is the presence of a \\(\\mathbb{Z}_3\\) factor in the ideal class group \\(\\mathcal{C}l(\\mathbb{Z}[\\sqrt{-p}])\\). Operating on the surface inherently avoids this redundant factor, matching the security profile of standard CSIDH.",
+    "crumbs": [
+      "Key Exchange",
+      "CSURF"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/csurf.html#progress",
+    "href": "protocols/key-exchange/csurf.html#progress",
+    "title": "CSURF",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "CSURF"
     ]
   },
   {
