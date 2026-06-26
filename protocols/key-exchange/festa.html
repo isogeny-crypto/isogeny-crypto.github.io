@@ -142,6 +142,7 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/protocol-list.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -372,6 +373,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/csigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C-SiGamal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/csurf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSURF</span></a>
   </div>
@@ -398,6 +405,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/sigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SiGamal</span></a>
   </div>
 </li>
       </ul>
@@ -468,7 +481,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">June 22, 2026</p>
+      <p class="date-modified">June 26, 2026</p>
     </div>
   </div>
     
@@ -535,11 +548,11 @@ window.Quarto = {
 </section>
 <section id="security-assumptions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
-<p>FESTA introduces generalized hardness assumptions for the scaled-torsion setting:</p>
+<p>FESTA introduces generalized hardness assumptions for the scaled-torsion setting.</p>
 <ul>
-<li><strong>Decisional Isogeny with Scaled-Torsion (DIST):</strong> Distinguishing a curve and its scaled torsion images (via matrix <span class="math inline">\(A\)</span>) from a random supersingular curve and random basis points.</li>
-<li><strong>Computational Isogeny with Scaled-Torsion (CIST):</strong> Extracting the isogeny <span class="math inline">\(\varphi\)</span> given <span class="math inline">\(E_0, E_1\)</span>, the domain basis, and the scaled target basis <span class="math inline">\(\mathbf{A}(\varphi(P_0), \varphi(Q_0))^T\)</span>.</li>
-<li><strong>Computational Isogeny with Double Scaled-Torsion (CIST<span class="math inline">\(^2\)</span>):</strong> Recovering two distinct isogenies <span class="math inline">\(\varphi, \varphi'\)</span> given two instances of scaled target bases that use the <em>same</em> scaling matrix <span class="math inline">\(\mathbf{A}\)</span>.</li>
+<li><p><strong>Decisional Isogeny with Scaled-Torsion (DIST):</strong> Distinguishing a curve and its scaled torsion images (via matrix <span class="math inline">\(A\)</span>) from a random supersingular curve and random basis points.</p></li>
+<li><p><strong>Computational Isogeny with Scaled-Torsion (CIST):</strong> Extracting the isogeny <span class="math inline">\(\varphi\)</span> given <span class="math inline">\(E_0, E_1\)</span>, the domain basis, and the scaled target basis <span class="math inline">\(\mathbf{A}(\varphi(P_0), \varphi(Q_0))^T\)</span>.</p></li>
+<li><p><strong>Computational Isogeny with Double Scaled-Torsion (CIST<span class="math inline">\(^2\)</span>):</strong> Recovering two distinct isogenies <span class="math inline">\(\varphi, \varphi'\)</span> given two instances of scaled target bases that use the <em>same</em> scaling matrix <span class="math inline">\(\mathbf{A}\)</span>.</p></li>
 </ul>
 </section>
 <section id="progress" class="level2" data-number="4">

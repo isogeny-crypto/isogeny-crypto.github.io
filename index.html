@@ -122,6 +122,7 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="./assets/fonts.css">
+<link rel="stylesheet" href="./assets/protocol-list.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -352,6 +353,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./protocols/key-exchange/csigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C-SiGamal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./protocols/key-exchange/csurf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSURF</span></a>
   </div>
@@ -378,6 +385,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./protocols/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./protocols/key-exchange/sigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SiGamal</span></a>
   </div>
 </li>
       </ul>
@@ -443,21 +456,23 @@ window.Quarto = {
 <h2 data-number="1" class="anchored" data-anchor-id="getting-started"><span class="header-section-number">1</span> Getting Started</h2>
 <p>If you are not familiar with the concept of cryptographic protocols, we recommend referring to the <a href="https://toc.cryptobook.us/">notes by Dan Boneh and Victor Shoup</a>.</p>
 <p>This wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption schemes and digital signature schemes.</p>
+<p><strong>Legend:</strong> 🔴 torsion points; 🔵 group action; 🟢 Deuring correspondence</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <section id="key-exchange" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="key-exchange"><span class="header-section-number">1.1</span> Key Exchange</h3>
+<div class="unlisted-protocols">
 <ul>
-<li><a href="./protocols/key-exchange/sidh.html">SIDH</a> (2011–2022)</li>
-<li><a href="./protocols/key-exchange/ksidh.html"><span class="math inline">\(k\)</span>-SIDH</a> (2017-2022)</li>
-<li><a href="./protocols/key-exchange/csidh.html">CSIDH</a> (2018)</li>
-<li><a href="./protocols/key-exchange/csurf.html">CSURF</a> (2020)</li>
-<li><a href="./protocols/key-exchange/bsidh.html">B-SIDH</a> (2020–2022)</li>
-<li>SiGamal (2020)</li>
-<li>C-SiGamal (2020)</li>
+<li>🔴 <a href="./protocols/key-exchange/sidh.html">SIDH</a> (2011–2022)</li>
+<li>🔴 <a href="./protocols/key-exchange/ksidh.html"><span class="math inline">\(k\)</span>-SIDH</a> (2017-2022)</li>
+<li>🔵 <a href="./protocols/key-exchange/csidh.html">CSIDH</a> (2018)</li>
+<li>🔵 <a href="./protocols/key-exchange/csurf.html">CSURF</a> (2020)</li>
+<li>🔴 <a href="./protocols/key-exchange/bsidh.html">B-SIDH</a> (2020–2022)</li>
+<li>🔵 <a href="./protocols/key-exchange/sigamal.html">SiGamal</a> (2020)</li>
+<li>🔵 <a href="./protocols/key-exchange/csigamal.html">C-SiGamal</a> (2020)</li>
+<li>SimS (2021)</li>
 <li>SHealS (2021-2022)</li>
 <li>HealS (2021-2022)</li>
-<li>SimS (2021)</li>
 <li>Séta (2021–2022)</li>
 <li>EJKM (2021)</li>
 <li>pSIDH (2022–2023)</li>
@@ -476,21 +491,24 @@ window.Quarto = {
 <li>LIT-SiGamal (2025)</li>
 <li>PIKE (2026)</li>
 </ul>
+</div>
 </section>
 </div><div class="column" style="width:50%;">
 <section id="digital-signature" class="level3" data-number="1.2">
 <h3 data-number="1.2" class="anchored" data-anchor-id="digital-signature"><span class="header-section-number">1.2</span> Digital Signature</h3>
+<div class="unlisted-protocols">
 <ul>
-<li>JS (2014)</li>
-<li>GPS (2017)</li>
-<li>SeaSign (2019)</li>
-<li><a href="./protocols/digital-signature/csi-fish.html">CSI-FiSh</a> (2019)</li>
+<li>🔴 JS (2014)</li>
+<li>🔴 YAJJS (2017)</li>
+<li>🟢 GPS (2017)</li>
+<li>🔵 SeaSign (2019)</li>
+<li>🔵 <a href="./protocols/digital-signature/csi-fish.html">CSI-FiSh</a> (2019)</li>
 <li>Sashimi (2020)</li>
-<li>Lossy CSI-FiSh (2020)</li>
-<li>SQISign (2020)</li>
+<li>🔵 Lossy CSI-FiSh (2020)</li>
+<li>🟢 SQISign (2020)</li>
 <li>Calamari (2020)</li>
 <li>IAS (2021)</li>
-<li>SIDH PoK (2022)</li>
+<li>🔴 SIDH PoK (2022)</li>
 <li>SCALLOP (2023)</li>
 <li>CJSS (2023)</li>
 <li>CSI-Otter (2023)</li>
@@ -513,6 +531,7 @@ window.Quarto = {
 <li>PRISMO (2026)</li>
 <li>Wombat (2026)</li>
 </ul>
+</div>
 </section>
 </div>
 </div>

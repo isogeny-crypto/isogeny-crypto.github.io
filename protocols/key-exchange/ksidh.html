@@ -142,6 +142,7 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/protocol-list.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -372,6 +373,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/csigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C-SiGamal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/csurf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSURF</span></a>
   </div>
@@ -398,6 +405,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/sigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SiGamal</span></a>
   </div>
 </li>
       </ul>
@@ -468,7 +481,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">June 24, 2026</p>
+      <p class="date-modified">June 26, 2026</p>
     </div>
   </div>
     
@@ -557,13 +570,13 @@ window.Quarto = {
 </section>
 <section id="security-assumptions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
-<p>The security of the <span class="math inline">\(k\)</span>-SIDH protocol relies on the following foundational assumptions:</p>
-<ol type="1">
-<li><strong>Intractability of the Supersingular Isogeny (SSI) Problem:</strong> The underlying primitive relies on the hardness of finding an isogeny of a specific degree with a cyclic kernel between two known supersingular elliptic curves defined over <span class="math inline">\(\mathbb{F}_{p^2}\)</span>.</li>
-<li><strong>Irreducibility of SIDH:</strong> The multiple-instances transformation requires the underlying key establishment to be <em>irreducible</em>. A protocol is irreducible if it is computationally infeasible for a malicious participant to craft a modified public key that successfully passes all public validation tests while generating the exact same shared secret across multiple different honest private keys. The authors prove that if an attacker could violate this irreducibility in SIDH, they could use that capability to efficiently solve the SSI problem.</li>
-<li><strong>Preimage Resistance of the Hash Function:</strong> The hash function <span class="math inline">\(H\)</span> must be strong and preimage-resistant. Since a dishonest Bob only receives <span class="math inline">\(H(h)\)</span> (or <span class="math inline">\(H(H(h))\)</span>), he must guess the entirety of the <span class="math inline">\(k\)</span>-element preimage correctly. The hash prevents the attacker from successfully testing failures instance-by-instance.</li>
-<li><strong>No Curve Manipulation:</strong> The proof model primarily addresses adversaries that manipulate elliptic curve torsion points. It relies on the heuristic assumption that the curves themselves are not being maliciously generated or manipulated in unverified ways, noting that there are no known active attacks exploiting manipulated curves directly in this context.</li>
-</ol>
+<p>The security of the <span class="math inline">\(k\)</span>-SIDH protocol relies on the following foundational assumptions.</p>
+<ul>
+<li><p><strong>Intractability of the Supersingular Isogeny (SSI) Problem:</strong> The underlying primitive relies on the hardness of finding an isogeny of a specific degree with a cyclic kernel between two known supersingular elliptic curves defined over <span class="math inline">\(\mathbb{F}_{p^2}\)</span>.</p></li>
+<li><p><strong>Irreducibility of SIDH:</strong> The multiple-instances transformation requires the underlying key establishment to be <em>irreducible</em>. A protocol is irreducible if it is computationally infeasible for a malicious participant to craft a modified public key that successfully passes all public validation tests while generating the exact same shared secret across multiple different honest private keys. The authors prove that if an attacker could violate this irreducibility in SIDH, they could use that capability to efficiently solve the SSI problem.</p></li>
+<li><p><strong>Preimage Resistance of the Hash Function:</strong> The hash function <span class="math inline">\(H\)</span> must be strong and preimage-resistant. Since a dishonest Bob only receives <span class="math inline">\(H(h)\)</span> (or <span class="math inline">\(H(H(h))\)</span>), he must guess the entirety of the <span class="math inline">\(k\)</span>-element preimage correctly. The hash prevents the attacker from successfully testing failures instance-by-instance.</p></li>
+<li><p><strong>No Curve Manipulation:</strong> The proof model primarily addresses adversaries that manipulate elliptic curve torsion points. It relies on the heuristic assumption that the curves themselves are not being maliciously generated or manipulated in unverified ways, noting that there are no known active attacks exploiting manipulated curves directly in this context.</p></li>
+</ul>
 </section>
 <section id="progress" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="progress"><span class="header-section-number">4</span> Progress</h2>

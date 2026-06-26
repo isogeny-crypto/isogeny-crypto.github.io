@@ -142,6 +142,7 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/protocol-list.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -372,6 +373,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/csigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C-SiGamal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/csurf.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">CSURF</span></a>
   </div>
@@ -398,6 +405,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/sigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SiGamal</span></a>
   </div>
 </li>
       </ul>
@@ -435,12 +448,7 @@ window.Quarto = {
   <li><a href="#curve-representation" id="toc-curve-representation" class="nav-link" data-scroll-target="#curve-representation"><span class="header-section-number">2.1</span> Curve Representation</a></li>
   <li><a href="#key-exchange" id="toc-key-exchange" class="nav-link" data-scroll-target="#key-exchange"><span class="header-section-number">2.2</span> Key Exchange</a></li>
   </ul></li>
-  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a>
-  <ul class="collapse">
-  <li><a href="#hard-homogeneous-spaces" id="toc-hard-homogeneous-spaces" class="nav-link" data-scroll-target="#hard-homogeneous-spaces"><span class="header-section-number">3.1</span> Hard Homogeneous Spaces</a></li>
-  <li><a href="#quantum-resistance" id="toc-quantum-resistance" class="nav-link" data-scroll-target="#quantum-resistance"><span class="header-section-number">3.2</span> Quantum Resistance</a></li>
-  <li><a href="#the-mathbbz_3-factor-and-equivalent-security" id="toc-the-mathbbz_3-factor-and-equivalent-security" class="nav-link" data-scroll-target="#the-mathbbz_3-factor-and-equivalent-security"><span class="header-section-number">3.3</span> The <span class="math inline">\(\mathbb{Z}_3\)</span> Factor and Equivalent Security</a></li>
-  </ul></li>
+  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a></li>
   <li><a href="#progress" id="toc-progress" class="nav-link" data-scroll-target="#progress"><span class="header-section-number">4</span> Progress</a></li>
   <li><span class="header-section-number">5</span> References</li>
   </ul>
@@ -485,7 +493,7 @@ window.Quarto = {
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
 <p>The CSURF protocol is a variant of the <a href="../../protocols/key-exchange/csidh.html">CSIDH</a> protocol, designed to operate on the “surface” of the supersingular isogeny graph rather than the “floor” <span class="citation" data-cites="csurf">[<a href="#ref-csurf" role="doc-biblioref">CaDe20</a>]</span>. CSURF utilizes supersingular elliptic curves over a finite prime field <span class="math inline">\(\mathbb{F}_p\)</span> (where <span class="math inline">\(p \equiv 3 \pmod 4\)</span>) whose endomorphism rings are isomorphic to the maximal order <span class="math inline">\(\mathbb{Z}[(1+\sqrt{-p})/2]\)</span>. This is in contrast to original CSIDH, which relies on curves with the non-maximal endomorphism ring <span class="math inline">\(\mathbb{Z}[\sqrt{-p}]\)</span> (the floor).</p>
-<p>A key operational advantage of CSURF is unlocked when the prime satisfies <span class="math inline">\(p \equiv 7 \pmod 8\)</span>. In this setting, horizontal 2-isogenies can be efficiently computed to evaluate the class group action. This efficiency stems from the fact that computing these 2-isogenies requires little more than a single exponentiation in the base field <span class="math inline">\(\mathbb{F}_p\)</span>. Additionally, moving to the surface eliminates the redundant <span class="math inline">\(\mathbb{Z}_3\)</span> factor present in the acting ideal-class group of standard CSIDH, which provides no extra security.</p>
+<p>A key operational advantage of CSURF is unlocked when the prime satisfies <span class="math inline">\(p \equiv 7 \pmod 8\)</span>. In this setting, horizontal 2-isogenies can be efficiently computed to evaluate the class group action. This efficiency stems from the fact that computing these 2-isogenies requires little more than a single exponentiation in the base field <span class="math inline">\(\mathbb{F}_p\)</span>. Additionally, moving to the surface eliminates the redundant <span class="math inline">\(\mathbb{Z}/3\mathbb{Z}\)</span> factor present in the acting ideal-class group of standard CSIDH, which provides no extra security.</p>
 </section>
 <section id="protocol-design" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="protocol-design"><span class="header-section-number">2</span> Protocol Design</h2>
@@ -513,18 +521,11 @@ window.Quarto = {
 </section>
 <section id="security-assumptions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
-<section id="hard-homogeneous-spaces" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="hard-homogeneous-spaces"><span class="header-section-number">3.1</span> Hard Homogeneous Spaces</h3>
-<p>The security of CSURF is rooted in the framework of Hard Homogeneous Spaces originally proposed by Couveignes and Rostovtsev-Stolbunov. The fundamental security assumption is the hardness of the parallelization problem: given a starting element <span class="math inline">\(s_0\)</span> and elements <span class="math inline">\(s_1, s_2 \in S\)</span>, it must be computationally infeasible to find <span class="math inline">\(g_1 g_2 * s_0\)</span> where <span class="math inline">\(s_1 = g_1 * s_0\)</span> and <span class="math inline">\(s_2 = g_2 * s_0\)</span>.</p>
-</section>
-<section id="quantum-resistance" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="quantum-resistance"><span class="header-section-number">3.2</span> Quantum Resistance</h3>
-<p>Because the action relies on isogenies of elliptic curves rather than standard cyclic group exponentiation, it does not succumb to Shor’s polynomial-time quantum algorithm. The most efficient known quantum attack against the hard homogeneous space constructed by CSURF is Kuperberg’s algorithm for finding hidden shifts, which operates in subexponential time.</p>
-</section>
-<section id="the-mathbbz_3-factor-and-equivalent-security" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="the-mathbbz_3-factor-and-equivalent-security"><span class="header-section-number">3.3</span> The <span class="math inline">\(\mathbb{Z}_3\)</span> Factor and Equivalent Security</h3>
-<p>A specific topological quirk of the isogeny graph when <span class="math inline">\(p \equiv 3 \pmod 8\)</span> (the standard CSIDH setting) is the presence of a <span class="math inline">\(\mathbb{Z}_3\)</span> factor in the ideal class group <span class="math inline">\(\mathcal{C}l(\mathbb{Z}[\sqrt{-p}])\)</span>. Operating on the surface inherently avoids this redundant factor, matching the security profile of standard CSIDH.</p>
-</section>
+<ul>
+<li><p><strong>Hard Homogeneous Spaces:</strong> The security of CSURF is rooted in the framework of Hard Homogeneous Spaces originally proposed by Couveignes and Rostovtsev-Stolbunov. The fundamental security assumption is the hardness of the parallelization problem: given a starting element <span class="math inline">\(s_0\)</span> and elements <span class="math inline">\(s_1, s_2 \in S\)</span>, it must be computationally infeasible to find <span class="math inline">\(g_1 g_2 * s_0\)</span> where <span class="math inline">\(s_1 = g_1 * s_0\)</span> and <span class="math inline">\(s_2 = g_2 * s_0\)</span>.</p></li>
+<li><p><strong>Quantum Resistance:</strong> Because the action relies on isogenies of elliptic curves rather than standard cyclic group exponentiation, it does not succumb to Shor’s polynomial-time quantum algorithm. The most efficient known quantum attack against the hard homogeneous space constructed by CSURF is Kuperberg’s algorithm for finding hidden shifts, which operates in subexponential time.</p></li>
+<li><p><strong>The <span class="math inline">\(\mathbb{Z}/3\mathbb{Z}\)</span> Factor and Equivalent Security:</strong> A specific topological quirk of the isogeny graph when <span class="math inline">\(p \equiv 3 \pmod 8\)</span> (the standard CSIDH setting) is the presence of a <span class="math inline">\(\mathbb{Z}/3\mathbb{Z}\)</span> factor in the ideal class group <span class="math inline">\(\mathcal{C}l(\mathbb{Z}[\sqrt{-p}])\)</span>. Operating on the surface inherently avoids this redundant factor, matching the security profile of standard CSIDH.</p></li>
+</ul>
 </section>
 <section id="progress" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="progress"><span class="header-section-number">4</span> Progress</h2>

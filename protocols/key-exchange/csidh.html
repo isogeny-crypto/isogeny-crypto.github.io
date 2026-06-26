@@ -142,6 +142,7 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/protocol-list.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -372,6 +373,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/csigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C-SiGamal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/csurf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSURF</span></a>
   </div>
@@ -398,6 +405,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/sigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SiGamal</span></a>
   </div>
 </li>
       </ul>
@@ -438,12 +451,7 @@ window.Quarto = {
   <li><a href="#public-key" id="toc-public-key" class="nav-link" data-scroll-target="#public-key"><span class="header-section-number">2.4</span> Public Key</a></li>
   <li><a href="#key-exchange" id="toc-key-exchange" class="nav-link" data-scroll-target="#key-exchange"><span class="header-section-number">2.5</span> Key Exchange</a></li>
   </ul></li>
-  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a>
-  <ul class="collapse">
-  <li><a href="#key-recovery-problem" id="toc-key-recovery-problem" class="nav-link" data-scroll-target="#key-recovery-problem"><span class="header-section-number">3.1</span> Key Recovery Problem</a></li>
-  <li><a href="#quantum-security" id="toc-quantum-security" class="nav-link" data-scroll-target="#quantum-security"><span class="header-section-number">3.2</span> Quantum Security</a></li>
-  <li><a href="#chosen-ciphertext-security" id="toc-chosen-ciphertext-security" class="nav-link" data-scroll-target="#chosen-ciphertext-security"><span class="header-section-number">3.3</span> Chosen-Ciphertext Security</a></li>
-  </ul></li>
+  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a></li>
   <li><a href="#progress" id="toc-progress" class="nav-link" data-scroll-target="#progress"><span class="header-section-number">4</span> Progress</a></li>
   <li><span class="header-section-number">5</span> References</li>
   </ul>
@@ -516,18 +524,11 @@ window.Quarto = {
 <section id="security-assumptions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
 <p>The security of the CSIDH protocol relies on the hardness of an isogeny-finding problem analogous to the classical discrete logarithm problem.</p>
-<section id="key-recovery-problem" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="key-recovery-problem"><span class="header-section-number">3.1</span> Key Recovery Problem</h3>
-<p>The fundamental computational assumption is that given two supersingular elliptic curves <span class="math inline">\(E\)</span> and <span class="math inline">\(E'\)</span> over <span class="math inline">\(\mathbb{F}_p\)</span> with the same <span class="math inline">\(\mathbb{F}_p\)</span>-rational endomorphism ring <span class="math inline">\(\mathcal{O}\)</span>, it is computationally infeasible to find an ideal <span class="math inline">\(\mathfrak{a}\)</span> such that <span class="math inline">\([\mathfrak{a}]E = E'\)</span>.</p>
-</section>
-<section id="quantum-security" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="quantum-security"><span class="header-section-number">3.2</span> Quantum Security</h3>
-<p>Breaking the scheme translates to solving an instance of the abelian hidden-shift problem. This problem can be addressed using subexponential-time quantum algorithms, such as those proposed by Kuperberg. The precise asymptotic complexity depends heavily on the cost of computing the isogeny oracle; combinations of algorithms yield bounds in the realm of <span class="math inline">\(L_p[1/2, 1/\sqrt{2}]\)</span>.</p>
-</section>
-<section id="chosen-ciphertext-security" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="chosen-ciphertext-security"><span class="header-section-number">3.3</span> Chosen-Ciphertext Security</h3>
-<p>Because CSIDH naturally affords efficient public-key validation, it avoids vulnerabilities related to the reuse of dishonest keys. This validation allows CSIDH to securely achieve non-interactive key exchange without resorting to additional chosen-ciphertext attack (CCA) transformations like the Fujisaki-Okamoto transform.</p>
-</section>
+<ul>
+<li><p><strong>Key Recovery Problem:</strong> The fundamental computational assumption is that given two supersingular elliptic curves <span class="math inline">\(E\)</span> and <span class="math inline">\(E'\)</span> over <span class="math inline">\(\mathbb{F}_p\)</span> with the same <span class="math inline">\(\mathbb{F}_p\)</span>-rational endomorphism ring <span class="math inline">\(\mathcal{O}\)</span>, it is computationally infeasible to find an ideal <span class="math inline">\(\mathfrak{a}\)</span> such that <span class="math inline">\([\mathfrak{a}]E = E'\)</span>.</p></li>
+<li><p><strong>Quantum Security:</strong> Breaking the scheme translates to solving an instance of the abelian hidden-shift problem. This problem can be addressed using subexponential-time quantum algorithms, such as those proposed by Kuperberg. The precise asymptotic complexity depends heavily on the cost of computing the isogeny oracle; combinations of algorithms yield bounds in the realm of <span class="math inline">\(L_p[1/2, 1/\sqrt{2}]\)</span>.</p></li>
+<li><p><strong>Chosen-Ciphertext Security:</strong> Because CSIDH naturally affords efficient public-key validation, it avoids vulnerabilities related to the reuse of dishonest keys. This validation allows CSIDH to securely achieve non-interactive key exchange without resorting to additional chosen-ciphertext attack (CCA) transformations like the Fujisaki-Okamoto transform.</p></li>
+</ul>
 </section>
 <section id="progress" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="progress"><span class="header-section-number">4</span> Progress</h2>

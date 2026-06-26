@@ -142,6 +142,7 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/protocol-list.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -372,6 +373,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/csigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C-SiGamal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/csurf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSURF</span></a>
   </div>
@@ -398,6 +405,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/sigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SiGamal</span></a>
   </div>
 </li>
       </ul>
@@ -525,10 +538,10 @@ window.Quarto = {
 </section>
 <section id="security-assumptions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
-<p>B-SIDH relies on different security assumptions compared to standard SIDH, primarily because it alters the nature of the isogeny walks:</p>
+<p>B-SIDH relies on different security assumptions compared to standard SIDH, primarily because it alters the nature of the isogeny walks.</p>
 <ul>
-<li><strong>Multiple Edge Sets:</strong> Unlike SIDH, where walks are restricted to a single <span class="math inline">\(l\)</span>-isogeny graph, B-SIDH requires switching between multiple <span class="math inline">\(l\)</span>-isogeny graphs. Security assumes that navigating multiple edge sets does not weaken the underlying supersingular isogeny problem, as long as the total number of destination nodes remains comparable to SIDH.</li>
-<li><strong>Full-Length Walks:</strong> The reduction in prime size means that Alice and Bob’s secret walks cover nearly the entire graph (almost full-length), compared to the half-length walks in standard SIDH.</li>
+<li><p><strong>Multiple Edge Sets:</strong> Unlike SIDH, where walks are restricted to a single <span class="math inline">\(l\)</span>-isogeny graph, B-SIDH requires switching between multiple <span class="math inline">\(l\)</span>-isogeny graphs. Security assumes that navigating multiple edge sets does not weaken the underlying supersingular isogeny problem, as long as the total number of destination nodes remains comparable to SIDH.</p></li>
+<li><p><strong>Full-Length Walks:</strong> The reduction in prime size means that Alice and Bob’s secret walks cover nearly the entire graph (almost full-length), compared to the half-length walks in standard SIDH. The complexity of attacks reamins dictated by the supersingular isogeny graph path finding algorithms.</p></li>
 </ul>
 </section>
 <section id="progress" class="level2" data-number="4">

@@ -1,0 +1,12 @@
+/* protocol-list.css — styling for the colored-circle (🔴🔵🟢) protocol
+   lists on the home page. Kept separate from fonts.css on purpose. */
+
+.unlisted-protocols ul,
+ul.unlisted-protocols {
+  list-style: none;
+  padding-left: 0;
+}
+
+.unlisted-protocols li {
+  margin: 0.25em 0;
+}
