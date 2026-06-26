@@ -31,14 +31,11 @@ When Alice receives Bob's public key $B$, she first verifies that the curve $E_B
 
 The security of the CSIDH protocol relies on the hardness of an isogeny-finding problem analogous to the classical discrete logarithm problem.
 
-### Key Recovery Problem
-The fundamental computational assumption is that given two supersingular elliptic curves $E$ and $E'$ over $\mathbb{F}_p$ with the same $\mathbb{F}_p$-rational endomorphism ring $\mathcal{O}$, it is computationally infeasible to find an ideal $\mathfrak{a}$ such that $[\mathfrak{a}]E = E'$.
+* **Key Recovery Problem:** The fundamental computational assumption is that given two supersingular elliptic curves $E$ and $E'$ over $\mathbb{F}_p$ with the same $\mathbb{F}_p$-rational endomorphism ring $\mathcal{O}$, it is computationally infeasible to find an ideal $\mathfrak{a}$ such that $[\mathfrak{a}]E = E'$.
 
-### Quantum Security
-Breaking the scheme translates to solving an instance of the abelian hidden-shift problem. This problem can be addressed using subexponential-time quantum algorithms, such as those proposed by Kuperberg. The precise asymptotic complexity depends heavily on the cost of computing the isogeny oracle; combinations of algorithms yield bounds in the realm of $L_p[1/2, 1/\sqrt{2}]$.
+* **Quantum Security:** Breaking the scheme translates to solving an instance of the abelian hidden-shift problem. This problem can be addressed using subexponential-time quantum algorithms, such as those proposed by Kuperberg. The precise asymptotic complexity depends heavily on the cost of computing the isogeny oracle; combinations of algorithms yield bounds in the realm of $L_p[1/2, 1/\sqrt{2}]$.
 
-### Chosen-Ciphertext Security
-Because CSIDH naturally affords efficient public-key validation, it avoids vulnerabilities related to the reuse of dishonest keys. This validation allows CSIDH to securely achieve non-interactive key exchange without resorting to additional chosen-ciphertext attack (CCA) transformations like the Fujisaki-Okamoto transform.
+* **Chosen-Ciphertext Security:** Because CSIDH naturally affords efficient public-key validation, it avoids vulnerabilities related to the reuse of dishonest keys. This validation allows CSIDH to securely achieve non-interactive key exchange without resorting to additional chosen-ciphertext attack (CCA) transformations like the Fujisaki-Okamoto transform.
 
 ## Progress
 

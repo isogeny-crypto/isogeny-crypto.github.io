@@ -94,10 +94,12 @@ The trapdoor owner can invert the function by utilizing the commutativity of mat
 
 ## Security Assumptions
 
-FESTA introduces generalized hardness assumptions for the scaled-torsion setting:
+FESTA introduces generalized hardness assumptions for the scaled-torsion setting.
 
 * **Decisional Isogeny with Scaled-Torsion (DIST):** Distinguishing a curve and its scaled torsion images (via matrix $A$) from a random supersingular curve and random basis points.
+
 * **Computational Isogeny with Scaled-Torsion (CIST):** Extracting the isogeny $\varphi$ given $E_0, E_1$, the domain basis, and the scaled target basis $\mathbf{A}(\varphi(P_0), \varphi(Q_0))^T$.
+
 * **Computational Isogeny with Double Scaled-Torsion (CIST$^2$):** Recovering two distinct isogenies $\varphi, \varphi'$ given two instances of scaled target bases that use the *same* scaling matrix $\mathbf{A}$.
 
 ## Progress

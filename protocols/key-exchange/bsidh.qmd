@@ -41,10 +41,11 @@ The protocol specifies a starting supersingular curve $E_0 / \mathbb{F}_{p^2}$. 
 
 ## Security Assumptions
 
-B-SIDH relies on different security assumptions compared to standard SIDH, primarily because it alters the nature of the isogeny walks:
+B-SIDH relies on different security assumptions compared to standard SIDH, primarily because it alters the nature of the isogeny walks.
 
 * **Multiple Edge Sets:** Unlike SIDH, where walks are restricted to a single $l$-isogeny graph, B-SIDH requires switching between multiple $l$-isogeny graphs. Security assumes that navigating multiple edge sets does not weaken the underlying supersingular isogeny problem, as long as the total number of destination nodes remains comparable to SIDH.
-* **Full-Length Walks:** The reduction in prime size means that Alice and Bob's secret walks cover nearly the entire graph (almost full-length), compared to the half-length walks in standard SIDH. 
+
+* **Full-Length Walks:** The reduction in prime size means that Alice and Bob's secret walks cover nearly the entire graph (almost full-length), compared to the half-length walks in standard SIDH. The complexity of attacks reamins dictated by the supersingular isogeny graph path finding algorithms.
 
 ## Progress
 

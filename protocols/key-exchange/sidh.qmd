@@ -90,7 +90,9 @@ The protocol dictates that Alice and Bob conduct random walks on two distinct is
 ## Security Assumptions
 
 * **Hardness Problem:** The scheme relies on the conjectured difficulty of finding an isogeny between two supersingular elliptic curves. 
+
 * **Auxiliary Input Security:** A unique characteristic of SIDH is the publication of the evaluated torsion basis points (the auxiliary input required for commutativity). The authors state that providing these outputs does not appear to make the underlying problem of finding the secret isogenies any easier.
+
 * **Resistance to Quantum Group Actions:** Because the protocol is not fundamentally based on an abelian group action, it is completely immune to the subexponential quantum attacks that rendered ordinary isogeny networks insecure.
 
 ## Progress

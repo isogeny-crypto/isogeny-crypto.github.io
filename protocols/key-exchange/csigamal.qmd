@@ -1,0 +1,84 @@
+---
+title: "C-SiGamal"
+subtitle: "Compressed SiGamal"
+date: 2026-06-26
+---
+
+## Overview
+
+C-SiGamal is a compressed variant of [SiGamal](/protocols/key-exchange/sigamal.qmd) that drastically reduces the communication overhead [@sigamal-csigamal]. Specifically, the bit length of a ciphertext in C-SiGamal is half that of a standard SiGamal ciphertext, requiring only twice the bit length of the underlying prime $p$.  This compression is achieved by modifying the encryption logic to omit sending a target curve and a masked point, instead employing a deterministically generated base point $P_E$ on the target curve and a carefully computed intermediate scalar $\mu^*$.
+
+## Protocol Design
+
+The C-SiGamal protocol utilizes the free and transitive group action of an ideal class group on a set of supersingular elliptic curves. 
+
+```{.tikz}
+\usetikzlibrary{arrows.meta, bending, calc}
+\begin{tikzpicture}[
+  every node/.style={font=\small},
+  arr/.style={-{Stealth}, thick},
+  dotted arr/.style={-{Stealth}, thick, dotted}
+]
+
+  % Nodes
+  \node (E0)    at (0,   0)  {$(E_0, P_0)$};
+  \node (aE0)   at (6,   0)  {$(E_1, P_1)$};
+  \node (bE0)   at (0,  -2) {$(E_3, P_3)$};
+  \node (abE0)  at (6,  -2) {$(E_4, P_4)$};
+  \node (bE0m)  at (0,  -4)  {$(E_3, P_3')$};
+  \node (abE0m2) at (6,  -4.5)  {$(E_4, (2\mu+1)P_{E_4})$};
+  \node (abE0m) at (6,  -6)  {$(E_4, \mathrm{a}P_3')$};
+
+  % E0 -> aE0 (solid, top)
+  \draw[arr] (E0) -- node[above, font=\small]{$\mathrm{a}$} (aE0);
+
+  % E0 -> bE0 (dotted, left)
+  \draw[dotted arr] (E0) -- node[left, font=\small]{$\mathrm{b}$} (bE0);
+
+  % aE0 -> abE0 (dotted, right)
+  \draw[dotted arr] (aE0) -- node[right, font=\small]{$\mathrm{b}$} (abE0);
+
+  % bE0 -> bE0m (dotted, left)
+  \draw[dotted arr] (bE0) -- node[left, font=\small]{$[\mu^*]$} (bE0m);
+
+  % abE0m2 -> abE0m (double line, no arrowhead)
+  \draw[double, double distance=2pt, thick] (abE0m2) -- (abE0m);
+
+  % bE0m -> abE0m (curved, solid)
+  \draw[arr] (bE0m) to[bend right=20] node[below, font=\small]{$\mathrm{a}$} (abE0m);
+
+\end{tikzpicture}
+```
+
+### Setup and Key Generation
+
+1. **Parameters:** Choose a prime $p = 2^r \cdot \ell_1 \cdots \ell_n - 1$, where $\ell_1, \dots, \ell_n$ are small distinct odd primes. 
+2. **Base Curve and Point:** Set $E_0$ as the elliptic curve $Y^2Z = X^3 + XZ^2$ and sample a random point $P_0 \in E_0(\mathbb{F}_p)$ of order $2^r$.
+3. **Secret Key:** Alice samples a random integer $\alpha$ and a vector of integers $e_1, \dots, e_n$. She defines the ideal class $\mathfrak{a} = \langle \alpha\rangle \mathfrak{l}_1^{e_1} \cdots \mathfrak{l}_n^{e_n} \in J(\mathbb{Z}[\pi_p])$. Her secret key is the tuple $(\alpha, e_1, \dots, e_n)$.
+4. **Public Key:** Alice computes $E_1 := [\mathfrak{a}]E_0$ and pushes the point $P_0$ through the isogeny to obtain $P_1 := \mathfrak{a}P_0$. Her public key is $(E_0, P_0, E_1, P_1)$.
+
+### Encryption
+
+The plaintext message space is $\{0, 1\}^{r-2}$. To encrypt a plaintext message $\mu$:
+
+1. **Ephemeral Key:** Bob samples random integers $\beta, e'_1, \dots, e'_n$ and defines the ideal $\mathfrak{b} = \langle \beta\rangle\mathfrak{l}_1^{e'_1} \cdots \mathfrak{l}_n^{e'_n}$.
+2. **Isogeny Computations:** Bob computes the action of $\mathfrak{b}$ on Alice's public keys, resulting in $E_3 := [\mathfrak{b}]E_0$, $P_3 := \mathfrak{b}P_0$, $E_4 := [\mathfrak{b}]E_1$, and $P_4 := \mathfrak{b}P_1$.
+3. **Point Derivation and Discrete Log:** Let $E_4$ be a supersingular elliptic curve defined by $Y^2Z = X^3 + aX^2Z + XZ^2$. Bob identifies the deterministic point $P_{E_4} \in E_4$, computed as $P_{E_4} = \ell_1 \cdots \ell_n \tilde{P}_{E_4}$, where $\tilde{P}_{E_4}$ is the point in $E_4(\mathbb{F}_p)$ with the largest $x$-coordinate among points whose orders are divisible by $2^r$. He then evaluates $(2\mu + 1)P_{E_4}$ and solves the discrete logarithm problem to find a scalar $\mu^*$ such that $(2\mu + 1)P_{E_4} = \mu^* P_4$ using the Pohlig-Hellman algorithm.
+4. **Ciphertext:** Bob computes $P'_3 := \mu^* P_3$. He sends the compressed ciphertext $(E_3, P'_3)$ to Alice. (This successfully halves the size compared to SiGamal's $(E_3, P_3, E_4, P_4)$).
+
+### Decryption
+
+Upon receiving the ciphertext $(E_3, P'_3)$:
+
+1. **Shared Curve Recovery:** Alice applies her secret ideal $\mathfrak{a}$ to Bob's ephemeral curve to compute $E_4 = [\mathfrak{a}]E_3$.
+2. **Point Evaluation:** She pushes Bob's masked point through her isogeny, calculating $\mathfrak{a}P'_3$.
+3. **Discrete Logarithm:** Alice deterministically calculates $P_{E_4}$ on the recovered curve $E_4$ based on the maximum $x$-coordinate selection rule. She then solves the discrete logarithm problem over $\mathbb{Z}/2^r\mathbb{Z}$ between $\mathfrak{a}P'_3$ and $P_{E_4}$ using the Pohlig-Hellman algorithm to find the scalar $M$.
+4. **Sign Disambiguation and Decoding:** If the most significant bit of $M$ is 1, Alice adjusts $M$ by computing $2^r - M$ to account for sign ambiguity in isogenies. Finally, she retrieves the plaintext as $\tilde{\mu} = (M - 1) / 2$.
+
+## Security Assumptions
+
+Same as [SiGamal's assumptions](../key-exchange/sigamal.qmd#security-assumptions).
+
+## Progress
+
+TODO

@@ -12,21 +12,25 @@ If you are not familiar with the concept of cryptographic protocols, we recommen
 
 This wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption schemes and digital signature schemes.
 
+**Legend:** 🔴 torsion points; 🔵 group action; 🟢 Deuring correspondence
+
+
 :::: {.columns}
 ::: {.column width="50%"}
 ### Key Exchange
 
-- [SIDH](protocols/key-exchange/sidh.qmd) (2011--2022)
-- [$k$-SIDH](protocols/key-exchange/ksidh.qmd) (2017-2022)
-- [CSIDH](protocols/key-exchange/csidh.qmd) (2018)
-- [CSURF](protocols/key-exchange/csurf.qmd) (2020)
-- [B-SIDH](protocols/key-exchange/bsidh.qmd) (2020--2022)
-- SiGamal (2020)
-- C-SiGamal (2020)
+::: {.unlisted-protocols}
+- 🔴 [SIDH](protocols/key-exchange/sidh.qmd) (2011--2022) 
+- 🔴 [$k$-SIDH](protocols/key-exchange/ksidh.qmd) (2017-2022) 
+- 🔵 [CSIDH](protocols/key-exchange/csidh.qmd) (2018) 
+- 🔵 [CSURF](protocols/key-exchange/csurf.qmd) (2020) 
+- 🔴 [B-SIDH](protocols/key-exchange/bsidh.qmd) (2020--2022) 
+- 🔵 [SiGamal](/protocols/key-exchange/sigamal.qmd) (2020) 
+- 🔵 [C-SiGamal](/protocols/key-exchange/csigamal.qmd) (2020) 
+- SimS (2021)
 - SHealS (2021-2022)
 - HealS (2021-2022)
-- SimS (2021)
-- Séta (2021--2022)
+- Séta (2021--2022) 
 - EJKM (2021)
 - pSIDH (2022--2023)
 - BDKLP (2022)
@@ -44,20 +48,23 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption 
 - LIT-SiGamal (2025)
 - PIKE (2026)
 :::
+:::
 
 ::: {.column width="50%"}
 ### Digital Signature
 
-- JS (2014)
-- GPS (2017)
-- SeaSign (2019)
-- [CSI-FiSh](protocols/digital-signature/csi-fish.qmd) (2019)
+::: {.unlisted-protocols}
+- 🔴 JS (2014)
+- 🔴 YAJJS (2017)
+- 🟢 GPS (2017) 
+- 🔵 SeaSign (2019)
+- 🔵 [CSI-FiSh](protocols/digital-signature/csi-fish.qmd) (2019) 
 - Sashimi (2020)
-- Lossy CSI-FiSh (2020)
-- SQISign (2020)
+- 🔵 Lossy CSI-FiSh (2020)
+- 🟢 SQISign (2020) 
 - Calamari (2020)
 - IAS (2021)
-- SIDH PoK (2022)
+- 🔴 SIDH PoK (2022)
 - SCALLOP (2023)
 - CJSS (2023)
 - CSI-Otter (2023)
@@ -80,7 +87,10 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption 
 - PRISMO (2026)
 - Wombat (2026)
 :::
+:::
+
 ::::
+
 
 ## Contributing
 

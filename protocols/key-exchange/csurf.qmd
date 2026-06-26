@@ -8,7 +8,7 @@ date: 2026-06-26
 
 The CSURF protocol is a variant of the [CSIDH](/protocols/key-exchange/csidh.qmd) protocol, designed to operate on the "surface" of the supersingular isogeny graph rather than the "floor" [@csurf]. CSURF utilizes supersingular elliptic curves over a finite prime field $\mathbb{F}_p$ (where $p \equiv 3 \pmod 4$) whose endomorphism rings are isomorphic to the maximal order $\mathbb{Z}[(1+\sqrt{-p})/2]$. This is in contrast to original CSIDH, which relies on curves with the non-maximal endomorphism ring $\mathbb{Z}[\sqrt{-p}]$ (the floor).
 
-A key operational advantage of CSURF is unlocked when the prime satisfies $p \equiv 7 \pmod 8$. In this setting, horizontal 2-isogenies can be efficiently computed to evaluate the class group action. This efficiency stems from the fact that computing these 2-isogenies requires little more than a single exponentiation in the base field $\mathbb{F}_p$. Additionally, moving to the surface eliminates the redundant $\mathbb{Z}_3$ factor present in the acting ideal-class group of standard CSIDH, which provides no extra security.
+A key operational advantage of CSURF is unlocked when the prime satisfies $p \equiv 7 \pmod 8$. In this setting, horizontal 2-isogenies can be efficiently computed to evaluate the class group action. This efficiency stems from the fact that computing these 2-isogenies requires little more than a single exponentiation in the base field $\mathbb{F}_p$. Additionally, moving to the surface eliminates the redundant $\mathbb{Z}/3\mathbb{Z}$ factor present in the acting ideal-class group of standard CSIDH, which provides no extra security.
 
 ## Protocol Design
 
@@ -34,14 +34,11 @@ The steps for a non-interactive key exchange between two parties, Alice and Bob,
 
 ## Security Assumptions
 
-### Hard Homogeneous Spaces
-The security of CSURF is rooted in the framework of Hard Homogeneous Spaces originally proposed by Couveignes and Rostovtsev-Stolbunov. The fundamental security assumption is the hardness of the parallelization problem: given a starting element $s_0$ and elements $s_1, s_2 \in S$, it must be computationally infeasible to find $g_1 g_2 * s_0$ where $s_1 = g_1 * s_0$ and $s_2 = g_2 * s_0$.
+* **Hard Homogeneous Spaces:** The security of CSURF is rooted in the framework of Hard Homogeneous Spaces originally proposed by Couveignes and Rostovtsev-Stolbunov. The fundamental security assumption is the hardness of the parallelization problem: given a starting element $s_0$ and elements $s_1, s_2 \in S$, it must be computationally infeasible to find $g_1 g_2 * s_0$ where $s_1 = g_1 * s_0$ and $s_2 = g_2 * s_0$.
 
-### Quantum Resistance
-Because the action relies on isogenies of elliptic curves rather than standard cyclic group exponentiation, it does not succumb to Shor's polynomial-time quantum algorithm. The most efficient known quantum attack against the hard homogeneous space constructed by CSURF is Kuperberg's algorithm for finding hidden shifts, which operates in subexponential time.
+* **Quantum Resistance:** Because the action relies on isogenies of elliptic curves rather than standard cyclic group exponentiation, it does not succumb to Shor's polynomial-time quantum algorithm. The most efficient known quantum attack against the hard homogeneous space constructed by CSURF is Kuperberg's algorithm for finding hidden shifts, which operates in subexponential time.
 
-### The $\mathbb{Z}_3$ Factor and Equivalent Security
-A specific topological quirk of the isogeny graph when $p \equiv 3 \pmod 8$ (the standard CSIDH setting) is the presence of a $\mathbb{Z}_3$ factor in the ideal class group $\mathcal{C}l(\mathbb{Z}[\sqrt{-p}])$. Operating on the surface inherently avoids this redundant factor, matching the security profile of standard CSIDH.
+* **The $\mathbb{Z}/3\mathbb{Z}$ Factor and Equivalent Security:** A specific topological quirk of the isogeny graph when $p \equiv 3 \pmod 8$ (the standard CSIDH setting) is the presence of a $\mathbb{Z}/3\mathbb{Z}$ factor in the ideal class group $\mathcal{C}l(\mathbb{Z}[\sqrt{-p}])$. Operating on the surface inherently avoids this redundant factor, matching the security profile of standard CSIDH.
 
 ## Progress
 

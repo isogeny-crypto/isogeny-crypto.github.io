@@ -1,0 +1,85 @@
+---
+title: "SiGamal"
+subtitle: "ElGamal encryption based on CSIDH"
+date: 2026-06-26
+---
+
+## Overview
+
+SiGamal is a post-quantum public key encryption (PKE) scheme built upon the [CSIDH](/protocols/key-exchange/csidh.qmd) framework that functions as an isogeny-based analogue to traditional ElGamal encryption [@sigamal-csigamal]. Its primary breakthrough is achieving Indistinguishability under Chosen-Plaintext Attack (IND-CPA) security strictly without the reliance on entropy-smoothing hash functions, offering a notable advantage over previous isogeny-based PKEs. 
+
+## Protocol Design
+
+The SiGamal protocol operates by sending plaintexts embedded as points through hidden isogenies. The scheme consists of three primary phases: Key Generation, Encryption, and Decryption.
+
+
+```{.tikz}
+\usetikzlibrary{arrows.meta, bending, calc}
+\begin{tikzpicture}[
+  every node/.style={font=\small},
+  arr/.style={-{Stealth}, thick},
+  dotted arr/.style={-{Stealth}, thick, dotted}
+]
+
+  % Nodes
+  \node (E0)   at (0,   0) {$(E_0, P_0)$};
+  \node (aE0)  at (6,   0) {$(E_1,P_1)$};
+  \node (bE0)  at (0,  -3) {$(E_3, P_3)$};
+  \node (abE0) at (6,  -3) {$(E_4, P_4)$};
+  \node (abE0b) at (6, -5) {$(E_4, \mathrm{a}P_3)$};
+
+  % E0 -> aE0 (solid, top)
+  \draw[arr] (E0) -- node[above, font=\small]{$\mathrm{a}$} (aE0);
+
+  % E0 -> bE0 (dotted, left)
+  \draw[dotted arr] (E0) -- node[left, font=\small]{$\mathrm{b}$} (bE0);
+
+  % aE0 -> abE0 (dotted, right)
+  \draw[dotted arr] (aE0) -- node[right, font=\small]{$[\mu]\circ\mathrm{b}$} (abE0);
+
+  % bE0 -> abE0b (curved, solid)
+  \draw[arr] (bE0) to[bend right=20] node[below, font=\small]{$\mathrm{a}$} (abE0b);
+
+\end{tikzpicture}
+```
+
+### Setup and Key Generation 
+1. **Parameters:** Choose a prime $p$ of the form $p = 2^r \cdot \ell_1 \cdots \ell_n - 1$, where $\ell_1, \dots, \ell_n$ are small distinct odd primes. 
+2. **Base Curve:** Let $E_0$ be the supersingular elliptic curve defined by $Y^2Z = X^3 + XZ^2$ over $\mathbb{F}_p$. 
+3. **Base Point:** Select a random point $P_0 \in E_0(\mathbb{F}_p)$ of order $2^r$.
+4. **Secret Key:** Alice uniformly samples random integers $\alpha \in (\mathbb{Z}/2^r\mathbb{Z})^\times$ and $e_1, \dots, e_n$. She defines ideal $\mathfrak{a} = \langle\alpha\rangle\mathfrak{l}_1^{e_1} \cdots \mathfrak{l}_n^{e_n}$. The vector $(\alpha, e_1, \dots, e_n)$ serves as her secret key.
+5. **Public Key:** Alice computes the action of the ideal class on the curve: $E_1 := [\mathfrak{a}]E_0$. She also pushes the point $P_0$ through the isogeny to obtain $P_1 := \mathfrak{a}P_0$. Her public key is the tuple $(E_0, P_0, E_1, P_1)$.
+
+### Encryption 
+The plaintext message space $\mathcal{M}$ is defined as $\{0, 1\}^{r-2}$. To encrypt a message $\mu \in \mathcal{M}$:
+
+1. **Message Embedding:** Bob maps the plaintext $\mu$ into the group $(\mathbb{Z}/2^r\mathbb{Z})^\times$ via the transformation $\mu \mapsto 2\mu + 1$.
+2. **Ephemeral Secret:** Bob samples uniformly random integers $\beta \in (\mathbb{Z}/2^r\mathbb{Z})^\times$ and $e'_1, \dots, e'_n$, defining an ideal $\mathfrak{b} = \langle \beta\rangle\mathfrak{l}_1^{e'_1} \cdots \mathfrak{l}_n^{e'_n}$.
+3. **Isogeny Computations:** Bob evaluates the group action of $[\mathfrak{b}]$ on both of Alice's public curves, computing:
+   * $E_3 := [\mathfrak{b}]E_0$
+   * $P_3 := \mathfrak{b}P_0$
+   * $E_4 := [\mathfrak{b}]E_1$
+4. **Point Masking:** Bob masks the embedded message by computing $P_4 := \mathfrak{b}((2\mu + 1)P_1)$. 
+5. **Ciphertext:** Bob sends the ciphertext tuple $(E_3, P_3, E_4, P_4)$ to Alice. (Note: Points are practically represented by their $x$-coordinates.
+
+### Decryption 
+Upon receiving the ciphertext $(E_3, P_3, E_4, P_4)$:
+
+1. **Shared Secret Recovery:** Alice uses her secret key $[\mathfrak{a}]$ to evaluate the action on Bob's ephemeral curve and point, specifically computing $\mathfrak{a}P_3$.
+2. **Discrete Logarithm Extraction:** Because $\mathfrak{a}P_3$ and $P_4$ reside on the same curve $[\mathfrak{a}][\mathfrak{b}]E_0$, Alice can solve the discrete logarithm problem over $\mathbb{Z}/2^r\mathbb{Z}$ between $\mathfrak{a}P_3$ and $P_4$. Since the order $2^r$ is smooth, she efficiently extracts the scalar $M$ using the Pohlig-Hellman algorithm.
+3. **Sign Disambiguation:** Isogenies map points up to a sign ($\pm 1$). If the most significant bit of $M$ is 1, Alice adjusts $M$ by computing $2^r - M$ to correct for the sign ambiguity.
+4. **Message Decoding:** Finally, Alice recovers the original plaintext $\mu$ by calculating $\tilde{\mu} = (M - 1) / 2$.
+
+## Security Assumptions {#security-assumptions}
+
+The security of SiGamal relies on standard and newly introduced hard problems in commutative supersingular isogeny graphs.
+
+* **Commutative Supersingular Decisional Diffie-Hellman (CSSDDH):** A foundational assumption of the CSIDH setting. It states that given random elements $[\mathfrak{a}], [\mathfrak{b}], [\mathfrak{c}] \in cl(\mathbb{Z}[\pi_p])$ and a base curve $E_0$, no efficient polynomial-time algorithm can distinguish the curve $[\mathfrak{a}][\mathfrak{b}]E_0$ from a randomly generated curve $[\mathfrak{c}]E_0$.
+
+* **Point-Commutative Supersingular Computational Diffie-Hellman (P-CSSCDH):** A new computational assumption introduced for SiGamal's OW-CPA security. It assumes that it is computationally hard to compute the image point of a given point under a hidden isogeny.
+
+* **Point-Commutative Supersingular Decisional Diffie-Hellman (P-CSSDDH):** A novel decisional assumption underlying SiGamal's IND-CPA security. It posits that no efficient algorithm can distinguish between a completely random point on an isogenous curve and a point that is the valid image of a public point mapped under a hidden isogeny.
+
+## Progress
+
+TODO

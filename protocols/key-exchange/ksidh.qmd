@@ -66,12 +66,15 @@ Bob performs the analogous checks.
 
 ## Security Assumptions
 
-The security of the $k$-SIDH protocol relies on the following foundational assumptions:
+The security of the $k$-SIDH protocol relies on the following foundational assumptions.
 
-1. **Intractability of the Supersingular Isogeny (SSI) Problem:** The underlying primitive relies on the hardness of finding an isogeny of a specific degree with a cyclic kernel between two known supersingular elliptic curves defined over $\mathbb{F}_{p^2}$.
-2. **Irreducibility of SIDH:** The multiple-instances transformation requires the underlying key establishment to be *irreducible*. A protocol is irreducible if it is computationally infeasible for a malicious participant to craft a modified public key that successfully passes all public validation tests while generating the exact same shared secret across multiple different honest private keys. The authors prove that if an attacker could violate this irreducibility in SIDH, they could use that capability to efficiently solve the SSI problem.
-3. **Preimage Resistance of the Hash Function:** The hash function $H$ must be strong and preimage-resistant. Since a dishonest Bob only receives $H(h)$ (or $H(H(h))$), he must guess the entirety of the $k$-element preimage correctly. The hash prevents the attacker from successfully testing failures instance-by-instance.
-4. **No Curve Manipulation:** The proof model primarily addresses adversaries that manipulate elliptic curve torsion points. It relies on the heuristic assumption that the curves themselves are not being maliciously generated or manipulated in unverified ways, noting that there are no known active attacks exploiting manipulated curves directly in this context.
+* **Intractability of the Supersingular Isogeny (SSI) Problem:** The underlying primitive relies on the hardness of finding an isogeny of a specific degree with a cyclic kernel between two known supersingular elliptic curves defined over $\mathbb{F}_{p^2}$.
+
+* **Irreducibility of SIDH:** The multiple-instances transformation requires the underlying key establishment to be *irreducible*. A protocol is irreducible if it is computationally infeasible for a malicious participant to craft a modified public key that successfully passes all public validation tests while generating the exact same shared secret across multiple different honest private keys. The authors prove that if an attacker could violate this irreducibility in SIDH, they could use that capability to efficiently solve the SSI problem.
+
+* **Preimage Resistance of the Hash Function:** The hash function $H$ must be strong and preimage-resistant. Since a dishonest Bob only receives $H(h)$ (or $H(H(h))$), he must guess the entirety of the $k$-element preimage correctly. The hash prevents the attacker from successfully testing failures instance-by-instance.
+
+* **No Curve Manipulation:** The proof model primarily addresses adversaries that manipulate elliptic curve torsion points. It relies on the heuristic assumption that the curves themselves are not being maliciously generated or manipulated in unverified ways, noting that there are no known active attacks exploiting manipulated curves directly in this context.
 
 ## Progress
 

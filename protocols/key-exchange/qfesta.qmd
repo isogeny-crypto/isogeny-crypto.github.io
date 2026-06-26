@@ -116,9 +116,11 @@ Given a special supersingular elliptic curve $E_0/\mathbb{F}_{p^2}$ with $j$-inv
 The core OW-CPA security of the QFESTA PKE relies on specialized variants of FESTA's distinguishing and computational problems. 
 
 * **Pseudorandomness of `RandIsogImages`:** The foundational assumption assumes that the codomain elliptic curve $E_1$ and its mapped torsion points $(P_1, Q_1)$ produced by `RandIsogImages` are computationally indistinguishable from a tuple drawn uniformly at random from valid configurations.
+
 * **Variant DIST Problem:** The security proof extends this to the public keys themselves, assuming an adversary cannot distinguish the legitimate masked points $(R_A, S_A)$ on $E_A$ from uniformly random torsion points.
-* **Hardness of Isogeny Recovery:** Finding the secret isogenies ($\phi_A, \phi_1, \phi_2$) given the degrees ($d_A, d_1, d_2$) requires $O(2^{\lambda})$ operations classically and $O(2^{\lambda/2})$ operations via quantum attacks (using Grover's algorithm or meet-in-the-middle strategies), satisfying the targeted security levels.
-* **Resistance to Castryck-Vercauteren Attack:** This specific polynomial-time attack is circumvented by carefully selecting the public basis $(P_0, Q_0) \in E_0[2^{3a}]$. The protocol computes endomorphism representations of these points and verifies that the shortest vector in the resulting Euclidean lattice has a norm greater than $2^{1.5\lambda}$, guaranteeing security against $\lambda$-bit complexity attacks.
+
+* **Hardness of Isogeny Recovery:** Finding the secret isogenies 
+($\phi_A, \phi_1, \phi_2$) given the degrees ($d_A, d_1, d_2$) requires $O(2^{\lambda})$ operations classically and $O(2^{\lambda/2})$ operations via quantum attacks (using Grover's algorithm or meet-in-the-middle strategies), satisfying the targeted security levels.
 
 ## Progress
 
