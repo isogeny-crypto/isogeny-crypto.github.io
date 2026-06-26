@@ -82,10 +82,10 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption 
 - SQIsign2D$^2$ (2025)
 - SPIDER (2026)
 - ORCAS (2026)
+- Wombat (2026)
 - SQIsign2DPush (2026)
 - WaterSQI (2026)
 - PRISMO (2026)
-- Wombat (2026)
 :::
 :::
 
