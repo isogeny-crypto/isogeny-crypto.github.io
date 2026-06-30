@@ -27,7 +27,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption 
 - 🔴 [B-SIDH](protocols/key-exchange/bsidh.qmd) (2020--2022) 
 - 🟢 [SiGamal](/protocols/key-exchange/sigamal.qmd) (2020) 
 - 🟢 [C-SiGamal](/protocols/key-exchange/csigamal.qmd) (2020) 
-- SimS (2021)
+- 🟢 [SimS](/protocols/key-exchange/sims.qmd) (2021)
 - SHealS (2021-2022)
 - HealS (2021-2022)
 - Séta (2021--2022) 

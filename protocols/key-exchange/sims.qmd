@@ -1,0 +1,90 @@
+---
+title: "SimS"
+subtitle: "Simplified SiGamal"
+date: 2026-07-01
+---
+
+## Overview
+
+SimS (Simplified SiGamal) is a post-quantum public-key encryption (PKE) protocol based on supersingular isogenies, specifically introduced to simplify the original [SiGamal](/protocols/key-exchange/sigamal.qmd) protocol and achieve stronger security guarantees [@sims]. While the canonical PKEs derived from protocols like [CSIDH](/protocols/key-exchange/csidh.qmd) and [SIDH](/protocols/key-exchange/sidh.qmd) are only OW-CPA (One-Way under Chosen Plaintext Attack) secure, requiring hash functions or Fujisaki-Okamoto transformations for higher security, SiGamal provided IND-CPA (Indistinguishability under Chosen-Plaintext Attack) security without hash functions but lacked IND-CCA (Indistinguishability under Chosen-Ciphertext Attack) security. SimS modifies SiGamal to thwart a concrete IND-CCA attack by completely decoupling transmitted curves from their torsion points in the ciphertext. Concretely, SimS replaces the exchanged torsion points with a canonically generated point of smooth order $2^r$ on a hidden shared curve, and masks its $x$-coordinate using a curve-dependent randomizing function. This structural simplification positions SimS between SiGamal and CSIDH, yielding smaller public keys, more compact ciphertexts, and enhanced computational efficiency compared to both SiGamal and [C-SiGamal](/protocols/key-exchange/csigamal.qmd), all while providing IND-CCA security.
+
+## Protocol Design
+
+SimS operates over a supersingular elliptic curve $E_0 : y^2 = x^3 + x$ defined over $\mathbb{F}_p$, where $p = 2^r \ell_1 \cdots \ell_n - 1$ is a prime such that $\ell_1, \ldots, \ell_n$ are small distinct odd primes. The protocol relies on the free and transitive action of the ideal class group $\text{cl}(\mathbb{Z}[\pi])$ on the set of supersingular elliptic curves defined over $\mathbb{F}_p$ with endomorphism ring $\mathbb{Z}[\pi]$. 
+
+
+```{.tikz}
+\usetikzlibrary{arrows.meta}
+\begin{tikzpicture}[
+  every node/.style={font=\small},
+  box/.style={draw, rounded corners, thick, minimum width=2.8cm, minimum height=1cm, align=center},
+  redarr/.style={-{Stealth}, thick, red},
+  bluearr/.style={-{Stealth}, very thick, blue}
+]
+
+  % Nodes
+  \node[box] (E0) at (0, 0) {$E_0$};
+  \node[box] (E1) at (6, 0) {$E_1 = {\color{red}[\mathrm{a}]}E_0$};
+  \node[box] (E3) at (0, -4) {$E_3 = {\color{blue}[\mathrm{b}]}E_0$};
+  \node[box] (E4top) at (6, -2.2) {${\color{blue}E_4} = {\color{blue}[\mathrm{b}]}E_1,$\\$P_4 = {\color{blue}[2m+1]P_{E_4}}$};
+  \node[box] (E4bot) at (6, -4) {${\color{red}E_4} = {\color{red}[\mathrm{a}]}E_0,$\\${\color{red}m'} = DLP(P_4, {\color{red}P_{E_4}})$};
+
+  % E0 -> E1 (red, top)
+  \draw[redarr] (E0) -- node[above, red]{$[\mathrm{a}]$} (E1);
+
+  % E0 -> E3 (blue, left)
+  \draw[bluearr] (E0) -- node[left, blue]{$[\mathrm{b}]$} (E3);
+
+  % E1 -> E4top (blue, right)
+  \draw[bluearr] (E1) -- node[right, blue]{$[\mathrm{b}]$} (E4top);
+
+  % E3 -> E4bot (red, bottom)
+  \draw[redarr] (E3) -- node[above, red]{$[\mathrm{a}]$} (E4bot);
+
+\end{tikzpicture}
+```
+
+### Setup and Public Parameters
+* **Prime:** $p = 2^r \ell_1 \dots \ell_n - 1$.
+* **Base Curve:** $E_0 : y^2 = x^3 + x$ over $\mathbb{F}_p$.
+* **Message Space:** $\mathcal{M} = \mathbb{Z}_{2^{r-2}}$.
+* **Randomizing Function:** A bijective function $f_E : \mathbb{F}_p \to \mathbb{F}_p$ indexed by the curve $E$. A concrete example is $f_E(x)$ such that its binary representation is $\text{bin}(x) \oplus \text{bin}(A_E)$, where $A_E$ is the Montgomery coefficient of $E$.
+
+### Key Generation
+1. Alice chooses a uniformly random integral ideal class $[\mathfrak{a}]$ from $\text{cl}(\mathbb{Z}[\pi])$.
+2. She computes the curve $E_1 = [\mathfrak{a}]E_0$ via the class group action.
+3. **Public Key:** $E_1$
+4. **Private Key:** $[\mathfrak{a}]$
+
+### Encryption
+To encrypt a plaintext $m \in \mathbb{Z}_{2^{r-2}}$ for Alice, Bob performs the following steps:
+
+1. Bob embeds the message $m$ into $\mathbb{Z}_{2^r}^\times$ by computing $M = 2m + 1$.
+2. He chooses a uniformly random ideal class $[\mathfrak{b}] \in \text{cl}(\mathbb{Z}[\pi])$.
+3. He computes the curve $E_3 = [\mathfrak{b}]E_0$.
+4. He applies the action of $[\mathfrak{b}]$ to Alice's public key to compute the shared curve $E_4 = [\mathfrak{b}]E_1 = [\mathfrak{b}][\mathfrak{a}]E_0$.
+5. He uses a deterministic algorithm to canonically generate a point $P_{E_4} \in E_4(\mathbb{F}_p)$ of smooth order $2^r$ (where $2^r \mid p+1$).
+6. He computes the scalar multiplication $P_4 = [M]P_{E_4}$.
+7. To avoid leaking the $x$-coordinate of $P_4$ (which could reveal information about $E_4$), he masks it using the randomizing function: $c = f_{E_4}(x(P_4))$.
+8. **Ciphertext:** $(E_3, c)$
+
+### Decryption
+Upon receiving the ciphertext $(E_3, c)$, Alice performs the following steps:
+
+1. She computes the shared curve $E_4 = [\mathfrak{a}]E_3 = [\mathfrak{a}][\mathfrak{b}]E_0$ using her private key $[\mathfrak{a}]$.
+2. Using $E_4$, she reverses the randomization function to recover $x(P_4) = f_{E_4}^{-1}(c)$, which identifies the point $P_4$.
+3. She canonically computes the same base point $P_{E_4} \in E_4(\mathbb{F}_p)$ of order $2^r$.
+4. She solves a discrete logarithm problem (DLP) to find the relationship between $P_4$ and $P_{E_4}$. Since the group order is $2^r$ (which is smooth), she can efficiently use the Pohlig-Hellman algorithm to find $M' \in \mathbb{Z}_{2^r}^\times$ such that $P_4 = [M']P_{E_4}$.
+5. If $M' > 2^{r-1}$, she adjusts $M = 2^r - M'$; otherwise $M = M'$.
+6. She recovers the original message as $m = (M - 1) / 2$.
+
+## Security Assumptions
+
+The security of the SimS protocol rests on two core assumptions:
+
+- **Commutative Supersingular Isogeny Decisional Diffie-Hellman (CSSIDDH) Assumption:** IND-CPA security relies on this assumption. It posits that given a base curve $E_0$ and two public curves $E_A = [\mathfrak{a}]E_0$ and $E_B = [\mathfrak{b}]E_0$, it is computationally infeasible to distinguish the shared secret curve $[\mathfrak{a}][\mathfrak{b}]E_0$ from a uniformly random curve $[\mathfrak{c}]E_0$.
+- **Knowledge of Exponent (KoE)-Type Assumption:** IND-CCA security relies on this assumption. It formalizes that if an adversary produces a valid ciphertext $(E_3, c)$, they must be able to extract the underlying ideal class $[\mathfrak{b}]$ used to generate the curve $E_3 = [\mathfrak{b}]E_0$ and the corresponding masked point on the shared curve $E_4$.
+
+## Progress
+
+TODO
