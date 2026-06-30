@@ -14,7 +14,7 @@
     "href": "index.html#getting-started",
     "title": "Isogeny-based Cryptography Wiki",
     "section": "1 Getting Started",
-    "text": "1 Getting Started\nIf you are not familiar with the concept of cryptographic protocols, we recommend referring to the notes by Dan Boneh and Victor Shoup.\nThis wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption schemes and digital signature schemes.\nLegend: 🔴 torsion points; 🔵 Deuring correspondence; 🟢 group action;\n\n\n\n1.1 Key Exchange\n\n\n🔴 SIDH (2011–2022)\n🔴 \\(k\\)-SIDH (2017-2022)\n🟢 CSIDH (2018)\n🟢 CSURF (2020)\n🔴 B-SIDH (2020–2022)\n🟢 SiGamal (2020)\n🟢 C-SiGamal (2020)\nSimS (2021)\nSHealS (2021-2022)\nHealS (2021-2022)\nSéta (2021–2022)\nEJKM (2021)\npSIDH (2022–2023)\nBDKLP (2022)\nM-SIDH (2023)\nMD-SIDH (2023)\nFESTA (2023)\nbinSIDH (2023)\nterSIDH (2023)\nQFESTA (2024)\nTOGA-UE (2024)\nBIN-UE (2024)\nCOM-UE (2024)\nSILBE (2024)\nPOKÉ (2025)\nLIT-SiGamal (2025)\nPIKE (2026)\n\n\n\n\n\n1.2 Digital Signature\n\n\n🔴 JS (2014)\n🔴 YAJJS (2017)\n🔵 GPS (2017)\n🟢 SeaSign (2019)\n🟢 CSI-FiSh (2019)\n🟢 Sashimi (2020)\n🟢 Lossy CSI-FiSh (2020)\n🔵 SQISign (2020)\n🟢 Calamari (2020)\n🟢 IAS (2021)\n🔴 SIDH PoK (2022)\n🟢 SCALLOP (2023)\nCJSS (2023)\nCSI-Otter (2023)\nJSD (2024)\nSCALLOP-HD (2024)\nSQIsignHD (2024)\nAprèsSQI (2024)\nSQIsign2D-East (2024)\nSQIsign2D-West (2024)\nSQIPrime (2024)\nErebor (2025)\nDurian (2025)\nPRISM (2025)\nPEARL-SCALLOP (2025)\nTanuki (2025)\nSQIsign2D\\(^2\\) (2025)\nSPIDER (2026)\nORCAS (2026)\nWombat (2026)\nSQIsign2DPush (2026)\nWaterSQI (2026)\nPRISMO (2026)\nSQInstructor (2026)",
+    "text": "1 Getting Started\nIf you are not familiar with the concept of cryptographic protocols, we recommend referring to the notes by Dan Boneh and Victor Shoup.\nThis wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption schemes and digital signature schemes.\nLegend: 🔴 torsion points; 🔵 Deuring correspondence; 🟢 group action;\n\n\n\n1.1 Key Exchange\n\n\n🔴 SIDH (2011–2022)\n🔴 \\(k\\)-SIDH (2017-2022)\n🟢 CSIDH (2018)\n🟢 CSURF (2020)\n🔴 B-SIDH (2020–2022)\n🟢 SiGamal (2020)\n🟢 C-SiGamal (2020)\n🟢 SimS (2021)\nSHealS (2021-2022)\nHealS (2021-2022)\nSéta (2021–2022)\nEJKM (2021)\npSIDH (2022–2023)\nBDKLP (2022)\nM-SIDH (2023)\nMD-SIDH (2023)\nFESTA (2023)\nbinSIDH (2023)\nterSIDH (2023)\nQFESTA (2024)\nTOGA-UE (2024)\nBIN-UE (2024)\nCOM-UE (2024)\nSILBE (2024)\nPOKÉ (2025)\nLIT-SiGamal (2025)\nPIKE (2026)\n\n\n\n\n\n1.2 Digital Signature\n\n\n🔴 JS (2014)\n🔴 YAJJS (2017)\n🔵 GPS (2017)\n🟢 SeaSign (2019)\n🟢 CSI-FiSh (2019)\n🟢 Sashimi (2020)\n🟢 Lossy CSI-FiSh (2020)\n🔵 SQISign (2020)\n🟢 Calamari (2020)\n🟢 IAS (2021)\n🔴 SIDH PoK (2022)\n🟢 SCALLOP (2023)\nCJSS (2023)\nCSI-Otter (2023)\nJSD (2024)\nSCALLOP-HD (2024)\nSQIsignHD (2024)\nAprèsSQI (2024)\nSQIsign2D-East (2024)\nSQIsign2D-West (2024)\nSQIPrime (2024)\nErebor (2025)\nDurian (2025)\nPRISM (2025)\nPEARL-SCALLOP (2025)\nTanuki (2025)\nSQIsign2D\\(^2\\) (2025)\nSPIDER (2026)\nORCAS (2026)\nWombat (2026)\nSQIsign2DPush (2026)\nWaterSQI (2026)\nPRISMO (2026)\nSQInstructor (2026)",
     "crumbs": [
       "Home"
     ]
@@ -247,6 +247,61 @@
     "crumbs": [
       "Key Exchange",
       "SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sims.html",
+    "href": "protocols/key-exchange/sims.html",
+    "title": "SimS",
+    "section": "",
+    "text": "SimS (Simplified SiGamal) is a post-quantum public-key encryption (PKE) protocol based on supersingular isogenies, specifically introduced to simplify the original SiGamal protocol and achieve stronger security guarantees [FoPe21]. While the canonical PKEs derived from protocols like CSIDH and SIDH are only OW-CPA (One-Way under Chosen Plaintext Attack) secure, requiring hash functions or Fujisaki-Okamoto transformations for higher security, SiGamal provided IND-CPA (Indistinguishability under Chosen-Plaintext Attack) security without hash functions but lacked IND-CCA (Indistinguishability under Chosen-Ciphertext Attack) security. SimS modifies SiGamal to thwart a concrete IND-CCA attack by completely decoupling transmitted curves from their torsion points in the ciphertext. Concretely, SimS replaces the exchanged torsion points with a canonically generated point of smooth order \\(2^r\\) on a hidden shared curve, and masks its \\(x\\)-coordinate using a curve-dependent randomizing function. This structural simplification positions SimS between SiGamal and CSIDH, yielding smaller public keys, more compact ciphertexts, and enhanced computational efficiency compared to both SiGamal and C-SiGamal, all while providing IND-CCA security.",
+    "crumbs": [
+      "Key Exchange",
+      "SimS"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sims.html#overview",
+    "href": "protocols/key-exchange/sims.html#overview",
+    "title": "SimS",
+    "section": "",
+    "text": "SimS (Simplified SiGamal) is a post-quantum public-key encryption (PKE) protocol based on supersingular isogenies, specifically introduced to simplify the original SiGamal protocol and achieve stronger security guarantees [FoPe21]. While the canonical PKEs derived from protocols like CSIDH and SIDH are only OW-CPA (One-Way under Chosen Plaintext Attack) secure, requiring hash functions or Fujisaki-Okamoto transformations for higher security, SiGamal provided IND-CPA (Indistinguishability under Chosen-Plaintext Attack) security without hash functions but lacked IND-CCA (Indistinguishability under Chosen-Ciphertext Attack) security. SimS modifies SiGamal to thwart a concrete IND-CCA attack by completely decoupling transmitted curves from their torsion points in the ciphertext. Concretely, SimS replaces the exchanged torsion points with a canonically generated point of smooth order \\(2^r\\) on a hidden shared curve, and masks its \\(x\\)-coordinate using a curve-dependent randomizing function. This structural simplification positions SimS between SiGamal and CSIDH, yielding smaller public keys, more compact ciphertexts, and enhanced computational efficiency compared to both SiGamal and C-SiGamal, all while providing IND-CCA security.",
+    "crumbs": [
+      "Key Exchange",
+      "SimS"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sims.html#protocol-design",
+    "href": "protocols/key-exchange/sims.html#protocol-design",
+    "title": "SimS",
+    "section": "2 Protocol Design",
+    "text": "2 Protocol Design\nSimS operates over a supersingular elliptic curve \\(E_0 : y^2 = x^3 + x\\) defined over \\(\\mathbb{F}_p\\), where \\(p = 2^r \\ell_1 \\cdots \\ell_n - 1\\) is a prime such that \\(\\ell_1, \\ldots, \\ell_n\\) are small distinct odd primes. The protocol relies on the free and transitive action of the ideal class group \\(\\text{cl}(\\mathbb{Z}[\\pi])\\) on the set of supersingular elliptic curves defined over \\(\\mathbb{F}_p\\) with endomorphism ring \\(\\mathbb{Z}[\\pi]\\).\nE0E1=[a]E0E3=[b]E0E4=[b]E1;P4=[2m+1]PE4E4=[a]E0;m0=DLP(P4;PE4)[a][b][b][a]\n\n2.1 Setup and Public Parameters\n\nPrime: \\(p = 2^r \\ell_1 \\dots \\ell_n - 1\\).\nBase Curve: \\(E_0 : y^2 = x^3 + x\\) over \\(\\mathbb{F}_p\\).\nMessage Space: \\(\\mathcal{M} = \\mathbb{Z}_{2^{r-2}}\\).\nRandomizing Function: A bijective function \\(f_E : \\mathbb{F}_p \\to \\mathbb{F}_p\\) indexed by the curve \\(E\\). A concrete example is \\(f_E(x)\\) such that its binary representation is \\(\\text{bin}(x) \\oplus \\text{bin}(A_E)\\), where \\(A_E\\) is the Montgomery coefficient of \\(E\\).\n\n\n\n2.2 Key Generation\n\nAlice chooses a uniformly random integral ideal class \\([\\mathfrak{a}]\\) from \\(\\text{cl}(\\mathbb{Z}[\\pi])\\).\nShe computes the curve \\(E_1 = [\\mathfrak{a}]E_0\\) via the class group action.\nPublic Key: \\(E_1\\)\nPrivate Key: \\([\\mathfrak{a}]\\)\n\n\n\n2.3 Encryption\nTo encrypt a plaintext \\(m \\in \\mathbb{Z}_{2^{r-2}}\\) for Alice, Bob performs the following steps:\n\nBob embeds the message \\(m\\) into \\(\\mathbb{Z}_{2^r}^\\times\\) by computing \\(M = 2m + 1\\).\nHe chooses a uniformly random ideal class \\([\\mathfrak{b}] \\in \\text{cl}(\\mathbb{Z}[\\pi])\\).\nHe computes the curve \\(E_3 = [\\mathfrak{b}]E_0\\).\nHe applies the action of \\([\\mathfrak{b}]\\) to Alice’s public key to compute the shared curve \\(E_4 = [\\mathfrak{b}]E_1 = [\\mathfrak{b}][\\mathfrak{a}]E_0\\).\nHe uses a deterministic algorithm to canonically generate a point \\(P_{E_4} \\in E_4(\\mathbb{F}_p)\\) of smooth order \\(2^r\\) (where \\(2^r \\mid p+1\\)).\nHe computes the scalar multiplication \\(P_4 = [M]P_{E_4}\\).\nTo avoid leaking the \\(x\\)-coordinate of \\(P_4\\) (which could reveal information about \\(E_4\\)), he masks it using the randomizing function: \\(c = f_{E_4}(x(P_4))\\).\nCiphertext: \\((E_3, c)\\)\n\n\n\n2.4 Decryption\nUpon receiving the ciphertext \\((E_3, c)\\), Alice performs the following steps:\n\nShe computes the shared curve \\(E_4 = [\\mathfrak{a}]E_3 = [\\mathfrak{a}][\\mathfrak{b}]E_0\\) using her private key \\([\\mathfrak{a}]\\).\nUsing \\(E_4\\), she reverses the randomization function to recover \\(x(P_4) = f_{E_4}^{-1}(c)\\), which identifies the point \\(P_4\\).\nShe canonically computes the same base point \\(P_{E_4} \\in E_4(\\mathbb{F}_p)\\) of order \\(2^r\\).\nShe solves a discrete logarithm problem (DLP) to find the relationship between \\(P_4\\) and \\(P_{E_4}\\). Since the group order is \\(2^r\\) (which is smooth), she can efficiently use the Pohlig-Hellman algorithm to find \\(M' \\in \\mathbb{Z}_{2^r}^\\times\\) such that \\(P_4 = [M']P_{E_4}\\).\nIf \\(M' &gt; 2^{r-1}\\), she adjusts \\(M = 2^r - M'\\); otherwise \\(M = M'\\).\nShe recovers the original message as \\(m = (M - 1) / 2\\).",
+    "crumbs": [
+      "Key Exchange",
+      "SimS"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sims.html#security-assumptions",
+    "href": "protocols/key-exchange/sims.html#security-assumptions",
+    "title": "SimS",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nThe security of the SimS protocol rests on two core assumptions:\n\nCommutative Supersingular Isogeny Decisional Diffie-Hellman (CSSIDDH) Assumption: IND-CPA security relies on this assumption. It posits that given a base curve \\(E_0\\) and two public curves \\(E_A = [\\mathfrak{a}]E_0\\) and \\(E_B = [\\mathfrak{b}]E_0\\), it is computationally infeasible to distinguish the shared secret curve \\([\\mathfrak{a}][\\mathfrak{b}]E_0\\) from a uniformly random curve \\([\\mathfrak{c}]E_0\\).\nKnowledge of Exponent (KoE)-Type Assumption: IND-CCA security relies on this assumption. It formalizes that if an adversary produces a valid ciphertext \\((E_3, c)\\), they must be able to extract the underlying ideal class \\([\\mathfrak{b}]\\) used to generate the curve \\(E_3 = [\\mathfrak{b}]E_0\\) and the corresponding masked point on the shared curve \\(E_4\\).",
+    "crumbs": [
+      "Key Exchange",
+      "SimS"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sims.html#progress",
+    "href": "protocols/key-exchange/sims.html#progress",
+    "title": "SimS",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "SimS"
     ]
   },
   {
