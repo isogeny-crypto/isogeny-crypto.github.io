@@ -1,0 +1,36 @@
+---
+title: "CSIDH UPKE"
+subtitle: "Symmetric UPKE Construction via CSIDH"
+date: 2026-07-01
+---
+
+## Overview
+
+The Key-Updatable Public-Key Encryption (UPKE) scheme based on [CSIDH](/protocols/key-exchange/csidh.qmd) is the first post-quantum secure protocol of its kind, designed to improve the forward-secrecy and post-compromise security of secure messaging protocols [@csidhupke]. UPKE constructions allow cryptographic keys to be updated over time, repairing security in the event of a key compromise. The protocol is a "Symmetric UPKE", meaning that the same secret update value is applied to both the decryption key and the encryption key. A defining feature of this CSIDH UPKE variant is that it mandates the use of a parameter set where the structure of the class group is completely known (such as [CSI-FiSh](/protocols/digital-signature/csi-fish.qmd)). This algebraic property ensures that secret elements and updates can be uniquely represented and uniformly sampled, completely preventing information leakage across sequential key updates.
+
+## Protocol Design
+
+A naive application of CSIDH to UPKE fails because repeated additions of short update vectors (represented in $\mathbb{Z}^{\ell}$) center the new keys around the old ones, leading to information leakage, and cause the $L_1$-norm to grow until the decryption process becomes unacceptably inefficient. 
+
+To overcome this, the CSIDH UPKE protocol requires the exact order $N$ of the class group $cl(\mathcal{O}) \cong \mathbb{Z}_N$ to be known, allowing keys to be represented and uniformly sampled as simple integers modulo $N$. The protocol leverages a Data Encapsulation Mechanism (DEM) and a Key Derivation Function (KDF) to operate as a hybrid encryption scheme. It defines six core algorithms:
+
+* **KeyGen($\lambda$)**: Samples a secret key $g_{sk}$ uniformly at random from $\mathbb{Z}_N$. It computes the public key $E_{pk} := g_{sk} * E_0$ by applying the group action to the starting curve $E_0$. The algorithm outputs $(sk, pk) = (g_{sk}, E_{pk})$.
+* **Encrypt($pk, m$)**: Samples a random element $g_{enc} \leftarrow \mathbb{Z}_N$. It computes a shared symmetric key $K \leftarrow \text{KDF}(g_{enc} * pk)$, applies the group action to obtain $E_{enc} \leftarrow g_{enc} * E_0$, and encrypts the message $m$ using the DEM to yield $ctxt \leftarrow \text{DEM.Encrypt}(K, m)$. The final ciphertext is $ct = (E_{enc}, ctxt)$.
+* **Decrypt($sk, ct$)**: Parses the ciphertext into $(E_{enc}, ctxt)$, derives the shared key $K \leftarrow \text{KDF}(sk * E_{enc})$, and outputs the plaintext $m$ via $\text{DEM.Decrypt}(K, ctxt)$.
+* **GenUpdate()**: Randomly samples an update value $\mu$ uniformly from $\mathbb{Z}_N$.
+* **UpdatePrivate($sk, \mu$)**: Computes the updated secret key by performing modular addition: $sk' \leftarrow sk + \mu \pmod N$.
+* **UpdatePublic($pk, \mu$)**: Updates the public key by applying the group action corresponding to the update value: $pk' \leftarrow \mu * pk$.
+
+By utilizing modular arithmetic over $\mathbb{Z}_N$ for private updates, the new secret key is guaranteed to be uniformly distributed in $\mathbb{Z}_N$ and independent of the prior key, completely eliminating error accumulation and data leakage.
+
+## Security Assumptions
+
+The protocol is proven to satisfy IND-CPA-U (Indistinguishability Under Chosen Plaintext Attack with Updatability) security. This relies on the hardness of the **Supersingular Isogeny Problem**, i.e. computing an isogeny between two supersingular elliptic curves over $\mathbb{F}_p$ with the same number of rational points. In addition to this core mathematical problem, the security model depends on the following explicit assumptions:
+
+1. **Uniform Sampling:** The class group structure ($N$) must be strictly known to allow uniform sampling from $\mathbb{Z}_N$, ensuring that updates reveal zero information about previous secret keys.
+2. **Subexponential Precomputation:** Computing the class group structure takes subexponential time. The scheme assumes attackers cannot break the underlying isogeny mapping itself, even if sufficient resources eventually allow scaling this subexponential initialization phase.
+3. **DEM Security:** The underlying Data Encapsulation Mechanism (DEM) must be fundamentally secure to ensure the hybrid construction provides baseline IND-CPA security.
+
+## Progress
+
+TODO

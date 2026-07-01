@@ -10,14 +10,14 @@ Welcome to the **Isogeny-based Cryptography Wiki**. This site serves as an open-
 
 If you are not familiar with the concept of cryptographic protocols, we recommend referring to the [notes by Dan Boneh and Victor Shoup](https://toc.cryptobook.us/).
 
-This wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption schemes and digital signature schemes.
+This wiki aims to cover all peer-reviewed isogeny-based key establishment schemes and digital signature schemes.
 
 **Legend:** 🔴 torsion points; 🔵 Deuring correspondence; 🟢 group action;
 
 
 :::: {.columns}
 ::: {.column width="50%"}
-### Key Exchange
+### Key Establishment
 
 ::: {.unlisted-protocols}
 - 🔴 [SIDH](protocols/key-exchange/sidh.qmd) (2011--2022) 
@@ -28,25 +28,24 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption 
 - 🟢 [SiGamal](/protocols/key-exchange/sigamal.qmd) (2020) 
 - 🟢 [C-SiGamal](/protocols/key-exchange/csigamal.qmd) (2020) 
 - 🟢 [SimS](/protocols/key-exchange/sims.qmd) (2021)
-- SHealS (2021-2022)
-- HealS (2021-2022)
-- Séta (2021--2022) 
-- EJKM (2021)
-- pSIDH (2022--2023)
-- BDKLP (2022)
-- M-SIDH (2023)
-- MD-SIDH (2023)
-- [FESTA](protocols/key-exchange/festa.qmd) (2023)
-- binSIDH (2023)
-- terSIDH (2023)
-- [QFESTA](protocols/key-exchange/qfesta.qmd) (2024)
-- TOGA-UE (2024)
-- BIN-UE (2024)
-- COM-UE (2024)
-- SILBE (2024)
-- POKÉ (2025)
-- LIT-SiGamal (2025)
-- PIKE (2026)
+- 🟢 [CSIDH UPKE](/protocols/key-exchange/csidhupke.qmd) (2021)
+- 🔴 Séta (2021--2022) 
+- 🔴 SHealS (2021-2022)
+- 🔴 HealS (2021-2022)
+- 🔵 pSIDH (2022--2023)
+- 🔴 M-SIDH (2023)
+- 🔴 MD-SIDH (2023)
+- 🔴 [FESTA](protocols/key-exchange/festa.qmd) (2023)
+- 🔴 binSIDH (2023)
+- 🔴 terSIDH (2023)
+- 🔵 [QFESTA](protocols/key-exchange/qfesta.qmd) (2024)
+- 🟢 TOGA-UE (2024)
+- 🟢 BIN-UE (2024)
+- 🟢 COM-UE (2024)
+- 🔴 SILBE (2024)
+- 🔵 POKÉ (2025)
+- 🟢 LIT-SiGamal (2025)
+- 🔵 PIKE (2026)
 :::
 :::
 
@@ -64,6 +63,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange/encryption 
 - 🔵 SQISign (2020) 
 - 🟢 Calamari (2020)
 - 🟢 IAS (2021)
+- 🟢 BDKLP (2022)
 - 🔴 SIDH PoK (2022)
 - 🟢 SCALLOP (2023)
 - CJSS (2023)
