@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2026-07-02">
 
-<title>Isogeny-based Cryptography Wiki</title>
+<title>Séta – Isogeny-based Cryptography Wiki</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,30 +24,49 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6eba6ba83b4f5fbebb32bc0a0d298c6a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-431624262cbfcaf302c4606a97cfd638.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-6eba6ba83b4f5fbebb32bc0a0d298c6a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6eba6ba83b4f5fbebb32bc0a0d298c6a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-431624262cbfcaf302c4606a97cfd638.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-6eba6ba83b4f5fbebb32bc0a0d298c6a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": true,
@@ -74,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <!-- Self-hosted fonts for pre-rendered TikZ SVGs -->
-<link rel="stylesheet" type="text/css" href="./assets/fonts.css">
+<link rel="stylesheet" type="text/css" href="../../assets/fonts.css">
 
 <style>
 .tikz-diagram {
@@ -121,8 +141,8 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="./assets/fonts.css">
-<link rel="stylesheet" href="./assets/protocol-list.css">
+<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/protocol-list.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -296,7 +316,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Home</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/seta.html">Séta</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -311,7 +331,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Isogeny-based Cryptography Wiki</a> 
+      <a href="../../">Isogeny-based Cryptography Wiki</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
@@ -326,7 +346,7 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
@@ -341,73 +361,73 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/key-exchange/bsidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/bsidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">B-SIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/key-exchange/csidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/csidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/key-exchange/csidhupke.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/csidhupke.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSIDH UPKE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/key-exchange/csigamal.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/csigamal.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">C-SiGamal</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/key-exchange/csurf.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/csurf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSURF</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/key-exchange/festa.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/festa.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">FESTA</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/key-exchange/ksidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/ksidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="math inline">\(k\)</span>-SIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/key-exchange/qfesta.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/qfesta.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">QFESTA</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/key-exchange/seta.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/seta.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Séta</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/key-exchange/sigamal.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/sigamal.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SiGamal</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/key-exchange/sims.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/sims.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SimS</span></a>
   </div>
 </li>
@@ -424,13 +444,13 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/digital-signature/csi-fish.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/digital-signature/csi-fish.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSI-FiSh</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./protocols/digital-signature/sqisign.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/digital-signature/sqisign.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SQISign</span></a>
   </div>
 </li>
@@ -446,8 +466,17 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started"><span class="header-section-number">1</span> Getting Started</a></li>
-  <li><a href="#contributing" id="toc-contributing" class="nav-link" data-scroll-target="#contributing"><span class="header-section-number">2</span> Contributing</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
+  <li><a href="#protocol-design" id="toc-protocol-design" class="nav-link" data-scroll-target="#protocol-design"><span class="header-section-number">2</span> Protocol Design</a>
+  <ul class="collapse">
+  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters"><span class="header-section-number">2.1</span> Parameters</a></li>
+  <li><a href="#key-generation" id="toc-key-generation" class="nav-link" data-scroll-target="#key-generation"><span class="header-section-number">2.2</span> Key Generation</a></li>
+  <li><a href="#encryption" id="toc-encryption" class="nav-link" data-scroll-target="#encryption"><span class="header-section-number">2.3</span> Encryption</a></li>
+  <li><a href="#decryption" id="toc-decryption" class="nav-link" data-scroll-target="#decryption"><span class="header-section-number">2.4</span> Decryption</a></li>
+  </ul></li>
+  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a></li>
+  <li><a href="#progress" id="toc-progress" class="nav-link" data-scroll-target="#progress"><span class="header-section-number">4</span> Progress</a></li>
+  <li><span class="header-section-number">5</span> References</li>
   </ul>
 </nav>
     </div>
@@ -455,10 +484,10 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/seta.html">Séta</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Isogeny-based Cryptography Wiki</h1>
-<p class="subtitle lead">A collaborative, accessible reference for isogeny-based protocols and primitives.</p>
+<h1 class="title">Séta</h1>
+<p class="subtitle lead">Supersingular Encryption from Torsion Attacks</p>
 </div>
 
 
@@ -466,7 +495,19 @@ window.Quarto = {
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 2, 2026</p>
+    </div>
+  </div>
   
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">July 2, 2026</p>
+    </div>
+  </div>
     
   </div>
   
@@ -475,103 +516,78 @@ window.Quarto = {
 </header>
 
 
-<p>Welcome to the <strong>Isogeny-based Cryptography Wiki</strong>. This site serves as an open-source, mathematically rigorous, and accessible repository of knowledge detailing post-quantum cryptographic protocols built on the hardness of finding isogenies between elliptic curves.</p>
-<section id="getting-started" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="getting-started"><span class="header-section-number">1</span> Getting Started</h2>
-<p>If you are not familiar with the concept of cryptographic protocols, we recommend referring to the <a href="https://toc.cryptobook.us/">notes by Dan Boneh and Victor Shoup</a>.</p>
-<p>This wiki aims to cover all peer-reviewed isogeny-based key establishment schemes and digital signature schemes.</p>
-<p><strong>Legend:</strong> <span class="protocol-disc" style="background: var(--dot-red);"></span> torsion points; <span class="protocol-disc" style="background: var(--dot-blue);"></span> quaternion algebra; <span class="protocol-disc" style="background: var(--dot-green);"></span> group action;</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<section id="key-establishment" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="key-establishment"><span class="header-section-number">1.1</span> Key Establishment</h3>
-<div class="unlisted-protocols">
-<ul>
-<li><span class="protocol-disc" style="background: var(--dot-red);"></span> <a href="./protocols/key-exchange/sidh.html">SIDH</a> (2011–2022)</li>
-<li><span class="protocol-disc" style="background: var(--dot-red);"></span> <a href="./protocols/key-exchange/ksidh.html"><span class="math inline">\(k\)</span>-SIDH</a> (2017-2022)</li>
-<li><span class="protocol-disc" style="background: var(--dot-green);"></span> <a href="./protocols/key-exchange/csidh.html">CSIDH</a> (2018)</li>
-<li><span class="protocol-disc" style="background: var(--dot-green);"></span> <a href="./protocols/key-exchange/csurf.html">CSURF</a> (2020)</li>
-<li><span class="protocol-disc" style="background: var(--dot-red);"></span> <a href="./protocols/key-exchange/bsidh.html">B-SIDH</a> (2020–2022)</li>
-<li><span class="protocol-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-green) 50% 100%);"></span> <a href="./protocols/key-exchange/sigamal.html">SiGamal</a> (2020)</li>
-<li><span class="protocol-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-green) 50% 100%);"></span> <a href="./protocols/key-exchange/csigamal.html">C-SiGamal</a> (2020)</li>
-<li><span class="protocol-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-green) 50% 100%);"></span> <a href="./protocols/key-exchange/sims.html">SimS</a> (2021)</li>
-<li><span class="protocol-disc" style="background: var(--dot-green);"></span> <a href="./protocols/key-exchange/csidhupke.html">CSIDH UPKE</a> (2021)</li>
-<li><span class="protocol-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> <a href="./protocols/key-exchange/seta.html">Séta</a> (2021–2022)</li>
-<li><span class="protocol-disc" style="background: var(--dot-red);"></span> SHealS (2021-2022)</li>
-<li><span class="protocol-disc" style="background: var(--dot-red);"></span> HealS (2021-2022)</li>
-<li><span class="protocol-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> pSIDH (2022–2023)</li>
-<li><span class="protocol-disc" style="background: var(--dot-red);"></span> M-SIDH (2023)</li>
-<li><span class="protocol-disc" style="background: var(--dot-red);"></span> MD-SIDH (2023)</li>
-<li><span class="protocol-disc" style="background: var(--dot-red);"></span> <a href="./protocols/key-exchange/festa.html">FESTA</a> (2023)</li>
-<li><span class="protocol-disc" style="background: var(--dot-red);"></span> binSIDH (2023)</li>
-<li><span class="protocol-disc" style="background: var(--dot-red);"></span> terSIDH (2023)</li>
-<li><span class="protocol-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> <a href="./protocols/key-exchange/qfesta.html">QFESTA</a> (2024)</li>
-<li><span class="protocol-disc" style="background: var(--dot-green);"></span> TOGA-UE (2024)</li>
-<li><span class="protocol-disc" style="background: var(--dot-green);"></span> BIN-UE (2024)</li>
-<li><span class="protocol-disc" style="background: var(--dot-green);"></span> COM-UE (2024)</li>
-<li><span class="protocol-disc" style="background: var(--dot-red);"></span> SILBE (2024)</li>
-<li><span class="protocol-disc" style="background: var(--dot-blue);"></span> POKÉ (2025)</li>
-<li><span class="protocol-disc" style="background: var(--dot-green);"></span> LIT-SiGamal (2025)</li>
-<li><span class="protocol-disc" style="background: var(--dot-blue);"></span> PIKE (2026)</li>
-</ul>
-</div>
+<section id="overview" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
+<blockquote class="blockquote">
+<p>Broken by the same attacks that broke SIDH.</p>
+</blockquote>
+<p>Séta (Supersingular Encryption from Torsion Attacks) constructs a trapdoor one-way function family by cleverly turning <a href="../../protocols/key-exchange/sidh.html#progress">torsion-point attacks</a> against SIDH-like schemes into a decryption mechanism <span class="citation" data-cites="seta">[<a href="#ref-seta" role="doc-biblioref">FSFK21</a>]</span>. In this framework, a message is encoded as a secret isogeny, and the ciphertext consists of the codomain curve along with the images of certain torsion points. The trapdoor inversion algorithm leverages an endomorphism of the starting curve and the torsion point images to compute the secret isogeny. To ensure that key generation, specifically the computation of a supersingular elliptic curve with a prescribed endomorphism ring, is practically efficient rather than just polynomial-time, Séta heavily relies on techniques from <a href="../../protocols/digital-signature/sqisign.html">SQISign</a>.</p>
 </section>
-</div><div class="column" style="width:50%;">
-<section id="digital-signature" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="digital-signature"><span class="header-section-number">1.2</span> Digital Signature</h3>
-<div class="unlisted-protocols">
-<ul>
-<li><span class="protocol-disc" style="background: var(--dot-red);"></span> JS (2014)</li>
-<li><span class="protocol-disc" style="background: var(--dot-red);"></span> YAJJS (2017)</li>
-<li><span class="protocol-disc" style="background: var(--dot-blue);"></span> GPS (2017)</li>
-<li><span class="protocol-disc" style="background: var(--dot-green);"></span> SeaSign (2019)</li>
-<li><span class="protocol-disc" style="background: var(--dot-green);"></span> <a href="./protocols/digital-signature/csi-fish.html">CSI-FiSh</a> (2019)</li>
-<li><span class="protocol-disc" style="background: var(--dot-green);"></span> Sashimi (2020)</li>
-<li><span class="protocol-disc" style="background: var(--dot-green);"></span> Lossy CSI-FiSh (2020)</li>
-<li><span class="protocol-disc" style="background: var(--dot-blue);"></span> <a href="./protocols/digital-signature/sqisign.html">SQISign</a> (2020)</li>
-<li><span class="protocol-disc" style="background: var(--dot-green);"></span> Calamari (2020)</li>
-<li><span class="protocol-disc" style="background: var(--dot-green);"></span> IAS (2021)</li>
-<li><span class="protocol-disc" style="background: var(--dot-green);"></span> BDKLP (2022)</li>
-<li><span class="protocol-disc" style="background: var(--dot-red);"></span> SIDH PoK (2022)</li>
-<li><span class="protocol-disc" style="background: var(--dot-green);"></span> SCALLOP (2023)</li>
-<li>CJSS (2023)</li>
-<li>CSI-Otter (2023)</li>
-<li>JSD (2024)</li>
-<li>SCALLOP-HD (2024)</li>
-<li>SQIsignHD (2024)</li>
-<li>AprèsSQI (2024)</li>
-<li>SQIsign2D-East (2024)</li>
-<li>SQIsign2D-West (2024)</li>
-<li>SQIPrime (2024)</li>
-<li>Erebor (2025)</li>
-<li>Durian (2025)</li>
-<li>PRISM (2025)</li>
-<li>PEARL-SCALLOP (2025)</li>
-<li>Tanuki (2025)</li>
-<li>SQIsign2D<span class="math inline">\(^2\)</span> (2025)</li>
-<li>SPIDER (2026)</li>
-<li>ORCAS (2026)</li>
-<li>Wombat (2026)</li>
-<li>SQIsign2DPush (2026)</li>
-<li>WaterSQI (2026)</li>
-<li>PRISMO (2026)</li>
-<li>SQInstructor (2026)</li>
-</ul>
-</div>
+<section id="protocol-design" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="protocol-design"><span class="header-section-number">2</span> Protocol Design</h2>
+<p>The Séta Public Key Encryption (PKE) scheme is defined by a tuple of Probabilistic Polynomial Time (PPT) algorithms <code>(KGen, Enc, Dec)</code>.</p>
+<section id="parameters" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="parameters"><span class="header-section-number">2.1</span> Parameters</h3>
+<p>Let <span class="math inline">\(\lambda\)</span> be the computational security parameter. A Séta instance requires a base prime <span class="math inline">\(p\)</span> chosen such that <span class="math inline">\(p^2 - 1 = D N f\)</span>, where <span class="math inline">\(D\)</span> and <span class="math inline">\(N\)</span> are smooth, coprime integers, and <span class="math inline">\(f\)</span> is a small cofactor. The parameter constraints are <span class="math inline">\(2^{2\lambda} &lt; D\)</span> and <span class="math inline">\(D^2 &lt; N\)</span>. These bounds ensure the security of the isogeny walk while allowing the torsion-point attack to recover the isogeny in polynomial time. We define <span class="math inline">\(\text{params} = (\lambda, p, D, N)\)</span>.</p>
 </section>
-</div>
-</div>
-</section>
-<section id="contributing" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="contributing"><span class="header-section-number">2</span> Contributing</h2>
-<p>This wiki is maintained by the <strong>isogeny-crypto</strong> organization. If you spot a mathematical error, want to expand on a protocol’s performance metrics, or wish to add a new primitive:</p>
+<section id="key-generation" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="key-generation"><span class="header-section-number">2.2</span> Key Generation</h3>
 <ol type="1">
-<li>Fork the repository on <a href="https://github.com/isogeny-crypto/isogeny-crypto.github.io">GitHub</a>.</li>
-<li>Create your article using a <code>.qmd</code> file in the <code>protocols/</code> directory.</li>
-<li>Submit a Pull Request.</li>
+<li>The key generation algorithm computes a uniformly random <span class="math inline">\((D, N)\)</span>-trapdoor supersingular elliptic curve <span class="math inline">\((E_{j_T}, T)\)</span> defined over <span class="math inline">\(\mathbb{F}_{p^2}\)</span>.
+<ul>
+<li>The curve <span class="math inline">\(E_{j_T}\)</span> serves as the starting point.</li>
+<li>To construct the trapdoor <span class="math inline">\(T\)</span>, the algorithm generates two specific integers <span class="math inline">\(d\)</span> and <span class="math inline">\(e\)</span> (where <span class="math inline">\(e\)</span> is chosen to be small, typically <span class="math inline">\(O(\log p)\)</span>) such that they satisfy a strict algebraic relationship: <span class="math inline">\(N^2e - d^2 &gt; 0\)</span> and <span class="math inline">\(N^2e - d^2\)</span> is exactly divisible by <span class="math inline">\(D^2\)</span>.</li>
+<li>The trapdoor <span class="math inline">\(T\)</span> consists of an endomorphism <span class="math inline">\(\theta \in \text{End}(E_{j_T})\)</span> with trace zero and degree (norm) <span class="math inline">\(\frac{N^2e-d^2}{D^2}\)</span>, as well as the evaluation of <span class="math inline">\(\theta\)</span> on the <span class="math inline">\(N\)</span>-torsion group <span class="math inline">\(E_{j_T}[N]\)</span>.</li>
+</ul></li>
+<li><strong>Public Key (<span class="math inline">\(pk\)</span>):</strong> The public key is set to <span class="math inline">\(j_T\)</span>, which is the j-invariant of the curve <span class="math inline">\(E_{j_T}\)</span>.</li>
+<li><strong>Secret Key (<span class="math inline">\(sk\)</span>):</strong> The secret key is the trapdoor <span class="math inline">\(T\)</span>.</li>
 </ol>
+</section>
+<section id="encryption" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="encryption"><span class="header-section-number">2.3</span> Encryption</h3>
+<ol type="1">
+<li>To encrypt a message <span class="math inline">\(m \in \{0, 1\}^{n_m}\)</span>, the message is mapped to a unique walk in the isogeny graph, defining a secret isogeny <span class="math inline">\(\phi: E_{j_T} \to E_c\)</span> of degree <span class="math inline">\(D\)</span>.</li>
+<li>Given a known basis <span class="math inline">\(P_{j_T}, Q_{j_T}\)</span> of the <span class="math inline">\(N\)</span>-torsion <span class="math inline">\(E_{j_T}[N]\)</span>, the sender evaluates the secret isogeny <span class="math inline">\(\phi\)</span> on these points to obtain the torsion images.</li>
+<li><strong>Ciphertext (<span class="math inline">\(c\)</span>):</strong> The resulting ciphertext consists of the codomain curve <span class="math inline">\(E_c\)</span> and the evaluated <span class="math inline">\(N\)</span>-torsion points, denoted roughly as <span class="math inline">\((E_c, \phi(P_{j_T}), \phi(Q_{j_T}))\)</span>.</li>
+</ol>
+</section>
+<section id="decryption" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="decryption"><span class="header-section-number">2.4</span> Decryption</h3>
+<ol type="1">
+<li><p>Upon receiving the ciphertext, the receiver uses the secret trapdoor <span class="math inline">\(T\)</span> to recover the message. Here trapdoor acts as a mathematical backdoor to recover hidden <span class="math inline">\(D\)</span>-degree isogenies.</p></li>
+<li><p>Decryption relies on evaluating and decomposing an endomorphism on the target curve <span class="math inline">\(E_c\)</span>.</p>
+<div class="tikz-diagram"><svg xmlns="http://www.w3.org/2000/svg" width="518.124" height="216.994" viewbox="-72 -72 388.593 162.746"><defs><style>@import url(../../assets/fonts.css);</style></defs><g stroke="#000" stroke-miterlimit="10" stroke-width=".4"><g stroke="none"><text x="-29.339" y="-30.243" font-family="cmmi9" font-size="9" transform="translate(-7.953 1.9)">E</text><text x="-22.533" y="-29.243" font-family="cmmi6" font-size="6" transform="translate(-7.953 1.9)">j</text><text x="-19.463" y="-27.893" font-family="cmmi5" font-size="5" transform="translate(-7.953 1.9)">T</text></g><g stroke="none"><text x="-29.339" y="-30.243" font-family="cmmi9" font-size="9" transform="translate(-5.33 116.386)">E</text><text x="-22.533" y="-29.243" font-family="cmmi6" font-size="6" transform="translate(-5.33 116.386)">c</text></g><g fill="#00f" stroke="#00f" stroke-width=".8"><path fill="none" d="M-20.066-38.026C13.19-65.93-71.87-65.93-41.773-40.678"></path><path stroke-width=".799984" d="m-39.486-38.758-2.18-3.888.046 2.097-2.072.319Z"></path><text x="-29.339" y="-30.243" fill="#00f" stroke="none" font-family="cmmi9" font-size="9" transform="translate(-2.293 -32.444)">µ</text></g><g fill="red" stroke="red" stroke-width=".8"><path fill="none" d="M-33.607-22.46v94.794"></path><path d="m-33.607 75.32 1.576-4.168-1.576 1.382-1.577-1.382Z"></path><text x="-29.339" y="-30.243" fill="red" stroke="none" font-family="cmmi9" font-size="9" transform="translate(-13.506 59.493)">Á</text></g><g fill="red" stroke="red" stroke-width=".8"><path fill="none" d="M-25.072 76.46v-94.794"></path><path d="m-25.072-21.321-1.576 4.169 1.576-1.382 1.577 1.382Z"></path><g fill="red" stroke="none"><text x="-28.594" y="-32.188" font-family="cmex10" font-size="10" transform="translate(8 60.951)">b</text><text x="-29.339" y="-30.243" font-family="cmmi9" font-size="9" transform="translate(8 60.951)">Á</text></g></g><g stroke="none"><text x="-29.339" y="-30.243" font-family="cmmi9" font-size="9" transform="translate(179.612 116.386)">E</text><text x="-22.533" y="-29.243" font-family="cmmi6" font-size="6" transform="translate(179.612 116.386)">c</text></g><g fill="#00f" stroke="#00f" stroke-width=".8"><path fill="none" d="M164.071 76.46C315.923-50.958-4.717-50.958 143.975 73.808"></path><path d="m146.263 75.728-2.18-3.888.045 2.096-2.072.32Z"></path><g fill="#00f" stroke="none"><text x="-29.339" y="-30.243" font-family="cmmi9" font-size="9" transform="translate(239.116 40.06)">Á</text><text x="-21.778" y="-30.243" font-family="cmsy9" font-size="9" transform="translate(239.116 40.06)">±</text><text x="-15.098" y="-30.243" font-family="cmmi9" font-size="9" transform="translate(239.116 40.06)">µ</text><text x="-8.456" y="-30.243" font-family="cmsy9" font-size="9" transform="translate(239.116 40.06)">±</text><text x="-1.029" y="-32.188" font-family="cmex10" font-size="10" transform="translate(239.116 40.06)">b</text><text x="-1.775" y="-30.243" font-family="cmmi9" font-size="9" transform="translate(239.116 40.06)">Á</text></g></g><g fill="red" stroke="red" stroke-width=".8"><path fill="none" d="M159.699 76.46c79.256-137.261-161.897-50.328-16.836 2.473"></path><path stroke-width=".799984" d="m145.67 79.955-3.38-2.908.76 1.954-1.838 1.009Z"></path><g fill="red" stroke="none"><text x="-29.339" y="-30.243" font-family="cmmi9" font-size="9" transform="translate(69.804 70.206)">Á</text><text x="-21.778" y="-30.243" font-family="cmsy9" font-size="9" transform="translate(69.804 70.206)">±</text><text x="-15.098" y="-30.243" font-family="cmmi9" font-size="9" transform="translate(69.804 70.206)">µ</text><text x="-8.456" y="-30.243" font-family="cmsy9" font-size="9" transform="translate(69.804 70.206)">±</text><text x="-1.029" y="-32.188" font-family="cmex10" font-size="10" transform="translate(69.804 70.206)">b</text><text x="-1.775" y="-30.243" font-family="cmmi9" font-size="9" transform="translate(69.804 70.206)">Á</text><text x="5.786" y="-30.243" font-family="cmr9" font-size="9" transform="translate(69.804 70.206)">+</text><text x="15.036" y="-30.243" font-family="cmr9" font-size="9" transform="translate(69.804 70.206)">[</text><text x="17.605" y="-30.243" font-family="cmmi9" font-size="9" transform="translate(69.804 70.206)">d</text><text x="22.398" y="-30.243" font-family="cmr9" font-size="9" transform="translate(69.804 70.206)">]</text></g></g></g></svg></div>
+<p>The receiver calculates the action of the endomorphism <span class="math inline">\(\tau = \phi \circ \theta \circ \hat{\phi} + [d]\)</span> on the <span class="math inline">\(N\)</span>-torsion of <span class="math inline">\(E_c\)</span>. Because the degree of the pushed-forward trace-zero endomorphism <span class="math inline">\(\phi \circ   \theta \circ \hat{\phi}\)</span> is designed to be <span class="math inline">\(N^2e - d^2\)</span>, adding <span class="math inline">\([d]\)</span> shifts the degree of <span class="math inline">\(\tau\)</span> to exactly <span class="math inline">\(N^2e\)</span>.</p></li>
+<li><p><strong>Decomposing <span class="math inline">\(\tau\)</span>:</strong> Because the target degree <span class="math inline">\(N^2e\)</span> is heavily dominated by the known <span class="math inline">\(N^2\)</span> component, the receiver uses the evaluated <span class="math inline">\(N\)</span>-torsion images from the ciphertext to factor <span class="math inline">\(\tau\)</span> into a sequence of smaller, manageable isogenies (e.g., <span class="math inline">\(\tau = \psi' \circ \eta \circ \psi\)</span>, where <span class="math inline">\(\psi, \psi'\)</span> have degree <span class="math inline">\(N\)</span> and <span class="math inline">\(\eta\)</span> has small degree <span class="math inline">\(e\)</span>).</p></li>
+<li><p><strong>Recovering the Dual Isogeny:</strong> After reconstructing <span class="math inline">\(\tau\)</span>, the receiver subtracts <span class="math inline">\([d]\)</span> to compute <span class="math inline">\(\tau - [d] = \phi \circ \theta \circ \hat{\phi}\)</span>. The kernel of the dual isogeny <span class="math inline">\(\hat{\phi}\)</span> is mathematically contained within the kernel of <span class="math inline">\((\tau - [d])\)</span>. By computing the intersection of this kernel with the <span class="math inline">\(D\)</span>-torsion of the target curve <span class="math inline">\(E_c\)</span>, the receiver systematically recovers <span class="math inline">\(\hat{\phi}\)</span>.</p></li>
+<li><p><strong>Decoding:</strong> Knowing <span class="math inline">\(\hat{\phi}\)</span> is equivalent to knowing the secret isogeny <span class="math inline">\(\phi\)</span>. The receiver traces the path of <span class="math inline">\(\phi\)</span> back in the isogeny graph to decode and recover the original binary message <span class="math inline">\(m\)</span> in polynomial time.</p></li>
+</ol>
+</section>
+</section>
+<section id="security-assumptions" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
+<p>The security of Séta is predicated on assumptions that blend traditional isogeny hardness with new formalized frameworks.</p>
+<ul>
+<li><strong>Supersingular Isogeny with Torsion (SSI-T) problem:</strong> Séta’s One-Way Chosen-Plaintext Attack (OW-CPA) security heavily relies on a variant of the <a href="../../protocols/key-exchange/sidh.html#security-assumptions">Computational Supersingular Isogeny (CSSI) problem</a>, originally introduced in SIDH. Séta borrows this foundational assumption but modifies it: instead of a fixed public starting curve, the starting j-invariant <span class="math inline">\(j_T\)</span> is chosen at random from the space of trapdoor curves.</li>
+<li><strong>The Uber Isogeny Assumption (<span class="math inline">\(\mathfrak{O}\)</span>-UIP):</strong> Séta formalizes a new framework termed the “uber” isogeny assumption. This problem, inspired directly by the key recovery problem in <a href="../../protocols/key-exchange/csidh.html">CSIDH</a>, asks: given two curves <span class="math inline">\(E_0\)</span> and <span class="math inline">\(E_s\)</span>, both with a known quadratic order <span class="math inline">\(\mathfrak{O}\)</span> embedded in their endomorphism rings, and a concrete embedding in <span class="math inline">\(E_0\)</span>, find an isogeny between them corresponding to an <span class="math inline">\(\mathfrak{O}\)</span>-ideal. Solving this new uber isogeny problem for the order <span class="math inline">\(\mathfrak{O}\)</span> utilized in Séta’s setup implies the ability to recover the trapdoor <span class="math inline">\(T\)</span> from the public key, breaking the scheme.</li>
+<li><strong>Indistinguishability of Trapdoor Curves:</strong> For the secret key to remain hidden, it is implicitly assumed that the distribution of trapdoor curves <span class="math inline">\((E_{j_T})\)</span> generated by the key generation algorithm does not leak the trapdoor. Simple knowledge of the starting curve equation and a description of the quadratic order embedded in it does not seem to be helpful without the concrete knowledge of an endomorphism realizing this embedding.</li>
+</ul>
+</section>
+<section id="progress" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="progress"><span class="header-section-number">4</span> Progress</h2>
+<p>TODO</p>
 
 
+</section>
+<section class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id=""><span class="header-section-number">5</span> References</h2>
+<div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-seta" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[FSFK21] </div><div class="csl-right-inline"><span class="smallcaps">Feo, Luca De</span> ; <span class="smallcaps">Saint Guilhem, Cyprien Delpech de</span> ; <span class="smallcaps">Fouotsa, Tako Boris</span> ; <span class="smallcaps">Kutas, Péter</span> ; <span class="smallcaps">Leroux, Antonin</span> ; <span class="smallcaps">Petit, Christophe</span> ; <span class="smallcaps">Silva, Javier</span> ; <span class="smallcaps">Wesolowski, Benjamin</span>: <a href="https://eprint.iacr.org/2019/1291"><span>Séta</span>: <span>S</span>upersingular <span>E</span>ncryption from <span>T</span>orsion <span>A</span>ttacks</a>. In: <em>ASIACRYPT</em>&nbsp;: Springer, 2021, pp.&nbsp;249–278</div>
+</div>
+</div>
+<hr>
+<p><strong>Contributors:</strong> <a href="https://github.com/gkorpal">@gkorpal</a></p>
 </section>
 
 </main> <!-- /main -->
