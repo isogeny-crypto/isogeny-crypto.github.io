@@ -45,9 +45,9 @@ Given a special supersingular elliptic curve $E_0/\mathbb{F}_{p^2}$ with $j$-inv
 ```
 
 * A smooth integer $D = 2^{3a}$ is chosen such that $E_0[D] \subset E_0(\mathbb{F}_{p^2})$ and $D - d \approx p$.
-* The algorithm computes an element $\alpha \in \mathcal{O}_0$ with a reduced norm of $d(D-d)$ using an extension of Cornacchia's algorithm (`FullRepresentInteger`).
+* The algorithm computes an element $\alpha \in \mathcal{O}_0$ with a reduced norm of $d(D-d)$ using an extension of Cornacchia's algorithm.
 * The quaternion element $\alpha$ is formally decomposed into $\hat{\rho} \circ \tau$, where $\tau$ and $\rho$ are isogenies of degrees $d$ and $D-d$, respectively.
-* By leveraging Kani's lemma (via SIDH attack components like `CodomainByKani` and `EvalByKani`), the algorithm extracts the codomain of $\tau$ and the images of arbitrary torsion points under $\tau$ entirely through (2,2)-isogeny chains.
+* By leveraging Kani's lemma (via SIDH attack components), the algorithm extracts the codomain of $\tau$ and the images of arbitrary torsion points under $\tau$ entirely through (2,2)-isogeny chains.
 
 ### Key Generation
 
@@ -109,7 +109,7 @@ Given a special supersingular elliptic curve $E_0/\mathbb{F}_{p^2}$ with $j$-inv
 
 ### Encryption and Decryption
 * **Encryption:** To encrypt a message $m \in \{0, 1\}^{3a-2}$, the sender encodes it into a diagonal masking matrix $\mathbf{B} = \text{diag}(s_B, s_B^{-1})$ where $s_B = 2m+1$. The sender generates a $d_1$-isogeny to a curve $E_1$ using `RandIsogImages` and a $3^{2b}$-isogeny from $E_A$ to $E_2$. The output ciphertext encapsulates these curves and points masked by $\mathbf{B}$.
-* **Decryption:** Utilizing the secret isogeny $\phi_A$ and the `EvalByKani` algorithm, the receiver can reconstruct the commutative diagrams necessary to unmask the points and solve a discrete logarithm (via Weil or Tate pairings) to retrieve the matrix $\mathbf{B}$, and consequently the message $m$.
+* **Decryption:** Utilizing the secret isogeny $\phi_A$ and Kani's lemma, the receiver can reconstruct the commutative diagrams necessary to unmask the points and solve a discrete logarithm (via Weil or Tate pairings) to retrieve the matrix $\mathbf{B}$, and consequently the message $m$.
 
 ## Security Assumptions
 

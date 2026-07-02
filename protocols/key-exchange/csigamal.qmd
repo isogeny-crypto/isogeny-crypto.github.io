@@ -77,7 +77,7 @@ Upon receiving the ciphertext $(E_3, P'_3)$:
 
 ## Security Assumptions
 
-Same as [SiGamal's assumptions](../key-exchange/sigamal.qmd#security-assumptions).
+Same as [SiGamal's assumptions](sigamal.qmd#security-assumptions).
 
 ## Progress
 

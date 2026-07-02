@@ -12,7 +12,7 @@ If you are not familiar with the concept of cryptographic protocols, we recommen
 
 This wiki aims to cover all peer-reviewed isogeny-based key establishment schemes and digital signature schemes.
 
-**Legend:** 🔴 torsion points; 🔵 Deuring correspondence; 🟢 group action;
+**Legend:** []{r=100} torsion points; []{b=100} quaternion algebra; []{g=100} group action;
 
 
 :::: {.columns}
@@ -20,32 +20,32 @@ This wiki aims to cover all peer-reviewed isogeny-based key establishment scheme
 ### Key Establishment
 
 ::: {.unlisted-protocols}
-- 🔴 [SIDH](protocols/key-exchange/sidh.qmd) (2011--2022) 
-- 🔴 [$k$-SIDH](protocols/key-exchange/ksidh.qmd) (2017-2022) 
-- 🟢 [CSIDH](protocols/key-exchange/csidh.qmd) (2018) 
-- 🟢 [CSURF](protocols/key-exchange/csurf.qmd) (2020) 
-- 🔴 [B-SIDH](protocols/key-exchange/bsidh.qmd) (2020--2022) 
-- 🟢 [SiGamal](/protocols/key-exchange/sigamal.qmd) (2020) 
-- 🟢 [C-SiGamal](/protocols/key-exchange/csigamal.qmd) (2020) 
-- 🟢 [SimS](/protocols/key-exchange/sims.qmd) (2021)
-- 🟢 [CSIDH UPKE](/protocols/key-exchange/csidhupke.qmd) (2021)
-- 🔴 Séta (2021--2022) 
-- 🔴 SHealS (2021-2022)
-- 🔴 HealS (2021-2022)
-- 🔵 pSIDH (2022--2023)
-- 🔴 M-SIDH (2023)
-- 🔴 MD-SIDH (2023)
-- 🔴 [FESTA](protocols/key-exchange/festa.qmd) (2023)
-- 🔴 binSIDH (2023)
-- 🔴 terSIDH (2023)
-- 🔵 [QFESTA](protocols/key-exchange/qfesta.qmd) (2024)
-- 🟢 TOGA-UE (2024)
-- 🟢 BIN-UE (2024)
-- 🟢 COM-UE (2024)
-- 🔴 SILBE (2024)
-- 🔵 POKÉ (2025)
-- 🟢 LIT-SiGamal (2025)
-- 🔵 PIKE (2026)
+- []{r=100} [SIDH](protocols/key-exchange/sidh.qmd) (2011--2022) 
+- []{r=100} [$k$-SIDH](protocols/key-exchange/ksidh.qmd) (2017-2022) 
+- []{g=100} [CSIDH](protocols/key-exchange/csidh.qmd) (2018) 
+- []{g=100} [CSURF](protocols/key-exchange/csurf.qmd) (2020) 
+- []{r=100} [B-SIDH](protocols/key-exchange/bsidh.qmd) (2020--2022) 
+- []{r=50 g=50} [SiGamal](/protocols/key-exchange/sigamal.qmd) (2020) 
+- []{r=50 g=50} [C-SiGamal](/protocols/key-exchange/csigamal.qmd) (2020) 
+- []{r=50 g=50} [SimS](/protocols/key-exchange/sims.qmd) (2021)
+- []{g=100} [CSIDH UPKE](/protocols/key-exchange/csidhupke.qmd) (2021)
+- []{r=50 b=50} [Séta](protocols/key-exchange/seta.qmd) (2021--2022) 
+- []{r=100} SHealS (2021-2022)
+- []{r=100} HealS (2021-2022)
+- []{r=50 b=50} pSIDH (2022--2023)
+- []{r=100} M-SIDH (2023)
+- []{r=100} MD-SIDH (2023)
+- []{r=100} [FESTA](protocols/key-exchange/festa.qmd) (2023)
+- []{r=100} binSIDH (2023)
+- []{r=100} terSIDH (2023)
+- []{r=50 b=50} [QFESTA](protocols/key-exchange/qfesta.qmd) (2024)
+- []{g=100} TOGA-UE (2024)
+- []{g=100} BIN-UE (2024)
+- []{g=100} COM-UE (2024)
+- []{r=100} SILBE (2024)
+- []{b=100} POKÉ (2025)
+- []{g=100} LIT-SiGamal (2025)
+- []{b=100} PIKE (2026)
 :::
 :::
 
@@ -53,19 +53,19 @@ This wiki aims to cover all peer-reviewed isogeny-based key establishment scheme
 ### Digital Signature
 
 ::: {.unlisted-protocols}
-- 🔴 JS (2014)
-- 🔴 YAJJS (2017)
-- 🔵 GPS (2017) 
-- 🟢 SeaSign (2019)
-- 🟢 [CSI-FiSh](protocols/digital-signature/csi-fish.qmd) (2019) 
-- 🟢 Sashimi (2020)
-- 🟢 Lossy CSI-FiSh (2020)
-- 🔵 SQISign (2020) 
-- 🟢 Calamari (2020)
-- 🟢 IAS (2021)
-- 🟢 BDKLP (2022)
-- 🔴 SIDH PoK (2022)
-- 🟢 SCALLOP (2023)
+- []{r=100} JS (2014)
+- []{r=100} YAJJS (2017)
+- []{b=100} GPS (2017) 
+- []{g=100} SeaSign (2019)
+- []{g=100} [CSI-FiSh](protocols/digital-signature/csi-fish.qmd) (2019) 
+- []{g=100} Sashimi (2020)
+- []{g=100} Lossy CSI-FiSh (2020)
+- []{b=100} [SQISign](protocols/digital-signature/sqisign.qmd) (2020) 
+- []{g=100} Calamari (2020)
+- []{g=100} IAS (2021)
+- []{g=100} BDKLP (2022)
+- []{r=100} SIDH PoK (2022)
+- []{g=100} SCALLOP (2023)
 - CJSS (2023)
 - CSI-Otter (2023)
 - JSD (2024)

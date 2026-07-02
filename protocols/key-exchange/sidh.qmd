@@ -87,18 +87,19 @@ The protocol dictates that Alice and Bob conduct random walks on two distinct is
 * Concurrently, Bob computes a new isogeny $\phi'_B : E_A \rightarrow E_{BA}$ utilizing Alice's evaluated points, with the kernel $\langle [m_B]\phi_A(P_B) + [n_B]\phi_A(Q_B) \rangle$.
 * The curves $E_{AB}$ and $E_{BA}$ are isomorphic, allowing both parties to establish a common shared key by computing the $j$-invariant $j(E_{AB})$.
 
-## Security Assumptions
+## Security Assumptions {#security-assumptions}
 
 * **Hardness Problem:** The scheme relies on the conjectured difficulty of finding an isogeny between two supersingular elliptic curves. 
 
-* **Auxiliary Input Security:** A unique characteristic of SIDH is the publication of the evaluated torsion basis points (the auxiliary input required for commutativity). The authors state that providing these outputs does not appear to make the underlying problem of finding the secret isogenies any easier.
+* **Computational Supersingular Isogeny (CSSI) problem:** A unique characteristic of SIDH is the publication of the evaluated torsion basis points (the auxiliary input required for commutativity). The authors state that providing these outputs does not appear to make the underlying problem of finding the secret isogenies any easier.
 
 * **Resistance to Quantum Group Actions:** Because the protocol is not fundamentally based on an abelian group action, it is completely immune to the subexponential quantum attacks that rendered ordinary isogeny networks insecure.
 
-## Progress
+## Progress {#progress}
 
 TODO
-https://sike.org/
+
+https://sike.org/ and 2017/571 
 
 
 

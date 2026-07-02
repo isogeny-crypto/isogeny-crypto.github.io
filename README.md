@@ -184,6 +184,20 @@ At build time, `fetch_contributors.py` queries the GitHub API for the commit his
 - New files will show "Pending GitHub sync..." until your first push, because the script queries the remote repository's commit history.
 - Contributor snippets are matched to pages by the `title:` field in each `.qmd`'s YAML frontmatter. Make sure every protocol page has a unique, stable title.
 
+### Protocol list legend (colored discs)
+
+The homepage's Key Establishment / Digital Signature lists (`index.qmd`) mark each protocol with a small colored disc indicating which underlying technique it relies on, per the legend: red = torsion points, blue = Deuring correspondence, green = group action.
+
+Discs are written with a shorthand span, expanded at build time by the `discs.lua` Pandoc filter:
+
+```markdown
+- []{r=100} SIDH (2011--2022)
+- []{b=100} SQISign (2020)
+- []{r=50 b=50} pSIDH (2022--2023)
+```
+
+`r`, `g`, `b` are percentages (0–100) for red/green/blue. Give one color for a solid disc, or two/three for a split disc rendered as a CSS `conic-gradient` in that ratio — useful for protocols that draw on more than one technique. Percentages need not sum to 100. Styling for the resulting disc lives in `assets/protocol-list.css`.
+
 ## Template 
 
 Upload the paper to an LLM model (I used Google Gemini Pro) with the following prompt:
@@ -191,8 +205,8 @@ Upload the paper to an LLM model (I used Google Gemini Pro) with the following p
 ```
 Study the attached file and generate a detailed, concrete description of the newly introduced protocol [NAME] in Quarto Markdown (.qmd) format. The target audience is researchers working in isogeny-based cryptography. Organize the information under the following headings:
 1. Overview (one pagargraph summarizing the protocol highlights)
-2. Protocol Design (walk through the protocol)
-3. Security Assumptions (what problems are assumed hard)
+2. Protocol Design (walk through the protocol while defining each symbol)
+3. Security Assumptions (what problems are assumed hard, weather assumptions are new or borrowed from previous schemes) 
 ```
 
 Iterate until you get a good initial draft. Then proof read and make necessary edits like adding references, hyperlinks, and `tikz` diagram (generated from screenshot using Anthropic Claude Sonnet) of the protocol.

@@ -29,6 +29,7 @@ format:
     filters:
       - scripts/tikz.lua
       - scripts/contributors.lua
+      - scripts/discs.lua
     include-in-header:
       - templates/tikzjax-header.html
     theme:

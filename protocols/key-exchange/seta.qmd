@@ -1,0 +1,88 @@
+---
+title: "Séta"
+subtitle: "Supersingular Encryption from Torsion Attacks"
+date: 2026-07-02
+---
+
+## Overview
+
+> Broken by the same attacks that broke SIDH. 
+
+Séta (Supersingular Encryption from Torsion Attacks) constructs a trapdoor one-way function family by cleverly turning [torsion-point attacks](/protocols/key-exchange/sidh.qmd#progress) against SIDH-like schemes into a decryption mechanism [@seta]. In this framework, a message is encoded as a secret isogeny, and the ciphertext consists of the codomain curve along with the images of certain torsion points. The trapdoor inversion algorithm leverages an endomorphism of the starting curve and the torsion point images to compute the secret isogeny. To ensure that key generation, specifically the computation of a supersingular elliptic curve with a prescribed endomorphism ring, is practically efficient rather than just polynomial-time, Séta heavily relies on techniques from [SQISign](/protocols/digital-signature/sqisign.qmd). 
+
+## Protocol Design
+The Séta Public Key Encryption (PKE) scheme is defined by a tuple of Probabilistic Polynomial Time (PPT) algorithms `(KGen, Enc, Dec)`.
+
+### Parameters
+Let $\lambda$ be the computational security parameter. A Séta instance requires a base prime $p$ chosen such that $p^2 - 1 = D N f$, where $D$ and $N$ are smooth, coprime integers, and $f$ is a small cofactor. The parameter constraints are $2^{2\lambda} < D$ and $D^2 < N$. These bounds ensure the security of the isogeny walk while allowing the torsion-point attack to recover the isogeny in polynomial time. We define $\text{params} = (\lambda, p, D, N)$.
+
+### Key Generation
+1. The key generation algorithm computes a uniformly random $(D, N)$-trapdoor supersingular elliptic curve $(E_{j_T}, T)$ defined over $\mathbb{F}_{p^2}$. 
+   - The curve $E_{j_T}$ serves as the starting point. 
+   - To construct the trapdoor $T$, the algorithm generates two specific integers $d$ and $e$ (where $e$ is chosen to be small, typically $O(\log p)$) such that they satisfy a strict algebraic relationship: $N^2e - d^2 > 0$ and $N^2e - d^2$ is exactly divisible by $D^2$.
+   - The trapdoor $T$ consists of an endomorphism $\theta \in \text{End}(E_{j_T})$ with trace zero and degree (norm) $\frac{N^2e-d^2}{D^2}$, as well as the evaluation of $\theta$ on the $N$-torsion group $E_{j_T}[N]$. 
+2. **Public Key ($pk$):** The public key is set to $j_T$, which is the j-invariant of the curve $E_{j_T}$.
+3. **Secret Key ($sk$):** The secret key is the trapdoor $T$.
+
+### Encryption
+1. To encrypt a message $m \in \{0, 1\}^{n_m}$, the message is mapped to a unique walk in the isogeny graph, defining a secret isogeny $\phi: E_{j_T} \to E_c$ of degree $D$.
+2. Given a known basis $P_{j_T}, Q_{j_T}$ of the $N$-torsion $E_{j_T}[N]$, the sender evaluates the secret isogeny $\phi$ on these points to obtain the torsion images.
+3. **Ciphertext ($c$):** The resulting ciphertext consists of the codomain curve $E_c$ and the evaluated $N$-torsion points, denoted roughly as $(E_c, \phi(P_{j_T}), \phi(Q_{j_T}))$.
+
+### Decryption
+1. Upon receiving the ciphertext, the receiver uses the secret trapdoor $T$ to recover the message. Here  trapdoor acts as a mathematical backdoor to recover hidden $D$-degree isogenies.
+2. Decryption relies on evaluating and decomposing an endomorphism on the target curve $E_c$. 
+   
+   ```{.tikz}
+    \usetikzlibrary{arrows.meta}
+    \begin{tikzpicture}[
+    every node/.style={font=\small},
+    redarr/.style={-{Stealth}, thick, red}
+    ]
+
+    %% LEFT DIAGRAM
+
+    \node (E0L) at (0, 0)   {$E_{j_T}$};
+    \node (EL)  at (0, -4)  {$E_c$};
+
+    \draw[blue, thick, -{Stealth}]
+        (E0L) to[out=40, in=140, looseness=6]
+        node[above, blue]{$\theta$} (E0L);
+
+    \draw[redarr] ([xshift=-0.15cm]E0L.south) --
+        node[left, red]{$\phi$}
+        ([xshift=-0.15cm]EL.north);
+
+    \draw[redarr] ([xshift=0.15cm]EL.north) --
+        node[right, red]{$\widehat{\phi}$}
+        ([xshift=0.15cm]E0L.south);
+
+    %% RIGHT DIAGRAM
+    \node (ER) at (6.5, -4) {$E_c$};
+
+    % main loop
+    \draw[blue, thick, -{Stealth}]
+        (ER) to[out=40, in=140, looseness=30]
+        node[above right, blue, pos=0.2]{$\phi\circ\theta\circ\widehat{\phi}$} (ER);
+
+    % shifted loop
+    \draw[red, thick, -{Stealth}]
+        (ER) to[out=60, in=160, looseness=30]
+        node[above left, red, pos=0.8]{$\phi\circ\theta\circ\widehat{\phi}+[d]$} (ER);
+    \end{tikzpicture}
+   ```
+   The receiver calculates the action of the endomorphism $\tau = \phi \circ \theta \circ \hat{\phi} + [d]$ on the $N$-torsion of $E_c$. Because the degree of the pushed-forward trace-zero endomorphism $\phi \circ	\theta \circ \hat{\phi}$ is designed to be $N^2e - d^2$, adding $[d]$ shifts the degree of $\tau$ to exactly $N^2e$.
+3. **Decomposing $\tau$:** Because the target degree $N^2e$ is heavily dominated by the known $N^2$ component, the receiver uses the evaluated $N$-torsion images from the ciphertext to factor $\tau$ into a sequence of smaller, manageable isogenies (e.g., $\tau = \psi' \circ \eta \circ \psi$, where $\psi, \psi'$ have degree $N$ and $\eta$ has small degree $e$).
+4. **Recovering the Dual Isogeny:** After reconstructing $\tau$, the receiver subtracts $[d]$ to compute $\tau - [d] = \phi \circ \theta \circ \hat{\phi}$. The kernel of the dual isogeny $\hat{\phi}$ is mathematically contained within the kernel of $(\tau - [d])$. By computing the intersection of this kernel with the $D$-torsion of the target curve $E_c$, the receiver systematically recovers $\hat{\phi}$.
+5. **Decoding:** Knowing $\hat{\phi}$ is equivalent to knowing the secret isogeny $\phi$. The receiver traces the path of $\phi$ back in the isogeny graph to decode and recover the original binary message $m$ in polynomial time.
+
+## Security Assumptions
+The security of Séta is predicated on assumptions that blend traditional isogeny hardness with new formalized frameworks.
+
+* **Supersingular Isogeny with Torsion (SSI-T) problem:** Séta's One-Way Chosen-Plaintext Attack (OW-CPA) security heavily relies on a variant of the [Computational Supersingular Isogeny (CSSI) problem](sidh.qmd#security-assumptions), originally introduced in SIDH. Séta borrows this foundational assumption but modifies it: instead of a fixed public starting curve, the starting j-invariant $j_T$ is chosen at random from the space of trapdoor curves.
+* **The Uber Isogeny Assumption ($\mathfrak{O}$-UIP):** Séta formalizes a new framework termed the "uber" isogeny assumption. This problem, inspired directly by the key recovery problem in [CSIDH](/protocols/key-exchange/csidh.qmd), asks: given two curves $E_0$ and $E_s$, both with a known quadratic order $\mathfrak{O}$ embedded in their endomorphism rings, and a concrete embedding in $E_0$, find an isogeny between them corresponding to an $\mathfrak{O}$-ideal. Solving this new uber isogeny problem for the order $\mathfrak{O}$ utilized in Séta's setup implies the ability to recover the trapdoor $T$ from the public key, breaking the scheme.
+* **Indistinguishability of Trapdoor Curves:** For the secret key to remain hidden, it is implicitly assumed that the distribution of trapdoor curves $(E_{j_T})$ generated by the key generation algorithm does not leak the trapdoor. Simple knowledge of the starting curve equation and a description of the quadratic order embedded in it does not seem to be helpful without the concrete knowledge of an endomorphism realizing this embedding.
+
+## Progress
+
+TODO
