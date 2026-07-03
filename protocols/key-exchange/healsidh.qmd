@@ -1,0 +1,172 @@
+---
+title: "HealSIDH"
+subtitle: "Healed Supersingular Isogeny Diffie-Hellman"
+date: 2026-07-03
+---
+
+## Overview
+
+> Broken by the same attacks that broke SIDH. 
+
+HealSIDH is a statically secure, interactive key exchange protocol designed to mitigate the adaptive attack without resorting to key disclosure (as seen in [SIKE](/protocols/key-exchange/sidh.qmd#progress)) or computationally expensive parallel executions (as seen in [$k$-SIDH](/protocols/key-exchange/ksidh.qmd)). At its core, HealSIDH introduces a direct key validation mechanism that allows each party to prove the honest generation of their transmitted torsion points [@healsidh]. By operating over a larger prime characteristic of the form $p = 2^{2a}3^{2b}f - 1$ (where $2^a \approx 3^b$) and utilizing a random supersingular starting curve $E_0$ with an unknown endomorphism ring, the protocol successfully neutralizes both the adaptive attack and improved passive torsion point attacks. 
+
+## Protocol Design
+
+The protocol fundamentally integrates the direct key validation mechanism within the standard [SIDH workflow](/protocols/key-exchange/sidh.qmd#protocol-design). The design involves canonical basis generation to prevent the leakage of points on the shared secret curve.
+
+```{.tikz}
+\usetikzlibrary{arrows.meta}
+\begin{tikzpicture}[
+  every node/.style={font=\small},
+  box/.style={draw, rounded corners, thick, minimum width=3.2cm, minimum height=1cm, align=center},
+  titlebox/.style={draw, rounded corners, thick, minimum width=3.2cm, minimum height=0.8cm, align=center},
+  redarr/.style={-{Stealth}, thick, red},
+  bluearr/.style={-{Stealth}, thick, blue},
+  redtext/.style={red},
+  bluetext/.style={blue}
+]
+
+  % --- Left column ---
+  \node[box] (E0) at (0, 4) {$E_0, P_2, Q_2,$\\$P_B, Q_B$};
+  \node[box] (EB) at (0, 0) {$E_B,\ R_a,\ S_a$};
+
+  \draw[bluearr] (E0) -- node[left, bluetext]{$\phi_B$} (EB);
+
+  % --- Middle column ---
+  \node[box, minimum width=4.4cm, minimum height=1.6cm] (EA) at (5, 4) {
+    $E_A,\ \phi_A(P_B),\ \phi_A(Q_B)$\\
+    $\phi_A(P_2) = [e_1]R_A + [f_1]S_A$\\
+    $\phi_A(Q_2) = [e_2]R_A + [f_2]S_A$
+  };
+
+  \draw[redarr] (E0) -- node[above, redtext]{$\phi_A$} (EA);
+
+  \node[box] (EAB) at (5, 1) {$E_{AB},\ R_{ab},\ S_{ab}$};
+  \node[box] (EBA) at (5, 0) {$E_{BA},\ \phi_A'(R_a),\ \phi_A'(S_a)$};
+
+  \draw[bluearr] (EA) -- node[right, bluetext]{$\phi_B'$} (EAB);
+  \draw[redarr] (EB) -- node[above, redtext]{$\phi_A'$} (EBA);
+
+  % Manually-drawn dotted rounded box around EAB and EBA (no fit library needed)
+  \draw[dotted, thick, rounded corners, red] (2.6, -0.7) rectangle (7.4, 1.7);
+
+  % --- Right column top: Honest Bob ---
+  \node[titlebox, draw=green!60!black, text=green!60!black] (bobtitle) at (11.2, 4.6) {Honest Bob};
+  \node[box, minimum width=4.6cm, minimum height=1.2cm, draw=green!60!black] (bobcontent) at (11.2, 3.6) {
+    $R_a = \phi_B(P_2),\ S_a = \phi_B'(Q_2)$\\
+    $R_{ab} = \phi_B'(R_A),\ S_{ab} = \phi_B(S_A)$
+  };
+
+  % --- Right column: Key validation ---
+  \node[titlebox, draw=red, text=red] (kvtitle) at (11.2, 1.9) {Key validation};
+  \node[box, minimum width=5.2cm, minimum height=2cm, draw=red] (kvcontent) at (11.2, 0.5) {
+    $e_{2^{2a}}(R_a, S_a) \stackrel{?}{=} e_{2^{2a}}(P_2, Q_2)^{3^b}$\\
+    $\phi_A'(R_a) \stackrel{?}{=} [e_1]R_{ab} + [f_1]S_{ab}$\\
+    $\phi_A'(S_a) \stackrel{?}{=} [e_2]R_{ab} + [f_2]S_{ab}$
+  };
+
+  % Arrow from dashed box area to key validation
+  \draw[redarr] (7.4, 0.5) -- (kvcontent.west);
+
+  % --- Yes / No outcomes ---
+  \node[box, draw=green!60!black, fill=green!10, minimum width=2.6cm, minimum height=0.9cm] (validkey) at (9.7, -2.3) {Valid key};
+  \node[box, draw=red, fill=red!10, minimum width=2.6cm, minimum height=0.9cm] (invalidkey) at (12.7, -2.3) {Invalid key};
+
+  \draw[-{Stealth}, thick] (kvcontent.south) -- ++(0,-0.7) -| node[pos=0.25, above]{Yes} (validkey.north);
+  \draw[-{Stealth}, thick] (kvcontent.south) -- ++(0,-0.7) -| node[pos=0.25, above]{No} (invalidkey.north);
+
+\end{tikzpicture}
+```
+
+### Setup and Public Parameters
+- **Prime Characteristic:** $p = 2^{2a}3^{2b}f - 1$ such that $2^a \approx 3^b$, allowing the required $2^{2a}$- and $3^{2b}$-torsion points to be defined over $\mathbb{F}_{p^2}$.
+- **Starting Curve:** $E_0$, a random supersingular elliptic curve defined over $\mathbb{F}_{p^2}$ with an *unknown* endomorphism ring (to thwart torsion point attacks).
+- **Torsion Bases:** 
+  - $E_0[2^{2a}] = \langle P_2, Q_2 \rangle$
+  - $E_0[3^{2b}] = \langle P_3, Q_3 \rangle$
+- **Scaled Points:** 
+  - $P_A = [2^a]P_2$, $Q_A = [2^a]Q_2$ (forming a basis for the $2^a$-torsion)
+  - $P_B = [3^b]P_3$, $Q_B = [3^b]Q_3$ (forming a basis for the $3^b$-torsion)
+
+### Key Generation
+
+**Alice's Key Generation:**
+
+1. **Secret Key:** Alice samples a random integer $\alpha \in \mathbb{Z}/{2^a}\mathbb{Z}$.
+2. **Secret Isogeny:** She computes the cyclic isogeny $\phi_A: E_0 \rightarrow E_A = E_0 / \langle P_A + [\alpha]Q_A \rangle$.
+3. **Torsion Image Evaluation:** She computes the images $R_b = \phi_A(P_3)$ and $S_b = \phi_A(Q_3)$, which will be sent to Bob. She also computes $\phi_A(P_2)$ and $\phi_A(Q_2)$.
+4. **Canonical Basis Extraction:** Alice canonically generates a basis $\{R_A, S_A\}$ of $E_A[2^{2a}]$.
+5. **Coefficient Calculation:** She solves for the coefficients $e_1, f_1, e_2, f_2 \in \mathbb{Z}_{2^{2a}}$ such that:
+   - $\phi_A(P_2) = [e_1]R_A + [f_1]S_A$
+   - $\phi_A(Q_2) = [e_2]R_A + [f_2]S_A$
+6. **Keys:** Her public key is $(E_A, R_b, S_b)$ and her secret key is the tuple $(\alpha, e_1, f_1, e_2, f_2)$.
+
+**Bob's Key Generation:**
+
+1. **Secret Key:** Bob samples a random integer $\beta \in \mathbb{Z}/{3^b}\mathbb{Z}$.
+2. **Secret Isogeny:** He computes the cyclic isogeny $\phi_B: E_0 \rightarrow E_B = E_0 / \langle P_B + [\beta]Q_B \rangle$.
+3. **Torsion Image Evaluation:** He computes the images $R_a = \phi_B(P_2)$ and $S_a = \phi_B(Q_2)$, which will be sent to Alice. He also computes $\phi_B(P_3)$ and $\phi_B(Q_3)$.
+4. **Canonical Basis Extraction:** Bob canonically generates a basis $\{R_B, S_B\}$ of $E_B[3^{2b}]$.
+5. **Coefficient Calculation:** He solves for the coefficients $g_1, h_1, g_2, h_2 \in \mathbb{Z}_{3^{2b}}$ such that:
+   - $\phi_B(P_3) = [g_1]R_B + [h_1]S_B$
+   - $\phi_B(Q_3) = [g_2]R_B + [h_2]S_B$
+6. **Keys:** His public key is $(E_B, R_a, S_a)$ and his secret key is the tuple $(\beta, g_1, h_1, g_2, h_2)$.
+
+### Key Exchange and Validation Phase
+
+To establish a shared secret, the parties compute their second-stage isogenies, evaluate them on the canonical bases, and perform cross-verification checks to ensure honesty.
+
+1. **Bob's Second Phase & Transmission:**
+   - Bob computes his second isogeny $\phi'_B: E_A \rightarrow E_{AB} = E_A / \langle [3^b]R_b + [\beta][3^b]S_b \rangle$.
+   - He canonically generates a basis $\{R_{AB}, S_{AB}\}$ for $E_{AB}[2^{2a}]$.
+   - He computes the image of Alice's canonical basis under $\phi'_B$, extracting coefficients $e_3, f_3, e_4, f_4 \in \mathbb{Z}_{2^{2a}}$ such that:
+     - $\phi'_B(R_A) = [e_3]R_{AB} + [f_3]S_{AB}$
+     - $\phi'_B(S_A) = [e_4]R_{AB} + [f_4]S_{AB}$
+   - Bob transmits the coefficients $(e_3, f_3, e_4, f_4)$ to Alice.
+
+2. **Alice's Second Phase & Transmission:**
+   - Alice computes her second isogeny $\phi'_A: E_B \rightarrow E_{BA} = E_B / \langle [2^a]R_a + [\alpha][2^a]S_a \rangle$.
+   - She canonically generates a basis $\{R_{BA}, S_{BA}\}$ for $E_{BA}[3^{2b}]$.
+   - She computes the image of Bob's canonical basis under $\phi'_A$, extracting coefficients $g_3, h_3, g_4, h_4 \in \mathbb{Z}_{3^{2b}}$ such that:
+     - $\phi'_A(R_B) = [g_3]R_{BA} + [h_3]S_{BA}$
+     - $\phi'_A(S_B) = [g_4]R_{BA} + [h_4]S_{BA}$
+   - Alice transmits the coefficients $(g_3, h_3, g_4, h_4)$ to Bob.
+
+3. **Alice's Validation Checks:**
+   - She canonically generates the basis $\{R_{AB}, S_{AB}\}$ for $E_{BA}[2^{2a}]$ (since $E_{BA} \cong E_{AB}$).
+   - She sets up expected points based on Bob's transmitted coefficients:
+     - $R_{ab} = [e_3]R_{AB} + [f_3]S_{AB}$
+     - $S_{ab} = [e_4]R_{AB} + [f_4]S_{AB}$
+   - Alice verifies Bob's honesty by checking:
+     1. The Weil pairing: $e_{2^{2a}}(R_a, S_a) \stackrel{?}{=} e_{2^{2a}}(P_2, Q_2)^{3^b}$
+     2. Coefficient validation 1: $\phi'_A(R_a) \stackrel{?}{=} [e_1]R_{ab} + [f_1]S_{ab}$
+     3. Coefficient validation 2: $\phi'_A(S_a) \stackrel{?}{=} [e_2]R_{ab} + [f_2]S_{ab}$
+   - If all checks pass, she accepts $j(E_{BA})$ as the shared secret.
+
+4. **Bob's Validation Checks:**
+   - He canonically generates the basis $\{R_{BA}, S_{BA}\}$ for $E_{AB}[3^{2b}]$.
+   - He sets up expected points based on Alice's transmitted coefficients:
+     - $R_{ba} = [g_3]R_{BA} + [h_3]S_{BA}$
+     - $S_{ba} = [g_4]R_{BA} + [h_4]S_{BA}$
+   - Bob verifies Alice's honesty by checking:
+     1. The Weil pairing: $e_{3^{2b}}(R_b, S_b) \stackrel{?}{=} e_{3^{2b}}(P_3, Q_3)^{2^a}$
+     2. Coefficient validation 1: $\phi'_B(R_b) \stackrel{?}{=} [g_1]R_{ba} + [h_1]S_{ba}$
+     3. Coefficient validation 2: $\phi'_B(S_b) \stackrel{?}{=} [g_2]R_{ba} + [h_2]S_{ba}$
+   - If all checks pass, he accepts $j(E_{AB})$ as the shared secret. Correctness dictates that $j(E_{AB}) = j(E_{BA})$.
+
+## Security Assumptions
+
+The security of HealSIDH relies on a combination of new computational assumptions introduced in the paper and the mitigation of previously known vulnerabilities in SIDH-based schemes.
+
+- **HealSIDH Computational Diffie-Hellman Problem (HealSIDH-CDHP):** The security of the key exchange against shared secret recovery relies on a new variant of the Supersingular Isogeny Computational Diffie-Hellman Problem (SSICDHP). This assumption posits that given the public parameters, public keys, and the validation coefficients, it is computationally intractable for an adversary to compute the shared curve $E_{AB}$.
+
+- **Indistinguishability of Canonical Basis Images:** For the semantic security (IND-CPA) of derived encryption schemes like SHealS, the authors formalize an assumption stating that the validation coefficients (representing the mapping of the canonical basis through the second-stage isogeny) are computationally indistinguishable from coefficients derived from a uniformly random basis of $E_{AB}[2^{2a}]$ sharing the same Weil pairing value.
+
+- **Mitigation of Adaptive Attacks:** The direct key validation methodology mathematically bounds a malicious participant, enforcing that any deviation in forming the torsion images will fail the pairing and coefficient checks. 
+
+- **Resistance to Passive Torsion Point Attacks:** Because HealSIDH exposes the actions of the secret isogeny on larger torsion groups, it would typically be susceptible to the passive torsion point attacks. To counter this, HealSIDH *borrows* the established mitigation of utilizing a starting curve $E_0$ with an *unknown* endomorphism ring, preventing the exploitation of known endomorphisms to recover the secret isogeny.
+
+## Progress
+TODO
+
+2022/443

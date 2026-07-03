@@ -14,7 +14,6 @@ This wiki aims to cover all peer-reviewed isogeny-based key establishment scheme
 
 **Legend:** []{r=100} torsion points; []{b=100} quaternion algebra; []{g=100} group action;
 
-
 :::: {.columns}
 ::: {.column width="50%"}
 ### Key Establishment
@@ -30,8 +29,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key establishment scheme
 - []{r=50 g=50} [SimS](/protocols/key-exchange/sims.qmd) (2021)
 - []{g=100} [CSIDH UPKE](/protocols/key-exchange/csidhupke.qmd) (2021)
 - []{r=50 b=50} [Séta](protocols/key-exchange/seta.qmd) (2021--2022) 
-- []{r=100} SHealS (2021-2022)
-- []{r=100} HealS (2021-2022)
+- []{r=100} [HealSIDH](/protocols/key-exchange/healsidh.qmd) (2021-2022)
 - []{r=50 b=50} pSIDH (2022--2023)
 - []{r=100} M-SIDH (2023)
 - []{r=100} MD-SIDH (2023)
@@ -66,28 +64,28 @@ This wiki aims to cover all peer-reviewed isogeny-based key establishment scheme
 - []{g=100} BDKLP (2022)
 - []{r=100} SIDH PoK (2022)
 - []{g=100} SCALLOP (2023)
-- CJSS (2023)
-- CSI-Otter (2023)
-- JSD (2024)
-- SCALLOP-HD (2024)
-- SQIsignHD (2024)
-- AprèsSQI (2024)
-- SQIsign2D-East (2024)
-- SQIsign2D-West (2024)
-- SQIPrime (2024)
-- Erebor (2025)
-- Durian (2025)
-- PRISM (2025)
-- PEARL-SCALLOP (2025)
-- Tanuki (2025)
-- SQIsign2D$^2$ (2025)
-- SPIDER (2026)
-- ORCAS (2026)
-- Wombat (2026)
-- SQIsign2DPush (2026)
-- WaterSQI (2026)
-- PRISMO (2026)
-- SQInstructor (2026)
+- []{g=100} CJSS (2023)
+- []{g=100} CSI-Otter (2023)
+- []{g=100} JSD (2024)
+- []{g=100} SCALLOP-HD (2024)
+- []{r=50 b=50} SQIsignHD (2024)
+- []{b=100} AprèsSQI (2024)
+- []{r=50 b=50} SQIsign2D-East (2024)
+- []{r=50 b=50} SQIsign2D-West (2024)
+- []{r=50 b=50} SQIPrime (2024)
+- []{b=100} Erebor (2025)
+- []{b=100} Durian (2025)
+- []{r=50 b=50} PRISM (2025)
+- []{g=100} PEARL-SCALLOP (2025)
+- []{g=100} Tanuki (2025)
+- []{r=50 b=50} SQIsign2D$^2$ (2025)
+- []{r=50 b=50} SPIDER (2026)
+- []{g=100} ORCAS (2026)
+- []{g=100} Wombat (2026)
+- []{r=50 b=50} SQIsign2DPush (2026)
+- []{r=50 b=50} WaterSQI (2026)
+- []{r=50 b=50} PRISMO (2026)
+- []{r=50 b=50} SQInstructor (2026)
 :::
 :::
 

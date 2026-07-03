@@ -200,7 +200,7 @@ Discs are written with a shorthand span, expanded at build time by the `discs.lu
 
 ## Template 
 
-Upload the paper to an LLM model (I used Google Gemini Pro) with the following prompt:
+Upload the paper to an LLM model (eg. Google Gemini Pro) with the following prompt:
 
 ```
 Study the attached file and generate a detailed, concrete description of the newly introduced protocol [NAME] in Quarto Markdown (.qmd) format. The target audience is researchers working in isogeny-based cryptography. Organize the information under the following headings:
@@ -209,4 +209,4 @@ Study the attached file and generate a detailed, concrete description of the new
 3. Security Assumptions (what problems are assumed hard, weather assumptions are new or borrowed from previous schemes) 
 ```
 
-Iterate until you get a good initial draft. Then proof read and make necessary edits like adding references, hyperlinks, and `tikz` diagram (generated from screenshot using Anthropic Claude Sonnet) of the protocol.
+Iterate until you get a good initial draft. Then proof read and make necessary edits like adding references, hyperlinks, and `tikz` diagram of the protocol (generated from screenshot using LLM, eg. Anthropic Claude Sonnet or Mitral Vibe/Le Chat).
