@@ -6,7 +6,7 @@ date: 2026-06-24
 
 ## Overview
 
-> Broken by the same attacks that broke SIDH. 
+> Broken by a polynomial time classical algorithm.
 
 The **$k$-SIDH** protocol introduces a generic transformation designed to secure [SIDH](/protocols/key-exchange/sidh.qmd) key agreement against active attacks in the static-static setting [@ksidh]. 
 

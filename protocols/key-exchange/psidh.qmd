@@ -1,0 +1,87 @@
+---
+title: "pSIDH"
+subtitle: "prime-SIDH"
+date: 2026-07-07
+---
+
+## Overview
+
+> Broken by a polynomial time quantum algorithm.
+
+The pSIDH (prime-SIDH) protocol is a novel Non-Interactive Key Exchange (NIKE) scheme introduced to circumvent the catastrophic torsion-point attacks that broke smooth-degree isogeny protocols like [SIDH](/protocols/key-exchange/sidh.qmd) and [Séta](/protocols/key-exchange/seta.qmd). While SIDH utilizes secret isogenies of smooth degrees to allow for efficient evaluation via Vélu's formulas, this smooth-degree structure fundamentally enables the recent polynomial-time attacks. pSIDH transitions the SIDH-style commutative isogeny diagram to the setting of large prime degrees. 
+
+Because standard evaluation of large prime-degree isogenies is computationally infeasible, pSIDH relies on a novel cryptographic tool: the suborder representation [@psidh]. In this scheme, secret keys are represented as quaternion ideals (the ideal representation), while public keys are broadcast as suborder representations. Compared to [CSIDH](/protocols/key-exchange/csidh.qmd), which also operates with a quantum-subexponential security profile and prime-degree elements, pSIDH relies on fundamentally different structural assumptions. 
+
+## Protocol Design
+
+The pSIDH protocol involves two parties, Alice and Bob, agreeing on a shared secret over supersingular elliptic curves.
+
+```{.tikz}
+\usetikzlibrary{arrows.meta, bending, calc}
+\begin{tikzpicture}[
+  every node/.style={font=\small},
+  arr/.style={-{Stealth}, thick}
+]
+
+  % Nodes
+  \node (E0) at (0, 0) {$E_0$};
+  \node (EA) at (3, 1) {$E_A$};
+  \node (EB) at (3, -1) {$E_B$};
+  \node (E) at (6, 0) {$E_{AB}$};
+
+  % Straight arrows
+  \draw[arr] (E0) -- node[above, sloped] {$\varphi_A$} (EA);
+  \draw[arr] (E0) -- node[below, sloped] {$\varphi_B$} (EB);
+  \draw[arr] (EA) -- node[above, sloped] {$[\varphi_A]_* \varphi_B$} (E);
+  \draw[arr] (EB) -- node[below, sloped]  {$[\varphi_B]_* \varphi_A$} (E);
+
+  % Curved arrows with labels
+  \draw[arr] (EA) to[bend left=50] node[above, sloped] {$\hat{\psi}_B$} (E);
+  \draw[arr] (EB) to[bend right=50] node[below, sloped] {$\hat{\psi}_A$} (E);
+
+\end{tikzpicture}
+```
+
+Here isogenies $[\varphi_A]_* \varphi_B$ and $[\varphi_B]_* \varphi_A$ are defined as the separable isogenies of respective kernels $\varphi_A(\text{ker}(\varphi_B))$ and $\varphi_B(\text{ker}(\varphi_A))$.
+
+### Global Parameters
+
+* $p$: A large prime characterizing the field $\mathbb{F}_{p^2}$.
+* $E_0$: A starting supersingular elliptic curve defined over $\mathbb{F}_{p^2}$.
+* $\mathcal{O}_0$: A known maximal order in the quaternion algebra $B_{p, \infty}$ such that $\text{End}(E_0) \cong \mathcal{O}_0$.
+
+### Key Generation
+
+Alice selects a large secret prime $D_A \neq p$.
+
+1. **Secret Key ($I_A$, $\varphi_A$):** Alice samples a random integral left-$\mathcal{O}_0$ ideal $I_A$ of norm $D_A$. Through the Deuring correspondence, $I_A$ represents a cyclic isogeny $\varphi_A: E_0 \to E_A$ of degree $D_A$. 
+2. **Public Key ($E_A, \pi_A$):** Alice computes the suborder representation $\pi_A = \text{IdealToSuborder}(I_A)$. This representation consists of the codomain curve $E_A$ and a collection of endomorphisms that reveal a specific suborder $\mathbb{Z} + D_A \mathcal{O}_0$ embedded within $\text{End}(E_A)$. 
+
+Bob symmetrically generates his keys using a distinct prime $D_B$, producing an ideal $I_B$ (corresponding to $\varphi_B: E_0 \to E_B$) and public key $(E_B, \pi_B)$.
+
+### Key Exchange
+
+To compute the shared curve $E$, Alice uses Bob's public key $(E_B, \pi_B)$ alongside her secret key $I_A$. Because Alice cannot directly compute the push-forward isogeny $[\varphi_B]_* \varphi_A : E_B \to E_{AB}$ due to $D_A$ being a large prime, she relies on an auxiliary smooth-degree path to reach $E$:
+
+1. Alice uses the algorithm `IdealSuborderNormEquation` to find an element $\theta \in (\mathbb{Z} + D_B \mathcal{O}_0) \cap I_A$ with norm $D_A \cdot S$, where $S$ is a carefully chosen powersmooth integer. Moreover, because $\theta \in I_A$, under the Deuring correspondence it maps to an endomorphism on $E_0$ that factors through her secret isogeny $\varphi_A$. That is, the endomorphism $\theta$ can be written as $\sigma_A \circ \varphi_A$, where $\sigma_A : E_A \to E_0$ is an auxiliary isogeny of smooth degree $S$.
+2. By pushing this endomorphism forward through Bob's isogeny $\varphi_B$, Alice utilizes Bob's suborder representation $\pi_B$ to obtain an embedding $\iota_B(\theta)$ into $\text{End}(E_B)$.
+3. This embedded endomorphism on $E_B$ is equivalent to $\psi_A \circ [\varphi_B]_*\varphi_A$, where $\psi_A: E_{AB} \to E_B$ is an auxiliary isogeny of degree $S$.
+4. Since $S$ is smooth, Alice can use the `SuborderEvaluation` algorithm on this endomorphism to explicitly find the kernel of the dual isogeny $\hat{\psi}_A : E_B \to E_{AB}$. 
+5. Taking the quotient by this kernel, Alice computes the isogeny $\hat{\psi}_A$. The codomain of $\hat{\psi}_A$ is the target shared curve $E_{AB}$, satisfying the commutativity of the diagram.
+6. Symmetrically, Bob computes an analogous auxiliary isogeny $\hat{\psi}_B: E_A \to E_{AB}$ using Alice's public key and his secret key.
+
+Both parties arrive at the identical curve $E_{AB}$, allowing them to use the $j$-invariant $j(E_{AB})$ as the shared secret.
+
+
+## Security Assumptions
+
+The core security of pSIDH is tied to the SubOrder to Ideal Problem (SOIP), which relates more closely to the key recovery of CSIDH (involving partial endomorphism ring knowledge) than that of SIDH, yet maintains an SIDH-like key agreement flow.
+
+* **SubOrder to Ideal Problem (SOIP):** This is the underlying key recovery assumption. It states that given a suborder representation $\pi$ of an isogeny $\varphi$ of prime degree $D$, it is computationally infeasible to recover the ideal representation $I_\varphi$ (the secret key). The SOIP is shown to be equivalent to specific prime-degree instances of the Torsion to Ideal Problem (TIP). Because the degree $D$ is a large prime, the $D$-torsion points are defined over an exponentially large field extension $\mathbb{F}_{p^k}$ (where $k = O(D)$). This prevents the polynomial-time torsion point attacks that devastated SIDH from being applied to SOIP. Thus, SOIP represents a robust new assumption designed to resist recent cryptanalytic breakthroughs.
+* **prime Supersingular Decisional Diffie-Hellman (pSSDDH):** The semantic security of the key exchange relies on this decisional assumption. pSSDDH assumes that an adversary cannot distinguish the valid shared curve $E_{AB}$ (where $\text{End}(E_{AB}) \cong \mathcal{O}_R(I_A \cap I_B)$) from a random curve $E_C$ that is merely $D_A D_B$-isogenous to $E_0$. This assumption directly borrows its structural formulation from the SSDDH problem introduced in the original SIDH proposal, but strictly limits the isogeny degrees to large primes and leverages suborder representations rather than torsion point images.
+
+## Progress
+
+TODO
+
+2023/779

@@ -6,7 +6,7 @@ date: 2026-07-02
 
 ## Overview
 
-> Broken by the same attacks that broke SIDH. 
+> Broken by a polynomial time classical algorithm.
 
 Séta (Supersingular Encryption from Torsion Attacks) constructs a trapdoor one-way function family by cleverly turning [torsion-point attacks](/protocols/key-exchange/sidh.qmd#progress) against SIDH-like schemes into a decryption mechanism [@seta]. In this framework, a message is encoded as a secret isogeny, and the ciphertext consists of the codomain curve along with the images of certain torsion points. The trapdoor inversion algorithm leverages an endomorphism of the starting curve and the torsion point images to compute the secret isogeny. To ensure that key generation, specifically the computation of a supersingular elliptic curve with a prescribed endomorphism ring, is practically efficient rather than just polynomial-time, Séta heavily relies on techniques from [SQISign](/protocols/digital-signature/sqisign.qmd). 
 
