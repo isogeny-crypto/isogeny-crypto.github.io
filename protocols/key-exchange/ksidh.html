@@ -409,6 +409,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/psidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">pSIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/qfesta.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">QFESTA</span></a>
   </div>
@@ -511,7 +517,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">June 26, 2026</p>
+      <p class="date-modified">July 7, 2026</p>
     </div>
   </div>
     
@@ -525,7 +531,7 @@ window.Quarto = {
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
 <blockquote class="blockquote">
-<p>Broken by the same attacks that broke SIDH.</p>
+<p>Broken by a polynomial time classical algorithm.</p>
 </blockquote>
 <p>The <strong><span class="math inline">\(k\)</span>-SIDH</strong> protocol introduces a generic transformation designed to secure <a href="../../protocols/key-exchange/sidh.html">SIDH</a> key agreement against active attacks in the static-static setting <span class="citation" data-cites="ksidh">[<a href="#ref-ksidh" role="doc-biblioref">AzJaLe17</a>]</span>.</p>
 <p>In a standard SIDH static-static key exchange, a malicious participant can mount an adaptive attack by sending specialized, manipulated public torsion points. By observing whether the subsequent key validation succeeds or fails, the attacker can iteratively leak the honest party’s static private key. Extant countermeasures, such as the Fujisaki-Okamoto transform, enforce indirect validation by requiring the untrusted party to disclose their private key. While secure, this precludes the use of static-static drop-in replacements.</p>

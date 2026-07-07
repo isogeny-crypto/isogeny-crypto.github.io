@@ -409,6 +409,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/psidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">pSIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/qfesta.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">QFESTA</span></a>
   </div>
@@ -510,7 +516,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">July 3, 2026</p>
+      <p class="date-modified">July 7, 2026</p>
     </div>
   </div>
     
@@ -524,7 +530,7 @@ window.Quarto = {
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
 <blockquote class="blockquote">
-<p>Broken by the same attacks that broke SIDH.</p>
+<p>Broken by a polynomial time classical algorithm.</p>
 </blockquote>
 <p>HealSIDH is a statically secure, interactive key exchange protocol designed to mitigate the adaptive attack without resorting to key disclosure (as seen in <a href="../../protocols/key-exchange/sidh.html#progress">SIKE</a>) or computationally expensive parallel executions (as seen in <a href="../../protocols/key-exchange/ksidh.html"><span class="math inline">\(k\)</span>-SIDH</a>). At its core, HealSIDH introduces a direct key validation mechanism that allows each party to prove the honest generation of their transmitted torsion points <span class="citation" data-cites="healsidh">[<a href="#ref-healsidh" role="doc-biblioref">FoPe21</a>]</span>. By operating over a larger prime characteristic of the form <span class="math inline">\(p = 2^{2a}3^{2b}f - 1\)</span> (where <span class="math inline">\(2^a \approx 3^b\)</span>) and utilizing a random supersingular starting curve <span class="math inline">\(E_0\)</span> with an unknown endomorphism ring, the protocol successfully neutralizes both the adaptive attack and improved passive torsion point attacks.</p>
 </section>
