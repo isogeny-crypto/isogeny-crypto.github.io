@@ -491,7 +491,13 @@ window.Quarto = {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
-  <li><a href="#protocol-design" id="toc-protocol-design" class="nav-link" data-scroll-target="#protocol-design"><span class="header-section-number">2</span> Protocol Design</a></li>
+  <li><a href="#protocol-design" id="toc-protocol-design" class="nav-link" data-scroll-target="#protocol-design"><span class="header-section-number">2</span> Protocol Design</a>
+  <ul class="collapse">
+  <li><a href="#parameters-primitives" id="toc-parameters-primitives" class="nav-link" data-scroll-target="#parameters-primitives"><span class="header-section-number">2.1</span> Parameters &amp; Primitives</a></li>
+  <li><a href="#keys-initialization" id="toc-keys-initialization" class="nav-link" data-scroll-target="#keys-initialization"><span class="header-section-number">2.2</span> Keys &amp; Initialization</a></li>
+  <li><a href="#key-updatability" id="toc-key-updatability" class="nav-link" data-scroll-target="#key-updatability"><span class="header-section-number">2.3</span> Key Updatability</a></li>
+  <li><a href="#message-encapsulation" id="toc-message-encapsulation" class="nav-link" data-scroll-target="#message-encapsulation"><span class="header-section-number">2.4</span> Message Encapsulation</a></li>
+  </ul></li>
   <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a></li>
   <li><a href="#progress" id="toc-progress" class="nav-link" data-scroll-target="#progress"><span class="header-section-number">4</span> Progress</a></li>
   <li><span class="header-section-number">5</span> References</li>
@@ -523,7 +529,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">July 1, 2026</p>
+      <p class="date-modified">July 8, 2026</p>
     </div>
   </div>
     
@@ -540,23 +546,51 @@ window.Quarto = {
 </section>
 <section id="protocol-design" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="protocol-design"><span class="header-section-number">2</span> Protocol Design</h2>
-<p>A naive application of CSIDH to UPKE fails because repeated additions of short update vectors (represented in <span class="math inline">\(\mathbb{Z}^{\ell}\)</span>) center the new keys around the old ones, leading to information leakage, and cause the <span class="math inline">\(L_1\)</span>-norm to grow until the decryption process becomes unacceptably inefficient.</p>
-<p>To overcome this, the CSIDH UPKE protocol requires the exact order <span class="math inline">\(N\)</span> of the class group <span class="math inline">\(cl(\mathcal{O}) \cong \mathbb{Z}_N\)</span> to be known, allowing keys to be represented and uniformly sampled as simple integers modulo <span class="math inline">\(N\)</span>. The protocol leverages a Data Encapsulation Mechanism (DEM) and a Key Derivation Function (KDF) to operate as a hybrid encryption scheme. It defines six core algorithms:</p>
+<p>A naive application of CSIDH to UPKE fails because repeated additions of short update vectors (represented in <span class="math inline">\(\mathbb{Z}^l\)</span>) center the new keys around the old ones, leading to information leakage. Furthermore, this causes the error term to grow with updates until the decryption process becomes unacceptably inefficient. To overcome these limitations, the CSIDH UPKE protocol requires a parameter set where the structure of the class group is completely computed and known. This mathematical property ensures unique group element representation and allows for uniform sampling.</p>
+<section id="parameters-primitives" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="parameters-primitives"><span class="header-section-number">2.1</span> Parameters &amp; Primitives</h3>
+<p>Before executing the protocol, participants establish the mathematical foundation and cryptographic primitives in a strict, logical sequence:</p>
 <ul>
-<li><strong>KeyGen(<span class="math inline">\(\lambda\)</span>)</strong>: Samples a secret key <span class="math inline">\(g_{sk}\)</span> uniformly at random from <span class="math inline">\(\mathbb{Z}_N\)</span>. It computes the public key <span class="math inline">\(E_{pk} := g_{sk} * E_0\)</span> by applying the group action to the starting curve <span class="math inline">\(E_0\)</span>. The algorithm outputs <span class="math inline">\((sk, pk) = (g_{sk}, E_{pk})\)</span>.</li>
-<li><strong>Encrypt(<span class="math inline">\(pk, m\)</span>)</strong>: Samples a random element <span class="math inline">\(g_{enc} \leftarrow \mathbb{Z}_N\)</span>. It computes a shared symmetric key <span class="math inline">\(K \leftarrow \text{KDF}(g_{enc} * pk)\)</span>, applies the group action to obtain <span class="math inline">\(E_{enc} \leftarrow g_{enc} * E_0\)</span>, and encrypts the message <span class="math inline">\(m\)</span> using the DEM to yield <span class="math inline">\(ctxt \leftarrow \text{DEM.Encrypt}(K, m)\)</span>. The final ciphertext is <span class="math inline">\(ct = (E_{enc}, ctxt)\)</span>.</li>
-<li><strong>Decrypt(<span class="math inline">\(sk, ct\)</span>)</strong>: Parses the ciphertext into <span class="math inline">\((E_{enc}, ctxt)\)</span>, derives the shared key <span class="math inline">\(K \leftarrow \text{KDF}(sk * E_{enc})\)</span>, and outputs the plaintext <span class="math inline">\(m\)</span> via <span class="math inline">\(\text{DEM.Decrypt}(K, ctxt)\)</span>.</li>
-<li><strong>GenUpdate()</strong>: Randomly samples an update value <span class="math inline">\(\mu\)</span> uniformly from <span class="math inline">\(\mathbb{Z}_N\)</span>.</li>
-<li><strong>UpdatePrivate(<span class="math inline">\(sk, \mu\)</span>)</strong>: Computes the updated secret key by performing modular addition: <span class="math inline">\(sk' \leftarrow sk + \mu \pmod N\)</span>.</li>
-<li><strong>UpdatePublic(<span class="math inline">\(pk, \mu\)</span>)</strong>: Updates the public key by applying the group action corresponding to the update value: <span class="math inline">\(pk' \leftarrow \mu * pk\)</span>.</li>
+<li><strong>Prime Field <span class="math inline">\(p\)</span></strong>: The protocol fixes a large prime of the form <span class="math inline">\(p = 4 \cdot \ell_1 \cdots \ell_n - 1\)</span>, where <span class="math inline">\(\ell_i\)</span> are small, distinct odd primes.</li>
+<li><strong>Base Curve <span class="math inline">\(E_0\)</span></strong>: The starting supersingular elliptic curve agreed upon by participants, defined as <span class="math inline">\(E_0 : y^2 = x^3 + x\)</span> over <span class="math inline">\(\mathbb{F}_p\)</span>. The condition <span class="math inline">\(p \equiv 3 \pmod 4\)</span> ensures <span class="math inline">\(E_0\)</span> is supersingular.</li>
+<li><strong><span class="math inline">\(cl(\mathcal{O})\)</span></strong>: The ideal-class group of the <span class="math inline">\(\mathbb{F}_p\)</span>-rational endomorphism ring <span class="math inline">\(\mathcal{O}\)</span> corresponding to the commutative supersingular isogeny graph of <span class="math inline">\(E_0\)</span>.</li>
+<li><strong>Group Order <span class="math inline">\(N\)</span></strong>: The exact known order of the class group <span class="math inline">\(cl(\mathcal{O})\)</span>.</li>
+<li><strong><span class="math inline">\(*\)</span></strong>: The group action, which applies an isogeny (derived from an element in <span class="math inline">\(\mathbb{Z}/N\mathbb{Z}\)</span>) to a supersingular elliptic curve.</li>
+<li><strong><span class="math inline">\(\text{KDF}\)</span> and <span class="math inline">\(\text{DEM}\)</span></strong>: A Key Derivation Function and a Data Encapsulation Mechanism, which together provide hybrid symmetric encryption and decryption capabilities.</li>
 </ul>
-<p>By utilizing modular arithmetic over <span class="math inline">\(\mathbb{Z}_N\)</span> for private updates, the new secret key is guaranteed to be uniformly distributed in <span class="math inline">\(\mathbb{Z}_N\)</span> and independent of the prior key, completely eliminating error accumulation and data leakage.</p>
+</section>
+<section id="keys-initialization" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="keys-initialization"><span class="header-section-number">2.2</span> Keys &amp; Initialization</h3>
+<p>The protocol initializes a participant’s long-lived cryptographic keys via the <strong>KeyGen()</strong> algorithm.</p>
+<ul>
+<li><strong>Private Key:</strong> A secret key <span class="math inline">\(g_{sk}\)</span> is sampled uniformly at random from <span class="math inline">\(\mathbb{Z}/N\mathbb{Z}\)</span>.</li>
+<li><strong>Public Key:</strong> The public key <span class="math inline">\(E_{pk} := g_{sk} * E_0\)</span> is computed by applying the group action to the starting curve.</li>
+<li><strong>Output:</strong> The algorithm outputs the initial keypair <span class="math inline">\((sk, pk) = (g_{sk}, E_{pk})\)</span>.</li>
+</ul>
+</section>
+<section id="key-updatability" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="key-updatability"><span class="header-section-number">2.3</span> Key Updatability</h3>
+<p>These distinct functions allow the keypair to be asynchronously updated, restoring security in the event of compromised secret values. By utilizing uniform sampling and modular arithmetic over <span class="math inline">\(\mathbb{Z}/N\mathbb{Z}\)</span>, the updated secret key leaks no information about the previous secret key, avoiding error accumulation and ensuring both forward secrecy and post-compromise security.</p>
+<ul>
+<li><strong>Update Generation (GenUpdate):</strong> An update value <span class="math inline">\(\mu\)</span> is sampled uniformly at random from <span class="math inline">\(\mathbb{Z}/N\mathbb{Z}\)</span>.</li>
+<li><strong>Private Key Update (UpdatePrivate):</strong> The updated secret key is computed via straightforward modular addition, outputting <span class="math inline">\(sk' \leftarrow sk + \mu \pmod N\)</span>.</li>
+<li><strong>Public Key Update (UpdatePublic):</strong> The public key is updated by applying the group action corresponding to the update value, outputting <span class="math inline">\(pk' \leftarrow \mu * pk\)</span>.</li>
+</ul>
+</section>
+<section id="message-encapsulation" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="message-encapsulation"><span class="header-section-number">2.4</span> Message Encapsulation</h3>
+<p>To securely transmit a plaintext message <span class="math inline">\(m\)</span>, the protocol uses the following hybrid encapsulation algorithms:</p>
+<ul>
+<li><strong>Encryption (Encrypt):</strong> The sender samples a random ephemeral element <span class="math inline">\(g_{enc} \leftarrow \mathbb{Z}/N\mathbb{Z}\)</span> and computes a shared symmetric key <span class="math inline">\(K \leftarrow \text{KDF}(g_{enc} * pk)\)</span>. They apply the group action to obtain the ephemeral public curve <span class="math inline">\(E_{enc} \leftarrow g_{enc} * E_0\)</span> and encrypt the message using the DEM to yield <span class="math inline">\(ctxt \leftarrow \text{DEM.Encrypt}(K, m)\)</span>. The output is the combined ciphertext <span class="math inline">\(ct = (E_{enc}, ctxt)\)</span>.</li>
+<li><strong>Decryption (Decrypt):</strong> The recipient parses the ciphertext <span class="math inline">\(ct\)</span> into <span class="math inline">\((E_{enc}, ctxt)\)</span> and derives the matching shared symmetric key <span class="math inline">\(K \leftarrow \text{KDF}(sk * E_{enc})\)</span>. They output the plaintext <span class="math inline">\(m\)</span> by executing <span class="math inline">\(\text{DEM.Decrypt}(K, ctxt)\)</span>.</li>
+</ul>
+</section>
 </section>
 <section id="security-assumptions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
 <p>The protocol is proven to satisfy IND-CPA-U (Indistinguishability Under Chosen Plaintext Attack with Updatability) security. This relies on the hardness of the <strong>Supersingular Isogeny Problem</strong>, i.e.&nbsp;computing an isogeny between two supersingular elliptic curves over <span class="math inline">\(\mathbb{F}_p\)</span> with the same number of rational points. In addition to this core mathematical problem, the security model depends on the following explicit assumptions:</p>
 <ol type="1">
-<li><strong>Uniform Sampling:</strong> The class group structure (<span class="math inline">\(N\)</span>) must be strictly known to allow uniform sampling from <span class="math inline">\(\mathbb{Z}_N\)</span>, ensuring that updates reveal zero information about previous secret keys.</li>
+<li><strong>Uniform Sampling:</strong> The class group structure (<span class="math inline">\(N\)</span>) must be strictly known to allow uniform sampling from <span class="math inline">\(\mathbb{Z}/N\mathbb{Z}\)</span>, ensuring that updates reveal zero information about previous secret keys.</li>
 <li><strong>Subexponential Precomputation:</strong> Computing the class group structure takes subexponential time. The scheme assumes attackers cannot break the underlying isogeny mapping itself, even if sufficient resources eventually allow scaling this subexponential initialization phase.</li>
 <li><strong>DEM Security:</strong> The underlying Data Encapsulation Mechanism (DEM) must be fundamentally secure to ensure the hybrid construction provides baseline IND-CPA security.</li>
 </ol>
