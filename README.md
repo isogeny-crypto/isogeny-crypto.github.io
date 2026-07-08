@@ -209,4 +209,4 @@ Study the attached file and generate a detailed, concrete description of the new
 3. Security Assumptions (what problems are assumed hard, whether assumptions are new or borrowed from previous schemes) 
 ```
 
-Iterate until you get a good initial draft. Then proof read and make necessary edits like adding references, hyperlinks, and `tikz` diagram of the protocol (generated from screenshot using LLM, eg. Anthropic Claude Sonnet or Mitral Vibe/Le Chat).
+Iterate until you get a good initial draft. Then proof read and make necessary edits like adding references, hyperlinks, and `tikz` diagram of the protocol (generated from screenshot using LLM, eg. Anthropic Claude Sonnet or Mistral Vibe/Le Chat).

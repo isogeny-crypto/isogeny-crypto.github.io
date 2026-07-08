@@ -7,7 +7,6 @@ date: 2026-06-12
 ## Overview
 
 >  It was a [NIST PQC competition](https://sike.org/) candidate but is now broken by a polynomial time classical algorithm.
-. 
 
 The Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange protocol designed to be secure against quantum computer attacks. Diffie-Hellman-type protocols inherently require commutativity to establish a shared secret [@sidh]. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input. 
 
@@ -88,11 +87,11 @@ The protocol dictates that Alice and Bob conduct random walks on two distinct is
 * Concurrently, Bob computes a new isogeny $\phi'_B : E_A \rightarrow E_{BA}$ utilizing Alice's evaluated points, with the kernel $\langle [m_B]\phi_A(P_B) + [n_B]\phi_A(Q_B) \rangle$.
 * The curves $E_{AB}$ and $E_{BA}$ are isomorphic, allowing both parties to establish a common shared key by computing the $j$-invariant $j(E_{AB})$.
 
-## Security Assumptions {#security-assumptions}
-
-* **Hardness Problem:** The scheme relies on the conjectured difficulty of finding an isogeny between two supersingular elliptic curves. 
+## Security Assumptions
 
 * **Computational Supersingular Isogeny (CSSI) problem:** A unique characteristic of SIDH is the publication of the evaluated torsion basis points (the auxiliary input required for commutativity). The authors state that providing these outputs does not appear to make the underlying problem of finding the secret isogenies any easier.
+
+* **Supersingular Decision Diffie-Hellman (SSDDH) problem**: The SSDDH problem tests whether an adversary can successfully distinguish the valid shared secret curve $E_{AB}$ (derived from the actual secret kernels) from a completely random curve $E_C$, when given both parties' public curves and evaluated auxiliary points.
 
 * **Resistance to Quantum Group Actions:** Because the protocol is not fundamentally based on an abelian group action, it is completely immune to the subexponential quantum attacks that rendered ordinary isogeny networks insecure.
 

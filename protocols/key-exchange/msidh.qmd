@@ -1,0 +1,82 @@
+---
+title: "M-SIDH"
+subtitle: "Masked torsion points SIDH"
+date: 2026-07-08
+---
+
+## Overview
+
+The Masked torsion points Supersingular Isogeny Diffie-Hellman (M-SIDH) protocol is a countermeasure designed to secure the SIDH key exchange against the [devastating torsion point attacks](/protocols/key-exchange/sidh.qmd#progress). In the original SIDH protocol, the exact images of torsion points are revealed, which allows attackers to embed the secret isogeny into a higher-dimensional isogeny problem and break the scheme. M-SIDH mitigates this by keeping the degrees of the secret isogenies fixed while partially hiding the torsion point information [@msidh-mdsidh]. Specifically, the protocol masks the torsion point images by scaling them with a random integer (a square root of unity). To prevent the efficient recovery of this hidden scalar using pairings and discrete logarithms, the protocol requires the isogeny degrees to be smooth integers with a large number of distinct prime factors. This ensures that the masking scalar has an exponential number of square roots modulo the isogeny degrees, thereby preserving the security of the protocol while facilitating a successful key exchange.
+
+## Protocol Design
+
+The M-SIDH protocol relies on similar algebraic structures as SIDH but introduces masking scalars to obscure the exact torsion point mappings.
+
+### Public Parameters
+
+The global parameters dictate the structure of the underlying finite fields and curves. Let $\lambda$ be the target security parameter and let $t = t(\lambda) \in \mathbb{N}$ be an integer dependent on $\lambda$.
+
+*   **Isogeny Degrees ($A$ and $B$):** Let $A = \prod_{i=1}^t l_i$ and $B = \prod_{i=1}^t q_i$ be coprime integers, where $l_i$ and $q_i$ are distinct small primes.
+*   **Characteristic ($p$):** Let $p = ABf - 1$ be a prime, where $f$ is a small cofactor. The parameters are chosen such that $A \approx B \approx \sqrt{p}$.
+*   **Starting Curve ($E_0$):** Let $E_0$ be a supersingular elliptic curve defined over $\mathbb{F}_{p^2}$. 
+*   **Torsion Bases:** The bases for the $A$-torsion and $B$-torsion subgroups are fixed publicly as $E_0[A] = \langle P_A, Q_A \rangle$ and $E_0[B] = \langle P_B, Q_B \rangle$.
+*   **Masking Sets ($\mu_2(A)$ and $\mu_2(B)$):** We define $\mu_2(N):=\{x \in \mathbb{Z}/N\mathbb{Z} \mid x^2 \equiv 1 \pmod N\}$ as the set of square roots of unity modulo $N$.
+
+The complete public parameters are $(E_0, p, A, B, P_A, Q_A, P_B, Q_B)$.
+
+### Key Generation and Exchange
+
+During this phase, Alice and Bob generate their secret isogenies, mask the resulting torsion points, and transmit them. 
+
+**Alice's Operations:**
+
+1.  **Secret Key:** Alice samples a uniformly random integer $a \in \mathbb{Z}/A\mathbb{Z}$ as her secret key ($sk_A = a$).
+2.  **Masking Scalar:** Alice samples a uniformly random scalar $\alpha \in \mu_2(B)$. The integer $\alpha$ is deleted immediately after the public key is generated.
+3.  **Isogeny Computation:** She computes the cyclic isogeny $\phi_A: E_0 \rightarrow E_A = E_0/\langle P_A + [a]Q_A \rangle$.
+4.  **Public Key:** Alice masks her output torsion points by computing $R_b = [\alpha]\phi_A(P_B)$ and $S_b = [\alpha]\phi_A(Q_B)$. She publishes her public key as $pk_A = (E_A, R_b, S_b)$. 
+
+**Bob's Operations:**
+
+1.  **Secret Key:** Bob samples a uniformly random integer $b \in \mathbb{Z}/B\mathbb{Z}$ as his secret key ($sk_B = b$).
+2.  **Masking Scalar:** Bob samples a uniformly random scalar $\beta \in \mu_2(A)$. The integer $\beta$ is deleted immediately after use.
+3.  **Isogeny Computation:** He computes the cyclic isogeny $\phi_B: E_0 \rightarrow E_B = E_0/\langle P_B + [b]Q_B \rangle$.
+4.  **Public Key:** Bob masks his output torsion points by computing $R_a = [\beta]\phi_B(P_A)$ and $S_a = [\beta]\phi_B(Q_A)$. He publishes his public key as $pk_B = (E_B, R_a, S_a)$.
+
+### Shared Key Computation
+
+Upon receiving each other's public keys, the parties verify the integrity of the masked points using the Weil pairing. Because the masking scalars are square roots of unity, the pairings of the masked points equal the pairings of the unmasked points.
+
+**Alice's Check and Computation:**
+
+1. Upon receiving Bob's public key $(E_B, R_a, S_a)$, Alice checks that $e_A(R_a, S_a) = e_A(P_A, Q_A)^B$. If the check fails, she aborts.
+2. If valid, she computes the isogeny $\phi_A': E_B \rightarrow E_{BA} = E_B/\langle R_a + [a]S_a \rangle$.
+3. Her shared key is the $j$-invariant $j(E_{BA})$.
+
+**Bob's Check and Computation:**
+
+1. Upon receiving Alice's public key $(E_A, R_b, S_b)$, Bob checks that $e_B(R_b, S_b) = e_B(P_B, Q_B)^A$. If the check fails, he aborts.
+2. If valid, he computes the isogeny $\phi_B': E_A \rightarrow E_{AB} = E_A/\langle R_b + [b]S_b \rangle$.
+3. His shared key is the $j$-invariant $j(E_{AB})$.
+
+Due to the commutative nature of the isogeny kernels, $E_{AB} \cong E_{BA}$, meaning both parties derive the exact same $j$-invariant as their shared secret.
+
+
+## Security Assumptions
+
+The foundational security of M-SIDH relies on a modified version of the isogeny with torsion problem. 
+
+> Given a supersingular curve $E_0/\mathbb{F}_{p^2}$ such that $\#E_0(\mathbb{F}_{p^2}) = (ABf)^2$, bases $P, Q$ for $E_0[B]$, the codomain curve $E_A$ of a uniformly random $A$-isogeny $\phi: E_0 \rightarrow E_A$, and the masked images $P' = [\alpha]\phi(P)$ and $Q' = [\alpha]\phi(Q)$ (where $\alpha$ is a uniformly random element of $\mu_2(B)$), compute the isogeny $\phi$. 
+
+This problem formulation is a new variant designed specifically for this protocol. It modifies the standard SIDH problem by supplying torsion point images exclusively up to an unknown scalar multiple $\alpha$, where $\alpha^2 \equiv 1 \pmod B$. 
+
+For the security assumptions to hold, the protocol explicitly requires:
+
+1.  **High Square Root Count:** The number of prime factors $t$ must be sufficiently large. If an attacker only needs the exact images of roughly $\sqrt{B}$ torsion points (involving a subset of prime factors $N \approx \sqrt{A}$), they could simply brute-force the square roots of unity modulo $N$. To maintain an exponential search space (preventing Grover's quantum search from succeeding), the protocol assumes $t-n+1 \ge 2\lambda$.
+2.  **No Short-Degree Endomorphisms on $E_0$:** M-SIDH assumes the starting curve $E_0$ does not possess a known small-degree endomorphism. If $E_0$ is a curve like $j=1728$ with a known non-trivial automorphism, an attacker can construct a "[lollipop endomorphism](/protocols/key-exchange/seta.qmd#decryption)" $\psi = \phi \circ \iota \circ \hat{\phi}$. Since the scalar squares to $1$ ($\alpha^2 = 1 \pmod A$), the action of the masked points can unmask the evaluation of this endomorphism precisely, enabling an expected polynomial-time attack. Thus, $E_0$ must be generated as a random supersingular curve with an unknown endomorphism ring.
+3.  **Adaptive Security Constraints:** Like standard [SIDH](/protocols/key-exchange/sidh.qmd#progress), M-SIDH is assumed to be vulnerable to adaptive attacks. Consequently, M-SIDH is only secure in ephemeral key exchange scenarios or when guarded by a CCA transform (like the Fujisaki-Okamoto transform in SIKE).
+
+## Progress
+
+TODO
+
+2023/1433 and 2024/459 and 2025/2075
