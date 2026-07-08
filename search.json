@@ -30,113 +30,168 @@
     ]
   },
   {
-    "objectID": "protocols/key-exchange/ksidh.html",
-    "href": "protocols/key-exchange/ksidh.html",
-    "title": "\\(k\\)-SIDH",
+    "objectID": "protocols/key-exchange/csigamal.html",
+    "href": "protocols/key-exchange/csigamal.html",
+    "title": "C-SiGamal",
     "section": "",
-    "text": "Broken by a polynomial time classical algorithm.\n\nThe \\(k\\)-SIDH protocol introduces a generic transformation designed to secure SIDH key agreement against active attacks in the static-static setting [AzJaLe17].\nIn a standard SIDH static-static key exchange, a malicious participant can mount an adaptive attack by sending specialized, manipulated public torsion points. By observing whether the subsequent key validation succeeds or fails, the attacker can iteratively leak the honest party’s static private key. Extant countermeasures, such as the Fujisaki-Okamoto transform, enforce indirect validation by requiring the untrusted party to disclose their private key. While secure, this precludes the use of static-static drop-in replacements.\nTo thwart these attacks without exposing private keys, \\(k\\)-SIDH uses a multiple instances model. Instead of a single key, each party generates \\(k\\) different keys. During the exchange, the participants perform key agreement using all \\(k^2\\) combinations of their individual keys. The resulting \\(k^2\\) shared secrets are hashed together. If a malicious, modified public key is used, it will almost certainly cause at least one of the \\(k^2\\) key derivations to fail, causing the final hashed validation to fail. This expands the space of failure outcomes exponentially, rendering it computationally infeasible for an attacker to predict the correct final hash and salvage the attack.",
+    "text": "C-SiGamal is a compressed variant of SiGamal that drastically reduces the communication overhead [MoOnTa20]. Specifically, the bit length of a ciphertext in C-SiGamal is half that of a standard SiGamal ciphertext, requiring only twice the bit length of the underlying prime \\(p\\). This compression is achieved by modifying the encryption logic to omit sending a target curve and a masked point, instead employing a deterministically generated base point \\(P_E\\) on the target curve and a carefully computed intermediate scalar \\(\\mu^*\\).",
     "crumbs": [
       "Key Exchange",
-      "$k$-SIDH"
+      "C-SiGamal"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/ksidh.html#overview",
-    "href": "protocols/key-exchange/ksidh.html#overview",
-    "title": "\\(k\\)-SIDH",
+    "objectID": "protocols/key-exchange/csigamal.html#overview",
+    "href": "protocols/key-exchange/csigamal.html#overview",
+    "title": "C-SiGamal",
     "section": "",
-    "text": "Broken by a polynomial time classical algorithm.\n\nThe \\(k\\)-SIDH protocol introduces a generic transformation designed to secure SIDH key agreement against active attacks in the static-static setting [AzJaLe17].\nIn a standard SIDH static-static key exchange, a malicious participant can mount an adaptive attack by sending specialized, manipulated public torsion points. By observing whether the subsequent key validation succeeds or fails, the attacker can iteratively leak the honest party’s static private key. Extant countermeasures, such as the Fujisaki-Okamoto transform, enforce indirect validation by requiring the untrusted party to disclose their private key. While secure, this precludes the use of static-static drop-in replacements.\nTo thwart these attacks without exposing private keys, \\(k\\)-SIDH uses a multiple instances model. Instead of a single key, each party generates \\(k\\) different keys. During the exchange, the participants perform key agreement using all \\(k^2\\) combinations of their individual keys. The resulting \\(k^2\\) shared secrets are hashed together. If a malicious, modified public key is used, it will almost certainly cause at least one of the \\(k^2\\) key derivations to fail, causing the final hashed validation to fail. This expands the space of failure outcomes exponentially, rendering it computationally infeasible for an attacker to predict the correct final hash and salvage the attack.",
+    "text": "C-SiGamal is a compressed variant of SiGamal that drastically reduces the communication overhead [MoOnTa20]. Specifically, the bit length of a ciphertext in C-SiGamal is half that of a standard SiGamal ciphertext, requiring only twice the bit length of the underlying prime \\(p\\). This compression is achieved by modifying the encryption logic to omit sending a target curve and a masked point, instead employing a deterministically generated base point \\(P_E\\) on the target curve and a carefully computed intermediate scalar \\(\\mu^*\\).",
     "crumbs": [
       "Key Exchange",
-      "$k$-SIDH"
+      "C-SiGamal"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/ksidh.html#protocol-design",
-    "href": "protocols/key-exchange/ksidh.html#protocol-design",
-    "title": "\\(k\\)-SIDH",
+    "objectID": "protocols/key-exchange/csigamal.html#protocol-design",
+    "href": "protocols/key-exchange/csigamal.html#protocol-design",
+    "title": "C-SiGamal",
     "section": "2 Protocol Design",
-    "text": "2 Protocol Design\nThe \\(k\\)-SIDH key agreement process requires both parties (Alice and Bob) to perform \\(k^2\\) pairwise derivations.\n\n2.1 Setup\nThe global parameters \\(gp\\) are identical to standard SIDH:\n\nA preimage-resistant hash function \\(H\\).\nA prime number \\(p = 2^m 3^n f \\pm 1\\).\nA supersingular elliptic curve \\(E/\\mathbb{F}_{p^2}\\).\nFixed, independent torsion bases: \\(P_A, Q_A \\in E[2^m]\\) and \\(P_B, Q_B \\in E[3^n]\\).\n\n\n\n2.2 Key Generation\n\n2.2.1 Alice’s Key Generation\n\nAlice generates \\(k\\) random private keys: \\(\\alpha_i \\in_R \\mathbb{Z}/2^m\\mathbb{Z}\\) for \\(1 \\le i \\le k\\).\nFor each key, she computes a \\(2^m\\)-isogeny: \\(\\phi_{Ai}: E \\rightarrow E_{Ai} = E / \\langle P_A + [\\alpha_i]Q_A \\rangle\\).\nShe projects Bob’s torsion bases through each isogeny: \\(R_i = \\phi_{Ai}(P_B)\\) and \\(S_i = \\phi_{Ai}(Q_B)\\).\nHer public key is the set of \\(k\\) tuples: \\(\\{(E_{Ai}, R_i, S_i)\\}_{i=1}^k\\).\n\n\n\n2.2.2 Bob’s Key Generation\n\nBob generates \\(k\\) random private keys: \\(\\beta_j \\in_R \\mathbb{Z}/3^n\\mathbb{Z}\\) for \\(1 \\le j \\le k\\).\nFor each key, he computes a \\(3^n\\)-isogeny: \\(\\phi_{Bj}: E \\rightarrow E_{Bj} = E / \\langle P_B + [\\beta_j]Q_B \\rangle\\).\nHe projects Alice’s torsion bases through each isogeny: \\(U_j = \\phi_{Bj}(P_A)\\) and \\(V_j = \\phi_{Bj}(Q_A)\\).\nHis public key is the set of \\(k\\) tuples: \\(\\{(E_{Bj}, U_j, V_j)\\}_{j=1}^k\\).\n\n\n\n\n2.3 Communication\nAlice and Bob exchange their respective lists of \\(k\\) public keys.\n\n2.3.1 Alice’s Computation\n\nFor every pair \\((i, j)\\) where \\(1 \\le i, j \\le k\\), Alice uses Bob’s \\(i\\)-th public key and her \\(j\\)-th private key to compute the \\(k^2\\) shared curves: \\[E_{BiAj} = E_{Bi} / \\langle U_i + [\\alpha_j]V_i \\rangle\\]\nShe extracts the j-invariants to form the shared secrets: \\(z_{i,j} = j(E_{BiAj})\\).\nShe computes the combined hash: \\(h = H(z_{1,1}, \\dots, z_{k,k})\\).\n\n\n\n2.3.2 Bob’s Computation\n\nFor every pair \\((i, j)\\), Bob uses Alice’s \\(j\\)-th public key and his \\(i\\)-th private key to compute: \\[E_{AjBi} = E_{Aj} / \\langle R_j + [\\beta_i]S_j \\rangle\\]\nHe extracts the j-invariants: \\(z'_{i,j} = j(E_{AjBi})\\).\nHe computes the combined hash: \\(h' = H(z'_{1,1}, \\dots, z'_{k,k})\\).\n\n\n\n\n2.4 Verification\n\nValidation: Both parties perform validation tests on the received public keys. Alice verifies that for each \\(j\\), \\(U_j\\) and \\(V_j\\) are independent points of order \\(2^m\\) on \\(E_{Bj}\\) and that the Weil pairing holds: \\[e_{2^m}(U_j, V_j) = e_{2^m}(P_A, Q_A)^{3^n}\\] Bob performs the analogous checks.\nKey Confirmation:\n\nAlice sends \\(H(H(h))\\) to Bob. Bob verifies it equals \\(H(H(h'))\\).\nBob sends \\(H(h')\\) to Alice. Alice verifies it equals \\(H(h)\\).\n\nTermination: If any public key pair fails validation, or if the hashes mismatch, the protocol terminates. Otherwise, they continue with \\(h = h'\\) as their shared secret key.",
+    "text": "2 Protocol Design\nThe C-SiGamal protocol utilizes the free and transitive group action of an ideal class group on a set of supersingular elliptic curves.\n(E0;P0)(E1;P1)(E3;P3)(E4;P4)(E3;P03)(E4;(2¹+1)PE4)(E4;aP03)abb[¹¤]a\n\n2.1 Setup and Key Generation\n\nParameters: Choose a prime \\(p = 2^r \\cdot \\ell_1 \\cdots \\ell_n - 1\\), where \\(\\ell_1, \\dots, \\ell_n\\) are small distinct odd primes.\nBase Curve and Point: Set \\(E_0\\) as the elliptic curve \\(Y^2Z = X^3 + XZ^2\\) and sample a random point \\(P_0 \\in E_0(\\mathbb{F}_p)\\) of order \\(2^r\\).\nSecret Key: Alice samples a random integer \\(\\alpha\\) and a vector of integers \\(e_1, \\dots, e_n\\). She defines the ideal class \\(\\mathfrak{a} = \\langle \\alpha\\rangle \\mathfrak{l}_1^{e_1} \\cdots \\mathfrak{l}_n^{e_n} \\in J(\\mathbb{Z}[\\pi_p])\\). Her secret key is the tuple \\((\\alpha, e_1, \\dots, e_n)\\).\nPublic Key: Alice computes \\(E_1 := [\\mathfrak{a}]E_0\\) and pushes the point \\(P_0\\) through the isogeny to obtain \\(P_1 := \\mathfrak{a}P_0\\). Her public key is \\((E_0, P_0, E_1, P_1)\\).\n\n\n\n2.2 Encryption\nThe plaintext message space is \\(\\{0, 1\\}^{r-2}\\). To encrypt a plaintext message \\(\\mu\\):\n\nEphemeral Key: Bob samples random integers \\(\\beta, e'_1, \\dots, e'_n\\) and defines the ideal \\(\\mathfrak{b} = \\langle \\beta\\rangle\\mathfrak{l}_1^{e'_1} \\cdots \\mathfrak{l}_n^{e'_n}\\).\nIsogeny Computations: Bob computes the action of \\(\\mathfrak{b}\\) on Alice’s public keys, resulting in \\(E_3 := [\\mathfrak{b}]E_0\\), \\(P_3 := \\mathfrak{b}P_0\\), \\(E_4 := [\\mathfrak{b}]E_1\\), and \\(P_4 := \\mathfrak{b}P_1\\).\nPoint Derivation and Discrete Log: Let \\(E_4\\) be a supersingular elliptic curve defined by \\(Y^2Z = X^3 + aX^2Z + XZ^2\\). Bob identifies the deterministic point \\(P_{E_4} \\in E_4\\), computed as \\(P_{E_4} = \\ell_1 \\cdots \\ell_n \\tilde{P}_{E_4}\\), where \\(\\tilde{P}_{E_4}\\) is the point in \\(E_4(\\mathbb{F}_p)\\) with the largest \\(x\\)-coordinate among points whose orders are divisible by \\(2^r\\). He then evaluates \\((2\\mu + 1)P_{E_4}\\) and solves the discrete logarithm problem to find a scalar \\(\\mu^*\\) such that \\((2\\mu + 1)P_{E_4} = \\mu^* P_4\\) using the Pohlig-Hellman algorithm.\nCiphertext: Bob computes \\(P'_3 := \\mu^* P_3\\). He sends the compressed ciphertext \\((E_3, P'_3)\\) to Alice. (This successfully halves the size compared to SiGamal’s \\((E_3, P_3, E_4, P_4)\\)).\n\n\n\n2.3 Decryption\nUpon receiving the ciphertext \\((E_3, P'_3)\\):\n\nShared Curve Recovery: Alice applies her secret ideal \\(\\mathfrak{a}\\) to Bob’s ephemeral curve to compute \\(E_4 = [\\mathfrak{a}]E_3\\).\nPoint Evaluation: She pushes Bob’s masked point through her isogeny, calculating \\(\\mathfrak{a}P'_3\\).\nDiscrete Logarithm: Alice deterministically calculates \\(P_{E_4}\\) on the recovered curve \\(E_4\\) based on the maximum \\(x\\)-coordinate selection rule. She then solves the discrete logarithm problem over \\(\\mathbb{Z}/2^r\\mathbb{Z}\\) between \\(\\mathfrak{a}P'_3\\) and \\(P_{E_4}\\) using the Pohlig-Hellman algorithm to find the scalar \\(M\\).\nSign Disambiguation and Decoding: If the most significant bit of \\(M\\) is 1, Alice adjusts \\(M\\) by computing \\(2^r - M\\) to account for sign ambiguity in isogenies. Finally, she retrieves the plaintext as \\(\\tilde{\\mu} = (M - 1) / 2\\).",
     "crumbs": [
       "Key Exchange",
-      "$k$-SIDH"
+      "C-SiGamal"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/ksidh.html#security-assumptions",
-    "href": "protocols/key-exchange/ksidh.html#security-assumptions",
-    "title": "\\(k\\)-SIDH",
+    "objectID": "protocols/key-exchange/csigamal.html#security-assumptions",
+    "href": "protocols/key-exchange/csigamal.html#security-assumptions",
+    "title": "C-SiGamal",
     "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nThe security of the \\(k\\)-SIDH protocol relies on the following foundational assumptions.\n\nIntractability of the Supersingular Isogeny (SSI) Problem: The underlying primitive relies on the hardness of finding an isogeny of a specific degree with a cyclic kernel between two known supersingular elliptic curves defined over \\(\\mathbb{F}_{p^2}\\).\nIrreducibility of SIDH: The multiple-instances transformation requires the underlying key establishment to be irreducible. A protocol is irreducible if it is computationally infeasible for a malicious participant to craft a modified public key that successfully passes all public validation tests while generating the exact same shared secret across multiple different honest private keys. The authors prove that if an attacker could violate this irreducibility in SIDH, they could use that capability to efficiently solve the SSI problem.\nPreimage Resistance of the Hash Function: The hash function \\(H\\) must be strong and preimage-resistant. Since a dishonest Bob only receives \\(H(h)\\) (or \\(H(H(h))\\)), he must guess the entirety of the \\(k\\)-element preimage correctly. The hash prevents the attacker from successfully testing failures instance-by-instance.\nNo Curve Manipulation: The proof model primarily addresses adversaries that manipulate elliptic curve torsion points. It relies on the heuristic assumption that the curves themselves are not being maliciously generated or manipulated in unverified ways, noting that there are no known active attacks exploiting manipulated curves directly in this context.",
+    "text": "3 Security Assumptions\nSame as SiGamal’s assumptions.",
     "crumbs": [
       "Key Exchange",
-      "$k$-SIDH"
+      "C-SiGamal"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/ksidh.html#progress",
-    "href": "protocols/key-exchange/ksidh.html#progress",
-    "title": "\\(k\\)-SIDH",
-    "section": "4 Progress",
-    "text": "4 Progress\nTODO 2019/890",
-    "crumbs": [
-      "Key Exchange",
-      "$k$-SIDH"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/csidhupke.html",
-    "href": "protocols/key-exchange/csidhupke.html",
-    "title": "CSIDH UPKE",
-    "section": "",
-    "text": "The Key-Updatable Public-Key Encryption (UPKE) scheme based on CSIDH is the first post-quantum secure protocol of its kind, designed to improve the forward-secrecy and post-compromise security of secure messaging protocols [EJKM21]. UPKE constructions allow cryptographic keys to be updated over time, repairing security in the event of a key compromise. The protocol is a “Symmetric UPKE”, meaning that the same secret update value is applied to both the decryption key and the encryption key. A defining feature of this CSIDH UPKE variant is that it mandates the use of a parameter set where the structure of the class group is completely known (such as CSI-FiSh). This algebraic property ensures that secret elements and updates can be uniquely represented and uniformly sampled, completely preventing information leakage across sequential key updates.",
-    "crumbs": [
-      "Key Exchange",
-      "CSIDH UPKE"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/csidhupke.html#overview",
-    "href": "protocols/key-exchange/csidhupke.html#overview",
-    "title": "CSIDH UPKE",
-    "section": "",
-    "text": "The Key-Updatable Public-Key Encryption (UPKE) scheme based on CSIDH is the first post-quantum secure protocol of its kind, designed to improve the forward-secrecy and post-compromise security of secure messaging protocols [EJKM21]. UPKE constructions allow cryptographic keys to be updated over time, repairing security in the event of a key compromise. The protocol is a “Symmetric UPKE”, meaning that the same secret update value is applied to both the decryption key and the encryption key. A defining feature of this CSIDH UPKE variant is that it mandates the use of a parameter set where the structure of the class group is completely known (such as CSI-FiSh). This algebraic property ensures that secret elements and updates can be uniquely represented and uniformly sampled, completely preventing information leakage across sequential key updates.",
-    "crumbs": [
-      "Key Exchange",
-      "CSIDH UPKE"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/csidhupke.html#protocol-design",
-    "href": "protocols/key-exchange/csidhupke.html#protocol-design",
-    "title": "CSIDH UPKE",
-    "section": "2 Protocol Design",
-    "text": "2 Protocol Design\nA naive application of CSIDH to UPKE fails because repeated additions of short update vectors (represented in \\(\\mathbb{Z}^{\\ell}\\)) center the new keys around the old ones, leading to information leakage, and cause the \\(L_1\\)-norm to grow until the decryption process becomes unacceptably inefficient.\nTo overcome this, the CSIDH UPKE protocol requires the exact order \\(N\\) of the class group \\(cl(\\mathcal{O}) \\cong \\mathbb{Z}_N\\) to be known, allowing keys to be represented and uniformly sampled as simple integers modulo \\(N\\). The protocol leverages a Data Encapsulation Mechanism (DEM) and a Key Derivation Function (KDF) to operate as a hybrid encryption scheme. It defines six core algorithms:\n\nKeyGen(\\(\\lambda\\)): Samples a secret key \\(g_{sk}\\) uniformly at random from \\(\\mathbb{Z}_N\\). It computes the public key \\(E_{pk} := g_{sk} * E_0\\) by applying the group action to the starting curve \\(E_0\\). The algorithm outputs \\((sk, pk) = (g_{sk}, E_{pk})\\).\nEncrypt(\\(pk, m\\)): Samples a random element \\(g_{enc} \\leftarrow \\mathbb{Z}_N\\). It computes a shared symmetric key \\(K \\leftarrow \\text{KDF}(g_{enc} * pk)\\), applies the group action to obtain \\(E_{enc} \\leftarrow g_{enc} * E_0\\), and encrypts the message \\(m\\) using the DEM to yield \\(ctxt \\leftarrow \\text{DEM.Encrypt}(K, m)\\). The final ciphertext is \\(ct = (E_{enc}, ctxt)\\).\nDecrypt(\\(sk, ct\\)): Parses the ciphertext into \\((E_{enc}, ctxt)\\), derives the shared key \\(K \\leftarrow \\text{KDF}(sk * E_{enc})\\), and outputs the plaintext \\(m\\) via \\(\\text{DEM.Decrypt}(K, ctxt)\\).\nGenUpdate(): Randomly samples an update value \\(\\mu\\) uniformly from \\(\\mathbb{Z}_N\\).\nUpdatePrivate(\\(sk, \\mu\\)): Computes the updated secret key by performing modular addition: \\(sk' \\leftarrow sk + \\mu \\pmod N\\).\nUpdatePublic(\\(pk, \\mu\\)): Updates the public key by applying the group action corresponding to the update value: \\(pk' \\leftarrow \\mu * pk\\).\n\nBy utilizing modular arithmetic over \\(\\mathbb{Z}_N\\) for private updates, the new secret key is guaranteed to be uniformly distributed in \\(\\mathbb{Z}_N\\) and independent of the prior key, completely eliminating error accumulation and data leakage.",
-    "crumbs": [
-      "Key Exchange",
-      "CSIDH UPKE"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/csidhupke.html#security-assumptions",
-    "href": "protocols/key-exchange/csidhupke.html#security-assumptions",
-    "title": "CSIDH UPKE",
-    "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nThe protocol is proven to satisfy IND-CPA-U (Indistinguishability Under Chosen Plaintext Attack with Updatability) security. This relies on the hardness of the Supersingular Isogeny Problem, i.e. computing an isogeny between two supersingular elliptic curves over \\(\\mathbb{F}_p\\) with the same number of rational points. In addition to this core mathematical problem, the security model depends on the following explicit assumptions:\n\nUniform Sampling: The class group structure (\\(N\\)) must be strictly known to allow uniform sampling from \\(\\mathbb{Z}_N\\), ensuring that updates reveal zero information about previous secret keys.\nSubexponential Precomputation: Computing the class group structure takes subexponential time. The scheme assumes attackers cannot break the underlying isogeny mapping itself, even if sufficient resources eventually allow scaling this subexponential initialization phase.\nDEM Security: The underlying Data Encapsulation Mechanism (DEM) must be fundamentally secure to ensure the hybrid construction provides baseline IND-CPA security.",
-    "crumbs": [
-      "Key Exchange",
-      "CSIDH UPKE"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/csidhupke.html#progress",
-    "href": "protocols/key-exchange/csidhupke.html#progress",
-    "title": "CSIDH UPKE",
+    "objectID": "protocols/key-exchange/csigamal.html#progress",
+    "href": "protocols/key-exchange/csigamal.html#progress",
+    "title": "C-SiGamal",
     "section": "4 Progress",
     "text": "4 Progress\nTODO",
     "crumbs": [
       "Key Exchange",
-      "CSIDH UPKE"
+      "C-SiGamal"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/csidh.html",
+    "href": "protocols/key-exchange/csidh.html",
+    "title": "CSIDH",
+    "section": "",
+    "text": "CSIDH is a post-quantum commutative group action that enables efficient non-interactive key exchange [CLMP18]. The construction adapts the layout of earlier cryptosystems proposed by Couveignes and Rostovtsev-Stolbunov, but replaces the use of ordinary elliptic curves with supersingular elliptic curves defined over a large prime field \\(\\mathbb{F}_p\\) . A key advantage of using supersingular curves over \\(\\mathbb{F}_p\\) (for \\(p \\ge 5\\)) is that they always have exactly \\(p + 1\\) rational points, which trivially yields the highly composite order needed for efficiency.",
+    "crumbs": [
+      "Key Exchange",
+      "CSIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/csidh.html#overview",
+    "href": "protocols/key-exchange/csidh.html#overview",
+    "title": "CSIDH",
+    "section": "",
+    "text": "CSIDH is a post-quantum commutative group action that enables efficient non-interactive key exchange [CLMP18]. The construction adapts the layout of earlier cryptosystems proposed by Couveignes and Rostovtsev-Stolbunov, but replaces the use of ordinary elliptic curves with supersingular elliptic curves defined over a large prime field \\(\\mathbb{F}_p\\) . A key advantage of using supersingular curves over \\(\\mathbb{F}_p\\) (for \\(p \\ge 5\\)) is that they always have exactly \\(p + 1\\) rational points, which trivially yields the highly composite order needed for efficiency.",
+    "crumbs": [
+      "Key Exchange",
+      "CSIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/csidh.html#protocol-design",
+    "href": "protocols/key-exchange/csidh.html#protocol-design",
+    "title": "CSIDH",
+    "section": "2 Protocol Design",
+    "text": "2 Protocol Design\nThe core of the CSIDH protocol is based on the free and transitive action of the ideal-class group \\(cl(\\mathcal{O})\\) on the set of \\(\\mathbb{F}_p\\)-isomorphism classes of supersingular elliptic curves with an \\(\\mathbb{F}_p\\)-rational endomorphism ring isomorphic to \\(\\mathcal{O}\\).\n\n2.1 Parameters\nThe protocol fixes a large prime \\(p\\) of the form \\(4 \\cdot \\ell_1 \\cdots \\ell_n - 1\\), where \\(\\ell_i\\) are small, distinct odd primes. The base curve is defined as \\(E_0 : y^2 = x^3 + x\\) over \\(\\mathbb{F}_p\\). The requirement that \\(p \\equiv 3 \\pmod 4\\) ensures that \\(E_0\\) is supersingular and permits the use of efficient Montgomery arithmetic.\n\n\n2.2 Endomorphism Ring & Isogenies\nThe Frobenius endomorphism \\(\\pi\\) of \\(E_0\\) satisfies \\(\\pi^2 = -p\\), giving an \\(\\mathbb{F}_p\\)-rational endomorphism ring of \\(\\mathcal{O} = \\mathbb{Z}[\\pi]\\). Because \\(\\pi^2 - 1 \\equiv 0 \\pmod{\\ell_i}\\), the ideals \\(\\ell_i\\mathcal{O}\\) split into Elkies primes \\(\\mathfrak{l}_i = (\\ell_i, \\pi - 1)\\) and \\(\\bar{\\mathfrak{l}}_i = (\\ell_i, \\pi + 1)\\). The isogenies for \\(\\mathfrak{l}_i\\) can be evaluated efficiently because their kernels are generated by points of order \\(\\ell_i\\) that lie in the kernel of \\(\\pi - 1\\), meaning they are rational over the base field \\(\\mathbb{F}_p\\).\n\n\n2.3 Private Key\nA private key is constructed as an exponent vector \\((e_1, \\dots, e_n)\\) with each \\(e_i \\in \\{-m, \\dots, m\\}\\), representing the ideal class \\([\\mathfrak{l}_1^{e_1} \\mathfrak{l}_2^{e_2} \\cdots \\mathfrak{l}_n^{e_n}] \\in cl(\\mathcal{O})\\).\n\n\n2.4 Public Key\nAn individual’s public key (e.g., Alice’s key \\(A\\)) is the Montgomery coefficient of the curve \\(E_A : y^2 = x^3 + Ax^2 + x\\), which is obtained by applying the action of the secret key \\([a]\\) to the base curve \\(E_0\\).\n\n\n2.5 Key Exchange\nWhen Alice receives Bob’s public key \\(B\\), she first verifies that the curve \\(E_B\\) is supersingular. She then applies her secret ideal class action \\([\\mathfrak{a}]\\) to compute \\([\\mathfrak{a}]E_B = [\\mathfrak{a}][\\mathfrak{b}]E_0\\). The shared secret is the unique Montgomery coefficient \\(S\\) corresponding to the combined curve \\([\\mathfrak{a}][\\mathfrak{b}]E_0\\).",
+    "crumbs": [
+      "Key Exchange",
+      "CSIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/csidh.html#security-assumptions",
+    "href": "protocols/key-exchange/csidh.html#security-assumptions",
+    "title": "CSIDH",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nThe security of the CSIDH protocol relies on the hardness of an isogeny-finding problem analogous to the classical discrete logarithm problem.\n\nKey Recovery Problem: The fundamental computational assumption is that given two supersingular elliptic curves \\(E\\) and \\(E'\\) over \\(\\mathbb{F}_p\\) with the same \\(\\mathbb{F}_p\\)-rational endomorphism ring \\(\\mathcal{O}\\), it is computationally infeasible to find an ideal \\(\\mathfrak{a}\\) such that \\([\\mathfrak{a}]E = E'\\).\nQuantum Security: Breaking the scheme translates to solving an instance of the abelian hidden-shift problem. This problem can be addressed using subexponential-time quantum algorithms, such as those proposed by Kuperberg. The precise asymptotic complexity depends heavily on the cost of computing the isogeny oracle; combinations of algorithms yield bounds in the realm of \\(L_p[1/2, 1/\\sqrt{2}]\\).\nChosen-Ciphertext Security: Because CSIDH naturally affords efficient public-key validation, it avoids vulnerabilities related to the reuse of dishonest keys. This validation allows CSIDH to securely achieve non-interactive key exchange without resorting to additional chosen-ciphertext attack (CCA) transformations like the Fujisaki-Okamoto transform.",
+    "crumbs": [
+      "Key Exchange",
+      "CSIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/csidh.html#progress",
+    "href": "protocols/key-exchange/csidh.html#progress",
+    "title": "CSIDH",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO\n2023/793 and 2020/1188 and 2018/537 and 2019/1202 and 2019/725",
+    "crumbs": [
+      "Key Exchange",
+      "CSIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/mdsidh.html",
+    "href": "protocols/key-exchange/mdsidh.html",
+    "title": "MD-SIDH",
+    "section": "",
+    "text": "The Masked-Degree Supersingular Isogeny Diffie-Hellman (MD-SIDH) protocol is a countermeasure designed to secure the SIDH key exchange against devastating torsion point attacks. In the original SIDH protocol, the fixed degrees of the secret isogenies, combined with exact torsion point images, allow attackers to embed the secret isogeny into a higher-dimensional isogeny problem and break the scheme. MD-SIDH mitigates this by masking the degree of the secret isogeny [FoMoPe23]. Specifically, the degrees of the secret isogenies are no longer fixed public parameters, but are instead chosen as uniformly random divisors of public smooth integers. To prevent the efficient recovery of this secret degree using Weil pairing computations and discrete logarithms, the protocol requires masking the images of the torsion points by scaling them with a random invertible integer. This ensures the true degree remains hidden, preserving the security of the protocol while facilitating a successful key exchange.",
+    "crumbs": [
+      "Key Exchange",
+      "MD-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/mdsidh.html#overview",
+    "href": "protocols/key-exchange/mdsidh.html#overview",
+    "title": "MD-SIDH",
+    "section": "",
+    "text": "The Masked-Degree Supersingular Isogeny Diffie-Hellman (MD-SIDH) protocol is a countermeasure designed to secure the SIDH key exchange against devastating torsion point attacks. In the original SIDH protocol, the fixed degrees of the secret isogenies, combined with exact torsion point images, allow attackers to embed the secret isogeny into a higher-dimensional isogeny problem and break the scheme. MD-SIDH mitigates this by masking the degree of the secret isogeny [FoMoPe23]. Specifically, the degrees of the secret isogenies are no longer fixed public parameters, but are instead chosen as uniformly random divisors of public smooth integers. To prevent the efficient recovery of this secret degree using Weil pairing computations and discrete logarithms, the protocol requires masking the images of the torsion points by scaling them with a random invertible integer. This ensures the true degree remains hidden, preserving the security of the protocol while facilitating a successful key exchange.",
+    "crumbs": [
+      "Key Exchange",
+      "MD-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/mdsidh.html#protocol-design",
+    "href": "protocols/key-exchange/mdsidh.html#protocol-design",
+    "title": "MD-SIDH",
+    "section": "2 Protocol Design",
+    "text": "2 Protocol Design\nThe MD-SIDH protocol relies on algebraic structures similar SIDH, but introduces variable secret degrees and masking scalars to obscure the exact torsion point mappings and isogeny degrees.\n\n2.1 Public Parameters\nThe global parameters dictate the structure of the underlying finite fields and curves. Let \\(\\lambda\\) be the target security parameter and let \\(t = t(\\lambda) \\in \\mathbb{N}\\) be an integer dependent on \\(\\lambda\\).\n\nIsogeny Degree Bounds (\\(A\\) and \\(B\\)): Let \\(A = l_1^{a_1}\\cdots l_t^{a_t}\\) and \\(B = q_1^{b_1}\\cdots q_t^{b_t}\\) be two smooth, coprime integers.\nCharacteristic (\\(p\\)): Let \\(p = ABf - 1\\) be a prime, where \\(f\\) is a small cofactor. The parameters are chosen such that \\(A \\approx B\\).\nStarting Curve (\\(E_0\\)): Let \\(E_0\\) be a supersingular elliptic curve defined over \\(\\mathbb{F}_{p^2}\\).\nTorsion Bases: The bases for the \\(A\\)-torsion and \\(B\\)-torsion subgroups are fixed publicly as \\(E_0[A] = \\langle P_A, Q_A \\rangle\\) and \\(E_0[B] = \\langle P_B, Q_B \\rangle\\).\n\nThe complete public parameters are \\((E_0, p, A, B, P_A, Q_A, P_B, Q_B)\\).\n\n\n2.2 Key Generation and Exchange\nDuring this phase, Alice and Bob generate their secret isogenies using random divisors of the bounds, mask the resulting torsion points with random invertible scalars, and transmit them.\nAlice’s Operations:\n\nSecret Key: Alice samples a uniformly random divisor \\(A'\\) of \\(A\\) and a random point \\(R_A \\in E_0[A']\\). Her secret key is \\(sk_A = R_A\\).\nMasking Scalar: Alice samples a uniformly random integer \\(\\alpha \\in \\mathbb{Z}/B\\mathbb{Z}^\\times\\). The integer \\(\\alpha\\) can be deleted immediately after the public key is generated.\nIsogeny Computation: She computes the isogeny \\(\\phi_A: E_0 \\rightarrow E_A := E_0/\\langle R_A \\rangle\\).\nPublic Key: Alice masks her output torsion points by computing \\([\\alpha]\\phi_A(P_B)\\) and \\([\\alpha]\\phi_A(Q_B)\\). She publishes her public key as \\(pk_A = (E_A, [\\alpha]\\phi_A(P_B), [\\alpha]\\phi_A(Q_B))\\).\n\nBob’s Operations:\n\nSecret Key: Bob samples a uniformly random divisor \\(B'\\) of \\(B\\) and a random point \\(R_B \\in E_0[B']\\). His secret key is \\(sk_B = R_B\\).\nMasking Scalar: Bob samples a uniformly random integer \\(\\beta \\in \\mathbb{Z}/A\\mathbb{Z}^\\times\\). The integer \\(\\beta\\) can be deleted immediately after use.\nIsogeny Computation: He computes the isogeny \\(\\phi_B: E_0 \\rightarrow E_B := E_0/\\langle R_B \\rangle\\).\nPublic Key: Bob masks his output torsion points by computing \\([\\beta]\\phi_B(P_A)\\) and \\([\\beta]\\phi_B(Q_A)\\). He publishes his public key as \\(pk_B = (E_B, [\\beta]\\phi_B(P_A), [\\beta]\\phi_B(Q_A))\\).\n\n\n\n2.3 Shared Key Computation\nUpon receiving each other’s public keys, the parties use the masked points to recover the unmasked kernels for their respective second-step isogenies. Because the masking scalars are simply constant invertible multipliers over the entire torsion group, the subgroups generated by the mapped secret points remain unaffected.\nAlice’s Computation:\n\nUpon receiving Bob’s public key \\((E_B, [\\beta]\\phi_B(P_A), [\\beta]\\phi_B(Q_A))\\), Alice uses her knowledge of \\(R_A\\) to linearly combine the received points and recover the subgroup \\(\\langle R'_A \\rangle = \\langle \\phi_B(R_A) \\rangle\\).\nShe computes the isogeny \\(E_{AB} := E_B/\\langle R'_A \\rangle\\).\nHer shared key is the \\(j\\)-invariant \\(j(E_{AB})\\).\n\nBob’s Computation:\n\nUpon receiving Alice’s public key \\((E_A, [\\alpha]\\phi_A(P_B), [\\alpha]\\phi_A(Q_B))\\), Bob uses his knowledge of \\(R_B\\) to linearly combine the received points and recover the subgroup \\(\\langle R'_B \\rangle = \\langle \\phi_A(R_B) \\rangle\\).\nHe computes the isogeny \\(E_{BA} := E_A/\\langle R'_B \\rangle\\).\nHis shared key is the \\(j\\)-invariant \\(j(E_{BA})\\).\n\nDue to the commutative nature of the isogeny kernels, \\(j(E_{AB}) = j(E_{BA})\\), meaning both parties derive the exact same value as their shared secret.",
+    "crumbs": [
+      "Key Exchange",
+      "MD-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/mdsidh.html#security-assumptions",
+    "href": "protocols/key-exchange/mdsidh.html#security-assumptions",
+    "title": "MD-SIDH",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nMD-SIDH relies on a modified version of the isogeny with torsion problem, defined as follows:\n\nLet \\(E_0/\\mathbb{F}_{p^2}\\) be a supersingular elliptic curve where \\(\\#E_0(\\mathbb{F}_{p^2}) = (ABf)^2\\), with \\(E_0[B] = \\langle P, Q \\rangle\\). Let \\(A'\\) be a uniformly random divisor of \\(A\\), and let \\(\\alpha \\in \\mathbb{Z}/B\\mathbb{Z}^\\times\\) be a random scalar. Given a random \\(A'\\)-degree isogeny \\(\\phi: E_0 \\rightarrow E_A\\), finding \\(\\phi\\) from the public tuple \\((E_0, P, Q, E_A, [\\alpha]\\phi(P), [\\alpha]\\phi(Q))\\) must be computationally infeasible.\n\nBeyond the baseline assumptions of M-SIDH, the security of MD-SIDH critically depends on three specific conditions:\n\nDegree Obfuscation: While the square-free part of the random divisor \\(A'\\) can be recovered using the Weil pairing, extracting the remaining prime power factors must be mathematically hard.\nUnrestricted Scalar Masking: Hiding the torsion point images using any arbitrary invertible integer (\\(\\alpha\\)) must not introduce new structural vulnerabilities, even though it fails to preserve the Weil pairing exactly.\nNon-Cyclic Hardness: The core M-SIDH problem must still hold for non-cyclic isogenies. This is required because reducing an MD-SIDH instance (by removing the known square-free degree factors) naturally results in a non-cyclic M-SIDH instance.",
+    "crumbs": [
+      "Key Exchange",
+      "MD-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/mdsidh.html#progress",
+    "href": "protocols/key-exchange/mdsidh.html#progress",
+    "title": "MD-SIDH",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "MD-SIDH"
     ]
   },
   {
@@ -144,7 +199,7 @@
     "href": "protocols/key-exchange/psidh.html",
     "title": "pSIDH",
     "section": "",
-    "text": "Broken by a polynomial time quantum algorithm.\n\nThe pSIDH (prime-SIDH) protocol is a novel Non-Interactive Key Exchange (NIKE) scheme introduced to circumvent the catastrophic torsion-point attacks that broke smooth-degree isogeny protocols like SIDH and Séta. While SIDH utilizes secret isogenies of smooth degrees to allow for efficient evaluation via Vélu’s formulas, this smooth-degree structure fundamentally enables the recent polynomial-time attacks. pSIDH transitions the SIDH-style commutative isogeny diagram to the setting of large prime degrees.\nBecause standard evaluation of large prime-degree isogenies is computationally infeasible, pSIDH relies on a novel cryptographic tool: the suborder representation [Lero22]. In this scheme, secret keys are represented as quaternion ideals (the ideal representation), while public keys are broadcast as suborder representations. Compared to CSIDH, which also operates with a quantum-subexponential security profile and prime-degree elements, pSIDH relies on fundamentally different structural assumptions.",
+    "text": "Broken by a polynomial time quantum algorithm.\n\nThe pSIDH (prime-SIDH) protocol is a novel Non-Interactive Key Exchange (NIKE) scheme introduced to circumvent the catastrophic torsion-point attacks that broke smooth-degree isogeny protocols like SIDH and Séta. While SIDH utilizes secret isogenies of smooth degrees to allow for efficient evaluation via Vélu’s formulas, this smooth-degree structure fundamentally enables the polynomial-time attacks. pSIDH transitions the SIDH-style commutative isogeny diagram to the setting of large prime degrees.\nBecause standard evaluation of large prime-degree isogenies is computationally infeasible, pSIDH relies on a novel cryptographic tool: the suborder representation [Lero22]. In this scheme, secret keys are represented as quaternion ideals (the ideal representation), while public keys are broadcast as suborder representations.",
     "crumbs": [
       "Key Exchange",
       "pSIDH"
@@ -155,7 +210,7 @@
     "href": "protocols/key-exchange/psidh.html#overview",
     "title": "pSIDH",
     "section": "",
-    "text": "Broken by a polynomial time quantum algorithm.\n\nThe pSIDH (prime-SIDH) protocol is a novel Non-Interactive Key Exchange (NIKE) scheme introduced to circumvent the catastrophic torsion-point attacks that broke smooth-degree isogeny protocols like SIDH and Séta. While SIDH utilizes secret isogenies of smooth degrees to allow for efficient evaluation via Vélu’s formulas, this smooth-degree structure fundamentally enables the recent polynomial-time attacks. pSIDH transitions the SIDH-style commutative isogeny diagram to the setting of large prime degrees.\nBecause standard evaluation of large prime-degree isogenies is computationally infeasible, pSIDH relies on a novel cryptographic tool: the suborder representation [Lero22]. In this scheme, secret keys are represented as quaternion ideals (the ideal representation), while public keys are broadcast as suborder representations. Compared to CSIDH, which also operates with a quantum-subexponential security profile and prime-degree elements, pSIDH relies on fundamentally different structural assumptions.",
+    "text": "Broken by a polynomial time quantum algorithm.\n\nThe pSIDH (prime-SIDH) protocol is a novel Non-Interactive Key Exchange (NIKE) scheme introduced to circumvent the catastrophic torsion-point attacks that broke smooth-degree isogeny protocols like SIDH and Séta. While SIDH utilizes secret isogenies of smooth degrees to allow for efficient evaluation via Vélu’s formulas, this smooth-degree structure fundamentally enables the polynomial-time attacks. pSIDH transitions the SIDH-style commutative isogeny diagram to the setting of large prime degrees.\nBecause standard evaluation of large prime-degree isogenies is computationally infeasible, pSIDH relies on a novel cryptographic tool: the suborder representation [Lero22]. In this scheme, secret keys are represented as quaternion ideals (the ideal representation), while public keys are broadcast as suborder representations.",
     "crumbs": [
       "Key Exchange",
       "pSIDH"
@@ -177,7 +232,7 @@
     "href": "protocols/key-exchange/psidh.html#security-assumptions",
     "title": "pSIDH",
     "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nThe core security of pSIDH is tied to the SubOrder to Ideal Problem (SOIP), which relates more closely to the key recovery of CSIDH (involving partial endomorphism ring knowledge) than that of SIDH, yet maintains an SIDH-like key agreement flow.\n\nSubOrder to Ideal Problem (SOIP): This is the underlying key recovery assumption. It states that given a suborder representation \\(\\pi\\) of an isogeny \\(\\varphi\\) of prime degree \\(D\\), it is computationally infeasible to recover the ideal representation \\(I_\\varphi\\) (the secret key). The SOIP is shown to be equivalent to specific prime-degree instances of the Torsion to Ideal Problem (TIP). Because the degree \\(D\\) is a large prime, the \\(D\\)-torsion points are defined over an exponentially large field extension \\(\\mathbb{F}_{p^k}\\) (where \\(k = O(D)\\)). This prevents the polynomial-time torsion point attacks that devastated SIDH from being applied to SOIP. Thus, SOIP represents a robust new assumption designed to resist recent cryptanalytic breakthroughs.\nprime Supersingular Decisional Diffie-Hellman (pSSDDH): The semantic security of the key exchange relies on this decisional assumption. pSSDDH assumes that an adversary cannot distinguish the valid shared curve \\(E_{AB}\\) (where \\(\\text{End}(E_{AB}) \\cong \\mathcal{O}_R(I_A \\cap I_B)\\)) from a random curve \\(E_C\\) that is merely \\(D_A D_B\\)-isogenous to \\(E_0\\). This assumption directly borrows its structural formulation from the SSDDH problem introduced in the original SIDH proposal, but strictly limits the isogeny degrees to large primes and leverages suborder representations rather than torsion point images.",
+    "text": "3 Security Assumptions\nThe core security of pSIDH is tied to the SubOrder to Ideal Problem (SOIP), which relates more closely to the key recovery of CSIDH (involving partial endomorphism ring knowledge) than that of SIDH, yet maintains an SIDH-like key agreement flow.\n\nSubOrder to Ideal Problem (SOIP): This is the underlying key recovery assumption. It states that given a suborder representation \\(\\pi\\) of an isogeny \\(\\varphi\\) of prime degree \\(D\\), it is computationally infeasible to recover the ideal representation \\(I_\\varphi\\) (the secret key). Because the degree \\(D\\) is a large prime, the \\(D\\)-torsion points are defined over an exponentially large field extension \\(\\mathbb{F}_{p^k}\\) (where \\(k = O(D)\\)). This prevents the polynomial-time torsion point attacks that devastated SIDH from being applied to SOIP. However, there is a sub-exponential quantum attack against the SOIP.\nprime Supersingular Decisional Diffie-Hellman (pSSDDH): The semantic security of the key exchange relies on this decisional assumption. pSSDDH assumes that an adversary cannot distinguish the valid shared curve \\(E_{AB}\\) (where \\(\\text{End}(E_{AB}) \\cong \\mathcal{O}_R(I_A \\cap I_B)\\)) from a random curve \\(E_C\\) that is merely \\(D_A D_B\\)-isogenous to \\(E_0\\). This assumption directly borrows its structural formulation from the SSDDH problem introduced in the original SIDH proposal, but strictly limits the isogeny degrees to large primes and leverages suborder representations rather than torsion point images.",
     "crumbs": [
       "Key Exchange",
       "pSIDH"
@@ -188,7 +243,7 @@
     "href": "protocols/key-exchange/psidh.html#progress",
     "title": "pSIDH",
     "section": "4 Progress",
-    "text": "4 Progress\nTODO\n2023/779",
+    "text": "4 Progress\nTODO\n2021/282 and 2023/779",
     "crumbs": [
       "Key Exchange",
       "pSIDH"
@@ -243,7 +298,7 @@
     "href": "protocols/key-exchange/festa.html#progress",
     "title": "FESTA",
     "section": "4 Progress",
-    "text": "4 Progress\nTODO",
+    "text": "4 Progress\nTODO\n2023/1092 and 2023/1433 and 2024/459 and 2025/2075",
     "crumbs": [
       "Key Exchange",
       "FESTA"
@@ -518,7 +573,7 @@
     "href": "protocols/key-exchange/sidh.html",
     "title": "SIDH",
     "section": "",
-    "text": "It was a NIST PQC competition candidate but is now broken by a polynomial time classical algorithm. .\n\nThe Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange protocol designed to be secure against quantum computer attacks. Diffie-Hellman-type protocols inherently require commutativity to establish a shared secret [JaFe11]. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input.",
+    "text": "It was a NIST PQC competition candidate but is now broken by a polynomial time classical algorithm.\n\nThe Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange protocol designed to be secure against quantum computer attacks. Diffie-Hellman-type protocols inherently require commutativity to establish a shared secret [JaFe11]. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input.",
     "crumbs": [
       "Key Exchange",
       "SIDH"
@@ -529,7 +584,7 @@
     "href": "protocols/key-exchange/sidh.html#overview",
     "title": "SIDH",
     "section": "",
-    "text": "It was a NIST PQC competition candidate but is now broken by a polynomial time classical algorithm. .\n\nThe Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange protocol designed to be secure against quantum computer attacks. Diffie-Hellman-type protocols inherently require commutativity to establish a shared secret [JaFe11]. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input.",
+    "text": "It was a NIST PQC competition candidate but is now broken by a polynomial time classical algorithm.\n\nThe Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange protocol designed to be secure against quantum computer attacks. Diffie-Hellman-type protocols inherently require commutativity to establish a shared secret [JaFe11]. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input.",
     "crumbs": [
       "Key Exchange",
       "SIDH"
@@ -551,7 +606,7 @@
     "href": "protocols/key-exchange/sidh.html#security-assumptions",
     "title": "SIDH",
     "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\n\nHardness Problem: The scheme relies on the conjectured difficulty of finding an isogeny between two supersingular elliptic curves.\nComputational Supersingular Isogeny (CSSI) problem: A unique characteristic of SIDH is the publication of the evaluated torsion basis points (the auxiliary input required for commutativity). The authors state that providing these outputs does not appear to make the underlying problem of finding the secret isogenies any easier.\nResistance to Quantum Group Actions: Because the protocol is not fundamentally based on an abelian group action, it is completely immune to the subexponential quantum attacks that rendered ordinary isogeny networks insecure.",
+    "text": "3 Security Assumptions\n\nComputational Supersingular Isogeny (CSSI) problem: A unique characteristic of SIDH is the publication of the evaluated torsion basis points (the auxiliary input required for commutativity). The authors state that providing these outputs does not appear to make the underlying problem of finding the secret isogenies any easier.\nSupersingular Decision Diffie-Hellman (SSDDH) problem: The SSDDH problem tests whether an adversary can successfully distinguish the valid shared secret curve \\(E_{AB}\\) (derived from the actual secret kernels) from a completely random curve \\(E_C\\), when given both parties’ public curves and evaluated auxiliary points.\nResistance to Quantum Group Actions: Because the protocol is not fundamentally based on an abelian group action, it is completely immune to the subexponential quantum attacks that rendered ordinary isogeny networks insecure.",
     "crumbs": [
       "Key Exchange",
       "SIDH"
@@ -734,113 +789,168 @@
     ]
   },
   {
-    "objectID": "protocols/key-exchange/csidh.html",
-    "href": "protocols/key-exchange/csidh.html",
-    "title": "CSIDH",
+    "objectID": "protocols/key-exchange/csidhupke.html",
+    "href": "protocols/key-exchange/csidhupke.html",
+    "title": "CSIDH UPKE",
     "section": "",
-    "text": "CSIDH is a post-quantum commutative group action that enables efficient non-interactive key exchange [CLMP18]. The construction adapts the layout of earlier cryptosystems proposed by Couveignes and Rostovtsev-Stolbunov, but replaces the use of ordinary elliptic curves with supersingular elliptic curves defined over a large prime field \\(\\mathbb{F}_p\\) . A key advantage of using supersingular curves over \\(\\mathbb{F}_p\\) (for \\(p \\ge 5\\)) is that they always have exactly \\(p + 1\\) rational points, which trivially yields the highly composite order needed for efficiency.",
+    "text": "The Key-Updatable Public-Key Encryption (UPKE) scheme based on CSIDH is the first post-quantum secure protocol of its kind, designed to improve the forward-secrecy and post-compromise security of secure messaging protocols [EJKM21]. UPKE constructions allow cryptographic keys to be updated over time, repairing security in the event of a key compromise. The protocol is a “Symmetric UPKE”, meaning that the same secret update value is applied to both the decryption key and the encryption key. A defining feature of this CSIDH UPKE variant is that it mandates the use of a parameter set where the structure of the class group is completely known (such as CSI-FiSh). This algebraic property ensures that secret elements and updates can be uniquely represented and uniformly sampled, completely preventing information leakage across sequential key updates.",
     "crumbs": [
       "Key Exchange",
-      "CSIDH"
+      "CSIDH UPKE"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/csidh.html#overview",
-    "href": "protocols/key-exchange/csidh.html#overview",
-    "title": "CSIDH",
+    "objectID": "protocols/key-exchange/csidhupke.html#overview",
+    "href": "protocols/key-exchange/csidhupke.html#overview",
+    "title": "CSIDH UPKE",
     "section": "",
-    "text": "CSIDH is a post-quantum commutative group action that enables efficient non-interactive key exchange [CLMP18]. The construction adapts the layout of earlier cryptosystems proposed by Couveignes and Rostovtsev-Stolbunov, but replaces the use of ordinary elliptic curves with supersingular elliptic curves defined over a large prime field \\(\\mathbb{F}_p\\) . A key advantage of using supersingular curves over \\(\\mathbb{F}_p\\) (for \\(p \\ge 5\\)) is that they always have exactly \\(p + 1\\) rational points, which trivially yields the highly composite order needed for efficiency.",
+    "text": "The Key-Updatable Public-Key Encryption (UPKE) scheme based on CSIDH is the first post-quantum secure protocol of its kind, designed to improve the forward-secrecy and post-compromise security of secure messaging protocols [EJKM21]. UPKE constructions allow cryptographic keys to be updated over time, repairing security in the event of a key compromise. The protocol is a “Symmetric UPKE”, meaning that the same secret update value is applied to both the decryption key and the encryption key. A defining feature of this CSIDH UPKE variant is that it mandates the use of a parameter set where the structure of the class group is completely known (such as CSI-FiSh). This algebraic property ensures that secret elements and updates can be uniquely represented and uniformly sampled, completely preventing information leakage across sequential key updates.",
     "crumbs": [
       "Key Exchange",
-      "CSIDH"
+      "CSIDH UPKE"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/csidh.html#protocol-design",
-    "href": "protocols/key-exchange/csidh.html#protocol-design",
-    "title": "CSIDH",
+    "objectID": "protocols/key-exchange/csidhupke.html#protocol-design",
+    "href": "protocols/key-exchange/csidhupke.html#protocol-design",
+    "title": "CSIDH UPKE",
     "section": "2 Protocol Design",
-    "text": "2 Protocol Design\nThe core of the CSIDH protocol is based on the free and transitive action of the ideal-class group \\(cl(\\mathcal{O})\\) on the set of \\(\\mathbb{F}_p\\)-isomorphism classes of supersingular elliptic curves with an \\(\\mathbb{F}_p\\)-rational endomorphism ring isomorphic to \\(\\mathcal{O}\\).\n\n2.1 Parameters\nThe protocol fixes a large prime \\(p\\) of the form \\(4 \\cdot \\ell_1 \\cdots \\ell_n - 1\\), where \\(\\ell_i\\) are small, distinct odd primes. The base curve is defined as \\(E_0 : y^2 = x^3 + x\\) over \\(\\mathbb{F}_p\\). The requirement that \\(p \\equiv 3 \\pmod 4\\) ensures that \\(E_0\\) is supersingular and permits the use of efficient Montgomery arithmetic.\n\n\n2.2 Endomorphism Ring & Isogenies\nThe Frobenius endomorphism \\(\\pi\\) of \\(E_0\\) satisfies \\(\\pi^2 = -p\\), giving an \\(\\mathbb{F}_p\\)-rational endomorphism ring of \\(\\mathcal{O} = \\mathbb{Z}[\\pi]\\). Because \\(\\pi^2 - 1 \\equiv 0 \\pmod{\\ell_i}\\), the ideals \\(\\ell_i\\mathcal{O}\\) split into Elkies primes \\(\\mathfrak{l}_i = (\\ell_i, \\pi - 1)\\) and \\(\\bar{\\mathfrak{l}}_i = (\\ell_i, \\pi + 1)\\). The isogenies for \\(\\mathfrak{l}_i\\) can be evaluated efficiently because their kernels are generated by points of order \\(\\ell_i\\) that lie in the kernel of \\(\\pi - 1\\), meaning they are rational over the base field \\(\\mathbb{F}_p\\).\n\n\n2.3 Private Key\nA private key is constructed as an exponent vector \\((e_1, \\dots, e_n)\\) with each \\(e_i \\in \\{-m, \\dots, m\\}\\), representing the ideal class \\([\\mathfrak{l}_1^{e_1} \\mathfrak{l}_2^{e_2} \\cdots \\mathfrak{l}_n^{e_n}] \\in cl(\\mathcal{O})\\).\n\n\n2.4 Public Key\nAn individual’s public key (e.g., Alice’s key \\(A\\)) is the Montgomery coefficient of the curve \\(E_A : y^2 = x^3 + Ax^2 + x\\), which is obtained by applying the action of the secret key \\([a]\\) to the base curve \\(E_0\\).\n\n\n2.5 Key Exchange\nWhen Alice receives Bob’s public key \\(B\\), she first verifies that the curve \\(E_B\\) is supersingular. She then applies her secret ideal class action \\([\\mathfrak{a}]\\) to compute \\([\\mathfrak{a}]E_B = [\\mathfrak{a}][\\mathfrak{b}]E_0\\). The shared secret is the unique Montgomery coefficient \\(S\\) corresponding to the combined curve \\([\\mathfrak{a}][\\mathfrak{b}]E_0\\).",
+    "text": "2 Protocol Design\nA naive application of CSIDH to UPKE fails because repeated additions of short update vectors (represented in \\(\\mathbb{Z}^{\\ell}\\)) center the new keys around the old ones, leading to information leakage, and cause the \\(L_1\\)-norm to grow until the decryption process becomes unacceptably inefficient.\nTo overcome this, the CSIDH UPKE protocol requires the exact order \\(N\\) of the class group \\(cl(\\mathcal{O}) \\cong \\mathbb{Z}_N\\) to be known, allowing keys to be represented and uniformly sampled as simple integers modulo \\(N\\). The protocol leverages a Data Encapsulation Mechanism (DEM) and a Key Derivation Function (KDF) to operate as a hybrid encryption scheme. It defines six core algorithms:\n\nKeyGen(\\(\\lambda\\)): Samples a secret key \\(g_{sk}\\) uniformly at random from \\(\\mathbb{Z}_N\\). It computes the public key \\(E_{pk} := g_{sk} * E_0\\) by applying the group action to the starting curve \\(E_0\\). The algorithm outputs \\((sk, pk) = (g_{sk}, E_{pk})\\).\nEncrypt(\\(pk, m\\)): Samples a random element \\(g_{enc} \\leftarrow \\mathbb{Z}_N\\). It computes a shared symmetric key \\(K \\leftarrow \\text{KDF}(g_{enc} * pk)\\), applies the group action to obtain \\(E_{enc} \\leftarrow g_{enc} * E_0\\), and encrypts the message \\(m\\) using the DEM to yield \\(ctxt \\leftarrow \\text{DEM.Encrypt}(K, m)\\). The final ciphertext is \\(ct = (E_{enc}, ctxt)\\).\nDecrypt(\\(sk, ct\\)): Parses the ciphertext into \\((E_{enc}, ctxt)\\), derives the shared key \\(K \\leftarrow \\text{KDF}(sk * E_{enc})\\), and outputs the plaintext \\(m\\) via \\(\\text{DEM.Decrypt}(K, ctxt)\\).\nGenUpdate(): Randomly samples an update value \\(\\mu\\) uniformly from \\(\\mathbb{Z}_N\\).\nUpdatePrivate(\\(sk, \\mu\\)): Computes the updated secret key by performing modular addition: \\(sk' \\leftarrow sk + \\mu \\pmod N\\).\nUpdatePublic(\\(pk, \\mu\\)): Updates the public key by applying the group action corresponding to the update value: \\(pk' \\leftarrow \\mu * pk\\).\n\nBy utilizing modular arithmetic over \\(\\mathbb{Z}_N\\) for private updates, the new secret key is guaranteed to be uniformly distributed in \\(\\mathbb{Z}_N\\) and independent of the prior key, completely eliminating error accumulation and data leakage.",
     "crumbs": [
       "Key Exchange",
-      "CSIDH"
+      "CSIDH UPKE"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/csidh.html#security-assumptions",
-    "href": "protocols/key-exchange/csidh.html#security-assumptions",
-    "title": "CSIDH",
+    "objectID": "protocols/key-exchange/csidhupke.html#security-assumptions",
+    "href": "protocols/key-exchange/csidhupke.html#security-assumptions",
+    "title": "CSIDH UPKE",
     "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nThe security of the CSIDH protocol relies on the hardness of an isogeny-finding problem analogous to the classical discrete logarithm problem.\n\nKey Recovery Problem: The fundamental computational assumption is that given two supersingular elliptic curves \\(E\\) and \\(E'\\) over \\(\\mathbb{F}_p\\) with the same \\(\\mathbb{F}_p\\)-rational endomorphism ring \\(\\mathcal{O}\\), it is computationally infeasible to find an ideal \\(\\mathfrak{a}\\) such that \\([\\mathfrak{a}]E = E'\\).\nQuantum Security: Breaking the scheme translates to solving an instance of the abelian hidden-shift problem. This problem can be addressed using subexponential-time quantum algorithms, such as those proposed by Kuperberg. The precise asymptotic complexity depends heavily on the cost of computing the isogeny oracle; combinations of algorithms yield bounds in the realm of \\(L_p[1/2, 1/\\sqrt{2}]\\).\nChosen-Ciphertext Security: Because CSIDH naturally affords efficient public-key validation, it avoids vulnerabilities related to the reuse of dishonest keys. This validation allows CSIDH to securely achieve non-interactive key exchange without resorting to additional chosen-ciphertext attack (CCA) transformations like the Fujisaki-Okamoto transform.",
+    "text": "3 Security Assumptions\nThe protocol is proven to satisfy IND-CPA-U (Indistinguishability Under Chosen Plaintext Attack with Updatability) security. This relies on the hardness of the Supersingular Isogeny Problem, i.e. computing an isogeny between two supersingular elliptic curves over \\(\\mathbb{F}_p\\) with the same number of rational points. In addition to this core mathematical problem, the security model depends on the following explicit assumptions:\n\nUniform Sampling: The class group structure (\\(N\\)) must be strictly known to allow uniform sampling from \\(\\mathbb{Z}_N\\), ensuring that updates reveal zero information about previous secret keys.\nSubexponential Precomputation: Computing the class group structure takes subexponential time. The scheme assumes attackers cannot break the underlying isogeny mapping itself, even if sufficient resources eventually allow scaling this subexponential initialization phase.\nDEM Security: The underlying Data Encapsulation Mechanism (DEM) must be fundamentally secure to ensure the hybrid construction provides baseline IND-CPA security.",
     "crumbs": [
       "Key Exchange",
-      "CSIDH"
+      "CSIDH UPKE"
     ]
   },
   {
-    "objectID": "protocols/key-exchange/csidh.html#progress",
-    "href": "protocols/key-exchange/csidh.html#progress",
-    "title": "CSIDH",
-    "section": "4 Progress",
-    "text": "4 Progress\nTODO\n2023/793 and 2020/1188 and 2018/537 and 2019/1202 and 2019/725",
-    "crumbs": [
-      "Key Exchange",
-      "CSIDH"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/csigamal.html",
-    "href": "protocols/key-exchange/csigamal.html",
-    "title": "C-SiGamal",
-    "section": "",
-    "text": "C-SiGamal is a compressed variant of SiGamal that drastically reduces the communication overhead [MoOnTa20]. Specifically, the bit length of a ciphertext in C-SiGamal is half that of a standard SiGamal ciphertext, requiring only twice the bit length of the underlying prime \\(p\\). This compression is achieved by modifying the encryption logic to omit sending a target curve and a masked point, instead employing a deterministically generated base point \\(P_E\\) on the target curve and a carefully computed intermediate scalar \\(\\mu^*\\).",
-    "crumbs": [
-      "Key Exchange",
-      "C-SiGamal"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/csigamal.html#overview",
-    "href": "protocols/key-exchange/csigamal.html#overview",
-    "title": "C-SiGamal",
-    "section": "",
-    "text": "C-SiGamal is a compressed variant of SiGamal that drastically reduces the communication overhead [MoOnTa20]. Specifically, the bit length of a ciphertext in C-SiGamal is half that of a standard SiGamal ciphertext, requiring only twice the bit length of the underlying prime \\(p\\). This compression is achieved by modifying the encryption logic to omit sending a target curve and a masked point, instead employing a deterministically generated base point \\(P_E\\) on the target curve and a carefully computed intermediate scalar \\(\\mu^*\\).",
-    "crumbs": [
-      "Key Exchange",
-      "C-SiGamal"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/csigamal.html#protocol-design",
-    "href": "protocols/key-exchange/csigamal.html#protocol-design",
-    "title": "C-SiGamal",
-    "section": "2 Protocol Design",
-    "text": "2 Protocol Design\nThe C-SiGamal protocol utilizes the free and transitive group action of an ideal class group on a set of supersingular elliptic curves.\n(E0;P0)(E1;P1)(E3;P3)(E4;P4)(E3;P03)(E4;(2¹+1)PE4)(E4;aP03)abb[¹¤]a\n\n2.1 Setup and Key Generation\n\nParameters: Choose a prime \\(p = 2^r \\cdot \\ell_1 \\cdots \\ell_n - 1\\), where \\(\\ell_1, \\dots, \\ell_n\\) are small distinct odd primes.\nBase Curve and Point: Set \\(E_0\\) as the elliptic curve \\(Y^2Z = X^3 + XZ^2\\) and sample a random point \\(P_0 \\in E_0(\\mathbb{F}_p)\\) of order \\(2^r\\).\nSecret Key: Alice samples a random integer \\(\\alpha\\) and a vector of integers \\(e_1, \\dots, e_n\\). She defines the ideal class \\(\\mathfrak{a} = \\langle \\alpha\\rangle \\mathfrak{l}_1^{e_1} \\cdots \\mathfrak{l}_n^{e_n} \\in J(\\mathbb{Z}[\\pi_p])\\). Her secret key is the tuple \\((\\alpha, e_1, \\dots, e_n)\\).\nPublic Key: Alice computes \\(E_1 := [\\mathfrak{a}]E_0\\) and pushes the point \\(P_0\\) through the isogeny to obtain \\(P_1 := \\mathfrak{a}P_0\\). Her public key is \\((E_0, P_0, E_1, P_1)\\).\n\n\n\n2.2 Encryption\nThe plaintext message space is \\(\\{0, 1\\}^{r-2}\\). To encrypt a plaintext message \\(\\mu\\):\n\nEphemeral Key: Bob samples random integers \\(\\beta, e'_1, \\dots, e'_n\\) and defines the ideal \\(\\mathfrak{b} = \\langle \\beta\\rangle\\mathfrak{l}_1^{e'_1} \\cdots \\mathfrak{l}_n^{e'_n}\\).\nIsogeny Computations: Bob computes the action of \\(\\mathfrak{b}\\) on Alice’s public keys, resulting in \\(E_3 := [\\mathfrak{b}]E_0\\), \\(P_3 := \\mathfrak{b}P_0\\), \\(E_4 := [\\mathfrak{b}]E_1\\), and \\(P_4 := \\mathfrak{b}P_1\\).\nPoint Derivation and Discrete Log: Let \\(E_4\\) be a supersingular elliptic curve defined by \\(Y^2Z = X^3 + aX^2Z + XZ^2\\). Bob identifies the deterministic point \\(P_{E_4} \\in E_4\\), computed as \\(P_{E_4} = \\ell_1 \\cdots \\ell_n \\tilde{P}_{E_4}\\), where \\(\\tilde{P}_{E_4}\\) is the point in \\(E_4(\\mathbb{F}_p)\\) with the largest \\(x\\)-coordinate among points whose orders are divisible by \\(2^r\\). He then evaluates \\((2\\mu + 1)P_{E_4}\\) and solves the discrete logarithm problem to find a scalar \\(\\mu^*\\) such that \\((2\\mu + 1)P_{E_4} = \\mu^* P_4\\) using the Pohlig-Hellman algorithm.\nCiphertext: Bob computes \\(P'_3 := \\mu^* P_3\\). He sends the compressed ciphertext \\((E_3, P'_3)\\) to Alice. (This successfully halves the size compared to SiGamal’s \\((E_3, P_3, E_4, P_4)\\)).\n\n\n\n2.3 Decryption\nUpon receiving the ciphertext \\((E_3, P'_3)\\):\n\nShared Curve Recovery: Alice applies her secret ideal \\(\\mathfrak{a}\\) to Bob’s ephemeral curve to compute \\(E_4 = [\\mathfrak{a}]E_3\\).\nPoint Evaluation: She pushes Bob’s masked point through her isogeny, calculating \\(\\mathfrak{a}P'_3\\).\nDiscrete Logarithm: Alice deterministically calculates \\(P_{E_4}\\) on the recovered curve \\(E_4\\) based on the maximum \\(x\\)-coordinate selection rule. She then solves the discrete logarithm problem over \\(\\mathbb{Z}/2^r\\mathbb{Z}\\) between \\(\\mathfrak{a}P'_3\\) and \\(P_{E_4}\\) using the Pohlig-Hellman algorithm to find the scalar \\(M\\).\nSign Disambiguation and Decoding: If the most significant bit of \\(M\\) is 1, Alice adjusts \\(M\\) by computing \\(2^r - M\\) to account for sign ambiguity in isogenies. Finally, she retrieves the plaintext as \\(\\tilde{\\mu} = (M - 1) / 2\\).",
-    "crumbs": [
-      "Key Exchange",
-      "C-SiGamal"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/csigamal.html#security-assumptions",
-    "href": "protocols/key-exchange/csigamal.html#security-assumptions",
-    "title": "C-SiGamal",
-    "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nSame as SiGamal’s assumptions.",
-    "crumbs": [
-      "Key Exchange",
-      "C-SiGamal"
-    ]
-  },
-  {
-    "objectID": "protocols/key-exchange/csigamal.html#progress",
-    "href": "protocols/key-exchange/csigamal.html#progress",
-    "title": "C-SiGamal",
+    "objectID": "protocols/key-exchange/csidhupke.html#progress",
+    "href": "protocols/key-exchange/csidhupke.html#progress",
+    "title": "CSIDH UPKE",
     "section": "4 Progress",
     "text": "4 Progress\nTODO",
     "crumbs": [
       "Key Exchange",
-      "C-SiGamal"
+      "CSIDH UPKE"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/ksidh.html",
+    "href": "protocols/key-exchange/ksidh.html",
+    "title": "\\(k\\)-SIDH",
+    "section": "",
+    "text": "Broken by a polynomial time classical algorithm.\n\nThe \\(k\\)-SIDH protocol introduces a generic transformation designed to secure SIDH key agreement against active attacks in the static-static setting [AzJaLe17].\nIn a standard SIDH static-static key exchange, a malicious participant can mount an adaptive attack by sending specialized, manipulated public torsion points. By observing whether the subsequent key validation succeeds or fails, the attacker can iteratively leak the honest party’s static private key. Extant countermeasures, such as the Fujisaki-Okamoto transform, enforce indirect validation by requiring the untrusted party to disclose their private key. While secure, this precludes the use of static-static drop-in replacements.\nTo thwart these attacks without exposing private keys, \\(k\\)-SIDH uses a multiple instances model. Instead of a single key, each party generates \\(k\\) different keys. During the exchange, the participants perform key agreement using all \\(k^2\\) combinations of their individual keys. The resulting \\(k^2\\) shared secrets are hashed together. If a malicious, modified public key is used, it will almost certainly cause at least one of the \\(k^2\\) key derivations to fail, causing the final hashed validation to fail. This expands the space of failure outcomes exponentially, rendering it computationally infeasible for an attacker to predict the correct final hash and salvage the attack.",
+    "crumbs": [
+      "Key Exchange",
+      "$k$-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/ksidh.html#overview",
+    "href": "protocols/key-exchange/ksidh.html#overview",
+    "title": "\\(k\\)-SIDH",
+    "section": "",
+    "text": "Broken by a polynomial time classical algorithm.\n\nThe \\(k\\)-SIDH protocol introduces a generic transformation designed to secure SIDH key agreement against active attacks in the static-static setting [AzJaLe17].\nIn a standard SIDH static-static key exchange, a malicious participant can mount an adaptive attack by sending specialized, manipulated public torsion points. By observing whether the subsequent key validation succeeds or fails, the attacker can iteratively leak the honest party’s static private key. Extant countermeasures, such as the Fujisaki-Okamoto transform, enforce indirect validation by requiring the untrusted party to disclose their private key. While secure, this precludes the use of static-static drop-in replacements.\nTo thwart these attacks without exposing private keys, \\(k\\)-SIDH uses a multiple instances model. Instead of a single key, each party generates \\(k\\) different keys. During the exchange, the participants perform key agreement using all \\(k^2\\) combinations of their individual keys. The resulting \\(k^2\\) shared secrets are hashed together. If a malicious, modified public key is used, it will almost certainly cause at least one of the \\(k^2\\) key derivations to fail, causing the final hashed validation to fail. This expands the space of failure outcomes exponentially, rendering it computationally infeasible for an attacker to predict the correct final hash and salvage the attack.",
+    "crumbs": [
+      "Key Exchange",
+      "$k$-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/ksidh.html#protocol-design",
+    "href": "protocols/key-exchange/ksidh.html#protocol-design",
+    "title": "\\(k\\)-SIDH",
+    "section": "2 Protocol Design",
+    "text": "2 Protocol Design\nThe \\(k\\)-SIDH key agreement process requires both parties (Alice and Bob) to perform \\(k^2\\) pairwise derivations.\n\n2.1 Setup\nThe global parameters \\(gp\\) are identical to standard SIDH:\n\nA preimage-resistant hash function \\(H\\).\nA prime number \\(p = 2^m 3^n f \\pm 1\\).\nA supersingular elliptic curve \\(E/\\mathbb{F}_{p^2}\\).\nFixed, independent torsion bases: \\(P_A, Q_A \\in E[2^m]\\) and \\(P_B, Q_B \\in E[3^n]\\).\n\n\n\n2.2 Key Generation\n\n2.2.1 Alice’s Key Generation\n\nAlice generates \\(k\\) random private keys: \\(\\alpha_i \\in_R \\mathbb{Z}/2^m\\mathbb{Z}\\) for \\(1 \\le i \\le k\\).\nFor each key, she computes a \\(2^m\\)-isogeny: \\(\\phi_{Ai}: E \\rightarrow E_{Ai} = E / \\langle P_A + [\\alpha_i]Q_A \\rangle\\).\nShe projects Bob’s torsion bases through each isogeny: \\(R_i = \\phi_{Ai}(P_B)\\) and \\(S_i = \\phi_{Ai}(Q_B)\\).\nHer public key is the set of \\(k\\) tuples: \\(\\{(E_{Ai}, R_i, S_i)\\}_{i=1}^k\\).\n\n\n\n2.2.2 Bob’s Key Generation\n\nBob generates \\(k\\) random private keys: \\(\\beta_j \\in_R \\mathbb{Z}/3^n\\mathbb{Z}\\) for \\(1 \\le j \\le k\\).\nFor each key, he computes a \\(3^n\\)-isogeny: \\(\\phi_{Bj}: E \\rightarrow E_{Bj} = E / \\langle P_B + [\\beta_j]Q_B \\rangle\\).\nHe projects Alice’s torsion bases through each isogeny: \\(U_j = \\phi_{Bj}(P_A)\\) and \\(V_j = \\phi_{Bj}(Q_A)\\).\nHis public key is the set of \\(k\\) tuples: \\(\\{(E_{Bj}, U_j, V_j)\\}_{j=1}^k\\).\n\n\n\n\n2.3 Communication\nAlice and Bob exchange their respective lists of \\(k\\) public keys.\n\n2.3.1 Alice’s Computation\n\nFor every pair \\((i, j)\\) where \\(1 \\le i, j \\le k\\), Alice uses Bob’s \\(i\\)-th public key and her \\(j\\)-th private key to compute the \\(k^2\\) shared curves: \\[E_{BiAj} = E_{Bi} / \\langle U_i + [\\alpha_j]V_i \\rangle\\]\nShe extracts the j-invariants to form the shared secrets: \\(z_{i,j} = j(E_{BiAj})\\).\nShe computes the combined hash: \\(h = H(z_{1,1}, \\dots, z_{k,k})\\).\n\n\n\n2.3.2 Bob’s Computation\n\nFor every pair \\((i, j)\\), Bob uses Alice’s \\(j\\)-th public key and his \\(i\\)-th private key to compute: \\[E_{AjBi} = E_{Aj} / \\langle R_j + [\\beta_i]S_j \\rangle\\]\nHe extracts the j-invariants: \\(z'_{i,j} = j(E_{AjBi})\\).\nHe computes the combined hash: \\(h' = H(z'_{1,1}, \\dots, z'_{k,k})\\).\n\n\n\n\n2.4 Verification\n\nValidation: Both parties perform validation tests on the received public keys. Alice verifies that for each \\(j\\), \\(U_j\\) and \\(V_j\\) are independent points of order \\(2^m\\) on \\(E_{Bj}\\) and that the Weil pairing holds: \\[e_{2^m}(U_j, V_j) = e_{2^m}(P_A, Q_A)^{3^n}\\] Bob performs the analogous checks.\nKey Confirmation:\n\nAlice sends \\(H(H(h))\\) to Bob. Bob verifies it equals \\(H(H(h'))\\).\nBob sends \\(H(h')\\) to Alice. Alice verifies it equals \\(H(h)\\).\n\nTermination: If any public key pair fails validation, or if the hashes mismatch, the protocol terminates. Otherwise, they continue with \\(h = h'\\) as their shared secret key.",
+    "crumbs": [
+      "Key Exchange",
+      "$k$-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/ksidh.html#security-assumptions",
+    "href": "protocols/key-exchange/ksidh.html#security-assumptions",
+    "title": "\\(k\\)-SIDH",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nThe security of the \\(k\\)-SIDH protocol relies on the following foundational assumptions.\n\nIntractability of the Supersingular Isogeny (SSI) Problem: The underlying primitive relies on the hardness of finding an isogeny of a specific degree with a cyclic kernel between two known supersingular elliptic curves defined over \\(\\mathbb{F}_{p^2}\\).\nIrreducibility of SIDH: The multiple-instances transformation requires the underlying key establishment to be irreducible. A protocol is irreducible if it is computationally infeasible for a malicious participant to craft a modified public key that successfully passes all public validation tests while generating the exact same shared secret across multiple different honest private keys. The authors prove that if an attacker could violate this irreducibility in SIDH, they could use that capability to efficiently solve the SSI problem.\nPreimage Resistance of the Hash Function: The hash function \\(H\\) must be strong and preimage-resistant. Since a dishonest Bob only receives \\(H(h)\\) (or \\(H(H(h))\\)), he must guess the entirety of the \\(k\\)-element preimage correctly. The hash prevents the attacker from successfully testing failures instance-by-instance.\nNo Curve Manipulation: The proof model primarily addresses adversaries that manipulate elliptic curve torsion points. It relies on the heuristic assumption that the curves themselves are not being maliciously generated or manipulated in unverified ways, noting that there are no known active attacks exploiting manipulated curves directly in this context.",
+    "crumbs": [
+      "Key Exchange",
+      "$k$-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/ksidh.html#progress",
+    "href": "protocols/key-exchange/ksidh.html#progress",
+    "title": "\\(k\\)-SIDH",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO 2019/890",
+    "crumbs": [
+      "Key Exchange",
+      "$k$-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/msidh.html",
+    "href": "protocols/key-exchange/msidh.html",
+    "title": "M-SIDH",
+    "section": "",
+    "text": "The Masked torsion points Supersingular Isogeny Diffie-Hellman (M-SIDH) protocol is a countermeasure designed to secure the SIDH key exchange against the devastating torsion point attacks. In the original SIDH protocol, the exact images of torsion points are revealed, which allows attackers to embed the secret isogeny into a higher-dimensional isogeny problem and break the scheme. M-SIDH mitigates this by keeping the degrees of the secret isogenies fixed while partially hiding the torsion point information [FoMoPe23]. Specifically, the protocol masks the torsion point images by scaling them with a random integer (a square root of unity). To prevent the efficient recovery of this hidden scalar using pairings and discrete logarithms, the protocol requires the isogeny degrees to be smooth integers with a large number of distinct prime factors. This ensures that the masking scalar has an exponential number of square roots modulo the isogeny degrees, thereby preserving the security of the protocol while facilitating a successful key exchange.",
+    "crumbs": [
+      "Key Exchange",
+      "M-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/msidh.html#overview",
+    "href": "protocols/key-exchange/msidh.html#overview",
+    "title": "M-SIDH",
+    "section": "",
+    "text": "The Masked torsion points Supersingular Isogeny Diffie-Hellman (M-SIDH) protocol is a countermeasure designed to secure the SIDH key exchange against the devastating torsion point attacks. In the original SIDH protocol, the exact images of torsion points are revealed, which allows attackers to embed the secret isogeny into a higher-dimensional isogeny problem and break the scheme. M-SIDH mitigates this by keeping the degrees of the secret isogenies fixed while partially hiding the torsion point information [FoMoPe23]. Specifically, the protocol masks the torsion point images by scaling them with a random integer (a square root of unity). To prevent the efficient recovery of this hidden scalar using pairings and discrete logarithms, the protocol requires the isogeny degrees to be smooth integers with a large number of distinct prime factors. This ensures that the masking scalar has an exponential number of square roots modulo the isogeny degrees, thereby preserving the security of the protocol while facilitating a successful key exchange.",
+    "crumbs": [
+      "Key Exchange",
+      "M-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/msidh.html#protocol-design",
+    "href": "protocols/key-exchange/msidh.html#protocol-design",
+    "title": "M-SIDH",
+    "section": "2 Protocol Design",
+    "text": "2 Protocol Design\nThe M-SIDH protocol relies on similar algebraic structures as SIDH but introduces masking scalars to obscure the exact torsion point mappings.\n\n2.1 Public Parameters\nThe global parameters dictate the structure of the underlying finite fields and curves. Let \\(\\lambda\\) be the target security parameter and let \\(t = t(\\lambda) \\in \\mathbb{N}\\) be an integer dependent on \\(\\lambda\\).\n\nIsogeny Degrees (\\(A\\) and \\(B\\)): Let \\(A = \\prod_{i=1}^t l_i\\) and \\(B = \\prod_{i=1}^t q_i\\) be coprime integers, where \\(l_i\\) and \\(q_i\\) are distinct small primes.\nCharacteristic (\\(p\\)): Let \\(p = ABf - 1\\) be a prime, where \\(f\\) is a small cofactor. The parameters are chosen such that \\(A \\approx B \\approx \\sqrt{p}\\).\nStarting Curve (\\(E_0\\)): Let \\(E_0\\) be a supersingular elliptic curve defined over \\(\\mathbb{F}_{p^2}\\).\nTorsion Bases: The bases for the \\(A\\)-torsion and \\(B\\)-torsion subgroups are fixed publicly as \\(E_0[A] = \\langle P_A, Q_A \\rangle\\) and \\(E_0[B] = \\langle P_B, Q_B \\rangle\\).\nMasking Sets (\\(\\mu_2(A)\\) and \\(\\mu_2(B)\\)): We define \\(\\mu_2(N):=\\{x \\in \\mathbb{Z}/N\\mathbb{Z} \\mid x^2 \\equiv 1 \\pmod N\\}\\) as the set of square roots of unity modulo \\(N\\).\n\nThe complete public parameters are \\((E_0, p, A, B, P_A, Q_A, P_B, Q_B)\\).\n\n\n2.2 Key Generation and Exchange\nDuring this phase, Alice and Bob generate their secret isogenies, mask the resulting torsion points, and transmit them.\nAlice’s Operations:\n\nSecret Key: Alice samples a uniformly random integer \\(a \\in \\mathbb{Z}/A\\mathbb{Z}\\) as her secret key (\\(sk_A = a\\)).\nMasking Scalar: Alice samples a uniformly random scalar \\(\\alpha \\in \\mu_2(B)\\). The integer \\(\\alpha\\) is deleted immediately after the public key is generated.\nIsogeny Computation: She computes the cyclic isogeny \\(\\phi_A: E_0 \\rightarrow E_A = E_0/\\langle P_A + [a]Q_A \\rangle\\).\nPublic Key: Alice masks her output torsion points by computing \\(R_b = [\\alpha]\\phi_A(P_B)\\) and \\(S_b = [\\alpha]\\phi_A(Q_B)\\). She publishes her public key as \\(pk_A = (E_A, R_b, S_b)\\).\n\nBob’s Operations:\n\nSecret Key: Bob samples a uniformly random integer \\(b \\in \\mathbb{Z}/B\\mathbb{Z}\\) as his secret key (\\(sk_B = b\\)).\nMasking Scalar: Bob samples a uniformly random scalar \\(\\beta \\in \\mu_2(A)\\). The integer \\(\\beta\\) is deleted immediately after use.\nIsogeny Computation: He computes the cyclic isogeny \\(\\phi_B: E_0 \\rightarrow E_B = E_0/\\langle P_B + [b]Q_B \\rangle\\).\nPublic Key: Bob masks his output torsion points by computing \\(R_a = [\\beta]\\phi_B(P_A)\\) and \\(S_a = [\\beta]\\phi_B(Q_A)\\). He publishes his public key as \\(pk_B = (E_B, R_a, S_a)\\).\n\n\n\n2.3 Shared Key Computation\nUpon receiving each other’s public keys, the parties verify the integrity of the masked points using the Weil pairing. Because the masking scalars are square roots of unity, the pairings of the masked points equal the pairings of the unmasked points.\nAlice’s Check and Computation:\n\nUpon receiving Bob’s public key \\((E_B, R_a, S_a)\\), Alice checks that \\(e_A(R_a, S_a) = e_A(P_A, Q_A)^B\\). If the check fails, she aborts.\nIf valid, she computes the isogeny \\(\\phi_A': E_B \\rightarrow E_{BA} = E_B/\\langle R_a + [a]S_a \\rangle\\).\nHer shared key is the \\(j\\)-invariant \\(j(E_{BA})\\).\n\nBob’s Check and Computation:\n\nUpon receiving Alice’s public key \\((E_A, R_b, S_b)\\), Bob checks that \\(e_B(R_b, S_b) = e_B(P_B, Q_B)^A\\). If the check fails, he aborts.\nIf valid, he computes the isogeny \\(\\phi_B': E_A \\rightarrow E_{AB} = E_A/\\langle R_b + [b]S_b \\rangle\\).\nHis shared key is the \\(j\\)-invariant \\(j(E_{AB})\\).\n\nDue to the commutative nature of the isogeny kernels, \\(E_{AB} \\cong E_{BA}\\), meaning both parties derive the exact same \\(j\\)-invariant as their shared secret.",
+    "crumbs": [
+      "Key Exchange",
+      "M-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/msidh.html#security-assumptions",
+    "href": "protocols/key-exchange/msidh.html#security-assumptions",
+    "title": "M-SIDH",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nThe foundational security of M-SIDH relies on a modified version of the isogeny with torsion problem.\n\nGiven a supersingular curve \\(E_0/\\mathbb{F}_{p^2}\\) such that \\(\\#E_0(\\mathbb{F}_{p^2}) = (ABf)^2\\), bases \\(P, Q\\) for \\(E_0[B]\\), the codomain curve \\(E_A\\) of a uniformly random \\(A\\)-isogeny \\(\\phi: E_0 \\rightarrow E_A\\), and the masked images \\(P' = [\\alpha]\\phi(P)\\) and \\(Q' = [\\alpha]\\phi(Q)\\) (where \\(\\alpha\\) is a uniformly random element of \\(\\mu_2(B)\\)), compute the isogeny \\(\\phi\\).\n\nThis problem formulation is a new variant designed specifically for this protocol. It modifies the standard SIDH problem by supplying torsion point images exclusively up to an unknown scalar multiple \\(\\alpha\\), where \\(\\alpha^2 \\equiv 1 \\pmod B\\).\nFor the security assumptions to hold, the protocol explicitly requires:\n\nHigh Square Root Count: The number of prime factors \\(t\\) must be sufficiently large. If an attacker only needs the exact images of roughly \\(\\sqrt{B}\\) torsion points (involving a subset of prime factors \\(N \\approx \\sqrt{A}\\)), they could simply brute-force the square roots of unity modulo \\(N\\). To maintain an exponential search space (preventing Grover’s quantum search from succeeding), the protocol assumes \\(t-n+1 \\ge 2\\lambda\\).\nNo Short-Degree Endomorphisms on \\(E_0\\): M-SIDH assumes the starting curve \\(E_0\\) does not possess a known small-degree endomorphism. If \\(E_0\\) is a curve like \\(j=1728\\) with a known non-trivial automorphism, an attacker can construct a “lollipop endomorphism” \\(\\psi = \\phi \\circ \\iota \\circ \\hat{\\phi}\\). Since the scalar squares to \\(1\\) (\\(\\alpha^2 = 1 \\pmod A\\)), the action of the masked points can unmask the evaluation of this endomorphism precisely, enabling an expected polynomial-time attack. Thus, \\(E_0\\) must be generated as a random supersingular curve with an unknown endomorphism ring.\nAdaptive Security Constraints: Like standard SIDH, M-SIDH is assumed to be vulnerable to adaptive attacks. Consequently, M-SIDH is only secure in ephemeral key exchange scenarios or when guarded by a CCA transform (like the Fujisaki-Okamoto transform in SIKE).",
+    "crumbs": [
+      "Key Exchange",
+      "M-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/msidh.html#progress",
+    "href": "protocols/key-exchange/msidh.html#progress",
+    "title": "M-SIDH",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO\n2023/1433 and 2024/459 and 2025/2075",
+    "crumbs": [
+      "Key Exchange",
+      "M-SIDH"
     ]
   }
 ]

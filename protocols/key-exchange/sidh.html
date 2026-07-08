@@ -409,6 +409,18 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/mdsidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MD-SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/msidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">M-SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/psidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">pSIDH</span></a>
   </div>
@@ -517,7 +529,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">July 7, 2026</p>
+      <p class="date-modified">July 8, 2026</p>
     </div>
   </div>
     
@@ -531,7 +543,7 @@ window.Quarto = {
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
 <blockquote class="blockquote">
-<p>It was a <a href="https://sike.org/">NIST PQC competition</a> candidate but is now broken by a polynomial time classical algorithm. .</p>
+<p>It was a <a href="https://sike.org/">NIST PQC competition</a> candidate but is now broken by a polynomial time classical algorithm.</p>
 </blockquote>
 <p>The Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange protocol designed to be secure against quantum computer attacks. Diffie-Hellman-type protocols inherently require commutativity to establish a shared secret <span class="citation" data-cites="sidh">[<a href="#ref-sidh" role="doc-biblioref">JaFe11</a>]</span>. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input.</p>
 </section>
@@ -577,8 +589,8 @@ window.Quarto = {
 <section id="security-assumptions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
 <ul>
-<li><p><strong>Hardness Problem:</strong> The scheme relies on the conjectured difficulty of finding an isogeny between two supersingular elliptic curves.</p></li>
 <li><p><strong>Computational Supersingular Isogeny (CSSI) problem:</strong> A unique characteristic of SIDH is the publication of the evaluated torsion basis points (the auxiliary input required for commutativity). The authors state that providing these outputs does not appear to make the underlying problem of finding the secret isogenies any easier.</p></li>
+<li><p><strong>Supersingular Decision Diffie-Hellman (SSDDH) problem</strong>: The SSDDH problem tests whether an adversary can successfully distinguish the valid shared secret curve <span class="math inline">\(E_{AB}\)</span> (derived from the actual secret kernels) from a completely random curve <span class="math inline">\(E_C\)</span>, when given both parties’ public curves and evaluated auxiliary points.</p></li>
 <li><p><strong>Resistance to Quantum Group Actions:</strong> Because the protocol is not fundamentally based on an abelian group action, it is completely immune to the subexponential quantum attacks that rendered ordinary isogeny networks insecure.</p></li>
 </ul>
 </section>

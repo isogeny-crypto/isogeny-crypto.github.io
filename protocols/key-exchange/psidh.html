@@ -409,6 +409,18 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/mdsidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MD-SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../protocols/key-exchange/msidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">M-SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../protocols/key-exchange/psidh.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">pSIDH</span></a>
   </div>
@@ -516,7 +528,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">July 7, 2026</p>
+      <p class="date-modified">July 8, 2026</p>
     </div>
   </div>
     
@@ -532,8 +544,8 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p>Broken by a polynomial time quantum algorithm.</p>
 </blockquote>
-<p>The pSIDH (prime-SIDH) protocol is a novel Non-Interactive Key Exchange (NIKE) scheme introduced to circumvent the catastrophic torsion-point attacks that broke smooth-degree isogeny protocols like <a href="../../protocols/key-exchange/sidh.html">SIDH</a> and <a href="../../protocols/key-exchange/seta.html">Séta</a>. While SIDH utilizes secret isogenies of smooth degrees to allow for efficient evaluation via Vélu’s formulas, this smooth-degree structure fundamentally enables the recent polynomial-time attacks. pSIDH transitions the SIDH-style commutative isogeny diagram to the setting of large prime degrees.</p>
-<p>Because standard evaluation of large prime-degree isogenies is computationally infeasible, pSIDH relies on a novel cryptographic tool: the suborder representation <span class="citation" data-cites="psidh">[<a href="#ref-psidh" role="doc-biblioref">Lero22</a>]</span>. In this scheme, secret keys are represented as quaternion ideals (the ideal representation), while public keys are broadcast as suborder representations. Compared to <a href="../../protocols/key-exchange/csidh.html">CSIDH</a>, which also operates with a quantum-subexponential security profile and prime-degree elements, pSIDH relies on fundamentally different structural assumptions.</p>
+<p>The pSIDH (prime-SIDH) protocol is a novel Non-Interactive Key Exchange (NIKE) scheme introduced to circumvent the catastrophic torsion-point attacks that broke smooth-degree isogeny protocols like <a href="../../protocols/key-exchange/sidh.html">SIDH</a> and <a href="../../protocols/key-exchange/seta.html">Séta</a>. While SIDH utilizes secret isogenies of smooth degrees to allow for efficient evaluation via Vélu’s formulas, this smooth-degree structure fundamentally enables the polynomial-time attacks. pSIDH transitions the SIDH-style commutative isogeny diagram to the setting of large prime degrees.</p>
+<p>Because standard evaluation of large prime-degree isogenies is computationally infeasible, pSIDH relies on a novel cryptographic tool: the suborder representation <span class="citation" data-cites="psidh">[<a href="#ref-psidh" role="doc-biblioref">Lero22</a>]</span>. In this scheme, secret keys are represented as quaternion ideals (the ideal representation), while public keys are broadcast as suborder representations.</p>
 </section>
 <section id="protocol-design" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="protocol-design"><span class="header-section-number">2</span> Protocol Design</h2>
@@ -573,16 +585,16 @@ window.Quarto = {
 </section>
 <section id="security-assumptions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
-<p>The core security of pSIDH is tied to the SubOrder to Ideal Problem (SOIP), which relates more closely to the key recovery of CSIDH (involving partial endomorphism ring knowledge) than that of SIDH, yet maintains an SIDH-like key agreement flow.</p>
+<p>The core security of pSIDH is tied to the SubOrder to Ideal Problem (SOIP), which relates more closely to the key recovery of <a href="../../protocols/key-exchange/csidh.html">CSIDH</a> (involving partial endomorphism ring knowledge) than that of SIDH, yet maintains an SIDH-like key agreement flow.</p>
 <ul>
-<li><strong>SubOrder to Ideal Problem (SOIP):</strong> This is the underlying key recovery assumption. It states that given a suborder representation <span class="math inline">\(\pi\)</span> of an isogeny <span class="math inline">\(\varphi\)</span> of prime degree <span class="math inline">\(D\)</span>, it is computationally infeasible to recover the ideal representation <span class="math inline">\(I_\varphi\)</span> (the secret key). The SOIP is shown to be equivalent to specific prime-degree instances of the Torsion to Ideal Problem (TIP). Because the degree <span class="math inline">\(D\)</span> is a large prime, the <span class="math inline">\(D\)</span>-torsion points are defined over an exponentially large field extension <span class="math inline">\(\mathbb{F}_{p^k}\)</span> (where <span class="math inline">\(k = O(D)\)</span>). This prevents the polynomial-time torsion point attacks that devastated SIDH from being applied to SOIP. Thus, SOIP represents a robust new assumption designed to resist recent cryptanalytic breakthroughs.</li>
-<li><strong>prime Supersingular Decisional Diffie-Hellman (pSSDDH):</strong> The semantic security of the key exchange relies on this decisional assumption. pSSDDH assumes that an adversary cannot distinguish the valid shared curve <span class="math inline">\(E_{AB}\)</span> (where <span class="math inline">\(\text{End}(E_{AB}) \cong \mathcal{O}_R(I_A \cap I_B)\)</span>) from a random curve <span class="math inline">\(E_C\)</span> that is merely <span class="math inline">\(D_A D_B\)</span>-isogenous to <span class="math inline">\(E_0\)</span>. This assumption directly borrows its structural formulation from the SSDDH problem introduced in the original SIDH proposal, but strictly limits the isogeny degrees to large primes and leverages suborder representations rather than torsion point images.</li>
+<li><strong>SubOrder to Ideal Problem (SOIP):</strong> This is the underlying key recovery assumption. It states that given a suborder representation <span class="math inline">\(\pi\)</span> of an isogeny <span class="math inline">\(\varphi\)</span> of prime degree <span class="math inline">\(D\)</span>, it is computationally infeasible to recover the ideal representation <span class="math inline">\(I_\varphi\)</span> (the secret key). Because the degree <span class="math inline">\(D\)</span> is a large prime, the <span class="math inline">\(D\)</span>-torsion points are defined over an exponentially large field extension <span class="math inline">\(\mathbb{F}_{p^k}\)</span> (where <span class="math inline">\(k = O(D)\)</span>). This prevents the polynomial-time torsion point attacks that devastated SIDH from being applied to SOIP. However, there is a sub-exponential quantum attack against the SOIP.</li>
+<li><strong>prime Supersingular Decisional Diffie-Hellman (pSSDDH):</strong> The semantic security of the key exchange relies on this decisional assumption. pSSDDH assumes that an adversary cannot distinguish the valid shared curve <span class="math inline">\(E_{AB}\)</span> (where <span class="math inline">\(\text{End}(E_{AB}) \cong \mathcal{O}_R(I_A \cap I_B)\)</span>) from a random curve <span class="math inline">\(E_C\)</span> that is merely <span class="math inline">\(D_A D_B\)</span>-isogenous to <span class="math inline">\(E_0\)</span>. This assumption directly borrows its structural formulation from the <a href="../../protocols/key-exchange/sidh.html#security-assumptions">SSDDH problem</a> introduced in the original SIDH proposal, but strictly limits the isogeny degrees to large primes and leverages suborder representations rather than torsion point images.</li>
 </ul>
 </section>
 <section id="progress" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="progress"><span class="header-section-number">4</span> Progress</h2>
 <p>TODO</p>
-<p>2023/779</p>
+<p>2021/282 and 2023/779</p>
 
 
 </section>

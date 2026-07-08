@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-07-01">
+<meta name="dcterms.date" content="2026-07-08">
 
-<title>SimS – Isogeny-based Cryptography Wiki</title>
+<title>MD-SIDH – Isogeny-based Cryptography Wiki</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -316,7 +316,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/sims.html">SimS</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/mdsidh.html">MD-SIDH</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -409,7 +409,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../protocols/key-exchange/mdsidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/mdsidh.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">MD-SIDH</span></a>
   </div>
 </li>
@@ -451,7 +451,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../protocols/key-exchange/sims.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../protocols/key-exchange/sims.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SimS</span></a>
   </div>
 </li>
@@ -493,10 +493,9 @@ window.Quarto = {
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
   <li><a href="#protocol-design" id="toc-protocol-design" class="nav-link" data-scroll-target="#protocol-design"><span class="header-section-number">2</span> Protocol Design</a>
   <ul class="collapse">
-  <li><a href="#setup-and-public-parameters" id="toc-setup-and-public-parameters" class="nav-link" data-scroll-target="#setup-and-public-parameters"><span class="header-section-number">2.1</span> Setup and Public Parameters</a></li>
-  <li><a href="#key-generation" id="toc-key-generation" class="nav-link" data-scroll-target="#key-generation"><span class="header-section-number">2.2</span> Key Generation</a></li>
-  <li><a href="#encryption" id="toc-encryption" class="nav-link" data-scroll-target="#encryption"><span class="header-section-number">2.3</span> Encryption</a></li>
-  <li><a href="#decryption" id="toc-decryption" class="nav-link" data-scroll-target="#decryption"><span class="header-section-number">2.4</span> Decryption</a></li>
+  <li><a href="#public-parameters" id="toc-public-parameters" class="nav-link" data-scroll-target="#public-parameters"><span class="header-section-number">2.1</span> Public Parameters</a></li>
+  <li><a href="#key-generation-and-exchange" id="toc-key-generation-and-exchange" class="nav-link" data-scroll-target="#key-generation-and-exchange"><span class="header-section-number">2.2</span> Key Generation and Exchange</a></li>
+  <li><a href="#shared-key-computation" id="toc-shared-key-computation" class="nav-link" data-scroll-target="#shared-key-computation"><span class="header-section-number">2.3</span> Shared Key Computation</a></li>
   </ul></li>
   <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a></li>
   <li><a href="#progress" id="toc-progress" class="nav-link" data-scroll-target="#progress"><span class="header-section-number">4</span> Progress</a></li>
@@ -508,10 +507,10 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/sims.html">SimS</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/bsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/mdsidh.html">MD-SIDH</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">SimS</h1>
-<p class="subtitle lead">Simplified SiGamal</p>
+<h1 class="title">MD-SIDH</h1>
+<p class="subtitle lead">Masked-degree SIDH</p>
 </div>
 
 
@@ -522,14 +521,14 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 1, 2026</p>
+      <p class="date">July 8, 2026</p>
     </div>
   </div>
   
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">June 30, 2026</p>
+      <p class="date-modified">July 8, 2026</p>
     </div>
   </div>
     
@@ -542,63 +541,69 @@ window.Quarto = {
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>SimS (Simplified SiGamal) is a post-quantum public-key encryption (PKE) protocol based on supersingular isogenies, specifically introduced to simplify the original <a href="../../protocols/key-exchange/sigamal.html">SiGamal</a> protocol and achieve stronger security guarantees <span class="citation" data-cites="sims">[<a href="#ref-sims" role="doc-biblioref">FoPe21</a>]</span>. While the canonical PKEs derived from protocols like <a href="../../protocols/key-exchange/csidh.html">CSIDH</a> and <a href="../../protocols/key-exchange/sidh.html">SIDH</a> are only OW-CPA (One-Way under Chosen Plaintext Attack) secure, requiring hash functions or Fujisaki-Okamoto transformations for higher security, SiGamal provided IND-CPA (Indistinguishability under Chosen-Plaintext Attack) security without hash functions but lacked IND-CCA (Indistinguishability under Chosen-Ciphertext Attack) security. SimS modifies SiGamal to thwart a concrete IND-CCA attack by completely decoupling transmitted curves from their torsion points in the ciphertext. Concretely, SimS replaces the exchanged torsion points with a canonically generated point of smooth order <span class="math inline">\(2^r\)</span> on a hidden shared curve, and masks its <span class="math inline">\(x\)</span>-coordinate using a curve-dependent randomizing function. This structural simplification positions SimS between SiGamal and CSIDH, yielding smaller public keys, more compact ciphertexts, and enhanced computational efficiency compared to both SiGamal and <a href="../../protocols/key-exchange/csigamal.html">C-SiGamal</a>, all while providing IND-CCA security.</p>
+<p>The Masked-Degree Supersingular Isogeny Diffie-Hellman (MD-SIDH) protocol is a countermeasure designed to secure the SIDH key exchange against <a href="../../protocols/key-exchange/sidh.html#progress">devastating torsion point attacks</a>. In the original SIDH protocol, the fixed degrees of the secret isogenies, combined with exact torsion point images, allow attackers to embed the secret isogeny into a higher-dimensional isogeny problem and break the scheme. MD-SIDH mitigates this by masking the degree of the secret isogeny <span class="citation" data-cites="msidh-mdsidh">[<a href="#ref-msidh-mdsidh" role="doc-biblioref">FoMoPe23</a>]</span>. Specifically, the degrees of the secret isogenies are no longer fixed public parameters, but are instead chosen as uniformly random divisors of public smooth integers. To prevent the efficient recovery of this secret degree using Weil pairing computations and discrete logarithms, the protocol requires masking the images of the torsion points by scaling them with a random invertible integer. This ensures the true degree remains hidden, preserving the security of the protocol while facilitating a successful key exchange.</p>
 </section>
 <section id="protocol-design" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="protocol-design"><span class="header-section-number">2</span> Protocol Design</h2>
-<p>SimS operates over a supersingular elliptic curve <span class="math inline">\(E_0 : y^2 = x^3 + x\)</span> defined over <span class="math inline">\(\mathbb{F}_p\)</span>, where <span class="math inline">\(p = 2^r \ell_1 \cdots \ell_n - 1\)</span> is a prime such that <span class="math inline">\(\ell_1, \ldots, \ell_n\)</span> are small distinct odd primes. The protocol relies on the free and transitive action of the ideal class group <span class="math inline">\(\text{cl}(\mathbb{Z}[\pi])\)</span> on the set of supersingular elliptic curves defined over <span class="math inline">\(\mathbb{F}_p\)</span> with endomorphism ring <span class="math inline">\(\mathbb{Z}[\pi]\)</span>.</p>
-<div class="tikz-diagram"><svg xmlns="http://www.w3.org/2000/svg" width="340.666" height="192.671" viewbox="-72 -72 255.499 144.503"><defs><style>@import url(../../assets/fonts.css);</style></defs><g stroke="#000" stroke-miterlimit="10" stroke-width=".4"><g stroke-width=".8"><path fill="none" d="M3.798-70.43H-67.87a4 4 0 0 0-4 4v20.452a4 4 0 0 0 4 4H3.798a4 4 0 0 0 4-4V-66.43a4 4 0 0 0-4-4ZM-71.87-41.978"></path><g stroke="none"><text x="-32.036" y="-56.204" font-family="cmmi9" font-size="9" transform="translate(-5.487 2.575)">E</text><text x="-25.229" y="-55.204" font-family="cmr6" font-size="6" transform="translate(-5.487 2.575)">0</text></g></g><g stroke-width=".8"><path fill="none" d="M174.514-70.43h-71.668a4 4 0 0 0-4 4v20.452a4 4 0 0 0 4 4h71.668a4 4 0 0 0 4-4V-66.43a4 4 0 0 0-4-4ZM98.846-41.978"></path><g stroke="none"><text x="-32.036" y="-56.204" font-family="cmmi9" font-size="9" transform="translate(148.694 2.25)">E</text><text x="-25.229" y="-55.204" font-family="cmr6" font-size="6" transform="translate(148.694 2.25)">1</text><text x="-18.493" y="-56.204" font-family="cmr9" font-size="9" transform="translate(148.694 2.25)">=</text><text x="-8.729" y="-56.204" fill="red" font-family="cmr9" font-size="9" transform="translate(148.694 2.25)">[a]</text><text x="1.034" y="-56.204" font-family="cmmi9" font-size="9" transform="translate(148.694 2.25)">E</text><text x="7.841" y="-55.204" font-family="cmr6" font-size="6" transform="translate(148.694 2.25)">0</text></g></g><g stroke-width=".8"><path fill="none" d="M3.798 43.38H-67.87a4 4 0 0 0-4 4v20.453a4 4 0 0 0 4 4H3.798a4 4 0 0 0 4-4V47.381a4 4 0 0 0-4-4ZM-71.87 71.834"></path><g stroke="none"><text x="-32.036" y="-56.204" font-family="cmmi9" font-size="9" transform="translate(-22.279 116.061)">E</text><text x="-25.229" y="-55.204" font-family="cmr6" font-size="6" transform="translate(-22.279 116.061)">3</text><text x="-18.493" y="-56.204" font-family="cmr9" font-size="9" transform="translate(-22.279 116.061)">=</text><text x="-8.729" y="-56.204" fill="#00f" font-family="cmr9" font-size="9" transform="translate(-22.279 116.061)">[b]</text><text x="1.548" y="-56.204" font-family="cmmi9" font-size="9" transform="translate(-22.279 116.061)">E</text><text x="8.355" y="-55.204" font-family="cmr6" font-size="6" transform="translate(-22.279 116.061)">0</text></g></g><g stroke-width=".8"><path fill="none" d="M174.514-7.834h-71.668a4 4 0 0 0-4 4v20.452a4 4 0 0 0 4 4h71.668a4 4 0 0 0 4-4V-3.834a4 4 0 0 0-4-4ZM98.846 20.618"></path><g stroke="none"><text x="-19.622" y="-67.204" fill="#00f" font-family="cmmi9" font-size="9" transform="translate(134.738 70.346)">E</text><text x="-12.815" y="-66.204" fill="#00f" font-family="cmr6" font-size="6" transform="translate(134.738 70.346)">4</text><text x="-6.079" y="-67.204" font-family="cmr9" font-size="9" transform="translate(134.738 70.346)">=</text><text x="3.685" y="-67.204" fill="#00f" font-family="cmr9" font-size="9" transform="translate(134.738 70.346)">[b]</text><text x="13.963" y="-67.204" font-family="cmmi9" font-size="9" transform="translate(134.738 70.346)">E</text><text x="20.77" y="-66.204" font-family="cmr6" font-size="6" transform="translate(134.738 70.346)">1</text><text x="24.936" y="-67.204" font-family="cmmi9" font-size="9" transform="translate(134.738 70.346)">;</text><text x="-32.036" y="-56.204" font-family="cmmi9" font-size="9" transform="translate(134.738 70.346)">P</text><text x="-26.13" y="-55.204" font-family="cmr6" font-size="6" transform="translate(134.738 70.346)">4</text><text x="-19.394" y="-56.204" font-family="cmr9" font-size="9" transform="translate(134.738 70.346)">=</text><text x="-9.63" y="-56.204" fill="#00f" font-family="cmr9" font-size="9" transform="translate(134.738 70.346)">[2</text><text x="-2.436" y="-56.204" fill="#00f" font-family="cmmi9" font-size="9" transform="translate(134.738 70.346)">m</text><text x="7.769" y="-56.204" fill="#00f" font-family="cmr9" font-size="9" transform="translate(134.738 70.346)">+</text><text x="17.019" y="-56.204" fill="#00f" font-family="cmr9" font-size="9" transform="translate(134.738 70.346)">1]</text><text x="24.213" y="-56.204" fill="#00f" font-family="cmmi9" font-size="9" transform="translate(134.738 70.346)">P</text><text x="30.119" y="-55.204" fill="#00f" font-family="cmmi6" font-size="6" transform="translate(134.738 70.346)">E</text><text x="35.518" y="-54.048" fill="#00f" font-family="cmr5" font-size="5" transform="translate(134.738 70.346)">4</text></g></g><g stroke-width=".8"><path fill="none" d="M178.83 43.38H98.531a4 4 0 0 0-4 4v20.453a4 4 0 0 0 4 4h80.297a4 4 0 0 0 4-4V47.381a4 4 0 0 0-4-4ZM94.531 71.834"></path><g stroke="none"><text x="-14.527" y="-67.204" fill="red" font-family="cmmi9" font-size="9" transform="translate(129.9 121.561)">E</text><text x="-7.72" y="-66.204" fill="red" font-family="cmr6" font-size="6" transform="translate(129.9 121.561)">4</text><text x="-.984" y="-67.204" font-family="cmr9" font-size="9" transform="translate(129.9 121.561)">=</text><text x="8.78" y="-67.204" fill="red" font-family="cmr9" font-size="9" transform="translate(129.9 121.561)">[a]</text><text x="18.544" y="-67.204" font-family="cmmi9" font-size="9" transform="translate(129.9 121.561)">E</text><text x="25.35" y="-66.204" font-family="cmr6" font-size="6" transform="translate(129.9 121.561)">0</text><text x="29.517" y="-67.204" font-family="cmmi9" font-size="9" transform="translate(129.9 121.561)">;</text><text x="-32.036" y="-56.204" fill="red" font-family="cmmi9" font-size="9" transform="translate(129.9 121.561)">m</text><text x="-23.887" y="-60.027" fill="red" font-family="cmsy6" font-size="6" transform="translate(129.9 121.561)">0</text><text x="-18.623" y="-56.204" font-family="cmr9" font-size="9" transform="translate(129.9 121.561)">=</text><text x="-8.859" y="-56.204" font-family="cmmi9" font-size="9" transform="translate(129.9 121.561)">D</text><text x="-.975" y="-56.204" font-family="cmmi9" font-size="9" transform="translate(129.9 121.561)">LP</text><text x="12.51" y="-56.204" font-family="cmr9" font-size="9" transform="translate(129.9 121.561)">(</text><text x="16.108" y="-56.204" font-family="cmmi9" font-size="9" transform="translate(129.9 121.561)">P</text><text x="22.013" y="-55.204" font-family="cmr6" font-size="6" transform="translate(129.9 121.561)">4</text><text x="26.18" y="-56.204" font-family="cmmi9" font-size="9" transform="translate(129.9 121.561)">;</text><text x="30.291" y="-56.204" fill="red" font-family="cmmi9" font-size="9" transform="translate(129.9 121.561)">P</text><text x="36.197" y="-55.204" fill="red" font-family="cmmi6" font-size="6" transform="translate(129.9 121.561)">E</text><text x="41.596" y="-54.048" fill="red" font-family="cmr5" font-size="5" transform="translate(129.9 121.561)">4</text><text x="45.998" y="-56.204" font-family="cmr9" font-size="9" transform="translate(129.9 121.561)">)</text></g></g><g fill="red" stroke="red" stroke-width=".8"><path fill="none" d="M8.198-56.204H94.32"></path><path d="m97.307-56.204-4.169-1.577 1.383 1.577-1.383 1.576Z"></path><text x="-32.036" y="-56.204" fill="red" stroke="none" font-family="cmr9" font-size="9" transform="translate(80.476 -5.983)">[a]</text></g><g fill="#00f" stroke="#00f" stroke-width="1.2"><path fill="none" d="M-32.036-41.578v79.383"></path><path d="m-32.036 41.272 1.802-4.754-1.802 1.587-1.802-1.587Z"></path><text x="-32.036" y="-56.204" fill="#00f" stroke="none" font-family="cmr9" font-size="9" transform="translate(-14.21 59.155)">[b]</text></g><g fill="#00f" stroke="#00f" stroke-width="1.2"><path fill="none" d="M138.68-41.578v28.167"></path><path d="m138.68-9.943 1.803-4.754-1.803 1.586-1.802-1.586Z"></path><text x="-32.036" y="-56.204" fill="#00f" stroke="none" font-family="cmr9" font-size="9" transform="translate(174.65 33.548)">[b]</text></g><g fill="red" stroke="red" stroke-width=".8"><path fill="none" d="M8.198 57.607h81.808"></path><path d="m92.992 57.607-4.169-1.577 1.383 1.577-1.383 1.576Z"></path><text x="-32.036" y="-56.204" fill="red" stroke="none" font-family="cmr9" font-size="9" transform="translate(78.319 107.828)">[a]</text></g></g></svg></div>
-<section id="setup-and-public-parameters" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="setup-and-public-parameters"><span class="header-section-number">2.1</span> Setup and Public Parameters</h3>
+<p>The MD-SIDH protocol relies on algebraic structures similar SIDH, but introduces variable secret degrees and masking scalars to obscure the exact torsion point mappings and isogeny degrees.</p>
+<section id="public-parameters" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="public-parameters"><span class="header-section-number">2.1</span> Public Parameters</h3>
+<p>The global parameters dictate the structure of the underlying finite fields and curves. Let <span class="math inline">\(\lambda\)</span> be the target security parameter and let <span class="math inline">\(t = t(\lambda) \in \mathbb{N}\)</span> be an integer dependent on <span class="math inline">\(\lambda\)</span>.</p>
 <ul>
-<li><strong>Prime:</strong> <span class="math inline">\(p = 2^r \ell_1 \dots \ell_n - 1\)</span>.</li>
-<li><strong>Base Curve:</strong> <span class="math inline">\(E_0 : y^2 = x^3 + x\)</span> over <span class="math inline">\(\mathbb{F}_p\)</span>.</li>
-<li><strong>Message Space:</strong> <span class="math inline">\(\mathcal{M} = \mathbb{Z}_{2^{r-2}}\)</span>.</li>
-<li><strong>Randomizing Function:</strong> A bijective function <span class="math inline">\(f_E : \mathbb{F}_p \to \mathbb{F}_p\)</span> indexed by the curve <span class="math inline">\(E\)</span>. A concrete example is <span class="math inline">\(f_E(x)\)</span> such that its binary representation is <span class="math inline">\(\text{bin}(x) \oplus \text{bin}(A_E)\)</span>, where <span class="math inline">\(A_E\)</span> is the Montgomery coefficient of <span class="math inline">\(E\)</span>.</li>
+<li><strong>Isogeny Degree Bounds (<span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>):</strong> Let <span class="math inline">\(A = l_1^{a_1}\cdots l_t^{a_t}\)</span> and <span class="math inline">\(B = q_1^{b_1}\cdots q_t^{b_t}\)</span> be two smooth, coprime integers.</li>
+<li><strong>Characteristic (<span class="math inline">\(p\)</span>):</strong> Let <span class="math inline">\(p = ABf - 1\)</span> be a prime, where <span class="math inline">\(f\)</span> is a small cofactor. The parameters are chosen such that <span class="math inline">\(A \approx B\)</span>.</li>
+<li><strong>Starting Curve (<span class="math inline">\(E_0\)</span>):</strong> Let <span class="math inline">\(E_0\)</span> be a supersingular elliptic curve defined over <span class="math inline">\(\mathbb{F}_{p^2}\)</span>.</li>
+<li><strong>Torsion Bases:</strong> The bases for the <span class="math inline">\(A\)</span>-torsion and <span class="math inline">\(B\)</span>-torsion subgroups are fixed publicly as <span class="math inline">\(E_0[A] = \langle P_A, Q_A \rangle\)</span> and <span class="math inline">\(E_0[B] = \langle P_B, Q_B \rangle\)</span>.</li>
 </ul>
+<p>The complete public parameters are <span class="math inline">\((E_0, p, A, B, P_A, Q_A, P_B, Q_B)\)</span>.</p>
 </section>
-<section id="key-generation" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="key-generation"><span class="header-section-number">2.2</span> Key Generation</h3>
+<section id="key-generation-and-exchange" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="key-generation-and-exchange"><span class="header-section-number">2.2</span> Key Generation and Exchange</h3>
+<p>During this phase, Alice and Bob generate their secret isogenies using random divisors of the bounds, mask the resulting torsion points with random invertible scalars, and transmit them.</p>
+<p><strong>Alice’s Operations:</strong></p>
 <ol type="1">
-<li>Alice chooses a uniformly random integral ideal class <span class="math inline">\([\mathfrak{a}]\)</span> from <span class="math inline">\(\text{cl}(\mathbb{Z}[\pi])\)</span>.</li>
-<li>She computes the curve <span class="math inline">\(E_1 = [\mathfrak{a}]E_0\)</span> via the class group action.</li>
-<li><strong>Public Key:</strong> <span class="math inline">\(E_1\)</span></li>
-<li><strong>Private Key:</strong> <span class="math inline">\([\mathfrak{a}]\)</span></li>
+<li><strong>Secret Key:</strong> Alice samples a uniformly random divisor <span class="math inline">\(A'\)</span> of <span class="math inline">\(A\)</span> and a random point <span class="math inline">\(R_A \in E_0[A']\)</span>. Her secret key is <span class="math inline">\(sk_A = R_A\)</span>.</li>
+<li><strong>Masking Scalar:</strong> Alice samples a uniformly random integer <span class="math inline">\(\alpha \in \mathbb{Z}/B\mathbb{Z}^\times\)</span>. The integer <span class="math inline">\(\alpha\)</span> can be deleted immediately after the public key is generated.</li>
+<li><strong>Isogeny Computation:</strong> She computes the isogeny <span class="math inline">\(\phi_A: E_0 \rightarrow E_A := E_0/\langle R_A \rangle\)</span>.</li>
+<li><strong>Public Key:</strong> Alice masks her output torsion points by computing <span class="math inline">\([\alpha]\phi_A(P_B)\)</span> and <span class="math inline">\([\alpha]\phi_A(Q_B)\)</span>. She publishes her public key as <span class="math inline">\(pk_A = (E_A, [\alpha]\phi_A(P_B), [\alpha]\phi_A(Q_B))\)</span>.</li>
+</ol>
+<p><strong>Bob’s Operations:</strong></p>
+<ol type="1">
+<li><strong>Secret Key:</strong> Bob samples a uniformly random divisor <span class="math inline">\(B'\)</span> of <span class="math inline">\(B\)</span> and a random point <span class="math inline">\(R_B \in E_0[B']\)</span>. His secret key is <span class="math inline">\(sk_B = R_B\)</span>.</li>
+<li><strong>Masking Scalar:</strong> Bob samples a uniformly random integer <span class="math inline">\(\beta \in \mathbb{Z}/A\mathbb{Z}^\times\)</span>. The integer <span class="math inline">\(\beta\)</span> can be deleted immediately after use.</li>
+<li><strong>Isogeny Computation:</strong> He computes the isogeny <span class="math inline">\(\phi_B: E_0 \rightarrow E_B := E_0/\langle R_B \rangle\)</span>.</li>
+<li><strong>Public Key:</strong> Bob masks his output torsion points by computing <span class="math inline">\([\beta]\phi_B(P_A)\)</span> and <span class="math inline">\([\beta]\phi_B(Q_A)\)</span>. He publishes his public key as <span class="math inline">\(pk_B = (E_B, [\beta]\phi_B(P_A), [\beta]\phi_B(Q_A))\)</span>.</li>
 </ol>
 </section>
-<section id="encryption" class="level3" data-number="2.3">
-<h3 data-number="2.3" class="anchored" data-anchor-id="encryption"><span class="header-section-number">2.3</span> Encryption</h3>
-<p>To encrypt a plaintext <span class="math inline">\(m \in \mathbb{Z}_{2^{r-2}}\)</span> for Alice, Bob performs the following steps:</p>
+<section id="shared-key-computation" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="shared-key-computation"><span class="header-section-number">2.3</span> Shared Key Computation</h3>
+<p>Upon receiving each other’s public keys, the parties use the masked points to recover the unmasked kernels for their respective second-step isogenies. Because the masking scalars are simply constant invertible multipliers over the entire torsion group, the subgroups generated by the mapped secret points remain unaffected.</p>
+<p><strong>Alice’s Computation:</strong></p>
 <ol type="1">
-<li>Bob embeds the message <span class="math inline">\(m\)</span> into <span class="math inline">\(\mathbb{Z}_{2^r}^\times\)</span> by computing <span class="math inline">\(M = 2m + 1\)</span>.</li>
-<li>He chooses a uniformly random ideal class <span class="math inline">\([\mathfrak{b}] \in \text{cl}(\mathbb{Z}[\pi])\)</span>.</li>
-<li>He computes the curve <span class="math inline">\(E_3 = [\mathfrak{b}]E_0\)</span>.</li>
-<li>He applies the action of <span class="math inline">\([\mathfrak{b}]\)</span> to Alice’s public key to compute the shared curve <span class="math inline">\(E_4 = [\mathfrak{b}]E_1 = [\mathfrak{b}][\mathfrak{a}]E_0\)</span>.</li>
-<li>He uses a deterministic algorithm to canonically generate a point <span class="math inline">\(P_{E_4} \in E_4(\mathbb{F}_p)\)</span> of smooth order <span class="math inline">\(2^r\)</span> (where <span class="math inline">\(2^r \mid p+1\)</span>).</li>
-<li>He computes the scalar multiplication <span class="math inline">\(P_4 = [M]P_{E_4}\)</span>.</li>
-<li>To avoid leaking the <span class="math inline">\(x\)</span>-coordinate of <span class="math inline">\(P_4\)</span> (which could reveal information about <span class="math inline">\(E_4\)</span>), he masks it using the randomizing function: <span class="math inline">\(c = f_{E_4}(x(P_4))\)</span>.</li>
-<li><strong>Ciphertext:</strong> <span class="math inline">\((E_3, c)\)</span></li>
+<li>Upon receiving Bob’s public key <span class="math inline">\((E_B, [\beta]\phi_B(P_A), [\beta]\phi_B(Q_A))\)</span>, Alice uses her knowledge of <span class="math inline">\(R_A\)</span> to linearly combine the received points and recover the subgroup <span class="math inline">\(\langle R'_A \rangle = \langle \phi_B(R_A) \rangle\)</span>.</li>
+<li>She computes the isogeny <span class="math inline">\(E_{AB} := E_B/\langle R'_A \rangle\)</span>.</li>
+<li>Her shared key is the <span class="math inline">\(j\)</span>-invariant <span class="math inline">\(j(E_{AB})\)</span>.</li>
 </ol>
-</section>
-<section id="decryption" class="level3" data-number="2.4">
-<h3 data-number="2.4" class="anchored" data-anchor-id="decryption"><span class="header-section-number">2.4</span> Decryption</h3>
-<p>Upon receiving the ciphertext <span class="math inline">\((E_3, c)\)</span>, Alice performs the following steps:</p>
+<p><strong>Bob’s Computation:</strong></p>
 <ol type="1">
-<li>She computes the shared curve <span class="math inline">\(E_4 = [\mathfrak{a}]E_3 = [\mathfrak{a}][\mathfrak{b}]E_0\)</span> using her private key <span class="math inline">\([\mathfrak{a}]\)</span>.</li>
-<li>Using <span class="math inline">\(E_4\)</span>, she reverses the randomization function to recover <span class="math inline">\(x(P_4) = f_{E_4}^{-1}(c)\)</span>, which identifies the point <span class="math inline">\(P_4\)</span>.</li>
-<li>She canonically computes the same base point <span class="math inline">\(P_{E_4} \in E_4(\mathbb{F}_p)\)</span> of order <span class="math inline">\(2^r\)</span>.</li>
-<li>She solves a discrete logarithm problem (DLP) to find the relationship between <span class="math inline">\(P_4\)</span> and <span class="math inline">\(P_{E_4}\)</span>. Since the group order is <span class="math inline">\(2^r\)</span> (which is smooth), she can efficiently use the Pohlig-Hellman algorithm to find <span class="math inline">\(M' \in \mathbb{Z}_{2^r}^\times\)</span> such that <span class="math inline">\(P_4 = [M']P_{E_4}\)</span>.</li>
-<li>If <span class="math inline">\(M' &gt; 2^{r-1}\)</span>, she adjusts <span class="math inline">\(M = 2^r - M'\)</span>; otherwise <span class="math inline">\(M = M'\)</span>.</li>
-<li>She recovers the original message as <span class="math inline">\(m = (M - 1) / 2\)</span>.</li>
+<li>Upon receiving Alice’s public key <span class="math inline">\((E_A, [\alpha]\phi_A(P_B), [\alpha]\phi_A(Q_B))\)</span>, Bob uses his knowledge of <span class="math inline">\(R_B\)</span> to linearly combine the received points and recover the subgroup <span class="math inline">\(\langle R'_B \rangle = \langle \phi_A(R_B) \rangle\)</span>.</li>
+<li>He computes the isogeny <span class="math inline">\(E_{BA} := E_A/\langle R'_B \rangle\)</span>.</li>
+<li>His shared key is the <span class="math inline">\(j\)</span>-invariant <span class="math inline">\(j(E_{BA})\)</span>.</li>
 </ol>
+<p>Due to the commutative nature of the isogeny kernels, <span class="math inline">\(j(E_{AB}) = j(E_{BA})\)</span>, meaning both parties derive the exact same value as their shared secret.</p>
 </section>
 </section>
 <section id="security-assumptions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
-<p>The security of the SimS protocol rests on two core assumptions:</p>
+<p>MD-SIDH relies on a modified version of the isogeny with torsion problem, defined as follows:</p>
+<blockquote class="blockquote">
+<p>Let <span class="math inline">\(E_0/\mathbb{F}_{p^2}\)</span> be a supersingular elliptic curve where <span class="math inline">\(\#E_0(\mathbb{F}_{p^2}) = (ABf)^2\)</span>, with <span class="math inline">\(E_0[B] = \langle P, Q \rangle\)</span>. Let <span class="math inline">\(A'\)</span> be a uniformly random divisor of <span class="math inline">\(A\)</span>, and let <span class="math inline">\(\alpha \in \mathbb{Z}/B\mathbb{Z}^\times\)</span> be a random scalar. Given a random <span class="math inline">\(A'\)</span>-degree isogeny <span class="math inline">\(\phi: E_0 \rightarrow E_A\)</span>, finding <span class="math inline">\(\phi\)</span> from the public tuple <span class="math inline">\((E_0, P, Q, E_A, [\alpha]\phi(P), [\alpha]\phi(Q))\)</span> must be computationally infeasible.</p>
+</blockquote>
+<p>Beyond the baseline <a href="../../protocols/key-exchange/msidh.html#security-assumptions">assumptions of M-SIDH</a>, the security of MD-SIDH critically depends on three specific conditions:</p>
 <ul>
-<li><strong>Commutative Supersingular Isogeny Decisional Diffie-Hellman (CSSIDDH) Assumption:</strong> IND-CPA security relies on this assumption. It posits that given a base curve <span class="math inline">\(E_0\)</span> and two public curves <span class="math inline">\(E_A = [\mathfrak{a}]E_0\)</span> and <span class="math inline">\(E_B = [\mathfrak{b}]E_0\)</span>, it is computationally infeasible to distinguish the shared secret curve <span class="math inline">\([\mathfrak{a}][\mathfrak{b}]E_0\)</span> from a uniformly random curve <span class="math inline">\([\mathfrak{c}]E_0\)</span>.</li>
-<li><strong>Knowledge of Exponent (KoE)-Type Assumption:</strong> IND-CCA security relies on this assumption. It formalizes that if an adversary produces a valid ciphertext <span class="math inline">\((E_3, c)\)</span>, they must be able to extract the underlying ideal class <span class="math inline">\([\mathfrak{b}]\)</span> used to generate the curve <span class="math inline">\(E_3 = [\mathfrak{b}]E_0\)</span> and the corresponding masked point on the shared curve <span class="math inline">\(E_4\)</span>.</li>
+<li><strong>Degree Obfuscation:</strong> While the square-free part of the random divisor <span class="math inline">\(A'\)</span> can be recovered using the Weil pairing, extracting the remaining prime power factors must be mathematically hard.</li>
+<li><strong>Unrestricted Scalar Masking:</strong> Hiding the torsion point images using any arbitrary invertible integer (<span class="math inline">\(\alpha\)</span>) must not introduce new structural vulnerabilities, even though it fails to preserve the Weil pairing exactly.</li>
+<li><strong>Non-Cyclic Hardness:</strong> The core M-SIDH problem must still hold for non-cyclic isogenies. This is required because reducing an MD-SIDH instance (by removing the known square-free degree factors) naturally results in a non-cyclic M-SIDH instance.</li>
 </ul>
 </section>
 <section id="progress" class="level2" data-number="4">
@@ -610,8 +615,8 @@ window.Quarto = {
 <section class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id=""><span class="header-section-number">5</span> References</h2>
 <div id="refs" class="references csl-bib-body" role="list">
-<div id="ref-sims" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[FoPe21] </div><div class="csl-right-inline"><span class="smallcaps">Fouotsa, Tako Boris</span> ; <span class="smallcaps">Petit, Christophe</span>: <a href="https://eprint.iacr.org/2021/218"><span>SimS</span>: A simplification of <span>SiGamal</span></a>. In: <em>PQCrypto</em>&nbsp;: Springer, 2021, pp.&nbsp;277–295</div>
+<div id="ref-msidh-mdsidh" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[FoMoPe23] </div><div class="csl-right-inline"><span class="smallcaps">Fouotsa, Tako Boris</span> ; <span class="smallcaps">Moriya, Tomoki</span> ; <span class="smallcaps">Petit, Christophe</span>: <a href="https://eprint.iacr.org/2023/013">M-<span>SIDH</span> and <span>MD</span>-<span>SIDH</span>: Countering <span>SIDH</span> attacks by masking information</a>. In: <em>EUROCRYPT</em>&nbsp;: Springer, 2023, pp.&nbsp;282–309</div>
 </div>
 </div>
 <hr>
