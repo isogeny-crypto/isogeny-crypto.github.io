@@ -10,24 +10,43 @@ The Key-Updatable Public-Key Encryption (UPKE) scheme based on [CSIDH](/protocol
 
 ## Protocol Design
 
-A naive application of CSIDH to UPKE fails because repeated additions of short update vectors (represented in $\mathbb{Z}^{\ell}$) center the new keys around the old ones, leading to information leakage, and cause the $L_1$-norm to grow until the decryption process becomes unacceptably inefficient. 
+A naive application of CSIDH to UPKE fails because repeated additions of short update vectors (represented in $\mathbb{Z}^l$) center the new keys around the old ones, leading to information leakage. Furthermore, this causes the error term to grow with updates until the decryption process becomes unacceptably inefficient. To overcome these limitations, the CSIDH UPKE protocol requires a parameter set where the structure of the class group is completely computed and known. This mathematical property ensures unique group element representation and allows for uniform sampling.
 
-To overcome this, the CSIDH UPKE protocol requires the exact order $N$ of the class group $cl(\mathcal{O}) \cong \mathbb{Z}_N$ to be known, allowing keys to be represented and uniformly sampled as simple integers modulo $N$. The protocol leverages a Data Encapsulation Mechanism (DEM) and a Key Derivation Function (KDF) to operate as a hybrid encryption scheme. It defines six core algorithms:
+### Parameters & Primitives
+Before executing the protocol, participants establish the mathematical foundation and cryptographic primitives in a strict, logical sequence:
 
-* **KeyGen($\lambda$)**: Samples a secret key $g_{sk}$ uniformly at random from $\mathbb{Z}_N$. It computes the public key $E_{pk} := g_{sk} * E_0$ by applying the group action to the starting curve $E_0$. The algorithm outputs $(sk, pk) = (g_{sk}, E_{pk})$.
-* **Encrypt($pk, m$)**: Samples a random element $g_{enc} \leftarrow \mathbb{Z}_N$. It computes a shared symmetric key $K \leftarrow \text{KDF}(g_{enc} * pk)$, applies the group action to obtain $E_{enc} \leftarrow g_{enc} * E_0$, and encrypts the message $m$ using the DEM to yield $ctxt \leftarrow \text{DEM.Encrypt}(K, m)$. The final ciphertext is $ct = (E_{enc}, ctxt)$.
-* **Decrypt($sk, ct$)**: Parses the ciphertext into $(E_{enc}, ctxt)$, derives the shared key $K \leftarrow \text{KDF}(sk * E_{enc})$, and outputs the plaintext $m$ via $\text{DEM.Decrypt}(K, ctxt)$.
-* **GenUpdate()**: Randomly samples an update value $\mu$ uniformly from $\mathbb{Z}_N$.
-* **UpdatePrivate($sk, \mu$)**: Computes the updated secret key by performing modular addition: $sk' \leftarrow sk + \mu \pmod N$.
-* **UpdatePublic($pk, \mu$)**: Updates the public key by applying the group action corresponding to the update value: $pk' \leftarrow \mu * pk$.
+*   **Prime Field $p$**: The protocol fixes a large prime of the form $p = 4 \cdot \ell_1 \cdots \ell_n - 1$, where $\ell_i$ are small, distinct odd primes.
+*   **Base Curve $E_0$**: The starting supersingular elliptic curve agreed upon by participants, defined as $E_0 : y^2 = x^3 + x$ over $\mathbb{F}_p$. The condition $p \equiv 3 \pmod 4$ ensures $E_0$ is supersingular.
+*   **$cl(\mathcal{O})$**: The ideal-class group of the $\mathbb{F}_p$-rational endomorphism ring $\mathcal{O}$ corresponding to the commutative supersingular isogeny graph of $E_0$.
+*   **Group Order $N$**: The exact known order of the class group $cl(\mathcal{O})$.
+*   **$*$**: The group action, which applies an isogeny (derived from an element in $\mathbb{Z}/N\mathbb{Z}$) to a supersingular elliptic curve.
+*   **$\text{KDF}$ and $\text{DEM}$**: A Key Derivation Function and a Data Encapsulation Mechanism, which together provide hybrid symmetric encryption and decryption capabilities.
 
-By utilizing modular arithmetic over $\mathbb{Z}_N$ for private updates, the new secret key is guaranteed to be uniformly distributed in $\mathbb{Z}_N$ and independent of the prior key, completely eliminating error accumulation and data leakage.
+### Keys & Initialization
+The protocol initializes a participant's long-lived cryptographic keys via the **KeyGen()** algorithm. 
+
+*   **Private Key:** A secret key $g_{sk}$ is sampled uniformly at random from $\mathbb{Z}/N\mathbb{Z}$.
+*   **Public Key:** The public key $E_{pk} := g_{sk} * E_0$ is computed by applying the group action to the starting curve.
+*   **Output:** The algorithm outputs the initial keypair $(sk, pk) = (g_{sk}, E_{pk})$.
+
+### Key Updatability
+These distinct functions allow the keypair to be asynchronously updated, restoring security in the event of compromised secret values. By utilizing uniform sampling and modular arithmetic over $\mathbb{Z}/N\mathbb{Z}$, the updated secret key leaks no information about the previous secret key, avoiding error accumulation and ensuring both forward secrecy and post-compromise security.
+
+*   **Update Generation (GenUpdate):** An update value $\mu$ is sampled uniformly at random from $\mathbb{Z}/N\mathbb{Z}$.
+*   **Private Key Update (UpdatePrivate):** The updated secret key is computed via straightforward modular addition, outputting $sk' \leftarrow sk + \mu \pmod N$.
+*   **Public Key Update (UpdatePublic):** The public key is updated by applying the group action corresponding to the update value, outputting $pk' \leftarrow \mu * pk$.
+
+### Message Encapsulation
+To securely transmit a plaintext message $m$, the protocol uses the following hybrid encapsulation algorithms:
+
+*   **Encryption (Encrypt):** The sender samples a random ephemeral element $g_{enc} \leftarrow \mathbb{Z}/N\mathbb{Z}$ and computes a shared symmetric key $K \leftarrow \text{KDF}(g_{enc} * pk)$. They apply the group action to obtain the ephemeral public curve $E_{enc} \leftarrow g_{enc} * E_0$ and encrypt the message using the DEM to yield $ctxt \leftarrow \text{DEM.Encrypt}(K, m)$. The output is the combined ciphertext $ct = (E_{enc}, ctxt)$.
+*   **Decryption (Decrypt):** The recipient parses the ciphertext $ct$ into $(E_{enc}, ctxt)$ and derives the matching shared symmetric key $K \leftarrow \text{KDF}(sk * E_{enc})$. They output the plaintext $m$ by executing $\text{DEM.Decrypt}(K, ctxt)$.
 
 ## Security Assumptions
 
 The protocol is proven to satisfy IND-CPA-U (Indistinguishability Under Chosen Plaintext Attack with Updatability) security. This relies on the hardness of the **Supersingular Isogeny Problem**, i.e. computing an isogeny between two supersingular elliptic curves over $\mathbb{F}_p$ with the same number of rational points. In addition to this core mathematical problem, the security model depends on the following explicit assumptions:
 
-1. **Uniform Sampling:** The class group structure ($N$) must be strictly known to allow uniform sampling from $\mathbb{Z}_N$, ensuring that updates reveal zero information about previous secret keys.
+1. **Uniform Sampling:** The class group structure ($N$) must be strictly known to allow uniform sampling from $\mathbb{Z}/N\mathbb{Z}$, ensuring that updates reveal zero information about previous secret keys.
 2. **Subexponential Precomputation:** Computing the class group structure takes subexponential time. The scheme assumes attackers cannot break the underlying isogeny mapping itself, even if sufficient resources eventually allow scaling this subexponential initialization phase.
 3. **DEM Security:** The underlying Data Encapsulation Mechanism (DEM) must be fundamentally secure to ensure the hybrid construction provides baseline IND-CPA security.
 
