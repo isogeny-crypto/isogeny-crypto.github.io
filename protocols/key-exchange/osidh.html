@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-06-01">
+<meta name="dcterms.date" content="2026-07-09">
 
-<title>CSIDH – Isogeny-based Cryptography Wiki</title>
+<title>OSIDH – Isogeny-based Cryptography Wiki</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -316,7 +316,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/binsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/csidh.html">CSIDH</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/binsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/osidh.html">OSIDH</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -373,7 +373,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../protocols/key-exchange/csidh.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../protocols/key-exchange/csidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSIDH</span></a>
   </div>
 </li>
@@ -427,7 +427,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../protocols/key-exchange/osidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../protocols/key-exchange/osidh.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">OSIDH</span></a>
   </div>
 </li>
@@ -511,11 +511,10 @@ window.Quarto = {
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
   <li><a href="#protocol-design" id="toc-protocol-design" class="nav-link" data-scroll-target="#protocol-design"><span class="header-section-number">2</span> Protocol Design</a>
   <ul class="collapse">
-  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters"><span class="header-section-number">2.1</span> Parameters</a></li>
-  <li><a href="#endomorphism-ring-isogenies" id="toc-endomorphism-ring-isogenies" class="nav-link" data-scroll-target="#endomorphism-ring-isogenies"><span class="header-section-number">2.2</span> Endomorphism Ring &amp; Isogenies</a></li>
-  <li><a href="#private-key" id="toc-private-key" class="nav-link" data-scroll-target="#private-key"><span class="header-section-number">2.3</span> Private Key</a></li>
-  <li><a href="#public-key" id="toc-public-key" class="nav-link" data-scroll-target="#public-key"><span class="header-section-number">2.4</span> Public Key</a></li>
-  <li><a href="#key-exchange" id="toc-key-exchange" class="nav-link" data-scroll-target="#key-exchange"><span class="header-section-number">2.5</span> Key Exchange</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">2.1</span> Setup</a></li>
+  <li><a href="#secret-key-generation" id="toc-secret-key-generation" class="nav-link" data-scroll-target="#secret-key-generation"><span class="header-section-number">2.2</span> Secret Key Generation</a></li>
+  <li><a href="#public-key-construction" id="toc-public-key-construction" class="nav-link" data-scroll-target="#public-key-construction"><span class="header-section-number">2.3</span> Public Key Construction</a></li>
+  <li><a href="#shared-secret-computation" id="toc-shared-secret-computation" class="nav-link" data-scroll-target="#shared-secret-computation"><span class="header-section-number">2.4</span> Shared Secret Computation</a></li>
   </ul></li>
   <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a></li>
   <li><a href="#progress" id="toc-progress" class="nav-link" data-scroll-target="#progress"><span class="header-section-number">4</span> Progress</a></li>
@@ -527,10 +526,10 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/binsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/csidh.html">CSIDH</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../protocols/key-exchange/binsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../protocols/key-exchange/osidh.html">OSIDH</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">CSIDH</h1>
-<p class="subtitle lead">Commutative Supersingular Isogeny Diffie-Hellman</p>
+<h1 class="title">OSIDH</h1>
+<p class="subtitle lead">Oriented Supersingular Isogeny Diffie-Hellman</p>
 </div>
 
 
@@ -541,7 +540,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 1, 2026</p>
+      <p class="date">July 9, 2026</p>
     </div>
   </div>
   
@@ -561,53 +560,83 @@ window.Quarto = {
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>CSIDH is a post-quantum commutative group action that enables efficient non-interactive key exchange <span class="citation" data-cites="csidh">[<a href="#ref-csidh" role="doc-biblioref">CLMP18</a>]</span>. The construction adapts the layout of earlier cryptosystems proposed by <a href="https://eprint.iacr.org/2006/291">Couveignes</a> and <a href="https://eprint.iacr.org/2006/145">Rostovtsev-Stolbunov</a>, but replaces the use of ordinary elliptic curves with supersingular elliptic curves defined over a large prime field <span class="math inline">\(\mathbb{F}_p\)</span> . A key advantage of using supersingular curves over <span class="math inline">\(\mathbb{F}_p\)</span> (for <span class="math inline">\(p \ge 5\)</span>) is that they always have exactly <span class="math inline">\(p + 1\)</span> rational points, which trivially yields the highly composite order needed for efficiency.</p>
+<p>The Oriented Supersingular Isogeny Diffie-Hellman (OSIDH) protocol is a cryptographic key exchange mechanism that generalizes the <a href="../../protocols/key-exchange/csidh.html">CSIDH</a> scheme and acts as an analogue to the standard <a href="../../protocols/key-exchange/sidh.html">SIDH</a> protocol <span class="citation" data-cites="osidh">[<a href="#ref-osidh" role="doc-biblioref">CoKo20</a>]</span>. At a high level, OSIDH establishes a shared secret between two parties by navigating a complex mathematical structure composed of an <span class="math inline">\(\ell\)</span>-isogeny cordillera acted upon by an ideal class group.</p>
+<p>Unlike CSIDH, which relies heavily on the availability of rational torsion subgroups (points of finite order whose coordinates exist entirely within the base field) over the prime field <span class="math inline">\(\mathbb{F}_p\)</span>, OSIDH leverages a category of <span class="math inline">\(\mathcal{O}\)</span>-oriented supersingular elliptic curves defined over the extension field <span class="math inline">\(\mathbb{F}_{p^2}\)</span>. This design removes strict conditions on rational torsion subgroups and covers virtually all isomorphism classes of supersingular elliptic curves. The protocol evaluates the group action efficiently using modular isogenies and precomputations, deliberately avoiding the exchange of full isogeny chains to prevent structural attacks on the endomorphism rings.</p>
 </section>
 <section id="protocol-design" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="protocol-design"><span class="header-section-number">2</span> Protocol Design</h2>
-<p>The core of the CSIDH protocol is based on the free and transitive action of the ideal-class group <span class="math inline">\(cl(\mathcal{O})\)</span> on the set of <span class="math inline">\(\mathbb{F}_p\)</span>-isomorphism classes of supersingular elliptic curves with an <span class="math inline">\(\mathbb{F}_p\)</span>-rational endomorphism ring isomorphic to <span class="math inline">\(\mathcal{O}\)</span>.</p>
-<section id="parameters" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="parameters"><span class="header-section-number">2.1</span> Parameters</h3>
-<p>The protocol fixes a large prime <span class="math inline">\(p\)</span> of the form <span class="math inline">\(4 \cdot \ell_1 \cdots \ell_n - 1\)</span>, where <span class="math inline">\(\ell_i\)</span> are small, distinct odd primes. The base curve is defined as <span class="math inline">\(E_0 : y^2 = x^3 + x\)</span> over <span class="math inline">\(\mathbb{F}_p\)</span>. The requirement that <span class="math inline">\(p \equiv 3 \pmod 4\)</span> ensures that <span class="math inline">\(E_0\)</span> is supersingular and permits the use of efficient Montgomery arithmetic.</p>
+<p>The OSIDH protocol operates on a network of isogenies, constructed as a descending ladder derived from a base elliptic curve. Below is a step-by-step description of the protocol.</p>
+<section id="setup" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">2.1</span> Setup</h3>
+<p>Before the exchange begins, the following public parameters and initial mathematical objects must be established:</p>
+<ul>
+<li><strong><span class="math inline">\(K\)</span></strong>: An imaginary quadratic field of small discriminant <span class="math inline">\(\Delta_K\)</span>.</li>
+<li><strong><span class="math inline">\(\mathcal{O}_K\)</span></strong>: An effective maximal order in <span class="math inline">\(K\)</span> with a class number of 1 (e.g., <span class="math inline">\(\mathbb{Z}[i]\)</span> or <span class="math inline">\(\mathbb{Z}[\zeta_3]\)</span>).</li>
+<li><strong><span class="math inline">\((r,t)\)</span></strong>: Parameters defining the key space dimensions and limits. <span class="math inline">\(t\)</span> is the number of prime ideals available for secret horizontal walks, and <span class="math inline">\(r\)</span> is a positive integer defining the maximum steps taken for each ideal. They are chosen together to ensure <span class="math inline">\((2r+1)^t \geq 2^{2\lambda}\)</span>, i.e.&nbsp;the total key space is exponentially large enough to meet a target security level <span class="math inline">\(\lambda\)</span>.</li>
+<li><strong><span class="math inline">\(\mathfrak{p}_1, \dots, \mathfrak{p}_t\)</span></strong>: A fixed set of small prime ideals that split in <span class="math inline">\(\mathcal{O}_K\)</span>.</li>
+<li><strong><span class="math inline">\(p\)</span></strong>: A large prime number such that the Kronecker symbol <span class="math inline">\((\frac{\Delta_K}{p}) \neq 1\)</span>, determining the field <span class="math inline">\(k = \mathbb{F}_{p^2}\)</span>.</li>
+<li><strong><span class="math inline">\(E_0\)</span></strong>: A base supersingular elliptic curve defined over <span class="math inline">\(k\)</span>, equipped with a primitive <span class="math inline">\(\mathcal{O}_K\)</span>-orientation.</li>
+<li><strong><span class="math inline">\(\ell\)</span></strong>: A small prime number.</li>
+<li><strong><span class="math inline">\(n\)</span></strong>: A parameter defining the depth of the vertical isogeny ladder. It is typically chosen such that <span class="math inline">\(\ell^n \approx p\)</span>.</li>
+<li><strong><span class="math inline">\(E_0 \rightarrow E_1 \rightarrow \dots \rightarrow E_n\)</span></strong>: A public, descending <span class="math inline">\(\ell\)</span>-isogeny chain of length <span class="math inline">\(n\)</span> originating from <span class="math inline">\(E_0\)</span> and terminating at <span class="math inline">\(E_n\)</span>.</li>
+</ul>
 </section>
-<section id="endomorphism-ring-isogenies" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="endomorphism-ring-isogenies"><span class="header-section-number">2.2</span> Endomorphism Ring &amp; Isogenies</h3>
-<p>The Frobenius endomorphism <span class="math inline">\(\pi\)</span> of <span class="math inline">\(E_0\)</span> satisfies <span class="math inline">\(\pi^2 = -p\)</span>, giving an <span class="math inline">\(\mathbb{F}_p\)</span>-rational endomorphism ring of <span class="math inline">\(\mathcal{O} = \mathbb{Z}[\pi]\)</span>. Because <span class="math inline">\(\pi^2 - 1 \equiv 0 \pmod{\ell_i}\)</span>, the ideals <span class="math inline">\(\ell_i\mathcal{O}\)</span> split into Elkies primes <span class="math inline">\(\mathfrak{l}_i = (\ell_i, \pi - 1)\)</span> and <span class="math inline">\(\bar{\mathfrak{l}}_i = (\ell_i, \pi + 1)\)</span>. The isogenies for <span class="math inline">\(\mathfrak{l}_i\)</span> can be evaluated efficiently because their kernels are generated by points of order <span class="math inline">\(\ell_i\)</span> that lie in the kernel of <span class="math inline">\(\pi - 1\)</span>, meaning they are rational over the base field <span class="math inline">\(\mathbb{F}_p\)</span>.</p>
+<section id="secret-key-generation" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="secret-key-generation"><span class="header-section-number">2.2</span> Secret Key Generation</h3>
+<ul>
+<li><strong>Alice</strong> privately selects a sequence of integers <span class="math inline">\((e_1, \dots, e_t)\)</span> such that <span class="math inline">\(|e_i| \leq r\)</span>.</li>
+<li><strong>Bob</strong> privately selects a sequence of integers <span class="math inline">\((d_1, \dots, d_t)\)</span> such that <span class="math inline">\(|d_i| \leq r\)</span>.</li>
+</ul>
 </section>
-<section id="private-key" class="level3" data-number="2.3">
-<h3 data-number="2.3" class="anchored" data-anchor-id="private-key"><span class="header-section-number">2.3</span> Private Key</h3>
-<p>A private key is constructed as an exponent vector <span class="math inline">\((e_1, \dots, e_n)\)</span> with each <span class="math inline">\(e_i \in \{-m, \dots, m\}\)</span>, representing the ideal class <span class="math inline">\([\mathfrak{l}_1^{e_1} \mathfrak{l}_2^{e_2} \cdots \mathfrak{l}_n^{e_n}] \in cl(\mathcal{O})\)</span>.</p>
+<section id="public-key-construction" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="public-key-construction"><span class="header-section-number">2.3</span> Public Key Construction</h3>
+<ul>
+<li><strong>Alice:</strong> To build her public key, Alice applies her secret key to the public starting curve, hiding her exact path while providing the necessary mathematical data for Bob to compute the shared secret.
+<ol type="1">
+<li><strong>The Secret Ideal Action:</strong> Alice’s secret integers <span class="math inline">\((e_1, \dots, e_t)\)</span> dictate a specific sequence of horizontal isogenies across the top-level isogeny graph (originating at <span class="math inline">\(E_0\)</span>), utilizing the prime ideals <span class="math inline">\(\mathfrak{p}_i\)</span>.</li>
+<li><strong>Pushing the Action Down the Ladder:</strong> To prevent structural attacks on the top-level curve, Alice pushes this horizontal action down to the bottom of the public <span class="math inline">\(\ell\)</span>-isogeny ladder (depth <span class="math inline">\(n\)</span>). This results in her terminal public curve, <span class="math inline">\(F_n = E_n / E_n[\mathfrak{p}_1^{e_1} \cdots \mathfrak{p}_t^{e_t}]\)</span>.</li>
+<li><strong>Evaluating Auxiliary Isogeny Chains:</strong> At depth <span class="math inline">\(n\)</span>, Bob cannot independently evaluate the ideal action on <span class="math inline">\(F_n\)</span>. Alice must provide auxiliary directional data by computing short, horizontal isogeny chains extending outwards from <span class="math inline">\(F_n\)</span> for every prime ideal <span class="math inline">\(\mathfrak{p}_i\)</span> (up to distance <span class="math inline">\(r\)</span>). These precomputed paths take the form: <span class="math inline">\(F_{n,i}^{(-r)} \leftarrow \dots \leftarrow F_n \rightarrow \dots \rightarrow F_{n,i}^{(r)}\)</span>.</li>
+<li><strong>The Final Public Key:</strong> Alice sends Bob her terminal curve <span class="math inline">\(F_n\)</span>, along with the complete set of precomputed horizontal chains.</li>
+</ol></li>
+<li><strong>Bob:</strong> To build his public key, Bob applies his secret key to the public starting curve, hiding his exact path while providing the necessary mathematical data for Alice to compute the shared secret.
+<ol type="1">
+<li><strong>The Secret Ideal Action:</strong> Bob’s secret integers <span class="math inline">\((d_1, \dots, d_t)\)</span> dictate a specific sequence of horizontal isogenies across the top-level isogeny graph (originating at <span class="math inline">\(E_0\)</span>), utilizing the prime ideals <span class="math inline">\(\mathfrak{p}_i\)</span>.</li>
+<li><strong>Pushing the Action Down the Ladder:</strong> To prevent structural attacks on the top-level curve, Bob pushes this horizontal action down to the bottom of the public <span class="math inline">\(\ell\)</span>-isogeny ladder (depth <span class="math inline">\(n\)</span>). This results in his terminal public curve, <span class="math inline">\(G_n = E_n / E_n[\mathfrak{p}_1^{d_1} \cdots \mathfrak{p}_t^{d_t}]\)</span>.</li>
+<li><strong>Evaluating Auxiliary Isogeny Chains:</strong> At depth <span class="math inline">\(n\)</span>, Alice cannot independently evaluate the ideal action on <span class="math inline">\(G_n\)</span>. Bob must provide auxiliary directional data by computing short, horizontal isogeny chains extending outwards from <span class="math inline">\(G_n\)</span> for every prime ideal <span class="math inline">\(\mathfrak{p}_i\)</span> (up to distance <span class="math inline">\(r\)</span>). These precomputed paths take the form: <span class="math inline">\(G_{n,i}^{(-r)} \leftarrow \dots \leftarrow G_n \rightarrow \dots \rightarrow G_{n,i}^{(r)}\)</span>.</li>
+<li><strong>The Final Public Key:</strong> Bob sends Alice his terminal curve <span class="math inline">\(G_n\)</span>, along with the complete set of precomputed horizontal chains.</li>
+</ol></li>
+</ul>
 </section>
-<section id="public-key" class="level3" data-number="2.4">
-<h3 data-number="2.4" class="anchored" data-anchor-id="public-key"><span class="header-section-number">2.4</span> Public Key</h3>
-<p>An individual’s public key (e.g., Alice’s key <span class="math inline">\(A\)</span>) is the Montgomery coefficient of the curve <span class="math inline">\(E_A : y^2 = x^3 + Ax^2 + x\)</span>, which is obtained by applying the action of the secret key <span class="math inline">\([a]\)</span> to the base curve <span class="math inline">\(E_0\)</span>.</p>
-</section>
-<section id="key-exchange" class="level3" data-number="2.5">
-<h3 data-number="2.5" class="anchored" data-anchor-id="key-exchange"><span class="header-section-number">2.5</span> Key Exchange</h3>
-<p>When Alice receives Bob’s public key <span class="math inline">\(B\)</span>, she first verifies that the curve <span class="math inline">\(E_B\)</span> is supersingular. She then applies her secret ideal class action <span class="math inline">\([\mathfrak{a}]\)</span> to compute <span class="math inline">\([\mathfrak{a}]E_B = [\mathfrak{a}][\mathfrak{b}]E_0\)</span>. The shared secret is the unique Montgomery coefficient <span class="math inline">\(S\)</span> corresponding to the combined curve <span class="math inline">\([\mathfrak{a}][\mathfrak{b}]E_0\)</span>.</p>
+<section id="shared-secret-computation" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="shared-secret-computation"><span class="header-section-number">2.4</span> Shared Secret Computation</h3>
+<p>Using the received data and their own secrets, both parties navigate to the same final curve.</p>
+<ul>
+<li><strong>Alice’s Computation:</strong> Starting from Bob’s curve <span class="math inline">\(G_n\)</span>, Alice takes <span class="math inline">\(e_i\)</span> steps along Bob’s provided <span class="math inline">\(\mathfrak{p}_i\)</span>-isogeny chains. As she evaluates each step, she pushes forward the remaining auxiliary isogenies for subsequent steps.</li>
+<li><strong>Bob’s Computation:</strong> Starting from Alice’s curve <span class="math inline">\(F_n\)</span>, Bob takes <span class="math inline">\(d_i\)</span> steps along Alice’s provided horizontal chains, pushing forward the required auxiliary data as he proceeds.</li>
+<li><strong>Shared Secret:</strong> Both arrive at the identical mathematical destination: the shared secret elliptic curve <span class="math inline">\(H_n = E_n / E_n[\mathfrak{p}_1^{e_1+d_1} \cdots \mathfrak{p}_t^{e_t+d_t}]\)</span>.</li>
+</ul>
 </section>
 </section>
 <section id="security-assumptions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
-<p>The security of the CSIDH protocol relies on the hardness of an isogeny-finding problem analogous to the classical discrete logarithm problem.</p>
+<p>The security of the OSIDH protocol is predicated on the hardness of computing unknown isogenies between two given supersingular elliptic curves.</p>
 <ul>
-<li><p><strong>Key Recovery Problem:</strong> The fundamental computational assumption is that given two supersingular elliptic curves <span class="math inline">\(E\)</span> and <span class="math inline">\(E'\)</span> over <span class="math inline">\(\mathbb{F}_p\)</span> with the same <span class="math inline">\(\mathbb{F}_p\)</span>-rational endomorphism ring <span class="math inline">\(\mathcal{O}\)</span>, it is computationally infeasible to find an ideal <span class="math inline">\(\mathfrak{a}\)</span> such that <span class="math inline">\([\mathfrak{a}]E = E'\)</span>.</p></li>
-<li><p><strong>Quantum Security:</strong> Breaking the scheme translates to solving an instance of the abelian hidden-shift problem. This problem can be addressed using subexponential-time quantum algorithms, such as those proposed by Kuperberg. The precise asymptotic complexity depends heavily on the cost of computing the isogeny oracle; combinations of algorithms yield bounds in the realm of <span class="math inline">\(L_p[1/2, 1/\sqrt{2}]\)</span>.</p></li>
-<li><p><strong>Chosen-Ciphertext Security:</strong> Because CSIDH naturally affords efficient public-key validation, it avoids vulnerabilities related to the reuse of dishonest keys. This validation allows CSIDH to securely achieve non-interactive key exchange without resorting to additional chosen-ciphertext attack (CCA) transformations like the Fujisaki-Okamoto transform.</p></li>
+<li><strong>Group Action Hardness:</strong> Borrowed from the <a href="https://eprint.iacr.org/2006/291">Couveignes</a> and <a href="https://eprint.iacr.org/2006/145">Rostovtsev-Stolbunov</a> framework, this assumes that given a starting curve and a curve resulting from a group action, finding the specific ideal group action connecting them is computationally infeasible. In OSIDH, this is modeled as the action of the class group <span class="math inline">\(\mathcal{C}l(\mathcal{O})\)</span> on the <span class="math inline">\(\ell\)</span>-isogeny graph.</li>
+<li><strong>Resistance to Structural Attacks:</strong> The security of the protocol relies critically on hiding the intermediate steps of the descending <span class="math inline">\(\ell\)</span>-isogeny ladder. By only exchanging the terminal curves (<span class="math inline">\(F_n, G_n\)</span>) along with local horizontal auxiliary chains, the protocol prevents adversaries from recovering the global endomorphism ring structure of the curves. If the full path from the specialized base curve <span class="math inline">\(E_0\)</span> were exposed, explicit knowledge of <span class="math inline">\(E_0\)</span>’s endomorphism ring would enable structural attacks to deduce the endomorphism ring of the final curves and easily compute the secret isogeny. Therefore, a core assumption is that exposing only the terminal curve and local auxiliary data at depth <span class="math inline">\(n\)</span> is insufficient to mount these endomorphism ring attacks.</li>
 </ul>
 </section>
 <section id="progress" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="progress"><span class="header-section-number">4</span> Progress</h2>
 <p>TODO</p>
-<p>2023/793 and 2020/1188 and 2018/537 and 2019/1202 and 2019/725 and 2025/847 and 2025/1098</p>
+<p>2021/1681</p>
 
 
 </section>
 <section class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id=""><span class="header-section-number">5</span> References</h2>
 <div id="refs" class="references csl-bib-body" role="list">
-<div id="ref-csidh" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[CLMP18] </div><div class="csl-right-inline"><span class="smallcaps">Castryck, Wouter</span> ; <span class="smallcaps">Lange, Tanja</span> ; <span class="smallcaps">Martindale, Chloe</span> ; <span class="smallcaps">Panny, Lorenz</span> ; <span class="smallcaps">Renes, Joost</span>: <a href="https://eprint.iacr.org/2018/383"><span>CSIDH</span>: <span>C</span>ommutative <span>S</span>upersingular <span>I</span>sogeny <span>D</span>iffie-<span>H</span>ellman</a>. In: <em>ASIACRYPT</em>&nbsp;: Springer, 2018, pp.&nbsp;395–427</div>
+<div id="ref-osidh" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[CoKo20] </div><div class="csl-right-inline"><span class="smallcaps">Colò, Leonardo</span> ; <span class="smallcaps">Kohel, David</span>: <a href="https://nutmic2019.imj-prg.fr/confpapers/OrientIsogGraph.pdf">Orienting supersingular isogeny graphs</a>. In: <em>NuTMiC 2019</em>&nbsp;: Journal of Mathematical Cryptology, vol 14.1, 2020, pp.&nbsp;414–437</div>
 </div>
 </div>
 <hr>
