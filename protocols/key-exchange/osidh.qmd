@@ -1,0 +1,68 @@
+---
+title: "OSIDH"
+subtitle: "Oriented Supersingular Isogeny Diffie-Hellman"
+date: 2026-07-09
+---
+
+## Overview
+
+The Oriented Supersingular Isogeny Diffie-Hellman (OSIDH) protocol is a cryptographic key exchange mechanism that generalizes the [CSIDH](/protocols/key-exchange/csidh.qmd) scheme and acts as an analogue to the standard [SIDH](/protocols/key-exchange/sidh.qmd) protocol [@osidh]. At a high level, OSIDH establishes a shared secret between two parties by navigating a complex mathematical structure composed of an $\ell$-isogeny cordillera acted upon by an ideal class group. 
+
+Unlike CSIDH, which relies heavily on the availability of rational torsion subgroups (points of finite order whose coordinates exist entirely within the base field) over the prime field $\mathbb{F}_p$, OSIDH leverages a category of $\mathcal{O}$-oriented supersingular elliptic curves defined over the extension field $\mathbb{F}_{p^2}$. This design removes strict conditions on rational torsion subgroups and covers virtually all isomorphism classes of supersingular elliptic curves. The protocol evaluates the group action efficiently using modular isogenies and precomputations, deliberately avoiding the exchange of full isogeny chains to prevent structural attacks on the endomorphism rings.
+
+## Protocol Design
+
+The OSIDH protocol operates on a network of isogenies, constructed as a descending ladder derived from a base elliptic curve. Below is a step-by-step description of the protocol.
+
+### Setup
+
+Before the exchange begins, the following public parameters and initial mathematical objects must be established:
+
+*   **$K$**: An imaginary quadratic field of small discriminant $\Delta_K$.
+*   **$\mathcal{O}_K$**: An effective maximal order in $K$ with a class number of 1 (e.g., $\mathbb{Z}[i]$ or $\mathbb{Z}[\zeta_3]$).
+*   **$(r,t)$**: Parameters defining the key space dimensions and limits. $t$ is the number of prime ideals available for secret horizontal walks, and $r$ is a positive integer defining the maximum steps taken for each ideal. They are chosen together to ensure  $(2r+1)^t \geq 2^{2\lambda}$, i.e. the total key space is exponentially large enough to meet a target security level $\lambda$. 
+*   **$\mathfrak{p}_1, \dots, \mathfrak{p}_t$**: A fixed set of small prime ideals that split in $\mathcal{O}_K$.
+*   **$p$**: A large prime number such that the Kronecker symbol $(\frac{\Delta_K}{p}) \neq 1$, determining the field $k = \mathbb{F}_{p^2}$.
+*   **$E_0$**: A base supersingular elliptic curve defined over $k$, equipped with a primitive $\mathcal{O}_K$-orientation.
+*   **$\ell$**: A small prime number.
+*   **$n$**: A parameter defining the depth of the vertical isogeny ladder. It is typically chosen such that $\ell^n \approx p$. 
+*   **$E_0 \rightarrow E_1 \rightarrow \dots \rightarrow E_n$**: A public, descending $\ell$-isogeny chain of length $n$ originating from $E_0$ and terminating at $E_n$.
+
+
+### Secret Key Generation
+*   **Alice** privately selects a sequence of integers $(e_1, \dots, e_t)$ such that $|e_i| \leq r$.
+*   **Bob** privately selects a sequence of integers $(d_1, \dots, d_t)$ such that $|d_i| \leq r$.
+
+### Public Key Construction
+
+*   **Alice:** To build her public key, Alice applies her secret key to the public starting curve, hiding her exact path while providing the necessary mathematical data for Bob to compute the shared secret.
+    1.  **The Secret Ideal Action:** Alice's secret integers $(e_1, \dots, e_t)$ dictate a specific sequence of horizontal isogenies across the top-level isogeny graph (originating at $E_0$), utilizing the prime ideals $\mathfrak{p}_i$.
+    2.  **Pushing the Action Down the Ladder:** To prevent structural attacks on the top-level curve, Alice pushes this horizontal action down to the bottom of the public $\ell$-isogeny ladder (depth $n$). This results in her terminal public curve, $F_n = E_n / E_n[\mathfrak{p}_1^{e_1} \cdots \mathfrak{p}_t^{e_t}]$.
+    3.  **Evaluating Auxiliary Isogeny Chains:** At depth $n$, Bob cannot independently evaluate the ideal action on $F_n$. Alice must provide auxiliary directional data by computing short, horizontal isogeny chains extending outwards from $F_n$ for every prime ideal $\mathfrak{p}_i$ (up to distance $r$). These precomputed paths take the form: $F_{n,i}^{(-r)} \leftarrow \dots \leftarrow F_n \rightarrow \dots \rightarrow F_{n,i}^{(r)}$.
+    4.  **The Final Public Key:** Alice sends Bob her terminal curve $F_n$, along with the complete set of precomputed horizontal chains.
+
+*   **Bob:** To build his public key, Bob applies his secret key to the public starting curve, hiding his exact path while providing the necessary mathematical data for Alice to compute the shared secret.
+    1.  **The Secret Ideal Action:** Bob's secret integers $(d_1, \dots, d_t)$ dictate a specific sequence of horizontal isogenies across the top-level isogeny graph (originating at $E_0$), utilizing the prime ideals $\mathfrak{p}_i$.
+    2.  **Pushing the Action Down the Ladder:** To prevent structural attacks on the top-level curve, Bob pushes this horizontal action down to the bottom of the public $\ell$-isogeny ladder (depth $n$). This results in his terminal public curve, $G_n = E_n / E_n[\mathfrak{p}_1^{d_1} \cdots \mathfrak{p}_t^{d_t}]$.
+    3.  **Evaluating Auxiliary Isogeny Chains:** At depth $n$, Alice cannot independently evaluate the ideal action on $G_n$. Bob must provide auxiliary directional data by computing short, horizontal isogeny chains extending outwards from $G_n$ for every prime ideal $\mathfrak{p}_i$ (up to distance $r$). These precomputed paths take the form: $G_{n,i}^{(-r)} \leftarrow \dots \leftarrow G_n \rightarrow \dots \rightarrow G_{n,i}^{(r)}$.
+    4.  **The Final Public Key:** Bob sends Alice his terminal curve $G_n$, along with the complete set of precomputed horizontal chains.
+
+### Shared Secret Computation
+Using the received data and their own secrets, both parties navigate to the same final curve.
+
+*   **Alice's Computation:** Starting from Bob's curve $G_n$, Alice takes $e_i$ steps along Bob's provided $\mathfrak{p}_i$-isogeny chains. As she evaluates each step, she pushes forward the remaining auxiliary isogenies for subsequent steps.
+*   **Bob's Computation:** Starting from Alice's curve $F_n$, Bob takes $d_i$ steps along Alice's provided horizontal chains, pushing forward the required auxiliary data as he proceeds.
+*   **Shared Secret:** Both arrive at the identical mathematical destination: the shared secret elliptic curve $H_n = E_n / E_n[\mathfrak{p}_1^{e_1+d_1} \cdots \mathfrak{p}_t^{e_t+d_t}]$.
+
+## Security Assumptions
+
+The security of the OSIDH protocol is predicated on the hardness of computing unknown isogenies between two given supersingular elliptic curves.
+
+*   **Group Action Hardness:** Borrowed from the [Couveignes](https://eprint.iacr.org/2006/291) and [Rostovtsev-Stolbunov](https://eprint.iacr.org/2006/145) framework, this assumes that given a starting curve and a curve resulting from a group action, finding the specific ideal group action connecting them is computationally infeasible. In OSIDH, this is modeled as the action of the class group $\mathcal{C}l(\mathcal{O})$ on the $\ell$-isogeny graph.
+*   **Resistance to Structural Attacks:** The security of the protocol relies critically on hiding the intermediate steps of the descending $\ell$-isogeny ladder. By only exchanging the terminal curves ($F_n, G_n$) along with local horizontal auxiliary chains, the protocol prevents adversaries from recovering the global endomorphism ring structure of the curves. If the full path from the specialized base curve $E_0$ were exposed, explicit knowledge of $E_0$'s endomorphism ring would enable structural attacks to deduce the endomorphism ring of the final curves and easily compute the secret isogeny. Therefore, a core assumption is that exposing only the terminal curve and local auxiliary data at depth $n$ is insufficient to mount these endomorphism ring attacks.
+
+## Progress
+
+TODO
+
+2021/1681
