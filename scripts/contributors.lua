@@ -42,7 +42,7 @@ function Pandoc(doc)
 
 -- Insert {#refs} div if the document cites anything but has no refs block
   if doc.meta["bibliography"] and has_citations(doc) and not has_refs_div(doc.blocks) then
-    doc.blocks:insert(pandoc.Header(2, pandoc.Inlines("References")))
+    doc.blocks:insert(pandoc.Header(2, pandoc.Inlines("References"), pandoc.Attr("references")))
     doc.blocks:insert(pandoc.Div({}, pandoc.Attr("refs")))
   end
 

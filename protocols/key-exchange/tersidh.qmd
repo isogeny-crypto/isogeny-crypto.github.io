@@ -4,7 +4,70 @@ subtitle: "ternary Supersingular Isogeny Diffie-Hellman"
 date: 2026-07-09
 ---
 
-[@binsidh-tersidh]
+## Overview
+
+The terSIDH protocol is a variant of the [binSIDH](/protocols/key-exchange/binsidh.qmd) protocol designed to significantly improve efficiency and reduce parameter sizes by utilizing variable-degree isogenies [@binsidh-tersidh]. In the binSIDH protocol, computations are restricted to full-degree artificially oriented isogenies where the path is defined by a binary choice for each prime factor. The terSIDH protocol introduces a third option: for each prime factor, the protocol can choose to omit that component entirely, effectively skipping the isogeny step for that prime. This ternary approach yields approximately $\log_2(3) \approx 1.6$ bits of security per prime compared to the single bit provided by binary choices, allowing the protocol to achieve target security levels with substantially smaller isogeny degrees and underlying primes.
+
+## Protocol Design
+
+The terSIDH protocol modifies the binSIDH approach by relying on variable-degree artificially oriented isogenies. Below is a detailed walkthrough of the protocol setup, key generation, and shared key derivation.
+
+### Setup
+
+The public parameters are generated as follows:
+
+* **$\lambda$**: The security parameter (e.g., 128, 192, 256) that dictates the targeted security level.
+* **$t$**: An integer depending on $\lambda$, representing the number of distinct prime factors required to achieve the desired security. Because each prime provides $\log_2(3) \approx 1.6$ bits of security, $t$ is significantly smaller than in binSIDH (approximately $\lambda / 1.6$).
+* **$l_i, q_i$**: Small, distinct prime numbers for $i \in \{1, \dots, t\}$.
+* **$A, B$**: Coprime integers where $A = \prod_{i=1}^t l_i$ and $B = \prod_{i=1}^t q_i$. $A$ dictates the maximum possible degree of Alice's isogenies, while $B$ dictates Bob's. The values are chosen such that $A \approx B \approx \sqrt{p}$.
+* **$f$**: A small cofactor used to ensure the resulting $p$ is a valid prime.
+* **$p$**: A large prime of the form $p = ABf - 1$.
+* **$E_0$**: A starting supersingular elliptic curve defined over $\mathbb{F}_{p^2}$ with cardinality $\#E_0(\mathbb{F}_{p^2}) = (p+1)^2$. To avoid special endomorphism ring properties that could lead to attacks, this curve should be generated via a uniformly random walk.
+* **$\mathfrak{A}, \mathfrak{B}$**: Artificial orientations on $E_0$. Specifically, the artificial $A$-orientation is defined as $\mathfrak{A} = (G_1, G_2)$, where $G_1, G_2 \subset E_0[A]$ are cyclic disjoint subgroups of order $A$. The artificial $B$-orientation is similarly defined as $\mathfrak{B} = (H_1, H_2)$, a pair of cyclic disjoint subgroups of order $B$.
+
+The globally public parameters are $(E_0, p, A, B, \mathfrak{A}, \mathfrak{B})$.
+
+### Key Generation
+
+Both parties independently sample random ternary secret vectors that dictate the specific subgroups used to construct their secret isogenies. A choice of $0$ corresponds to omitting the component for that prime. Consequently, the final isogeny has a variable degree that merely divides $A$ or $B$, rather than strictly equaling it.
+
+**Alice:**
+
+1. Samples a secret vector $\mathbf{a}$ uniformly at random from $\{0, 1, 2\}^t$.
+2. Decomposes her artificial $A$-orientation $\mathfrak{A} = (G_1, G_2)$. Since $G_1$ and $G_2$ are cyclic groups of order $A = \prod_{i=1}^t l_i$, they can be written as the direct sum of their prime-order components: $G_1 = G_1^1 \oplus \dots \oplus G_1^t$ and $G_2 = G_2^1 \oplus \dots \oplus G_2^t$, where each $G_1^i$ and $G_2^i$ has order $l_i$. She also explicitly sets $G_0^i = \mathcal{O}$ (the point at infinity) for all $i \in \{1, \dots, t\}$.
+3. Constructs the $\mathfrak{A}$-isogeny $\phi_A : E_0 \to E_A$ defined by her secret vector $\mathbf{a}$. For each $i$-th prime factor $l_i$, she selects the kernel component from $G_1^i$ (if $\mathbf{a}_i = 1$), $G_2^i$ (if $\mathbf{a}_i = 2$), or $\mathcal{O}$ (if $\mathbf{a}_i = 0$). Formally, $\ker \phi_A = \langle G_{\mathbf{a}_1}^1, G_{\mathbf{a}_2}^2, \dots, G_{\mathbf{a}_t}^t \rangle$. Due to the possibility of $\mathbf{a}_i = 0$, the actual degree of $\phi_A$ divides $A$.
+4. Computes the image of Bob's artificial $B$-orientation $\mathfrak{B}$ under her isogeny, yielding $\mathfrak{B}' = \phi_A(\mathfrak{B}) = (\phi_A(H_1), \phi_A(H_2))$.
+5. Alice's secret key is $\mathbf{a}$ and her public key is $(E_A, \mathfrak{B}')$.
+
+**Bob:**
+
+1. Samples a secret vector $\mathbf{b}$ uniformly at random from $\{0, 1, 2\}^t$.
+2. Decomposes his artificial $B$-orientation $\mathfrak{B} = (H_1, H_2)$ into its prime-order components $H_1^i$ and $H_2^i$ of order $q_i$. He similarly sets $H_0^i = \mathcal{O}$ for all $i \in \{1, \dots, t\}$.
+3. Constructs the $\mathfrak{B}$-isogeny $\phi_B : E_0 \to E_B$. The kernel is chosen from $\mathfrak{B}$ according to the vector $\mathbf{b}$, such that $\ker \phi_B = \langle H_{\mathbf{b}_1}^1, H_{\mathbf{b}_2}^2, \dots, H_{\mathbf{b}_t}^t \rangle$. The degree of $\phi_B$ divides $B$.
+4. Computes the image of Alice's artificial $A$-orientation $\mathfrak{A}$ under his isogeny, yielding $\mathfrak{A}' = \phi_B(\mathfrak{A})$.
+5. Bob's secret key is $\mathbf{b}$ and his public key is $(E_B, \mathfrak{A}')$.
+
+### Shared Key Computation
+
+Upon exchanging public keys, the parties compute their parallel isogenies to arrive at a common curve.
+
+**Alice:**
+
+1. Receives Bob's public key $(E_B, \mathfrak{A}')$. She verifies that $\mathfrak{A}'$ is indeed a valid artificial $A$-orientation on $E_B$; if not, she aborts.
+2. She computes the $\mathfrak{A}'$-isogeny $\phi_A' : E_B \to E_{BA}$ defined by her ternary secret vector $\mathbf{a}$. The degree of this isogeny divides $A$.
+3. Her shared key is the $j$-invariant of the resulting curve, $j(E_{BA})$.
+
+**Bob:**
+
+1. Receives Alice's public key $(E_A, \mathfrak{B}')$. He verifies that $\mathfrak{B}'$ is a valid artificial $B$-orientation on $E_A$; if not, he aborts.
+2. He computes the $\mathfrak{B}'$-isogeny $\phi_B' : E_A \to E_{AB}$ defined by his ternary secret vector $\mathbf{b}$. The degree of this isogeny divides $B$.
+3. His shared key is the $j$-invariant of the resulting curve, $j(E_{AB})$.
+
+Due to the structure of parallel isogenies over artificially oriented curves, the resulting codomain curves $E_{AB}$ and $E_{BA}$ are isomorphic, ensuring $j(E_{AB}) = j(E_{BA})$.
+
+## Security Assumptions
+
+terSIDH shares its mathematical [security assumptions](/protocols/key-exchange/binsidh.qmd#security-assumptions) with binSIDH but its reliance on variable-degree isogenies introduces unique implementation-level security challenges. Constructing constant-time implementations for terSIDH is inherently more difficult than for binSIDH due to the variable execution paths. Furthermore, designing zero-knowledge proofs for terSIDH public keys is particularly challenging because existing proof techniques inevitably leak the secret isogeny degree, potentially limiting terSIDH's applicability in advanced cryptographic constructions compared to binSIDH. 
 
 ## Progress
 
