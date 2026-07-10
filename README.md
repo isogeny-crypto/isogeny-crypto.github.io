@@ -30,7 +30,6 @@ Unlike lightweight alternatives, MathJax provides native screen-reader compatibi
 - Use standard `$` for inline math and `$$` for display equations.
 - The repository is configured to use `html-math-method: mathjax` globally. Do not override this setting in individual files.
 - For diagrams, use fenced code blocks with the `.tikz` class (see below). Diagrams automatically centre and invert correctly in dark mode.
-- TikZJax supports only a subset of LaTeX fonts and math commands. In particular, `\mathfrak` can be unreliable; prefer `\mathrm` as a fallback.
 
 ### Writing TikZ Diagrams
 
@@ -63,18 +62,20 @@ A larger example — the CSIDH key exchange diagram:
 \begin{tikzpicture}
 
   \node (E0)  at (3, 4) {$E_0$};
-  \node (EA)  at (0, 2) {$E_A = [\mathfrak{a}] * E_0$};
-  \node (EB)  at (6, 2) {$E_B = [\mathfrak{b}] * E_0$};
+  \node (EA)  at (0, 2) {$E_A = [\mathrm{a}] * E_0$};
+  \node (EB)  at (6, 2) {$E_B = [\mathrm{b}] * E_0$};
   \node (EAB) at (3, 0) {$E_{AB} = E_{BA}$};
 
-  \draw[-{Stealth}, thick] (E0)  -- node[left,  midway] {$[\mathfrak{a}]$} (EA);
-  \draw[-{Stealth}, thick] (E0)  -- node[right, midway] {$[\mathfrak{b}]$} (EB);
-  \draw[-{Stealth}, thick] (EA)  -- node[right, midway] {$[\mathfrak{b}]$} (EAB);
-  \draw[-{Stealth}, thick] (EB)  -- node[left,  midway] {$[\mathfrak{a}]$} (EAB);
+  \draw[-{Stealth}, thick] (E0)  -- node[left,  midway] {$[\mathrm{a}]$} (EA);
+  \draw[-{Stealth}, thick] (E0)  -- node[right, midway] {$[\mathrm{b}]$} (EB);
+  \draw[-{Stealth}, thick] (EA)  -- node[right, midway] {$[\mathrm{b}]$} (EAB);
+  \draw[-{Stealth}, thick] (EB)  -- node[left,  midway] {$[\mathrm{a}]$} (EAB);
 
 \end{tikzpicture}
 ```
 ````
+
+Note that TikZJax supports only a subset of LaTeX fonts and math commands. In particular, `\mathfrak` can be unreliable; prefer `\mathrm` as a fallback.
 
 To adjust diagram size, change the coordinate spacing directly — spread nodes further apart to enlarge, closer to compress. You can also add `[scale=1.5]` to the `\begin{tikzpicture}` options.
 
