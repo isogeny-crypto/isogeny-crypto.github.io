@@ -85,6 +85,17 @@
     ]
   },
   {
+    "objectID": "protocols/key-exchange/csigamal.html#references",
+    "href": "protocols/key-exchange/csigamal.html#references",
+    "title": "C-SiGamal",
+    "section": "5 References",
+    "text": "5 References\n\n\n[MoOnTa20] Moriya, Tomoki ; Onuki, Hiroshi ; Takagi, Tsuyoshi: SiGamal: A supersingular isogeny-based PKE and its application to a PRF. In: ASIACRYPT : Springer, 2020, pp. 551–580\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "C-SiGamal"
+    ]
+  },
+  {
     "objectID": "protocols/key-exchange/csidh.html",
     "href": "protocols/key-exchange/csidh.html",
     "title": "CSIDH",
@@ -134,6 +145,17 @@
     "title": "CSIDH",
     "section": "4 Progress",
     "text": "4 Progress\nTODO\n2023/793 and 2020/1188 and 2018/537 and 2019/1202 and 2019/725 and 2025/847 and 2025/1098",
+    "crumbs": [
+      "Key Exchange",
+      "CSIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/csidh.html#references",
+    "href": "protocols/key-exchange/csidh.html#references",
+    "title": "CSIDH",
+    "section": "5 References",
+    "text": "5 References\n\n\n[CLMP18] Castryck, Wouter ; Lange, Tanja ; Martindale, Chloe ; Panny, Lorenz ; Renes, Joost: CSIDH: Commutative Supersingular Isogeny Diffie-Hellman. In: ASIACRYPT : Springer, 2018, pp. 395–427\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Key Exchange",
       "CSIDH"
@@ -195,6 +217,17 @@
     ]
   },
   {
+    "objectID": "protocols/key-exchange/csidhupke.html#references",
+    "href": "protocols/key-exchange/csidhupke.html#references",
+    "title": "CSIDH UPKE",
+    "section": "5 References",
+    "text": "5 References\n\n\n[EJKM21] Eaton, Edward ; Jao, David ; Komlo, Chelsea ; Mokrani, Youcef: Towards post-quantum updatable public-key encryption via supersingular isogenies. In: SAC : Springer, 2021, pp. 461–482\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "CSIDH UPKE"
+    ]
+  },
+  {
     "objectID": "protocols/key-exchange/csurf.html",
     "href": "protocols/key-exchange/csurf.html",
     "title": "CSURF",
@@ -244,6 +277,17 @@
     "title": "CSURF",
     "section": "4 Progress",
     "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "CSURF"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/csurf.html#references",
+    "href": "protocols/key-exchange/csurf.html#references",
+    "title": "CSURF",
+    "section": "5 References",
+    "text": "5 References\n\n\n[CaDe20] Castryck, Wouter ; Decru, Thomas: CSIDH on the surface. In: PQCrypto : Springer, 2020, pp. 111–129\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Key Exchange",
       "CSURF"
@@ -305,6 +349,17 @@
     ]
   },
   {
+    "objectID": "protocols/key-exchange/psidh.html#references",
+    "href": "protocols/key-exchange/psidh.html#references",
+    "title": "pSIDH",
+    "section": "5 References",
+    "text": "5 References\n\n\n[Lero22] Leroux, Antonin: A new isogeny representation and applications to cryptography. In: ASIACRYPT : Springer, 2022, pp. 3–35\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "pSIDH"
+    ]
+  },
+  {
     "objectID": "protocols/key-exchange/festa.html",
     "href": "protocols/key-exchange/festa.html",
     "title": "FESTA",
@@ -354,6 +409,17 @@
     "title": "FESTA",
     "section": "4 Progress",
     "text": "4 Progress\nTODO\n2023/1092 and 2023/1433 and 2024/459 and 2025/2075",
+    "crumbs": [
+      "Key Exchange",
+      "FESTA"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/festa.html#references",
+    "href": "protocols/key-exchange/festa.html#references",
+    "title": "FESTA",
+    "section": "5 References",
+    "text": "5 References\n\n\n[BaMaPo23] Basso, Andrea ; Maino, Luciano ; Pope, Giacomo: FESTA: Fast encryption from supersingular torsion attacks. In: ASIACRYPT : Springer, 2023, pp. 98–126\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Key Exchange",
       "FESTA"
@@ -415,6 +481,17 @@
     ]
   },
   {
+    "objectID": "protocols/key-exchange/sigamal.html#references",
+    "href": "protocols/key-exchange/sigamal.html#references",
+    "title": "SiGamal",
+    "section": "5 References",
+    "text": "5 References\n\n\n[MoOnTa20] Moriya, Tomoki ; Onuki, Hiroshi ; Takagi, Tsuyoshi: SiGamal: A supersingular isogeny-based PKE and its application to a PRF. In: ASIACRYPT : Springer, 2020, pp. 551–580\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "SiGamal"
+    ]
+  },
+  {
     "objectID": "protocols/key-exchange/qfesta.html",
     "href": "protocols/key-exchange/qfesta.html",
     "title": "QFESTA",
@@ -470,6 +547,17 @@
     ]
   },
   {
+    "objectID": "protocols/key-exchange/qfesta.html#references",
+    "href": "protocols/key-exchange/qfesta.html#references",
+    "title": "QFESTA",
+    "section": "5 References",
+    "text": "5 References\n\n\n[NaOn24] Nakagawa, Kohei ; Onuki, Hiroshi: QFESTA: Efficient algorithms and parameters for FESTA using quaternion algebras. In: CRYPTO : Springer, 2024, pp. 75–106\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "QFESTA"
+    ]
+  },
+  {
     "objectID": "protocols/key-exchange/seta.html",
     "href": "protocols/key-exchange/seta.html",
     "title": "Séta",
@@ -507,7 +595,7 @@
     "href": "protocols/key-exchange/seta.html#security-assumptions",
     "title": "Séta",
     "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nThe security of Séta is predicated on assumptions that blend traditional isogeny hardness with new formalized frameworks.\n\nSupersingular Isogeny with Torsion (SSI-T) problem: Séta’s One-Way Chosen-Plaintext Attack (OW-CPA) security heavily relies on a variant of the Computational Supersingular Isogeny (CSSI) problem, originally introduced in SIDH. Séta borrows this foundational assumption but modifies it: instead of a fixed public starting curve, the starting j-invariant \\(j_T\\) is chosen at random from the space of trapdoor curves.\nThe Uber Isogeny Assumption (\\(\\mathfrak{O}\\)-UIP): Séta formalizes a new framework termed the “uber” isogeny assumption. This problem, inspired directly by the key recovery problem in CSIDH, asks: given two curves \\(E_0\\) and \\(E_s\\), both with a known quadratic order \\(\\mathfrak{O}\\) embedded in their endomorphism rings, and a concrete embedding in \\(E_0\\), find an isogeny between them corresponding to an \\(\\mathfrak{O}\\)-ideal. Solving this new uber isogeny problem for the order \\(\\mathfrak{O}\\) utilized in Séta’s setup implies the ability to recover the trapdoor \\(T\\) from the public key, breaking the scheme.\nIndistinguishability of Trapdoor Curves: For the secret key to remain hidden, it is implicitly assumed that the distribution of trapdoor curves \\((E_{j_T})\\) generated by the key generation algorithm does not leak the trapdoor. Simple knowledge of the starting curve equation and a description of the quadratic order embedded in it does not seem to be helpful without the concrete knowledge of an endomorphism realizing this embedding.",
+    "text": "3 Security Assumptions\nThe security of Séta is predicated on assumptions that blend traditional isogeny hardness with new formalized frameworks.\n\nSupersingular Isogeny with Torsion (SSI-T) problem: Séta’s One-Way Chosen-Plaintext Attack (OW-CPA) security heavily relies on a variant of the Computational Supersingular Isogeny (CSSI) problem, originally introduced in SIDH. Séta borrows this foundational assumption but modifies it: instead of a fixed public starting curve, the starting j-invariant \\(j_T\\) is chosen at random from the space of trapdoor curves.\nThe Uber Isogeny Assumption (\\(\\mathfrak{O}\\)-UIP): Séta formalizes a new framework termed the “uber” isogeny assumption. This problem, inspired directly by the key recovery problem in CSIDH and OSIDH, asks: given two curves \\(E_0\\) and \\(E_s\\), both with a known quadratic order \\(\\mathfrak{O}\\) embedded in their endomorphism rings, and a concrete embedding in \\(E_0\\), find an isogeny between them corresponding to an \\(\\mathfrak{O}\\)-ideal. Solving this new uber isogeny problem for the order \\(\\mathfrak{O}\\) utilized in Séta’s setup implies the ability to recover the trapdoor \\(T\\) from the public key, breaking the scheme.\nIndistinguishability of Trapdoor Curves: For the secret key to remain hidden, it is implicitly assumed that the distribution of trapdoor curves \\((E_{j_T})\\) generated by the key generation algorithm does not leak the trapdoor. Simple knowledge of the starting curve equation and a description of the quadratic order embedded in it does not seem to be helpful without the concrete knowledge of an endomorphism realizing this embedding.",
     "crumbs": [
       "Key Exchange",
       "Séta"
@@ -519,6 +607,17 @@
     "title": "Séta",
     "section": "4 Progress",
     "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "Séta"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/seta.html#references",
+    "href": "protocols/key-exchange/seta.html#references",
+    "title": "Séta",
+    "section": "5 References",
+    "text": "5 References\n\n\n[FSFK21] Feo, Luca De ; Saint Guilhem, Cyprien Delpech de ; Fouotsa, Tako Boris ; Kutas, Péter ; Leroux, Antonin ; Petit, Christophe ; Silva, Javier ; Wesolowski, Benjamin: Séta: Supersingular Encryption from Torsion Attacks. In: ASIACRYPT : Springer, 2021, pp. 249–278\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Key Exchange",
       "Séta"
@@ -552,6 +651,17 @@
     "title": "CSI-FiSh",
     "section": "2 Key Mechanism",
     "text": "2 Key Mechanism\nBy computing the exact structure of \\(\\text{Cl}(R)\\) for a 512-bit prime \\(p\\), CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical Fiat-Shamir transform to the isogeny setting.\n\nUnderlying Hard Problem: The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational CSIDH protocol.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "protocols/digital-signature/csi-fish.html#references",
+    "href": "protocols/digital-signature/csi-fish.html#references",
+    "title": "CSI-FiSh",
+    "section": "3 References",
+    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT : Springer, 2019, pp. 227–255\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Digital Signature",
       "CSI-FiSh"
@@ -624,6 +734,17 @@
     ]
   },
   {
+    "objectID": "protocols/key-exchange/osidh.html#references",
+    "href": "protocols/key-exchange/osidh.html#references",
+    "title": "OSIDH",
+    "section": "5 References",
+    "text": "5 References\n\n\n[CoKo20] Colò, Leonardo ; Kohel, David: Orienting supersingular isogeny graphs. In: NuTMiC 2019 : Journal of Mathematical Cryptology, vol 14.1, 2020, pp. 414–437\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "OSIDH"
+    ]
+  },
+  {
     "objectID": "protocols/key-exchange/sims.html",
     "href": "protocols/key-exchange/sims.html",
     "title": "SimS",
@@ -673,6 +794,17 @@
     "title": "SimS",
     "section": "4 Progress",
     "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "SimS"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/sims.html#references",
+    "href": "protocols/key-exchange/sims.html#references",
+    "title": "SimS",
+    "section": "5 References",
+    "text": "5 References\n\n\n[FoPe21] Fouotsa, Tako Boris ; Petit, Christophe: SimS: A simplification of SiGamal. In: PQCrypto : Springer, 2021, pp. 277–295\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Key Exchange",
       "SimS"
@@ -734,6 +866,17 @@
     ]
   },
   {
+    "objectID": "protocols/key-exchange/sidh.html#references",
+    "href": "protocols/key-exchange/sidh.html#references",
+    "title": "SIDH",
+    "section": "5 References",
+    "text": "5 References\n\n\n[JaFe11] Jao, David ; Feo, Luca De: Towards Quantum-Resistant Cryptosystems from Supersingular Elliptic Curve Isogenies. In: PQCrypto : Springer, 2011, pp. 19–34\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "SIDH"
+    ]
+  },
+  {
     "objectID": "protocols/key-exchange/bsidh.html",
     "href": "protocols/key-exchange/bsidh.html",
     "title": "B-SIDH",
@@ -783,6 +926,17 @@
     "title": "B-SIDH",
     "section": "4 Progress",
     "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "B-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/bsidh.html#references",
+    "href": "protocols/key-exchange/bsidh.html#references",
+    "title": "B-SIDH",
+    "section": "5 References",
+    "text": "5 References\n\n\n[Cost20] Costello, Craig: B-SIDH: Supersingular isogeny Diffie-Hellman using twisted torsion. In: ASIACRYPT : Springer, 2020, pp. 440–463\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Key Exchange",
       "B-SIDH"
@@ -844,11 +998,55 @@
     ]
   },
   {
+    "objectID": "protocols/key-exchange/healsidh.html#references",
+    "href": "protocols/key-exchange/healsidh.html#references",
+    "title": "HealSIDH",
+    "section": "5 References",
+    "text": "5 References\n\n\n[FoPe21] Fouotsa, Tako Boris ; Petit, Christophe: SHealS and HealS: Isogeny-Based PKEs from a Key Validation Method for SIDH. In: ASIACRYPT : Springer, 2021, pp. 279–307\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "HealSIDH"
+    ]
+  },
+  {
     "objectID": "protocols/key-exchange/tersidh.html",
     "href": "protocols/key-exchange/tersidh.html",
     "title": "terSIDH",
     "section": "",
-    "text": "[BaFo23]",
+    "text": "The terSIDH protocol is a variant of the binSIDH protocol designed to significantly improve efficiency and reduce parameter sizes by utilizing variable-degree isogenies [BaFo23]. In the binSIDH protocol, computations are restricted to full-degree artificially oriented isogenies where the path is defined by a binary choice for each prime factor. The terSIDH protocol introduces a third option: for each prime factor, the protocol can choose to omit that component entirely, effectively skipping the isogeny step for that prime. This ternary approach yields approximately \\(\\log_2(3) \\approx 1.6\\) bits of security per prime compared to the single bit provided by binary choices, allowing the protocol to achieve target security levels with substantially smaller isogeny degrees and underlying primes.",
+    "crumbs": [
+      "Key Exchange",
+      "terSIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/tersidh.html#overview",
+    "href": "protocols/key-exchange/tersidh.html#overview",
+    "title": "terSIDH",
+    "section": "",
+    "text": "The terSIDH protocol is a variant of the binSIDH protocol designed to significantly improve efficiency and reduce parameter sizes by utilizing variable-degree isogenies [BaFo23]. In the binSIDH protocol, computations are restricted to full-degree artificially oriented isogenies where the path is defined by a binary choice for each prime factor. The terSIDH protocol introduces a third option: for each prime factor, the protocol can choose to omit that component entirely, effectively skipping the isogeny step for that prime. This ternary approach yields approximately \\(\\log_2(3) \\approx 1.6\\) bits of security per prime compared to the single bit provided by binary choices, allowing the protocol to achieve target security levels with substantially smaller isogeny degrees and underlying primes.",
+    "crumbs": [
+      "Key Exchange",
+      "terSIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/tersidh.html#protocol-design",
+    "href": "protocols/key-exchange/tersidh.html#protocol-design",
+    "title": "terSIDH",
+    "section": "2 Protocol Design",
+    "text": "2 Protocol Design\nThe terSIDH protocol modifies the binSIDH approach by relying on variable-degree artificially oriented isogenies. Below is a detailed walkthrough of the protocol setup, key generation, and shared key derivation.\n\n2.1 Setup\nThe public parameters are generated as follows:\n\n\\(\\lambda\\): The security parameter (e.g., 128, 192, 256) that dictates the targeted security level.\n\\(t\\): An integer depending on \\(\\lambda\\), representing the number of distinct prime factors required to achieve the desired security. Because each prime provides \\(\\log_2(3) \\approx 1.6\\) bits of security, \\(t\\) is significantly smaller than in binSIDH (approximately \\(\\lambda / 1.6\\)).\n\\(l_i, q_i\\): Small, distinct prime numbers for \\(i \\in \\{1, \\dots, t\\}\\).\n\\(A, B\\): Coprime integers where \\(A = \\prod_{i=1}^t l_i\\) and \\(B = \\prod_{i=1}^t q_i\\). \\(A\\) dictates the maximum possible degree of Alice’s isogenies, while \\(B\\) dictates Bob’s. The values are chosen such that \\(A \\approx B \\approx \\sqrt{p}\\).\n\\(f\\): A small cofactor used to ensure the resulting \\(p\\) is a valid prime.\n\\(p\\): A large prime of the form \\(p = ABf - 1\\).\n\\(E_0\\): A starting supersingular elliptic curve defined over \\(\\mathbb{F}_{p^2}\\) with cardinality \\(\\#E_0(\\mathbb{F}_{p^2}) = (p+1)^2\\). To avoid special endomorphism ring properties that could lead to attacks, this curve should be generated via a uniformly random walk.\n\\(\\mathfrak{A}, \\mathfrak{B}\\): Artificial orientations on \\(E_0\\). Specifically, the artificial \\(A\\)-orientation is defined as \\(\\mathfrak{A} = (G_1, G_2)\\), where \\(G_1, G_2 \\subset E_0[A]\\) are cyclic disjoint subgroups of order \\(A\\). The artificial \\(B\\)-orientation is similarly defined as \\(\\mathfrak{B} = (H_1, H_2)\\), a pair of cyclic disjoint subgroups of order \\(B\\).\n\nThe globally public parameters are \\((E_0, p, A, B, \\mathfrak{A}, \\mathfrak{B})\\).\n\n\n2.2 Key Generation\nBoth parties independently sample random ternary secret vectors that dictate the specific subgroups used to construct their secret isogenies. A choice of \\(0\\) corresponds to omitting the component for that prime. Consequently, the final isogeny has a variable degree that merely divides \\(A\\) or \\(B\\), rather than strictly equaling it.\nAlice:\n\nSamples a secret vector \\(\\mathbf{a}\\) uniformly at random from \\(\\{0, 1, 2\\}^t\\).\nDecomposes her artificial \\(A\\)-orientation \\(\\mathfrak{A} = (G_1, G_2)\\). Since \\(G_1\\) and \\(G_2\\) are cyclic groups of order \\(A = \\prod_{i=1}^t l_i\\), they can be written as the direct sum of their prime-order components: \\(G_1 = G_1^1 \\oplus \\dots \\oplus G_1^t\\) and \\(G_2 = G_2^1 \\oplus \\dots \\oplus G_2^t\\), where each \\(G_1^i\\) and \\(G_2^i\\) has order \\(l_i\\). She also explicitly sets \\(G_0^i = \\mathcal{O}\\) (the point at infinity) for all \\(i \\in \\{1, \\dots, t\\}\\).\nConstructs the \\(\\mathfrak{A}\\)-isogeny \\(\\phi_A : E_0 \\to E_A\\) defined by her secret vector \\(\\mathbf{a}\\). For each \\(i\\)-th prime factor \\(l_i\\), she selects the kernel component from \\(G_1^i\\) (if \\(\\mathbf{a}_i = 1\\)), \\(G_2^i\\) (if \\(\\mathbf{a}_i = 2\\)), or \\(\\mathcal{O}\\) (if \\(\\mathbf{a}_i = 0\\)). Formally, \\(\\ker \\phi_A = \\langle G_{\\mathbf{a}_1}^1, G_{\\mathbf{a}_2}^2, \\dots, G_{\\mathbf{a}_t}^t \\rangle\\). Due to the possibility of \\(\\mathbf{a}_i = 0\\), the actual degree of \\(\\phi_A\\) divides \\(A\\).\nComputes the image of Bob’s artificial \\(B\\)-orientation \\(\\mathfrak{B}\\) under her isogeny, yielding \\(\\mathfrak{B}' = \\phi_A(\\mathfrak{B}) = (\\phi_A(H_1), \\phi_A(H_2))\\).\nAlice’s secret key is \\(\\mathbf{a}\\) and her public key is \\((E_A, \\mathfrak{B}')\\).\n\nBob:\n\nSamples a secret vector \\(\\mathbf{b}\\) uniformly at random from \\(\\{0, 1, 2\\}^t\\).\nDecomposes his artificial \\(B\\)-orientation \\(\\mathfrak{B} = (H_1, H_2)\\) into its prime-order components \\(H_1^i\\) and \\(H_2^i\\) of order \\(q_i\\). He similarly sets \\(H_0^i = \\mathcal{O}\\) for all \\(i \\in \\{1, \\dots, t\\}\\).\nConstructs the \\(\\mathfrak{B}\\)-isogeny \\(\\phi_B : E_0 \\to E_B\\). The kernel is chosen from \\(\\mathfrak{B}\\) according to the vector \\(\\mathbf{b}\\), such that \\(\\ker \\phi_B = \\langle H_{\\mathbf{b}_1}^1, H_{\\mathbf{b}_2}^2, \\dots, H_{\\mathbf{b}_t}^t \\rangle\\). The degree of \\(\\phi_B\\) divides \\(B\\).\nComputes the image of Alice’s artificial \\(A\\)-orientation \\(\\mathfrak{A}\\) under his isogeny, yielding \\(\\mathfrak{A}' = \\phi_B(\\mathfrak{A})\\).\nBob’s secret key is \\(\\mathbf{b}\\) and his public key is \\((E_B, \\mathfrak{A}')\\).\n\n\n\n2.3 Shared Key Computation\nUpon exchanging public keys, the parties compute their parallel isogenies to arrive at a common curve.\nAlice:\n\nReceives Bob’s public key \\((E_B, \\mathfrak{A}')\\). She verifies that \\(\\mathfrak{A}'\\) is indeed a valid artificial \\(A\\)-orientation on \\(E_B\\); if not, she aborts.\nShe computes the \\(\\mathfrak{A}'\\)-isogeny \\(\\phi_A' : E_B \\to E_{BA}\\) defined by her ternary secret vector \\(\\mathbf{a}\\). The degree of this isogeny divides \\(A\\).\nHer shared key is the \\(j\\)-invariant of the resulting curve, \\(j(E_{BA})\\).\n\nBob:\n\nReceives Alice’s public key \\((E_A, \\mathfrak{B}')\\). He verifies that \\(\\mathfrak{B}'\\) is a valid artificial \\(B\\)-orientation on \\(E_A\\); if not, he aborts.\nHe computes the \\(\\mathfrak{B}'\\)-isogeny \\(\\phi_B' : E_A \\to E_{AB}\\) defined by his ternary secret vector \\(\\mathbf{b}\\). The degree of this isogeny divides \\(B\\).\nHis shared key is the \\(j\\)-invariant of the resulting curve, \\(j(E_{AB})\\).\n\nDue to the structure of parallel isogenies over artificially oriented curves, the resulting codomain curves \\(E_{AB}\\) and \\(E_{BA}\\) are isomorphic, ensuring \\(j(E_{AB}) = j(E_{BA})\\).",
+    "crumbs": [
+      "Key Exchange",
+      "terSIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/tersidh.html#security-assumptions",
+    "href": "protocols/key-exchange/tersidh.html#security-assumptions",
+    "title": "terSIDH",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nterSIDH shares its mathematical security assumptions with binSIDH but its reliance on variable-degree isogenies introduces unique implementation-level security challenges. Constructing constant-time implementations for terSIDH is inherently more difficult than for binSIDH due to the variable execution paths. Furthermore, designing zero-knowledge proofs for terSIDH public keys is particularly challenging because existing proof techniques inevitably leak the secret isogeny degree, potentially limiting terSIDH’s applicability in advanced cryptographic constructions compared to binSIDH.",
     "crumbs": [
       "Key Exchange",
       "terSIDH"
@@ -858,8 +1056,19 @@
     "objectID": "protocols/key-exchange/tersidh.html#progress",
     "href": "protocols/key-exchange/tersidh.html#progress",
     "title": "terSIDH",
-    "section": "1 Progress",
-    "text": "1 Progress\nTODO\n2026/032",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO\n2026/032",
+    "crumbs": [
+      "Key Exchange",
+      "terSIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/tersidh.html#references",
+    "href": "protocols/key-exchange/tersidh.html#references",
+    "title": "terSIDH",
+    "section": "5 References",
+    "text": "5 References\n\n\n[BaFo23] Basso, Andrea ; Fouotsa, Tako Boris: New SIDH countermeasures for a more efficient key exchange. In: ASIACRYPT : Springer, 2023, pp. 208–233\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Key Exchange",
       "terSIDH"
@@ -921,11 +1130,55 @@
     ]
   },
   {
+    "objectID": "protocols/key-exchange/mdsidh.html#references",
+    "href": "protocols/key-exchange/mdsidh.html#references",
+    "title": "MD-SIDH",
+    "section": "5 References",
+    "text": "5 References\n\n\n[FoMoPe23] Fouotsa, Tako Boris ; Moriya, Tomoki ; Petit, Christophe: M-SIDH and MD-SIDH: Countering SIDH attacks by masking information. In: EUROCRYPT : Springer, 2023, pp. 282–309\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "MD-SIDH"
+    ]
+  },
+  {
     "objectID": "protocols/key-exchange/binsidh.html",
     "href": "protocols/key-exchange/binsidh.html",
     "title": "binSIDH",
     "section": "",
-    "text": "[BaFo23]",
+    "text": "The binSIDH protocol is designed to provide a secure and efficient isogeny-based key exchange in the wake of the polynomial-time key-recovery attacks that broke the original SIDH protocol [BaFo23]. Originally, SIDH required revealing the images of torsion points to enable parties to compute parallel isogenies and arrive at a shared secret, but this extra torsion information was ultimately exploited to recover the secret isogeny. To circumvent these attacks without sacrificing the efficiency of SIDH too heavily, binSIDH introduces the concept of “artificially oriented curves.” By equipping an elliptic curve with a pair of cyclic disjoint subgroups (an artificial orientation), the protocol limits the set of allowable isogenies and restricts the revealed information strictly to the push-forwards of these orientations. This formulation interpolates between the original SIDH and group-action based protocols (like CSIDH), revealing sufficiently less information to prevent the known torsion-based attacks while preserving the parallel isogeny structure necessary for a Diffie-Hellman-like key agreement.",
+    "crumbs": [
+      "Key Exchange",
+      "binSIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/binsidh.html#overview",
+    "href": "protocols/key-exchange/binsidh.html#overview",
+    "title": "binSIDH",
+    "section": "",
+    "text": "The binSIDH protocol is designed to provide a secure and efficient isogeny-based key exchange in the wake of the polynomial-time key-recovery attacks that broke the original SIDH protocol [BaFo23]. Originally, SIDH required revealing the images of torsion points to enable parties to compute parallel isogenies and arrive at a shared secret, but this extra torsion information was ultimately exploited to recover the secret isogeny. To circumvent these attacks without sacrificing the efficiency of SIDH too heavily, binSIDH introduces the concept of “artificially oriented curves.” By equipping an elliptic curve with a pair of cyclic disjoint subgroups (an artificial orientation), the protocol limits the set of allowable isogenies and restricts the revealed information strictly to the push-forwards of these orientations. This formulation interpolates between the original SIDH and group-action based protocols (like CSIDH), revealing sufficiently less information to prevent the known torsion-based attacks while preserving the parallel isogeny structure necessary for a Diffie-Hellman-like key agreement.",
+    "crumbs": [
+      "Key Exchange",
+      "binSIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/binsidh.html#protocol-design",
+    "href": "protocols/key-exchange/binsidh.html#protocol-design",
+    "title": "binSIDH",
+    "section": "2 Protocol Design",
+    "text": "2 Protocol Design\nThe binSIDH protocol restricts computations to full-degree artificially oriented isogenies. Below is a detailed walkthrough of the protocol setup, key generation, and shared key derivation.\n\n2.1 Setup\nThe public parameters are generated as follows:\n\n\\(\\lambda\\): The security parameter (e.g., 128, 192, 256) that dictates the targeted security level.\n\\(t\\): An integer depending on \\(\\lambda\\), representing the number of distinct prime factors required to achieve the desired security.\n\\(l_i, q_i\\): Small, distinct prime numbers for \\(i \\in \\{1, \\dots, t\\}\\).\n\\(A, B\\): Coprime integers where \\(A = \\prod_{i=1}^t l_i\\) and \\(B = \\prod_{i=1}^t q_i\\). \\(A\\) dictates the degree of Alice’s isogenies, while \\(B\\) dictates Bob’s. The values are chosen such that \\(A \\approx B \\approx \\sqrt{p}\\).\n\\(f\\): A small cofactor used to ensure the resulting \\(p\\) is a valid prime.\n\\(p\\): A large prime of the form \\(p = ABf - 1\\).\n\\(E_0\\): A starting supersingular elliptic curve defined over \\(\\mathbb{F}_{p^2}\\) with cardinality \\(\\#E_0(\\mathbb{F}_{p^2}) = (p+1)^2\\). To avoid special endomorphism ring properties that could lead to attacks, this curve should be generated via a uniformly random walk.\n\\(\\mathfrak{A}, \\mathfrak{B}\\): Artificial orientations on \\(E_0\\). Specifically, the artificial \\(A\\)-orientation is defined as \\(\\mathfrak{A} = (G_1, G_2)\\), where \\(G_1, G_2 \\subset E_0[A]\\) are cyclic disjoint subgroups of order \\(A\\). The artificial \\(B\\)-orientation is similarly defined as \\(\\mathfrak{B} = (H_1, H_2)\\), a pair of cyclic disjoint subgroups of order \\(B\\).\n\nThe globally public parameters are \\((E_0, p, A, B, \\mathfrak{A}, \\mathfrak{B})\\).\n\n\n2.2 Key Generation\nBoth parties independently sample random secret vectors that dictate the specific subgroups used to construct their secret isogenies.\nAlice:\n\nSamples a secret vector \\(\\mathbf{a}\\) uniformly at random from \\(\\{1, 2\\}^t\\).\nDecomposes her artificial \\(A\\)-orientation \\(\\mathfrak{A} = (G_1, G_2)\\). Since \\(G_1\\) and \\(G_2\\) are cyclic groups of order \\(A = \\prod_{i=1}^t l_i\\), they can be written as the direct sum of their prime-order components: \\(G_1 = G_1^1 \\oplus \\dots \\oplus G_1^t\\) and \\(G_2 = G_2^1 \\oplus \\dots \\oplus G_2^t\\), where each \\(G_1^i\\) and \\(G_2^i\\) has order \\(l_i\\).\nConstructs the \\(\\mathfrak{A}\\)-isogeny \\(\\phi_A : E_0 \\to E_A\\) of degree \\(A\\). The kernel of \\(\\phi_A\\) is strictly dictated by the vector \\(\\mathbf{a}\\): for each \\(i\\)-th prime factor \\(l_i\\), she selects the kernel component from either \\(G_1^i\\) (if \\(\\mathbf{a}_i = 1\\)) or \\(G_2^i\\) (if \\(\\mathbf{a}_i = 2\\)). Formally, \\(\\ker \\phi_A = \\langle G_{\\mathbf{a}_1}^1, G_{\\mathbf{a}_2}^2, \\dots, G_{\\mathbf{a}_t}^t \\rangle\\).\nComputes the image of Bob’s artificial \\(B\\)-orientation \\(\\mathfrak{B}\\) under her isogeny. This is simply the evaluation of \\(\\phi_A\\) on the subgroups of \\(\\mathfrak{B}\\), yielding \\(\\mathfrak{B}' = \\phi_A(\\mathfrak{B}) = (\\phi_A(H_1),\\phi_A(H_2))\\).\nAlice’s secret key is \\(\\mathbf{a}\\) and her public key is \\((E_A, \\mathfrak{B}')\\).\n\nBob:\n\nSamples a secret vector \\(\\mathbf{b}\\) uniformly at random from \\(\\{1, 2\\}^t\\).\nDecomposes his artificial \\(B\\)-orientation \\(\\mathfrak{B} = (H_1, H_2)\\) into its prime-order components \\(H_1^i\\) and \\(H_2^i\\) of order \\(q_i\\).\nConstructs the \\(\\mathfrak{B}\\)-isogeny \\(\\phi_B : E_0 \\to E_B\\) of degree \\(B\\). The kernel is chosen from \\(\\mathfrak{B}\\) according to the vector \\(\\mathbf{b}\\), such that \\(\\ker \\phi_B = \\langle H_{\\mathbf{b}_1}^1, H_{\\mathbf{b}_2}^2, \\dots, H_{\\mathbf{b}_t}^t \\rangle\\).\nComputes the image of Alice’s artificial \\(A\\)-orientation \\(\\mathfrak{A}\\) under his isogeny, yielding \\(\\mathfrak{A}' = \\phi_B(\\mathfrak{A})\\).\nBob’s secret key is \\(\\mathbf{b}\\) and his public key is \\((E_B, \\mathfrak{A}')\\).\n\n\n\n2.3 Shared Key Computation\nUpon exchanging public keys, the parties compute their parallel isogenies to arrive at a common curve.\nAlice:\n\nReceives Bob’s public key \\((E_B, \\mathfrak{A}')\\). She verifies that \\(\\mathfrak{A}'\\) is indeed a valid artificial \\(A\\)-orientation on \\(E_B\\); if not, she aborts.\nShe computes the \\(\\mathfrak{A}'\\)-isogeny \\(\\phi_A' : E_B \\to E_{BA}\\) of degree \\(A\\), defined by her secret vector \\(\\mathbf{a}\\).\nHer shared key is the \\(j\\)-invariant of the resulting curve, \\(j(E_{BA})\\).\n\nBob:\n\nReceives Alice’s public key \\((E_A, \\mathfrak{B}')\\). He verifies that \\(\\mathfrak{B}'\\) is a valid artificial \\(B\\)-orientation on \\(E_A\\); if not, he aborts.\nHe computes the \\(\\mathfrak{B}'\\)-isogeny \\(\\phi_B' : E_A \\to E_{AB}\\) of degree \\(B\\), defined by his secret vector \\(\\mathbf{b}\\).\nHis shared key is the \\(j\\)-invariant of the resulting curve, \\(j(E_{AB})\\).\n\nDue to the structure of parallel isogenies over artificially oriented curves, the resulting codomain curves \\(E_{AB}\\) and \\(E_{BA}\\) are isomorphic, ensuring \\(j(E_{AB}) = j(E_{BA})\\).",
+    "crumbs": [
+      "Key Exchange",
+      "binSIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/binsidh.html#security-assumptions",
+    "href": "protocols/key-exchange/binsidh.html#security-assumptions",
+    "title": "binSIDH",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nThe security of binSIDH relies on a set of computational problems related to artificially oriented curves, some of which are generalizations of recently introduced isogeny problems.\n\nSupersingular Isogeny Problem for artificially A-oriented curves (SSIP-A): Given an artificially \\(A\\)-oriented curve \\((E, \\mathfrak{A})\\), a codomain curve \\(E'\\), the image orientation \\(\\mathfrak{A}'\\), and a degree \\(B\\), compute the isogeny of degree \\(B\\) connecting them. This is a generalization of the CIST problem previously introduced in the FESTA cryptosystem.\nArtificially Oriented Isogeny Problem (AOIP): Given a starting curve \\(E\\) with an artificial \\(A\\)-orientation \\(\\mathfrak{A}\\) and an artificial \\(B\\)-orientation \\(\\mathfrak{B}\\), along with the codomain curve \\(E'\\) and the image orientation \\(\\mathfrak{A}'\\), compute the cyclic \\(B\\)-isogeny.\nArtificially Oriented Computational Diffie-Hellman (AO-CDH): Given the initial public parameters and the two public keys \\((E_A, \\phi_A(\\mathfrak{B}))\\) and \\((E_B, \\phi_B(\\mathfrak{A}))\\), compute the shared invariant \\(j(E_{AB})\\).",
     "crumbs": [
       "Key Exchange",
       "binSIDH"
@@ -935,8 +1188,19 @@
     "objectID": "protocols/key-exchange/binsidh.html#progress",
     "href": "protocols/key-exchange/binsidh.html#progress",
     "title": "binSIDH",
-    "section": "1 Progress",
-    "text": "1 Progress\nTODO\n2026/032",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO\n2026/032",
+    "crumbs": [
+      "Key Exchange",
+      "binSIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/binsidh.html#references",
+    "href": "protocols/key-exchange/binsidh.html#references",
+    "title": "binSIDH",
+    "section": "5 References",
+    "text": "5 References\n\n\n[BaFo23] Basso, Andrea ; Fouotsa, Tako Boris: New SIDH countermeasures for a more efficient key exchange. In: ASIACRYPT : Springer, 2023, pp. 208–233\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Key Exchange",
       "binSIDH"
@@ -998,6 +1262,17 @@
     ]
   },
   {
+    "objectID": "protocols/key-exchange/ksidh.html#references",
+    "href": "protocols/key-exchange/ksidh.html#references",
+    "title": "\\(k\\)-SIDH",
+    "section": "5 References",
+    "text": "5 References\n\n\n[AzJaLe17] Azarderakhsh, Reza ; Jao, David ; Leonar, Christopher: Post-quantum static-static key agreement using multiple protocol instances. In: SAC : Springer, 2017, pp. 45–63\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "$k$-SIDH"
+    ]
+  },
+  {
     "objectID": "protocols/key-exchange/msidh.html",
     "href": "protocols/key-exchange/msidh.html",
     "title": "M-SIDH",
@@ -1047,6 +1322,17 @@
     "title": "M-SIDH",
     "section": "4 Progress",
     "text": "4 Progress\nTODO\n2023/1433 and 2024/459 and 2025/2075",
+    "crumbs": [
+      "Key Exchange",
+      "M-SIDH"
+    ]
+  },
+  {
+    "objectID": "protocols/key-exchange/msidh.html#references",
+    "href": "protocols/key-exchange/msidh.html#references",
+    "title": "M-SIDH",
+    "section": "5 References",
+    "text": "5 References\n\n\n[FoMoPe23] Fouotsa, Tako Boris ; Moriya, Tomoki ; Petit, Christophe: M-SIDH and MD-SIDH: Countering SIDH attacks by masking information. In: EUROCRYPT : Springer, 2023, pp. 282–309\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Key Exchange",
       "M-SIDH"

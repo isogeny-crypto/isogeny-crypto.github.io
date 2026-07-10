@@ -508,8 +508,16 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#progress" id="toc-progress" class="nav-link active" data-scroll-target="#progress"><span class="header-section-number">1</span> Progress</a></li>
-  <li><span class="header-section-number">2</span> References</li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
+  <li><a href="#protocol-design" id="toc-protocol-design" class="nav-link" data-scroll-target="#protocol-design"><span class="header-section-number">2</span> Protocol Design</a>
+  <ul class="collapse">
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">2.1</span> Setup</a></li>
+  <li><a href="#key-generation" id="toc-key-generation" class="nav-link" data-scroll-target="#key-generation"><span class="header-section-number">2.2</span> Key Generation</a></li>
+  <li><a href="#shared-key-computation" id="toc-shared-key-computation" class="nav-link" data-scroll-target="#shared-key-computation"><span class="header-section-number">2.3</span> Shared Key Computation</a></li>
+  </ul></li>
+  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a></li>
+  <li><a href="#progress" id="toc-progress" class="nav-link" data-scroll-target="#progress"><span class="header-section-number">4</span> Progress</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">5</span> References</a></li>
   </ul>
 </nav>
     </div>
@@ -538,7 +546,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">July 9, 2026</p>
+      <p class="date-modified">July 10, 2026</p>
     </div>
   </div>
     
@@ -549,16 +557,79 @@ window.Quarto = {
 </header>
 
 
-<p><span class="citation" data-cites="binsidh-tersidh">[<a href="#ref-binsidh-tersidh" role="doc-biblioref">BaFo23</a>]</span></p>
-<section id="progress" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="progress"><span class="header-section-number">1</span> Progress</h2>
+<section id="overview" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
+<p>The terSIDH protocol is a variant of the <a href="../../protocols/key-exchange/binsidh.html">binSIDH</a> protocol designed to significantly improve efficiency and reduce parameter sizes by utilizing variable-degree isogenies <span class="citation" data-cites="binsidh-tersidh">[<a href="#ref-binsidh-tersidh" role="doc-biblioref">BaFo23</a>]</span>. In the binSIDH protocol, computations are restricted to full-degree artificially oriented isogenies where the path is defined by a binary choice for each prime factor. The terSIDH protocol introduces a third option: for each prime factor, the protocol can choose to omit that component entirely, effectively skipping the isogeny step for that prime. This ternary approach yields approximately <span class="math inline">\(\log_2(3) \approx 1.6\)</span> bits of security per prime compared to the single bit provided by binary choices, allowing the protocol to achieve target security levels with substantially smaller isogeny degrees and underlying primes.</p>
+</section>
+<section id="protocol-design" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="protocol-design"><span class="header-section-number">2</span> Protocol Design</h2>
+<p>The terSIDH protocol modifies the binSIDH approach by relying on variable-degree artificially oriented isogenies. Below is a detailed walkthrough of the protocol setup, key generation, and shared key derivation.</p>
+<section id="setup" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">2.1</span> Setup</h3>
+<p>The public parameters are generated as follows:</p>
+<ul>
+<li><strong><span class="math inline">\(\lambda\)</span></strong>: The security parameter (e.g., 128, 192, 256) that dictates the targeted security level.</li>
+<li><strong><span class="math inline">\(t\)</span></strong>: An integer depending on <span class="math inline">\(\lambda\)</span>, representing the number of distinct prime factors required to achieve the desired security. Because each prime provides <span class="math inline">\(\log_2(3) \approx 1.6\)</span> bits of security, <span class="math inline">\(t\)</span> is significantly smaller than in binSIDH (approximately <span class="math inline">\(\lambda / 1.6\)</span>).</li>
+<li><strong><span class="math inline">\(l_i, q_i\)</span></strong>: Small, distinct prime numbers for <span class="math inline">\(i \in \{1, \dots, t\}\)</span>.</li>
+<li><strong><span class="math inline">\(A, B\)</span></strong>: Coprime integers where <span class="math inline">\(A = \prod_{i=1}^t l_i\)</span> and <span class="math inline">\(B = \prod_{i=1}^t q_i\)</span>. <span class="math inline">\(A\)</span> dictates the maximum possible degree of Alice’s isogenies, while <span class="math inline">\(B\)</span> dictates Bob’s. The values are chosen such that <span class="math inline">\(A \approx B \approx \sqrt{p}\)</span>.</li>
+<li><strong><span class="math inline">\(f\)</span></strong>: A small cofactor used to ensure the resulting <span class="math inline">\(p\)</span> is a valid prime.</li>
+<li><strong><span class="math inline">\(p\)</span></strong>: A large prime of the form <span class="math inline">\(p = ABf - 1\)</span>.</li>
+<li><strong><span class="math inline">\(E_0\)</span></strong>: A starting supersingular elliptic curve defined over <span class="math inline">\(\mathbb{F}_{p^2}\)</span> with cardinality <span class="math inline">\(\#E_0(\mathbb{F}_{p^2}) = (p+1)^2\)</span>. To avoid special endomorphism ring properties that could lead to attacks, this curve should be generated via a uniformly random walk.</li>
+<li><strong><span class="math inline">\(\mathfrak{A}, \mathfrak{B}\)</span></strong>: Artificial orientations on <span class="math inline">\(E_0\)</span>. Specifically, the artificial <span class="math inline">\(A\)</span>-orientation is defined as <span class="math inline">\(\mathfrak{A} = (G_1, G_2)\)</span>, where <span class="math inline">\(G_1, G_2 \subset E_0[A]\)</span> are cyclic disjoint subgroups of order <span class="math inline">\(A\)</span>. The artificial <span class="math inline">\(B\)</span>-orientation is similarly defined as <span class="math inline">\(\mathfrak{B} = (H_1, H_2)\)</span>, a pair of cyclic disjoint subgroups of order <span class="math inline">\(B\)</span>.</li>
+</ul>
+<p>The globally public parameters are <span class="math inline">\((E_0, p, A, B, \mathfrak{A}, \mathfrak{B})\)</span>.</p>
+</section>
+<section id="key-generation" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="key-generation"><span class="header-section-number">2.2</span> Key Generation</h3>
+<p>Both parties independently sample random ternary secret vectors that dictate the specific subgroups used to construct their secret isogenies. A choice of <span class="math inline">\(0\)</span> corresponds to omitting the component for that prime. Consequently, the final isogeny has a variable degree that merely divides <span class="math inline">\(A\)</span> or <span class="math inline">\(B\)</span>, rather than strictly equaling it.</p>
+<p><strong>Alice:</strong></p>
+<ol type="1">
+<li>Samples a secret vector <span class="math inline">\(\mathbf{a}\)</span> uniformly at random from <span class="math inline">\(\{0, 1, 2\}^t\)</span>.</li>
+<li>Decomposes her artificial <span class="math inline">\(A\)</span>-orientation <span class="math inline">\(\mathfrak{A} = (G_1, G_2)\)</span>. Since <span class="math inline">\(G_1\)</span> and <span class="math inline">\(G_2\)</span> are cyclic groups of order <span class="math inline">\(A = \prod_{i=1}^t l_i\)</span>, they can be written as the direct sum of their prime-order components: <span class="math inline">\(G_1 = G_1^1 \oplus \dots \oplus G_1^t\)</span> and <span class="math inline">\(G_2 = G_2^1 \oplus \dots \oplus G_2^t\)</span>, where each <span class="math inline">\(G_1^i\)</span> and <span class="math inline">\(G_2^i\)</span> has order <span class="math inline">\(l_i\)</span>. She also explicitly sets <span class="math inline">\(G_0^i = \mathcal{O}\)</span> (the point at infinity) for all <span class="math inline">\(i \in \{1, \dots, t\}\)</span>.</li>
+<li>Constructs the <span class="math inline">\(\mathfrak{A}\)</span>-isogeny <span class="math inline">\(\phi_A : E_0 \to E_A\)</span> defined by her secret vector <span class="math inline">\(\mathbf{a}\)</span>. For each <span class="math inline">\(i\)</span>-th prime factor <span class="math inline">\(l_i\)</span>, she selects the kernel component from <span class="math inline">\(G_1^i\)</span> (if <span class="math inline">\(\mathbf{a}_i = 1\)</span>), <span class="math inline">\(G_2^i\)</span> (if <span class="math inline">\(\mathbf{a}_i = 2\)</span>), or <span class="math inline">\(\mathcal{O}\)</span> (if <span class="math inline">\(\mathbf{a}_i = 0\)</span>). Formally, <span class="math inline">\(\ker \phi_A = \langle G_{\mathbf{a}_1}^1, G_{\mathbf{a}_2}^2, \dots, G_{\mathbf{a}_t}^t \rangle\)</span>. Due to the possibility of <span class="math inline">\(\mathbf{a}_i = 0\)</span>, the actual degree of <span class="math inline">\(\phi_A\)</span> divides <span class="math inline">\(A\)</span>.</li>
+<li>Computes the image of Bob’s artificial <span class="math inline">\(B\)</span>-orientation <span class="math inline">\(\mathfrak{B}\)</span> under her isogeny, yielding <span class="math inline">\(\mathfrak{B}' = \phi_A(\mathfrak{B}) = (\phi_A(H_1), \phi_A(H_2))\)</span>.</li>
+<li>Alice’s secret key is <span class="math inline">\(\mathbf{a}\)</span> and her public key is <span class="math inline">\((E_A, \mathfrak{B}')\)</span>.</li>
+</ol>
+<p><strong>Bob:</strong></p>
+<ol type="1">
+<li>Samples a secret vector <span class="math inline">\(\mathbf{b}\)</span> uniformly at random from <span class="math inline">\(\{0, 1, 2\}^t\)</span>.</li>
+<li>Decomposes his artificial <span class="math inline">\(B\)</span>-orientation <span class="math inline">\(\mathfrak{B} = (H_1, H_2)\)</span> into its prime-order components <span class="math inline">\(H_1^i\)</span> and <span class="math inline">\(H_2^i\)</span> of order <span class="math inline">\(q_i\)</span>. He similarly sets <span class="math inline">\(H_0^i = \mathcal{O}\)</span> for all <span class="math inline">\(i \in \{1, \dots, t\}\)</span>.</li>
+<li>Constructs the <span class="math inline">\(\mathfrak{B}\)</span>-isogeny <span class="math inline">\(\phi_B : E_0 \to E_B\)</span>. The kernel is chosen from <span class="math inline">\(\mathfrak{B}\)</span> according to the vector <span class="math inline">\(\mathbf{b}\)</span>, such that <span class="math inline">\(\ker \phi_B = \langle H_{\mathbf{b}_1}^1, H_{\mathbf{b}_2}^2, \dots, H_{\mathbf{b}_t}^t \rangle\)</span>. The degree of <span class="math inline">\(\phi_B\)</span> divides <span class="math inline">\(B\)</span>.</li>
+<li>Computes the image of Alice’s artificial <span class="math inline">\(A\)</span>-orientation <span class="math inline">\(\mathfrak{A}\)</span> under his isogeny, yielding <span class="math inline">\(\mathfrak{A}' = \phi_B(\mathfrak{A})\)</span>.</li>
+<li>Bob’s secret key is <span class="math inline">\(\mathbf{b}\)</span> and his public key is <span class="math inline">\((E_B, \mathfrak{A}')\)</span>.</li>
+</ol>
+</section>
+<section id="shared-key-computation" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="shared-key-computation"><span class="header-section-number">2.3</span> Shared Key Computation</h3>
+<p>Upon exchanging public keys, the parties compute their parallel isogenies to arrive at a common curve.</p>
+<p><strong>Alice:</strong></p>
+<ol type="1">
+<li>Receives Bob’s public key <span class="math inline">\((E_B, \mathfrak{A}')\)</span>. She verifies that <span class="math inline">\(\mathfrak{A}'\)</span> is indeed a valid artificial <span class="math inline">\(A\)</span>-orientation on <span class="math inline">\(E_B\)</span>; if not, she aborts.</li>
+<li>She computes the <span class="math inline">\(\mathfrak{A}'\)</span>-isogeny <span class="math inline">\(\phi_A' : E_B \to E_{BA}\)</span> defined by her ternary secret vector <span class="math inline">\(\mathbf{a}\)</span>. The degree of this isogeny divides <span class="math inline">\(A\)</span>.</li>
+<li>Her shared key is the <span class="math inline">\(j\)</span>-invariant of the resulting curve, <span class="math inline">\(j(E_{BA})\)</span>.</li>
+</ol>
+<p><strong>Bob:</strong></p>
+<ol type="1">
+<li>Receives Alice’s public key <span class="math inline">\((E_A, \mathfrak{B}')\)</span>. He verifies that <span class="math inline">\(\mathfrak{B}'\)</span> is a valid artificial <span class="math inline">\(B\)</span>-orientation on <span class="math inline">\(E_A\)</span>; if not, he aborts.</li>
+<li>He computes the <span class="math inline">\(\mathfrak{B}'\)</span>-isogeny <span class="math inline">\(\phi_B' : E_A \to E_{AB}\)</span> defined by his ternary secret vector <span class="math inline">\(\mathbf{b}\)</span>. The degree of this isogeny divides <span class="math inline">\(B\)</span>.</li>
+<li>His shared key is the <span class="math inline">\(j\)</span>-invariant of the resulting curve, <span class="math inline">\(j(E_{AB})\)</span>.</li>
+</ol>
+<p>Due to the structure of parallel isogenies over artificially oriented curves, the resulting codomain curves <span class="math inline">\(E_{AB}\)</span> and <span class="math inline">\(E_{BA}\)</span> are isomorphic, ensuring <span class="math inline">\(j(E_{AB}) = j(E_{BA})\)</span>.</p>
+</section>
+</section>
+<section id="security-assumptions" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
+<p>terSIDH shares its mathematical <a href="../../protocols/key-exchange/binsidh.html#security-assumptions">security assumptions</a> with binSIDH but its reliance on variable-degree isogenies introduces unique implementation-level security challenges. Constructing constant-time implementations for terSIDH is inherently more difficult than for binSIDH due to the variable execution paths. Furthermore, designing zero-knowledge proofs for terSIDH public keys is particularly challenging because existing proof techniques inevitably leak the secret isogeny degree, potentially limiting terSIDH’s applicability in advanced cryptographic constructions compared to binSIDH.</p>
+</section>
+<section id="progress" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="progress"><span class="header-section-number">4</span> Progress</h2>
 <p>TODO</p>
 <p>2026/032</p>
 
 
 </section>
-<section class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id=""><span class="header-section-number">2</span> References</h2>
+<section id="references" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="references"><span class="header-section-number">5</span> References</h2>
 <div id="refs" class="references csl-bib-body" role="list">
 <div id="ref-binsidh-tersidh" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[BaFo23] </div><div class="csl-right-inline"><span class="smallcaps">Basso, Andrea</span> ; <span class="smallcaps">Fouotsa, Tako Boris</span>: <a href="https://eprint.iacr.org/2023/791">New <span>SIDH</span> countermeasures for a more efficient key exchange</a>. In: <em>ASIACRYPT</em>&nbsp;: Springer, 2023, pp.&nbsp;208–233</div>
