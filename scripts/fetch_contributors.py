@@ -37,7 +37,7 @@ os.makedirs(".contributors", exist_ok=True)
 
 # Create placeholder snippets for any .qmd files that don't have one yet,
 # so Quarto never fails on a missing include before the API fetch runs.
-for file_path in Path("protocols").rglob("*.qmd"):
+for file_path in Path("schemes").rglob("*.qmd"):
     title = get_qmd_title(file_path)
     key = title_to_key(title)
     snippet_path = Path(".contributors") / f"{key}.md"
@@ -49,7 +49,7 @@ headers = {"User-Agent": "Mozilla/5.0"}
 if github_token:
     headers["Authorization"] = f"token {github_token}"
 
-for file_path in Path("protocols").rglob("*.qmd"):
+for file_path in Path("schemes").rglob("*.qmd"):
     # 1. Sync mtime to last git commit
     try:
         result = subprocess.run(

@@ -6,11 +6,11 @@ date: 2026-06-22
 
 ## Overview
 
-QFESTA (Quaternion Fast Encapsulation from Supersingular Torsion Attacks) is a new isogeny-based public-key encryption (PKE) and key encapsulation mechanism (KEM) based on the [FESTA](/protocols/key-exchange/festa.qmd) protocol [@qfesta]. 
+QFESTA (Quaternion Fast Encapsulation from Supersingular Torsion Attacks) is a new isogeny-based public-key encryption (PKE) and key encapsulation mechanism (KEM) based on the [FESTA](/schemes/key-exchange/festa.qmd) scheme [@qfesta]. 
 
 FESTA uses the SIDH attack machinery for decryption, which natively imposes strong smoothness constraints on the degrees of the underlying isogenies ($d_A, d_1, d_2$), forcing them to be large and leading to significant data sizes and computational overhead. To circumvent these limitations, QFESTA introduces a novel technique leveraging quaternion algebras to compute the codomain and point images of non-smooth degree isogenies from a special starting curve. This eliminates the smoothness restriction for degrees $d_A$ and $d_1$, vastly shrinking parameter sizes.
 
-## Protocol Design
+## Scheme Design
 
 The main innovation in QFESTA's design is the sub-algorithm `RandIsogImages`, which evaluates non-smooth degree isogenies using Kani's lemma and quaternion endomorphisms. Finally, to achieve indistinguishability against chosen ciphertext attacks (IND-CCA) in the quantum random oracle model (QROM), the core One-Way Chosen Plaintext Attack (OW-CPA) secure PKE is wrapped using the Fujisaki-Okamoto ($FO^{\not\perp}$) transform.
 

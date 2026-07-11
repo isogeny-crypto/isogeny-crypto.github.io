@@ -6,11 +6,11 @@ date: 2026-06-26
 
 ## Overview
 
-SiGamal is a post-quantum public key encryption (PKE) scheme built upon the [CSIDH](/protocols/key-exchange/csidh.qmd) framework that functions as an isogeny-based analogue to traditional ElGamal encryption [@sigamal-csigamal]. Its primary breakthrough is achieving Indistinguishability under Chosen-Plaintext Attack (IND-CPA) security strictly without the reliance on entropy-smoothing hash functions, offering a notable advantage over previous isogeny-based PKEs. 
+SiGamal is a post-quantum public key encryption (PKE) scheme built upon the [CSIDH](/schemes/key-exchange/csidh.qmd) framework that functions as an isogeny-based analogue to traditional ElGamal encryption [@sigamal-csigamal]. Its primary breakthrough is achieving Indistinguishability under Chosen-Plaintext Attack (IND-CPA) security strictly without the reliance on entropy-smoothing hash functions, offering a notable advantage over previous isogeny-based PKEs. 
 
-## Protocol Design
+## Scheme Design
 
-The SiGamal protocol operates by sending plaintexts embedded as points through hidden isogenies. The scheme consists of three primary phases: Key Generation, Encryption, and Decryption.
+The SiGamal scheme operates by sending plaintexts embedded as points through hidden isogenies. The scheme consists of three primary phases: Key Generation, Encryption, and Decryption.
 
 
 ```{.tikz}

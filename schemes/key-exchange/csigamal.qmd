@@ -6,11 +6,11 @@ date: 2026-06-26
 
 ## Overview
 
-C-SiGamal is a compressed variant of [SiGamal](/protocols/key-exchange/sigamal.qmd) that drastically reduces the communication overhead [@sigamal-csigamal]. Specifically, the bit length of a ciphertext in C-SiGamal is half that of a standard SiGamal ciphertext, requiring only twice the bit length of the underlying prime $p$.  This compression is achieved by modifying the encryption logic to omit sending a target curve and a masked point, instead employing a deterministically generated base point $P_E$ on the target curve and a carefully computed intermediate scalar $\mu^*$.
+C-SiGamal is a compressed variant of [SiGamal](/schemes/key-exchange/sigamal.qmd) that drastically reduces the communication overhead [@sigamal-csigamal]. Specifically, the bit length of a ciphertext in C-SiGamal is half that of a standard SiGamal ciphertext, requiring only twice the bit length of the underlying prime $p$.  This compression is achieved by modifying the encryption logic to omit sending a target curve and a masked point, instead employing a deterministically generated base point $P_E$ on the target curve and a carefully computed intermediate scalar $\mu^*$.
 
-## Protocol Design
+## Scheme Design
 
-The C-SiGamal protocol utilizes the free and transitive group action of an ideal class group on a set of supersingular elliptic curves. 
+The C-SiGamal scheme utilizes the free and transitive group action of an ideal class group on a set of supersingular elliptic curves. 
 
 ```{.tikz}
 \usetikzlibrary{arrows.meta, bending, calc}

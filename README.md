@@ -1,6 +1,6 @@
 # Isogeny-based Cryptography Wiki
 
-Welcome to the source repository for the [isogeny-crypto.github.io](https://isogeny-crypto.github.io) wiki. This repository contains the markdown source files, mathematical configurations, and build scripts used to generate our collaborative reference for isogeny-based cryptographic protocols.
+Welcome to the source repository for the [isogeny-crypto.github.io](https://isogeny-crypto.github.io) wiki. This repository contains the markdown source files, mathematical configurations, and build scripts used to generate our collaborative reference for isogeny-based cryptographic schemes.
 
 ## Tech Stack & Architecture
 
@@ -175,19 +175,19 @@ curl -L -o alpha.csl https://raw.githubusercontent.com/citation-style-language/s
 
 ### Automated contributor attribution
 
-At build time, `fetch_contributors.py` queries the GitHub API for the commit history of every `.qmd` file in `protocols/` and writes a small markdown snippet into the `.contributors/` directory, named after the page's title (e.g. `sidh.md`, `csi-fish.md`). The `contributors.lua` Pandoc filter then automatically appends the relevant snippet to the bottom of each rendered page, preceded by a horizontal rule.
+At build time, `fetch_contributors.py` queries the GitHub API for the commit history of every `.qmd` file in `schemes/` and writes a small markdown snippet into the `.contributors/` directory, named after the page's title (e.g. `sidh.md`, `csi-fish.md`). The `contributors.lua` Pandoc filter then automatically appends the relevant snippet to the bottom of each rendered page, preceded by a horizontal rule.
 
-**This is fully automatic — no changes are needed to your `.qmd` files.** When you create a new protocol page, simply write your content and push; the contributor block will appear at the bottom after the first CI build.
+**This is fully automatic — no changes are needed to your `.qmd` files.** When you create a new scheme page, simply write your content and push; the contributor block will appear at the bottom after the first CI build.
 
 **Important notes:**
 
 - Do not edit `.contributors/` manually — it is regenerated on every full build and is gitignored.
 - New files will show "Pending GitHub sync..." until your first push, because the script queries the remote repository's commit history.
-- Contributor snippets are matched to pages by the `title:` field in each `.qmd`'s YAML frontmatter. Make sure every protocol page has a unique, stable title.
+- Contributor snippets are matched to pages by the `title:` field in each `.qmd`'s YAML frontmatter. Make sure every scheme page has a unique, stable title.
 
-### Protocol list legend (colored discs)
+### scheme list legend (colored discs)
 
-The homepage's Key Establishment / Digital Signature lists (`index.qmd`) mark each protocol with a small colored disc indicating which underlying technique it relies on, per the legend: red = torsion points, blue = Deuring correspondence, green = group action.
+The homepage's Key Establishment / Digital Signature lists (`index.qmd`) mark each scheme with a small colored disc indicating which underlying technique it relies on, per the legend: red = torsion points, blue = Deuring correspondence, green = group action.
 
 Discs are written with a shorthand span, expanded at build time by the `discs.lua` Pandoc filter:
 
@@ -197,17 +197,17 @@ Discs are written with a shorthand span, expanded at build time by the `discs.lu
 - []{r=50 b=50} pSIDH (2022--2023)
 ```
 
-`r`, `g`, `b` are percentages (0–100) for red/green/blue. Give one color for a solid disc, or two/three for a split disc rendered as a CSS `conic-gradient` in that ratio — useful for protocols that draw on more than one technique. Percentages need not sum to 100. Styling for the resulting disc lives in `assets/protocol-list.css`.
+`r`, `g`, `b` are percentages (0–100) for red/green/blue. Give one color for a solid disc, or two/three for a split disc rendered as a CSS `conic-gradient` in that ratio — useful for schemes that draw on more than one technique. Percentages need not sum to 100. Styling for the resulting disc lives in `assets/scheme-list.css`.
 
 ## Template 
 
 Upload the paper to an LLM model (eg. Google Gemini Pro) with the following prompt:
 
 ```
-Study the attached file and generate a detailed, concrete description of the newly introduced protocol [NAME] in Quarto Markdown (.qmd) format. The target audience is researchers working in isogeny-based cryptography. Organize the information under the following headings:
-1. Overview (one paragraph summarizing the protocol motivation in plain english without sounding like a sales pitch) 
-2. Protocol Design (walk through the protocol while defining each symbol before usage)
+Study the attached file and generate a detailed, concrete description of the newly introduced scheme [NAME] in Quarto Markdown (.qmd) format. The target audience is researchers working in isogeny-based cryptography. Organize the information under the following headings:
+1. Overview (one paragraph summarizing the scheme motivation in plain english without sounding like a sales pitch) 
+2. Scheme Design (walk through the scheme while defining each symbol before usage)
 3. Security Assumptions (what problems are assumed hard, whether assumptions are new or borrowed from previous schemes) 
 ```
 
-Iterate until you get a good initial draft. Then proof read and make necessary edits like adding references, hyperlinks, and `tikz` diagram of the protocol (generated from screenshot using LLM, eg. Anthropic Claude Sonnet or Mistral Vibe/Le Chat).
+Iterate until you get a good initial draft. Then proof read and make necessary edits like adding references, hyperlinks, and `tikz` diagram of the scheme (generated from screenshot using LLM, eg. Anthropic Claude Sonnet or Mistral Vibe/Le Chat).

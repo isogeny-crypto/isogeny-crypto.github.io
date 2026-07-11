@@ -8,13 +8,13 @@ date: 2026-07-07
 
 > Broken by a polynomial time quantum algorithm.
 
-The pSIDH (prime-SIDH) protocol is a novel Non-Interactive Key Exchange (NIKE) scheme introduced to circumvent the catastrophic torsion-point attacks that broke smooth-degree isogeny protocols like [SIDH](/protocols/key-exchange/sidh.qmd) and [Séta](/protocols/key-exchange/seta.qmd). While SIDH utilizes secret isogenies of smooth degrees to allow for efficient evaluation via Vélu's formulas, this smooth-degree structure fundamentally enables the polynomial-time attacks. pSIDH transitions the SIDH-style commutative isogeny diagram to the setting of large prime degrees. 
+The pSIDH (prime-SIDH) scheme is a novel Non-Interactive Key Exchange (NIKE) scheme introduced to circumvent the catastrophic torsion-point attacks that broke smooth-degree isogeny schemes like [SIDH](/schemes/key-exchange/sidh.qmd) and [Séta](/schemes/key-exchange/seta.qmd). While SIDH utilizes secret isogenies of smooth degrees to allow for efficient evaluation via Vélu's formulas, this smooth-degree structure fundamentally enables the polynomial-time attacks. pSIDH transitions the SIDH-style commutative isogeny diagram to the setting of large prime degrees. 
 
 Because standard evaluation of large prime-degree isogenies is computationally infeasible, pSIDH relies on a novel cryptographic tool: the suborder representation [@psidh]. In this scheme, secret keys are represented as quaternion ideals (the ideal representation), while public keys are broadcast as suborder representations. 
 
-## Protocol Design
+## Scheme Design
 
-The pSIDH protocol involves two parties, Alice and Bob, agreeing on a shared secret over supersingular elliptic curves.
+The pSIDH scheme involves two parties, Alice and Bob, agreeing on a shared secret over supersingular elliptic curves.
 
 ```{.tikz}
 \usetikzlibrary{arrows.meta, bending, calc}
@@ -75,10 +75,10 @@ Both parties arrive at the identical curve $E_{AB}$, allowing them to use the $j
 
 ## Security Assumptions
 
-The core security of pSIDH is tied to the SubOrder to Ideal Problem (SOIP), which relates more closely to the key recovery of [CSIDH](/protocols/key-exchange/csidh.qmd) (involving partial endomorphism ring knowledge) than that of SIDH, yet maintains an SIDH-like key agreement flow.
+The core security of pSIDH is tied to the SubOrder to Ideal Problem (SOIP), which relates more closely to the key recovery of [CSIDH](/schemes/key-exchange/csidh.qmd) (involving partial endomorphism ring knowledge) than that of SIDH, yet maintains an SIDH-like key agreement flow.
 
 * **SubOrder to Ideal Problem (SOIP):** This is the underlying key recovery assumption. It states that given a suborder representation $\pi$ of an isogeny $\varphi$ of prime degree $D$, it is computationally infeasible to recover the ideal representation $I_\varphi$ (the secret key). Because the degree $D$ is a large prime, the $D$-torsion points are defined over an exponentially large field extension $\mathbb{F}_{p^k}$ (where $k = O(D)$). This prevents the polynomial-time torsion point attacks that devastated SIDH from being applied to SOIP. However, there is a sub-exponential quantum attack against the SOIP.
-* **prime Supersingular Decisional Diffie-Hellman (pSSDDH):** The semantic security of the key exchange relies on this decisional assumption. pSSDDH assumes that an adversary cannot distinguish the valid shared curve $E_{AB}$ (where $\text{End}(E_{AB}) \cong \mathcal{O}_R(I_A \cap I_B)$) from a random curve $E_C$ that is merely $D_A D_B$-isogenous to $E_0$. This assumption directly borrows its structural formulation from the [SSDDH problem](/protocols/key-exchange/sidh.qmd#security-assumptions) introduced in the original SIDH proposal, but strictly limits the isogeny degrees to large primes and leverages suborder representations rather than torsion point images.
+* **prime Supersingular Decisional Diffie-Hellman (pSSDDH):** The semantic security of the key exchange relies on this decisional assumption. pSSDDH assumes that an adversary cannot distinguish the valid shared curve $E_{AB}$ (where $\text{End}(E_{AB}) \cong \mathcal{O}_R(I_A \cap I_B)$) from a random curve $E_C$ that is merely $D_A D_B$-isogenous to $E_0$. This assumption directly borrows its structural formulation from the [SSDDH problem](/schemes/key-exchange/sidh.qmd#security-assumptions) introduced in the original SIDH proposal, but strictly limits the isogeny degrees to large primes and leverages suborder representations rather than torsion point images.
 
 ## Progress
 

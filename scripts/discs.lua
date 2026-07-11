@@ -1,6 +1,6 @@
 -- discs.lua
 -- Expands shorthand []{r=.. g=.. b=..} spans into colored "disc" bullets,
--- so protocol lists in .qmd files can write e.g.:
+-- so scheme lists in .qmd files can write e.g.:
 --
 --   - []{r=50 b=50} pSIDH (2022--2023)
 --
@@ -50,6 +50,6 @@ function Span(el)
 
   return pandoc.RawInline(
     "html",
-    '<span class="protocol-disc" style="' .. css .. '"></span>'
+    '<span class="scheme-disc" style="' .. css .. '"></span>'
   )
 end

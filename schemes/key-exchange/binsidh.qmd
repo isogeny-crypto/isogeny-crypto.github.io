@@ -6,11 +6,11 @@ date: 2026-07-09
 
 ## Overview
 
-The binSIDH protocol is designed to provide a secure and efficient isogeny-based key exchange in the wake of the polynomial-time key-recovery attacks that broke the original [SIDH](/protocols/key-exchange/sidh.qmd) protocol [@binsidh-tersidh]. Originally, SIDH required revealing the images of torsion points to enable parties to compute parallel isogenies and arrive at a shared secret, but this extra torsion information was ultimately exploited to recover the secret isogeny. To circumvent these attacks without sacrificing the efficiency of SIDH too heavily, binSIDH introduces the concept of "artificially oriented curves." By equipping an elliptic curve with a pair of cyclic disjoint subgroups (an artificial orientation), the protocol limits the set of allowable isogenies and restricts the revealed information strictly to the push-forwards of these orientations. This formulation interpolates between the original SIDH and group-action based protocols (like [CSIDH](/protocols/key-exchange/csidh.qmd)), revealing sufficiently less information to prevent the known torsion-based attacks while preserving the parallel isogeny structure necessary for a Diffie-Hellman-like key agreement.
+The binSIDH scheme is designed to provide a secure and efficient isogeny-based key exchange in the wake of the polynomial-time key-recovery attacks that broke the original [SIDH](/schemes/key-exchange/sidh.qmd) scheme [@binsidh-tersidh]. Originally, SIDH required revealing the images of torsion points to enable parties to compute parallel isogenies and arrive at a shared secret, but this extra torsion information was ultimately exploited to recover the secret isogeny. To circumvent these attacks without sacrificing the efficiency of SIDH too heavily, binSIDH introduces the concept of "artificially oriented curves." By equipping an elliptic curve with a pair of cyclic disjoint subgroups (an artificial orientation), the scheme limits the set of allowable isogenies and restricts the revealed information strictly to the push-forwards of these orientations. This formulation interpolates between the original SIDH and group-action based schemes (like [CSIDH](/schemes/key-exchange/csidh.qmd)), revealing sufficiently less information to prevent the known torsion-based attacks while preserving the parallel isogeny structure necessary for a Diffie-Hellman-like key agreement.
 
-## Protocol Design
+## Scheme Design
 
-The binSIDH protocol restricts computations to full-degree artificially oriented isogenies. Below is a detailed walkthrough of the protocol setup, key generation, and shared key derivation.
+The binSIDH scheme restricts computations to full-degree artificially oriented isogenies. Below is a detailed walkthrough of the scheme setup, key generation, and shared key derivation.
 
 ### Setup
 
@@ -69,7 +69,7 @@ Due to the structure of parallel isogenies over artificially oriented curves, th
 
 The security of binSIDH relies on a set of computational problems related to artificially oriented curves, some of which are generalizations of recently introduced isogeny problems. 
 
-1. **Supersingular Isogeny Problem for artificially A-oriented curves (SSIP-A)**: Given an artificially $A$-oriented curve $(E, \mathfrak{A})$, a codomain curve $E'$, the image orientation $\mathfrak{A}'$, and a degree $B$, compute the isogeny of degree $B$ connecting them. This is a generalization of the CIST problem previously introduced in the [FESTA](/protocols/key-exchange/festa.qmd#security-assumptions) cryptosystem.
+1. **Supersingular Isogeny Problem for artificially A-oriented curves (SSIP-A)**: Given an artificially $A$-oriented curve $(E, \mathfrak{A})$, a codomain curve $E'$, the image orientation $\mathfrak{A}'$, and a degree $B$, compute the isogeny of degree $B$ connecting them. This is a generalization of the CIST problem previously introduced in the [FESTA](/schemes/key-exchange/festa.qmd#security-assumptions) cryptosystem.
 
 2. **Artificially Oriented Isogeny Problem (AOIP)**: Given a starting curve $E$ with an artificial $A$-orientation $\mathfrak{A}$ and an artificial $B$-orientation $\mathfrak{B}$, along with the codomain curve $E'$ and the image orientation $\mathfrak{A}'$, compute the cyclic $B$-isogeny. 
 

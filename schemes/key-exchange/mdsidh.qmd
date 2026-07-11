@@ -6,11 +6,11 @@ date: 2026-07-08
 
 ## Overview
 
-The Masked-Degree Supersingular Isogeny Diffie-Hellman (MD-SIDH) protocol is a countermeasure designed to secure the SIDH key exchange against [devastating torsion point attacks](/protocols/key-exchange/sidh.qmd#progress). In the original SIDH protocol, the fixed degrees of the secret isogenies, combined with exact torsion point images, allow attackers to embed the secret isogeny into a higher-dimensional isogeny problem and break the scheme. MD-SIDH mitigates this by masking the degree of the secret isogeny [@msidh-mdsidh]. Specifically, the degrees of the secret isogenies are no longer fixed public parameters, but are instead chosen as uniformly random divisors of public smooth integers. To prevent the efficient recovery of this secret degree using Weil pairing computations and discrete logarithms, the protocol requires masking the images of the torsion points by scaling them with a random invertible integer. This ensures the true degree remains hidden, preserving the security of the protocol while facilitating a successful key exchange.
+The Masked-Degree Supersingular Isogeny Diffie-Hellman (MD-SIDH) scheme is a countermeasure designed to secure the SIDH key exchange against [devastating torsion point attacks](/schemes/key-exchange/sidh.qmd#progress). In the original SIDH scheme, the fixed degrees of the secret isogenies, combined with exact torsion point images, allow attackers to embed the secret isogeny into a higher-dimensional isogeny problem and break the scheme. MD-SIDH mitigates this by masking the degree of the secret isogeny [@msidh-mdsidh]. Specifically, the degrees of the secret isogenies are no longer fixed public parameters, but are instead chosen as uniformly random divisors of public smooth integers. To prevent the efficient recovery of this secret degree using Weil pairing computations and discrete logarithms, the scheme requires masking the images of the torsion points by scaling them with a random invertible integer. This ensures the true degree remains hidden, preserving the security of the scheme while facilitating a successful key exchange.
 
-## Protocol Design
+## Scheme Design
 
-The MD-SIDH protocol relies on algebraic structures similar SIDH, but introduces variable secret degrees and masking scalars to obscure the exact torsion point mappings and isogeny degrees.
+The MD-SIDH scheme relies on algebraic structures similar SIDH, but introduces variable secret degrees and masking scalars to obscure the exact torsion point mappings and isogeny degrees.
 
 ### Public Parameters
 
@@ -65,7 +65,7 @@ MD-SIDH relies on a modified version of the isogeny with torsion problem, define
 
 > Let $E_0/\mathbb{F}_{p^2}$ be a supersingular elliptic curve where $\#E_0(\mathbb{F}_{p^2}) = (ABf)^2$, with $E_0[B] = \langle P, Q \rangle$. Let $A'$ be a uniformly random divisor of $A$, and let $\alpha \in \mathbb{Z}/B\mathbb{Z}^\times$ be a random scalar. Given a random $A'$-degree isogeny $\phi: E_0 \rightarrow E_A$, finding $\phi$ from the public tuple $(E_0, P, Q, E_A, [\alpha]\phi(P), [\alpha]\phi(Q))$ must be computationally infeasible.
 
-Beyond the baseline [assumptions of M-SIDH](/protocols/key-exchange/msidh.qmd#security-assumptions), the security of MD-SIDH critically depends on three specific conditions:
+Beyond the baseline [assumptions of M-SIDH](/schemes/key-exchange/msidh.qmd#security-assumptions), the security of MD-SIDH critically depends on three specific conditions:
 
 * **Degree Obfuscation:** While the square-free part of the random divisor $A'$ can be recovered using the Weil pairing, extracting the remaining prime power factors must be mathematically hard.
 * **Unrestricted Scalar Masking:** Hiding the torsion point images using any arbitrary invertible integer ($\alpha$) must not introduce new structural vulnerabilities, even though it fails to preserve the Weil pairing exactly.

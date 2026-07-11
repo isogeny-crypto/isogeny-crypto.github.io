@@ -6,20 +6,20 @@ date: 2026-06-26
 
 ## Overview
 
-The CSURF protocol is a variant of the [CSIDH](/protocols/key-exchange/csidh.qmd) protocol, designed to operate on the "surface" of the supersingular isogeny graph rather than the "floor" [@csurf]. CSURF utilizes supersingular elliptic curves over a finite prime field $\mathbb{F}_p$ (where $p \equiv 3 \pmod 4$) whose endomorphism rings are isomorphic to the maximal order $\mathbb{Z}[(1+\sqrt{-p})/2]$. This is in contrast to original CSIDH, which relies on curves with the non-maximal endomorphism ring $\mathbb{Z}[\sqrt{-p}]$ (the floor).
+The CSURF scheme is a variant of the [CSIDH](/schemes/key-exchange/csidh.qmd) scheme, designed to operate on the "surface" of the supersingular isogeny graph rather than the "floor" [@csurf]. CSURF utilizes supersingular elliptic curves over a finite prime field $\mathbb{F}_p$ (where $p \equiv 3 \pmod 4$) whose endomorphism rings are isomorphic to the maximal order $\mathbb{Z}[(1+\sqrt{-p})/2]$. This is in contrast to original CSIDH, which relies on curves with the non-maximal endomorphism ring $\mathbb{Z}[\sqrt{-p}]$ (the floor).
 
 A key operational advantage of CSURF is unlocked when the prime satisfies $p \equiv 7 \pmod 8$. In this setting, horizontal 2-isogenies can be efficiently computed to evaluate the class group action. This efficiency stems from the fact that computing these 2-isogenies requires little more than a single exponentiation in the base field $\mathbb{F}_p$. Additionally, moving to the surface eliminates the redundant $\mathbb{Z}/3\mathbb{Z}$ factor present in the acting ideal-class group of standard CSIDH, which provides no extra security.
 
-## Protocol Design
+## Scheme Design
 
 ### Curve Representation
 CSURF relies on a tweaked Montgomery curve representation. The set of valid public keys is defined by the set 
 $$S_p^- = \{A \in \mathbb{F}_p \mid y^2 = x^3 + Ax^2 - x \text{ is supersingular}\}$$
-This adjusted equation, $y^2 = x^3 + Ax^2 - x$, allows any curve on the surface to be uniquely represented by its coefficient $A$. Crucially, the set $S_p^-$ contains $0$, making the curve $y^2 = x^3 - x$ an ideal, natural starting curve $s_0$ for the protocol.
+This adjusted equation, $y^2 = x^3 + Ax^2 - x$, allows any curve on the surface to be uniquely represented by its coefficient $A$. Crucially, the set $S_p^-$ contains $0$, making the curve $y^2 = x^3 - x$ an ideal, natural starting curve $s_0$ for the scheme.
 
 ### Key Exchange
 
-The CSURF protocol models a hard homogeneous space, where a finite commutative group acts freely and transitively on a set. The acting group is the ideal-class group $\mathcal{C}l(\mathbb{Z}[(1+\sqrt{-p})/2])$ acting on the set $S_p^-$ of tweaked Montgomery coefficients.
+The CSURF scheme models a hard homogeneous space, where a finite commutative group acts freely and transitively on a set. The acting group is the ideal-class group $\mathcal{C}l(\mathbb{Z}[(1+\sqrt{-p})/2])$ acting on the set $S_p^-$ of tweaked Montgomery coefficients.
 
 The steps for a non-interactive key exchange between two parties, Alice and Bob, proceed as follows:
 

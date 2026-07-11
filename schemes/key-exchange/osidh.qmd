@@ -6,13 +6,13 @@ date: 2026-07-09
 
 ## Overview
 
-The Oriented Supersingular Isogeny Diffie-Hellman (OSIDH) protocol is a cryptographic key exchange mechanism that generalizes the [CSIDH](/protocols/key-exchange/csidh.qmd) scheme and acts as an analogue to the standard [SIDH](/protocols/key-exchange/sidh.qmd) protocol [@osidh]. At a high level, OSIDH establishes a shared secret between two parties by navigating a complex mathematical structure composed of an $\ell$-isogeny cordillera acted upon by an ideal class group. 
+The Oriented Supersingular Isogeny Diffie-Hellman (OSIDH) scheme is a cryptographic key exchange mechanism that generalizes the [CSIDH](/schemes/key-exchange/csidh.qmd) scheme and acts as an analogue to the standard [SIDH](/schemes/key-exchange/sidh.qmd) scheme [@osidh]. At a high level, OSIDH establishes a shared secret between two parties by navigating a complex mathematical structure composed of an $\ell$-isogeny cordillera acted upon by an ideal class group. 
 
-Unlike CSIDH, which relies heavily on the availability of rational torsion subgroups (points of finite order whose coordinates exist entirely within the base field) over the prime field $\mathbb{F}_p$, OSIDH leverages a category of $\mathcal{O}$-oriented supersingular elliptic curves defined over the extension field $\mathbb{F}_{p^2}$. This design removes strict conditions on rational torsion subgroups and covers virtually all isomorphism classes of supersingular elliptic curves. The protocol evaluates the group action efficiently using modular isogenies and precomputations, deliberately avoiding the exchange of full isogeny chains to prevent structural attacks on the endomorphism rings.
+Unlike CSIDH, which relies heavily on the availability of rational torsion subgroups (points of finite order whose coordinates exist entirely within the base field) over the prime field $\mathbb{F}_p$, OSIDH leverages a category of $\mathcal{O}$-oriented supersingular elliptic curves defined over the extension field $\mathbb{F}_{p^2}$. This design removes strict conditions on rational torsion subgroups and covers virtually all isomorphism classes of supersingular elliptic curves. The scheme evaluates the group action efficiently using modular isogenies and precomputations, deliberately avoiding the exchange of full isogeny chains to prevent structural attacks on the endomorphism rings.
 
-## Protocol Design
+## Scheme Design
 
-The OSIDH protocol operates on a network of isogenies, constructed as a descending ladder derived from a base elliptic curve. Below is a step-by-step description of the protocol.
+The OSIDH scheme operates on a network of isogenies, constructed as a descending ladder derived from a base elliptic curve. Below is a step-by-step description of the scheme.
 
 ### Setup
 
@@ -56,10 +56,10 @@ Using the received data and their own secrets, both parties navigate to the same
 
 ## Security Assumptions
 
-The security of the OSIDH protocol is predicated on the hardness of computing unknown isogenies between two given supersingular elliptic curves.
+The security of the OSIDH scheme is predicated on the hardness of computing unknown isogenies between two given supersingular elliptic curves.
 
 *   **Group Action Hardness:** Borrowed from the [Couveignes](https://eprint.iacr.org/2006/291) and [Rostovtsev-Stolbunov](https://eprint.iacr.org/2006/145) framework, this assumes that given a starting curve and a curve resulting from a group action, finding the specific ideal group action connecting them is computationally infeasible. In OSIDH, this is modeled as the action of the class group $\mathcal{C}l(\mathcal{O})$ on the $\ell$-isogeny graph.
-*   **Resistance to Structural Attacks:** The security of the protocol relies critically on hiding the intermediate steps of the descending $\ell$-isogeny ladder. By only exchanging the terminal curves ($F_n, G_n$) along with local horizontal auxiliary chains, the protocol prevents adversaries from recovering the global endomorphism ring structure of the curves. If the full path from the specialized base curve $E_0$ were exposed, explicit knowledge of $E_0$'s endomorphism ring would enable structural attacks to deduce the endomorphism ring of the final curves and easily compute the secret isogeny. Therefore, a core assumption is that exposing only the terminal curve and local auxiliary data at depth $n$ is insufficient to mount these endomorphism ring attacks.
+*   **Resistance to Structural Attacks:** The security of the scheme relies critically on hiding the intermediate steps of the descending $\ell$-isogeny ladder. By only exchanging the terminal curves ($F_n, G_n$) along with local horizontal auxiliary chains, the scheme prevents adversaries from recovering the global endomorphism ring structure of the curves. If the full path from the specialized base curve $E_0$ were exposed, explicit knowledge of $E_0$'s endomorphism ring would enable structural attacks to deduce the endomorphism ring of the final curves and easily compute the secret isogeny. Therefore, a core assumption is that exposing only the terminal curve and local auxiliary data at depth $n$ is insufficient to mount these endomorphism ring attacks.
 
 ## Progress
 

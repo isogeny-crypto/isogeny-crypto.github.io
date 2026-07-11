@@ -7,7 +7,7 @@ authors:
     given-names: "Gaurish"
 repository-code: "https://github.com/isogeny-crypto/isogeny-crypto.github.io"
 url: "https://isogeny-crypto.github.io"
-abstract: "A collaborative, accessible reference for isogeny-based cryptographic protocols and primitives."
+abstract: "A collaborative, accessible reference for isogeny-based cryptographic schemes."
 keywords:
   - cryptography
   - post-quantum

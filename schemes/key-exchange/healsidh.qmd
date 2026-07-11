@@ -8,11 +8,11 @@ date: 2026-07-03
 
 > Broken by a polynomial time classical algorithm.
 
-HealSIDH is a statically secure, interactive key exchange protocol designed to mitigate the adaptive attack without resorting to key disclosure (as seen in [SIKE](/protocols/key-exchange/sidh.qmd#progress)) or computationally expensive parallel executions (as seen in [$k$-SIDH](/protocols/key-exchange/ksidh.qmd)). At its core, HealSIDH introduces a direct key validation mechanism that allows each party to prove the honest generation of their transmitted torsion points [@healsidh]. By operating over a larger prime characteristic of the form $p = 2^{2a}3^{2b}f - 1$ (where $2^a \approx 3^b$) and utilizing a random supersingular starting curve $E_0$ with an unknown endomorphism ring, the protocol successfully neutralizes both the adaptive attack and improved passive torsion point attacks. 
+HealSIDH is a statically secure, interactive key exchange scheme designed to mitigate the adaptive attack without resorting to key disclosure (as seen in [SIKE](/schemes/key-exchange/sidh.qmd#progress)) or computationally expensive parallel executions (as seen in [$k$-SIDH](/schemes/key-exchange/ksidh.qmd)). At its core, HealSIDH introduces a direct key validation mechanism that allows each party to prove the honest generation of their transmitted torsion points [@healsidh]. By operating over a larger prime characteristic of the form $p = 2^{2a}3^{2b}f - 1$ (where $2^a \approx 3^b$) and utilizing a random supersingular starting curve $E_0$ with an unknown endomorphism ring, the scheme successfully neutralizes both the adaptive attack and improved passive torsion point attacks. 
 
-## Protocol Design
+## Scheme Design
 
-The protocol fundamentally integrates the direct key validation mechanism within the standard [SIDH workflow](/protocols/key-exchange/sidh.qmd#protocol-design). The design involves canonical basis generation to prevent the leakage of points on the shared secret curve.
+The scheme fundamentally integrates the direct key validation mechanism within the standard [SIDH workflow](/schemes/key-exchange/sidh.qmd#scheme-design). The design involves canonical basis generation to prevent the leakage of points on the shared secret curve.
 
 ```{.tikz}
 \usetikzlibrary{arrows.meta}

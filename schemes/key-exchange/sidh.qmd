@@ -8,11 +8,11 @@ date: 2026-06-12
 
 >  It was a [NIST PQC competition](https://sike.org/) candidate but is now broken by a polynomial time classical algorithm.
 
-The Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange protocol designed to be secure against quantum computer attacks. Diffie-Hellman-type protocols inherently require commutativity to establish a shared secret [@sidh]. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input. 
+The Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange scheme designed to be secure against quantum computer attacks. Diffie-Hellman-type schemes inherently require commutativity to establish a shared secret [@sidh]. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input. 
 
-## Protocol Design
+## Scheme Design
 
-The protocol dictates that Alice and Bob conduct random walks on two distinct isogeny graphs (of degrees $\ell_A$ and $\ell_B$ respectively) and use auxiliary points to arrive at an isomorphic destination curve.
+The scheme dictates that Alice and Bob conduct random walks on two distinct isogeny graphs (of degrees $\ell_A$ and $\ell_B$ respectively) and use auxiliary points to arrive at an isomorphic destination curve.
 
 
 ```{.tikz}
@@ -93,7 +93,7 @@ The protocol dictates that Alice and Bob conduct random walks on two distinct is
 
 * **Supersingular Decision Diffie-Hellman (SSDDH) problem**: The SSDDH problem tests whether an adversary can successfully distinguish the valid shared secret curve $E_{AB}$ (derived from the actual secret kernels) from a completely random curve $E_C$, when given both parties' public curves and evaluated auxiliary points.
 
-* **Resistance to Quantum Group Actions:** Because the protocol is not fundamentally based on an abelian group action, it is completely immune to the subexponential quantum attacks that rendered ordinary isogeny networks insecure.
+* **Resistance to Quantum Group Actions:** Because the scheme is not fundamentally based on an abelian group action, it is completely immune to the subexponential quantum attacks that rendered ordinary isogeny networks insecure.
 
 ## Progress {#progress}
 

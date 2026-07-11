@@ -6,11 +6,11 @@ date: 2026-07-01
 
 ## Overview
 
-SimS (Simplified SiGamal) is a post-quantum public-key encryption (PKE) protocol based on supersingular isogenies, specifically introduced to simplify the original [SiGamal](/protocols/key-exchange/sigamal.qmd) protocol and achieve stronger security guarantees [@sims]. While the canonical PKEs derived from protocols like [CSIDH](/protocols/key-exchange/csidh.qmd) and [SIDH](/protocols/key-exchange/sidh.qmd) are only OW-CPA (One-Way under Chosen Plaintext Attack) secure, requiring hash functions or Fujisaki-Okamoto transformations for higher security, SiGamal provided IND-CPA (Indistinguishability under Chosen-Plaintext Attack) security without hash functions but lacked IND-CCA (Indistinguishability under Chosen-Ciphertext Attack) security. SimS modifies SiGamal to thwart a concrete IND-CCA attack by completely decoupling transmitted curves from their torsion points in the ciphertext. Concretely, SimS replaces the exchanged torsion points with a canonically generated point of smooth order $2^r$ on a hidden shared curve, and masks its $x$-coordinate using a curve-dependent randomizing function. This structural simplification positions SimS between SiGamal and CSIDH, yielding smaller public keys, more compact ciphertexts, and enhanced computational efficiency compared to both SiGamal and [C-SiGamal](/protocols/key-exchange/csigamal.qmd), all while providing IND-CCA security.
+SimS (Simplified SiGamal) is a post-quantum public-key encryption (PKE) scheme based on supersingular isogenies, specifically introduced to simplify the original [SiGamal](/schemes/key-exchange/sigamal.qmd) scheme and achieve stronger security guarantees [@sims]. While the canonical PKEs derived from schemes like [CSIDH](/schemes/key-exchange/csidh.qmd) and [SIDH](/schemes/key-exchange/sidh.qmd) are only OW-CPA (One-Way under Chosen Plaintext Attack) secure, requiring hash functions or Fujisaki-Okamoto transformations for higher security, SiGamal provided IND-CPA (Indistinguishability under Chosen-Plaintext Attack) security without hash functions but lacked IND-CCA (Indistinguishability under Chosen-Ciphertext Attack) security. SimS modifies SiGamal to thwart a concrete IND-CCA attack by completely decoupling transmitted curves from their torsion points in the ciphertext. Concretely, SimS replaces the exchanged torsion points with a canonically generated point of smooth order $2^r$ on a hidden shared curve, and masks its $x$-coordinate using a curve-dependent randomizing function. This structural simplification positions SimS between SiGamal and CSIDH, yielding smaller public keys, more compact ciphertexts, and enhanced computational efficiency compared to both SiGamal and [C-SiGamal](/schemes/key-exchange/csigamal.qmd), all while providing IND-CCA security.
 
-## Protocol Design
+## Scheme Design
 
-SimS operates over a supersingular elliptic curve $E_0 : y^2 = x^3 + x$ defined over $\mathbb{F}_p$, where $p = 2^r \ell_1 \cdots \ell_n - 1$ is a prime such that $\ell_1, \ldots, \ell_n$ are small distinct odd primes. The protocol relies on the free and transitive action of the ideal class group $\text{cl}(\mathbb{Z}[\pi])$ on the set of supersingular elliptic curves defined over $\mathbb{F}_p$ with endomorphism ring $\mathbb{Z}[\pi]$. 
+SimS operates over a supersingular elliptic curve $E_0 : y^2 = x^3 + x$ defined over $\mathbb{F}_p$, where $p = 2^r \ell_1 \cdots \ell_n - 1$ is a prime such that $\ell_1, \ldots, \ell_n$ are small distinct odd primes. The scheme relies on the free and transitive action of the ideal class group $\text{cl}(\mathbb{Z}[\pi])$ on the set of supersingular elliptic curves defined over $\mathbb{F}_p$ with endomorphism ring $\mathbb{Z}[\pi]$. 
 
 
 ```{.tikz}
@@ -80,7 +80,7 @@ Upon receiving the ciphertext $(E_3, c)$, Alice performs the following steps:
 
 ## Security Assumptions
 
-The security of the SimS protocol rests on two core assumptions:
+The security of the SimS scheme rests on two core assumptions:
 
 - **Commutative Supersingular Isogeny Decisional Diffie-Hellman (CSSIDDH) Assumption:** IND-CPA security relies on this assumption. It posits that given a base curve $E_0$ and two public curves $E_A = [\mathfrak{a}]E_0$ and $E_B = [\mathfrak{b}]E_0$, it is computationally infeasible to distinguish the shared secret curve $[\mathfrak{a}][\mathfrak{b}]E_0$ from a uniformly random curve $[\mathfrak{c}]E_0$.
 - **Knowledge of Exponent (KoE)-Type Assumption:** IND-CCA security relies on this assumption. It formalizes that if an adversary produces a valid ciphertext $(E_3, c)$, they must be able to extract the underlying ideal class $[\mathfrak{b}]$ used to generate the curve $E_3 = [\mathfrak{b}]E_0$ and the corresponding masked point on the shared curve $E_4$.

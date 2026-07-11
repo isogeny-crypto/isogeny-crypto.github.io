@@ -8,16 +8,16 @@ date: 2026-06-23
 
 > Broken by a polynomial time classical algorithm.
  
-B-SIDH (pronounced "B-side") is a novel instantiation that significantly improves upon the original [SIDH](/protocols/key-exchange/sidh.qmd) protocol. It bypasses previous restrictions on the shape of the underlying prime field by permitting parties to operate simultaneously within the $(p+1)$-torsion of a supersingular elliptic curve and the $(p-1)$-torsion of its quadratic twist [@bsidh]. 
+B-SIDH (pronounced "B-side") is a novel instantiation that significantly improves upon the original [SIDH](/schemes/key-exchange/sidh.qmd) scheme. It bypasses previous restrictions on the shape of the underlying prime field by permitting parties to operate simultaneously within the $(p+1)$-torsion of a supersingular elliptic curve and the $(p-1)$-torsion of its quadratic twist [@bsidh]. 
 
-## Protocol Design
+## Scheme Design
 
-The B-SIDH protocol structurally mimics the traditional SIDH walk-through but instantiates the operations such that Alice and Bob work in opposite quadratic twists using degrees $M$ and $N$, respectively, where $M |(p+1)$ and $N | (p-1)$. 
+The B-SIDH scheme structurally mimics the traditional SIDH walk-through but instantiates the operations such that Alice and Bob work in opposite quadratic twists using degrees $M$ and $N$, respectively, where $M |(p+1)$ and $N | (p-1)$. 
 
 ### Public Parameters
 Unlike traditional SIDH, which requires primes of the restrictive form $p = f \cdot 2^a 3^b - 1$ (forcing both parties' smooth degrees to divide $p+1$), B-SIDH selects a prime $p$ such that both $p+1$ and $p-1$ are engineered to be smooth, allowing for significantly smaller primes.
 
-The protocol specifies a starting supersingular curve $E_0 / \mathbb{F}_{p^2}$. It also establishes a basis $\{P_A, Q_A\}$ for the $M$-torsion in $E_0(\mathbb{F}_{p^2})$ and a basis $\{P_B, Q_B\}$ for the $N$-torsion corresponding to the quadratic twist. Because Montgomery arithmetic is twist-agnostic, coordinates from both sets are processed identically using their $x$-coordinates over $\mathbb{F}_{p^2}$.
+The scheme specifies a starting supersingular curve $E_0 / \mathbb{F}_{p^2}$. It also establishes a basis $\{P_A, Q_A\}$ for the $M$-torsion in $E_0(\mathbb{F}_{p^2})$ and a basis $\{P_B, Q_B\}$ for the $N$-torsion corresponding to the quadratic twist. Because Montgomery arithmetic is twist-agnostic, coordinates from both sets are processed identically using their $x$-coordinates over $\mathbb{F}_{p^2}$.
 
 ### Alice's Key Generation
 * Alice chooses two secret integers $(\alpha_A, \beta_A) \in \mathbb{Z}/M\mathbb{Z} \times \mathbb{Z}/M\mathbb{Z}$.

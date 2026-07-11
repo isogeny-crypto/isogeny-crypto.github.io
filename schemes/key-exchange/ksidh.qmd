@@ -8,13 +8,13 @@ date: 2026-06-24
 
 > Broken by a polynomial time classical algorithm.
 
-The **$k$-SIDH** protocol introduces a generic transformation designed to secure [SIDH](/protocols/key-exchange/sidh.qmd) key agreement against active attacks in the static-static setting [@ksidh]. 
+The **$k$-SIDH** scheme introduces a generic transformation designed to secure [SIDH](/schemes/key-exchange/sidh.qmd) key agreement against active attacks in the static-static setting [@ksidh]. 
 
 In a standard SIDH static-static key exchange, a malicious participant can mount an adaptive attack by sending specialized, manipulated public torsion points. By observing whether the subsequent key validation succeeds or fails, the attacker can iteratively leak the honest party's static private key. Extant countermeasures, such as the Fujisaki-Okamoto transform, enforce indirect validation by requiring the untrusted party to disclose their private key. While secure, this precludes the use of static-static drop-in replacements.
 
 To thwart these attacks without exposing private keys, $k$-SIDH uses a multiple instances model. Instead of a single key, each party generates $k$ different keys. During the exchange, the participants perform key agreement using all $k^2$ combinations of their individual keys. The resulting $k^2$ shared secrets are hashed together. If a malicious, modified public key is used, it will almost certainly cause at least one of the $k^2$ key derivations to fail, causing the final hashed validation to fail. This expands the space of failure outcomes exponentially, rendering it computationally infeasible for an attacker to predict the correct final hash and salvage the attack. 
 
-## Protocol Design
+## Scheme Design
 
 The $k$-SIDH key agreement process requires both parties (Alice and Bob) to perform $k^2$ pairwise derivations. 
 
@@ -62,15 +62,15 @@ Bob performs the analogous checks.
 2. **Key Confirmation:** 
     - Alice sends $H(H(h))$ to Bob. Bob verifies it equals $H(H(h'))$.
     - Bob sends $H(h')$ to Alice. Alice verifies it equals $H(h)$.
-3. **Termination:** If any public key pair fails validation, or if the hashes mismatch, the protocol terminates. Otherwise, they continue with $h = h'$ as their shared secret key.
+3. **Termination:** If any public key pair fails validation, or if the hashes mismatch, the scheme terminates. Otherwise, they continue with $h = h'$ as their shared secret key.
 
 ## Security Assumptions
 
-The security of the $k$-SIDH protocol relies on the following foundational assumptions.
+The security of the $k$-SIDH scheme relies on the following foundational assumptions.
 
 * **Intractability of the Supersingular Isogeny (SSI) Problem:** The underlying primitive relies on the hardness of finding an isogeny of a specific degree with a cyclic kernel between two known supersingular elliptic curves defined over $\mathbb{F}_{p^2}$.
 
-* **Irreducibility of SIDH:** The multiple-instances transformation requires the underlying key establishment to be *irreducible*. A protocol is irreducible if it is computationally infeasible for a malicious participant to craft a modified public key that successfully passes all public validation tests while generating the exact same shared secret across multiple different honest private keys. The authors prove that if an attacker could violate this irreducibility in SIDH, they could use that capability to efficiently solve the SSI problem.
+* **Irreducibility of SIDH:** The multiple-instances transformation requires the underlying key establishment to be *irreducible*. A scheme is irreducible if it is computationally infeasible for a malicious participant to craft a modified public key that successfully passes all public validation tests while generating the exact same shared secret across multiple different honest private keys. The authors prove that if an attacker could violate this irreducibility in SIDH, they could use that capability to efficiently solve the SSI problem.
 
 * **Preimage Resistance of the Hash Function:** The hash function $H$ must be strong and preimage-resistant. Since a dishonest Bob only receives $H(h)$ (or $H(H(h))$), he must guess the entirety of the $k$-element preimage correctly. The hash prevents the attacker from successfully testing failures instance-by-instance.
 

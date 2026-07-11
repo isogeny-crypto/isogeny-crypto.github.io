@@ -1,43 +1,45 @@
 ---
 title: "Isogeny-based Cryptography Wiki"
-subtitle: "A collaborative, accessible reference for isogeny-based protocols and primitives."
+subtitle: "A collaborative, accessible reference for isogeny-based cryptographic schemes."
 date-modified: ""
 ---
 
-Welcome to the **Isogeny-based Cryptography Wiki**. This site serves as an open-source, mathematically rigorous, and accessible repository of knowledge detailing post-quantum cryptographic protocols built on the hardness of finding isogenies between elliptic curves.
+Welcome to the **Isogeny-based Cryptography Wiki**. This site serves as an open-source, mathematically rigorous, and accessible repository of knowledge detailing post-quantum cryptographic schemes built on the hardness of finding isogenies between elliptic curves.
 
 ## Getting Started
 
-If you are not familiar with the concept of cryptographic protocols, we recommend referring to the [notes by Dan Boneh and Victor Shoup](https://toc.cryptobook.us/).
+If you are not familiar with cryptographic schemes, we recommend [this book draft](https://toc.cryptobook.us/) by Dan Boneh and Victor Shoup. For the underlying mathematics, see [Steven Galbraith's book](https://www.math.auckland.ac.nz/~sgal018/crypto-book/crypto-book.html). You may also benefit from reading PhD theses in this area, for instance [this list](https://github.com/GiacomoPope/maths-theses) curated by Giacomo Pope. You may also find good reference material in past schools, such as [Bristol 2020](https://isogenyschool2020.co.uk/schedule/), [ANTS 2020](https://www.youtube.com/@ANTSSummerSchool/videos), [PCMI 2022](https://www.youtube.com/playlist?list=PLldN_DpkXL3amFV76Dmimhbrm0MYa4d32), [IPAM 2022](https://www.youtube.com/playlist?list=PLHyI3Fbmv0SdibCMJcJFBZPARwec6fPnQ), [VaNTAGe 2022](https://www.youtube.com/playlist?list=PLo3uxbU5v05z8XnaEeNYI_xbn_IrvgLvJ), [SLMath 2024](https://www.slmath.org/summer-schools/1068#schedule_notes), [CIMPA 2024](https://www.youtube.com/playlist?list=PLLxG_np9o-2fSsZcOq0woYWBxbiSFy1qI), [PQCSA 2025](https://www.youtube.com/playlist?list=PLiHaXFHjrqYcvzIxFEo118XCzxI-KSctT), and [AWS 2026](https://swc-math.github.io/aws/2026/index.html). Once you are ready to engage with the community, consider joining activities such as the [Isogeny Club](https://isogeny.club/), [Leuven Isogeny Days](https://www.esat.kuleuven.be/cosic/projects/isocrypt/workshops/), [BIRS workshops](https://www.birs.ca/events/2025/5-day-workshops/25w5500), and [Swissogeny Day](https://swissogeny.github.io/).
 
-This wiki aims to cover all peer-reviewed isogeny-based key establishment schemes and digital signature schemes.
+## Cryptographic Schemes
+
+This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes (including KEM, etc.) and digital signature schemes.
 
 **Legend:** []{r=100} torsion points; []{b=100} quaternion algebra; []{g=100} group action;
 
 :::: {.columns}
 ::: {.column width="50%"}
-### Key Establishment
+### Key Exchange
 
-::: {.unlisted-protocols}
-- []{r=100} [SIDH](protocols/key-exchange/sidh.qmd) (2011--2022) 
-- []{r=100} [$k$-SIDH](protocols/key-exchange/ksidh.qmd) (2017-2022) 
-- []{g=100} [CSIDH](protocols/key-exchange/csidh.qmd) (2018) 
-- []{g=100} [OSIDH](/protocols/key-exchange/osidh.qmd) (2019)
-- []{g=100} [CSURF](protocols/key-exchange/csurf.qmd) (2020) 
-- []{r=100} [B-SIDH](protocols/key-exchange/bsidh.qmd) (2020--2022) 
-- []{r=50 g=50} [SiGamal](/protocols/key-exchange/sigamal.qmd) (2020) 
-- []{r=50 g=50} [C-SiGamal](/protocols/key-exchange/csigamal.qmd) (2020) 
-- []{r=50 g=50} [SimS](/protocols/key-exchange/sims.qmd) (2021)
-- []{g=100} [CSIDH UPKE](/protocols/key-exchange/csidhupke.qmd) (2021)
-- []{r=50 b=50} [Séta](protocols/key-exchange/seta.qmd) (2021--2022) 
-- []{r=100} [HealSIDH](/protocols/key-exchange/healsidh.qmd) (2021-2022)
-- []{b=100} [pSIDH](/protocols/key-exchange/psidh.qmd) (2022--2023)
-- []{r=100} [M-SIDH](/protocols/key-exchange/msidh.qmd) (2023)
-- []{r=100} [MD-SIDH](/protocols/key-exchange/mdsidh.qmd) (2023)
-- []{r=100} [FESTA](protocols/key-exchange/festa.qmd) (2023)
-- []{r=100} [binSIDH](/protocols/key-exchange/binsidh.qmd) (2023)
-- []{r=100} [terSIDH](/protocols/key-exchange/tersidh.qmd) (2023)
-- []{r=50 b=50} [QFESTA](protocols/key-exchange/qfesta.qmd) (2024)
+::: {.unlisted-schemes}
+- []{r=100} [SIDH](schemes/key-exchange/sidh.qmd) (2011--2022) 
+- []{r=100} [$k$-SIDH](schemes/key-exchange/ksidh.qmd) (2017-2022) 
+- []{g=100} [CSIDH](schemes/key-exchange/csidh.qmd) (2018) 
+- []{g=100} [OSIDH](/schemes/key-exchange/osidh.qmd) (2019)
+- []{g=100} [CSURF](schemes/key-exchange/csurf.qmd) (2020) 
+- []{r=100} [B-SIDH](schemes/key-exchange/bsidh.qmd) (2020--2022) 
+- []{r=50 g=50} [SiGamal](/schemes/key-exchange/sigamal.qmd) (2020) 
+- []{r=50 g=50} [C-SiGamal](/schemes/key-exchange/csigamal.qmd) (2020) 
+- []{r=50 g=50} [SimS](/schemes/key-exchange/sims.qmd) (2021)
+- []{g=100} [CSIDH UPKE](/schemes/key-exchange/csidhupke.qmd) (2021)
+- []{r=50 b=50} [Séta](schemes/key-exchange/seta.qmd) (2021--2022) 
+- []{r=100} [HealSIDH](/schemes/key-exchange/healsidh.qmd) (2021-2022)
+- []{b=100} [pSIDH](/schemes/key-exchange/psidh.qmd) (2022--2023)
+- []{r=100} [M-SIDH](/schemes/key-exchange/msidh.qmd) (2023)
+- []{r=100} [MD-SIDH](/schemes/key-exchange/mdsidh.qmd) (2023)
+- []{r=100} [FESTA](schemes/key-exchange/festa.qmd) (2023)
+- []{r=100} [binSIDH](/schemes/key-exchange/binsidh.qmd) (2023)
+- []{r=100} [terSIDH](/schemes/key-exchange/tersidh.qmd) (2023)
+- []{r=50 b=50} [QFESTA](schemes/key-exchange/qfesta.qmd) (2024)
 - []{g=100} TOGA-UE (2024)
 - []{g=100} BIN-UE (2024)
 - []{g=100} COM-UE (2024)
@@ -51,15 +53,15 @@ This wiki aims to cover all peer-reviewed isogeny-based key establishment scheme
 ::: {.column width="50%"}
 ### Digital Signature
 
-::: {.unlisted-protocols}
+::: {.unlisted-schemes}
 - []{r=100} JS (2014)
 - []{r=100} YAJJS (2017)
 - []{b=100} GPS (2017) 
 - []{g=100} SeaSign (2019)
-- []{g=100} [CSI-FiSh](protocols/digital-signature/csi-fish.qmd) (2019) 
+- []{g=100} [CSI-FiSh](schemes/digital-signature/csi-fish.qmd) (2019) 
 - []{g=100} Sashimi (2020)
 - []{g=100} Lossy CSI-FiSh (2020)
-- []{b=100} [SQISign](protocols/digital-signature/sqisign.qmd) (2020) 
+- []{b=100} [SQISign](schemes/digital-signature/sqisign.qmd) (2020) 
 - []{g=100} Calamari (2020)
 - []{g=100} IAS (2021)
 - []{g=100} BDKLP (2022)
@@ -98,5 +100,5 @@ This wiki aims to cover all peer-reviewed isogeny-based key establishment scheme
 This wiki is maintained by the **isogeny-crypto** organization. If you spot a mathematical error, want to expand on a protocol's performance metrics, or wish to add a new primitive:
 
 1. Fork the repository on [GitHub](https://github.com/isogeny-crypto/isogeny-crypto.github.io).
-2. Create your article using a `.qmd` file in the `protocols/` directory.
+2. Create your article using a `.qmd` file in the `schemes/` directory.
 3. Submit a Pull Request.

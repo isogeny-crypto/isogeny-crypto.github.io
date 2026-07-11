@@ -6,11 +6,11 @@ date: 2026-07-08
 
 ## Overview
 
-The Masked torsion points Supersingular Isogeny Diffie-Hellman (M-SIDH) protocol is a countermeasure designed to secure the SIDH key exchange against the [devastating torsion point attacks](/protocols/key-exchange/sidh.qmd#progress). In the original SIDH protocol, the exact images of torsion points are revealed, which allows attackers to embed the secret isogeny into a higher-dimensional isogeny problem and break the scheme. M-SIDH mitigates this by keeping the degrees of the secret isogenies fixed while partially hiding the torsion point information [@msidh-mdsidh]. Specifically, the protocol masks the torsion point images by scaling them with a random integer (a square root of unity). To prevent the efficient recovery of this hidden scalar using pairings and discrete logarithms, the protocol requires the isogeny degrees to be smooth integers with a large number of distinct prime factors. This ensures that the masking scalar has an exponential number of square roots modulo the isogeny degrees, thereby preserving the security of the protocol while facilitating a successful key exchange.
+The Masked torsion points Supersingular Isogeny Diffie-Hellman (M-SIDH) scheme is a countermeasure designed to secure the SIDH key exchange against the [devastating torsion point attacks](/schemes/key-exchange/sidh.qmd#progress). In the original SIDH scheme, the exact images of torsion points are revealed, which allows attackers to embed the secret isogeny into a higher-dimensional isogeny problem and break the scheme. M-SIDH mitigates this by keeping the degrees of the secret isogenies fixed while partially hiding the torsion point information [@msidh-mdsidh]. Specifically, the scheme masks the torsion point images by scaling them with a random integer (a square root of unity). To prevent the efficient recovery of this hidden scalar using pairings and discrete logarithms, the scheme requires the isogeny degrees to be smooth integers with a large number of distinct prime factors. This ensures that the masking scalar has an exponential number of square roots modulo the isogeny degrees, thereby preserving the security of the scheme while facilitating a successful key exchange.
 
-## Protocol Design
+## Scheme Design
 
-The M-SIDH protocol relies on similar algebraic structures as SIDH but introduces masking scalars to obscure the exact torsion point mappings.
+The M-SIDH scheme relies on similar algebraic structures as SIDH but introduces masking scalars to obscure the exact torsion point mappings.
 
 ### Public Parameters
 
@@ -67,13 +67,13 @@ The foundational security of M-SIDH relies on a modified version of the isogeny 
 
 > Given a supersingular curve $E_0/\mathbb{F}_{p^2}$ such that $\#E_0(\mathbb{F}_{p^2}) = (ABf)^2$, bases $P, Q$ for $E_0[B]$, the codomain curve $E_A$ of a uniformly random $A$-isogeny $\phi: E_0 \rightarrow E_A$, and the masked images $P' = [\alpha]\phi(P)$ and $Q' = [\alpha]\phi(Q)$ (where $\alpha$ is a uniformly random element of $\mu_2(B)$), compute the isogeny $\phi$. 
 
-This problem formulation is a new variant designed specifically for this protocol. It modifies the standard SIDH problem by supplying torsion point images exclusively up to an unknown scalar multiple $\alpha$, where $\alpha^2 \equiv 1 \pmod B$. 
+This problem formulation is a new variant designed specifically for this scheme. It modifies the standard SIDH problem by supplying torsion point images exclusively up to an unknown scalar multiple $\alpha$, where $\alpha^2 \equiv 1 \pmod B$. 
 
-For the security assumptions to hold, the protocol explicitly requires:
+For the security assumptions to hold, the scheme explicitly requires:
 
-1.  **High Square Root Count:** The number of prime factors $t$ must be sufficiently large. If an attacker only needs the exact images of roughly $\sqrt{B}$ torsion points (involving a subset of prime factors $N \approx \sqrt{A}$), they could simply brute-force the square roots of unity modulo $N$. To maintain an exponential search space (preventing Grover's quantum search from succeeding), the protocol assumes $t-n+1 \ge 2\lambda$.
-2.  **No Short-Degree Endomorphisms on $E_0$:** M-SIDH assumes the starting curve $E_0$ does not possess a known small-degree endomorphism. If $E_0$ is a curve like $j=1728$ with a known non-trivial automorphism, an attacker can construct a "[lollipop endomorphism](/protocols/key-exchange/seta.qmd#decryption)" $\psi = \phi \circ \iota \circ \hat{\phi}$. Since the scalar squares to $1$ ($\alpha^2 = 1 \pmod A$), the action of the masked points can unmask the evaluation of this endomorphism precisely, enabling an expected polynomial-time attack. Thus, $E_0$ must be generated as a random supersingular curve with an unknown endomorphism ring.
-3.  **Adaptive Security Constraints:** Like standard [SIDH](/protocols/key-exchange/sidh.qmd#progress), M-SIDH is assumed to be vulnerable to adaptive attacks. Consequently, M-SIDH is only secure in ephemeral key exchange scenarios or when guarded by a CCA transform (like the Fujisaki-Okamoto transform in SIKE).
+1.  **High Square Root Count:** The number of prime factors $t$ must be sufficiently large. If an attacker only needs the exact images of roughly $\sqrt{B}$ torsion points (involving a subset of prime factors $N \approx \sqrt{A}$), they could simply brute-force the square roots of unity modulo $N$. To maintain an exponential search space (preventing Grover's quantum search from succeeding), the scheme assumes $t-n+1 \ge 2\lambda$.
+2.  **No Short-Degree Endomorphisms on $E_0$:** M-SIDH assumes the starting curve $E_0$ does not possess a known small-degree endomorphism. If $E_0$ is a curve like $j=1728$ with a known non-trivial automorphism, an attacker can construct a "[lollipop endomorphism](/schemes/key-exchange/seta.qmd#decryption)" $\psi = \phi \circ \iota \circ \hat{\phi}$. Since the scalar squares to $1$ ($\alpha^2 = 1 \pmod A$), the action of the masked points can unmask the evaluation of this endomorphism precisely, enabling an expected polynomial-time attack. Thus, $E_0$ must be generated as a random supersingular curve with an unknown endomorphism ring.
+3.  **Adaptive Security Constraints:** Like standard [SIDH](/schemes/key-exchange/sidh.qmd#progress), M-SIDH is assumed to be vulnerable to adaptive attacks. Consequently, M-SIDH is only secure in ephemeral key exchange scenarios or when guarded by a CCA transform (like the Fujisaki-Okamoto transform in SIKE).
 
 ## Progress
 

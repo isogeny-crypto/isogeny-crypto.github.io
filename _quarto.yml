@@ -7,7 +7,7 @@ date-modified: last-modified
 
 website:
   title: "Isogeny-based Cryptography Wiki"
-  description: "An accessible reference for isogeny-based protocols."
+  description: "An accessible reference for isogeny-based cryptographic schemes."
   search:
     location: sidebar
     type: overlay
@@ -20,9 +20,9 @@ website:
       - href: index.qmd
         text: Home
       - section: "Key Exchange"
-        contents: "protocols/key-exchange/*.qmd"
+        contents: "schemes/key-exchange/*.qmd"
       - section: "Digital Signature"
-        contents: "protocols/digital-signature/*.qmd"
+        contents: "schemes/digital-signature/*.qmd"
 
 format:
   html:
@@ -37,7 +37,7 @@ format:
       dark: cyborg
     css: 
       - /assets/fonts.css
-      - /assets/protocol-list.css
+      - /assets/scheme-list.css
     toc: true
     toc-location: right
     code-fold: true
