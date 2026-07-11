@@ -48,9 +48,9 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes (in
 - []{g=100} BIN-UE (2024)
 - []{g=100} COM-UE (2024)
 - []{r=100} SILBE (2024)
-- []{r=100} [POKÉ](/schemes/key-exchange/poke.qmd) (2025)
-- []{r=50 g=50} LIT-SiGamal (2025)
-- []{r=100} PIKE (2026)
+- []{r=50 b=50} [POKÉ](/schemes/key-exchange/poke.qmd) (2025)
+- []{r=50 b=50} LIT-SiGamal (2025)
+- []{r=50 b=50} PIKE (2026)
 :::
 :::
 
