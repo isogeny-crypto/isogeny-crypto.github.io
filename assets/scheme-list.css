@@ -1,4 +1,4 @@
-/* protocol-list.css — styling for the colored-circle protocol
+/* scheme-list.css — styling for the colored-circle scheme
    lists on the home page. Kept separate from fonts.css on purpose. */
 
 :root {
@@ -7,13 +7,13 @@
   --dot-green: #78b159; /* group action */
 }
 
-.unlisted-protocols ul,
-ul.unlisted-protocols {
+.unlisted-schemes ul,
+ul.unlisted-schemes {
   list-style: none;
   padding-left: 0;
 }
 
-.unlisted-protocols li {
+.unlisted-schemes li {
   margin: 0.25em 0;
 }
 
@@ -24,7 +24,7 @@ ul.unlisted-protocols {
    give a split conic-gradient disc in that ratio. See discs.lua for the
    shorthand syntax — this class itself just styles the resulting span.
 */
-.protocol-disc {
+.scheme-disc {
   display: inline-block;
   width: 0.8em;
   height: 0.8em;
@@ -34,6 +34,6 @@ ul.unlisted-protocols {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
 }
 
-.protocol-disc.red   { background: var(--dot-red); }
-.protocol-disc.blue  { background: var(--dot-blue); }
-.protocol-disc.green { background: var(--dot-green); }
+.scheme-disc.red   { background: var(--dot-red); }
+.scheme-disc.blue  { background: var(--dot-blue); }
+.scheme-disc.green { background: var(--dot-green); }
