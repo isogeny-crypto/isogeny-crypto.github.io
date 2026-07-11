@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-07-11">
+
+<title>POKÉ – Isogeny-based Cryptography Wiki</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6eba6ba83b4f5fbebb32bc0a0d298c6a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-431624262cbfcaf302c4606a97cfd638.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-6eba6ba83b4f5fbebb32bc0a0d298c6a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": true,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<!-- Self-hosted fonts for pre-rendered TikZ SVGs -->
+<link rel="stylesheet" type="text/css" href="../../assets/fonts.css">
+
+<style>
+.tikz-diagram {
+    display: flex;
+    justify-content: center;
+    margin: 1.5em auto;
+}
+.tikz-diagram svg {
+    max-width: 100%;
+    height: auto;
+}
+.quarto-dark .tikz-diagram svg {
+    filter: invert(1) hue-rotate(180deg);
+}
+</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/scheme-list.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../schemes/key-exchange/binsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../schemes/key-exchange/poke.html">POKÉ</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Isogeny-based Cryptography Wiki</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Key Exchange</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/binsidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">binSIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/bsidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">B-SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/csidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CSIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/csidhupke.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CSIDH UPKE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/csigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C-SiGamal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/csurf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CSURF</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/festa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">FESTA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/healsidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">HealSIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/ksidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="math inline">\(k\)</span>-SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/mdsidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MD-SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/msidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">M-SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/osidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">OSIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/poke.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">POKÉ</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/psidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">pSIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/qfesta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">QFESTA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/seta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Séta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/sigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SiGamal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/sims.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SimS</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/tersidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">terSIDH</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Digital Signature</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/digital-signature/csi-fish.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CSI-FiSh</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/digital-signature/sqisign.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SQISign</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/digital-signature/sqisignhd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SQIsignHD</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
+  <li><a href="#scheme-design" id="toc-scheme-design" class="nav-link" data-scroll-target="#scheme-design"><span class="header-section-number">2</span> Scheme Design</a>
+  <ul class="collapse">
+  <li><a href="#setup-and-parameters" id="toc-setup-and-parameters" class="nav-link" data-scroll-target="#setup-and-parameters"><span class="header-section-number">2.1</span> Setup and Parameters</a></li>
+  <li><a href="#key-generation-alice" id="toc-key-generation-alice" class="nav-link" data-scroll-target="#key-generation-alice"><span class="header-section-number">2.2</span> Key Generation (Alice)</a></li>
+  <li><a href="#encryption-bob" id="toc-encryption-bob" class="nav-link" data-scroll-target="#encryption-bob"><span class="header-section-number">2.3</span> Encryption (Bob)</a></li>
+  <li><a href="#decryption-alice" id="toc-decryption-alice" class="nav-link" data-scroll-target="#decryption-alice"><span class="header-section-number">2.4</span> Decryption (Alice)</a></li>
+  </ul></li>
+  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a></li>
+  <li><a href="#progress" id="toc-progress" class="nav-link" data-scroll-target="#progress"><span class="header-section-number">4</span> Progress</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">5</span> References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../schemes/key-exchange/binsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../schemes/key-exchange/poke.html">POKÉ</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">POKÉ</h1>
+<p class="subtitle lead">POint-based Key Exchange</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 11, 2026</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">July 11, 2026</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
+<p>POKÉ is a public-key encryption scheme constructed from isogenies of unknown degrees. The primary motivation behind POKÉ is to bridge two distinct paradigms in isogeny-based cryptography: the traditional one-dimensional SIDH-like commutative diagrams, and the newer, higher-dimensional representations (such as those used in <a href="../../schemes/key-exchange/festa.html">FESTA</a> or <a href="../../schemes/digital-signature/sqisignhd.html">SQIsignHD</a>) <span class="citation" data-cites="poke">[<a href="#ref-poke" role="doc-biblioref">BaMa25</a>]</span>. By having one party compute isogenies of an unknown, non-smooth degree (requiring higher-dimensional representation techniques to evaluate) and the other party compute smooth-degree isogenies (with kernel generators defined over the base field), POKÉ establishes a commutative diagram where all four elliptic curves are made public. Despite the curves being known, the scheme achieves a shared secret by exploiting the commutativity of the hidden isogenies evaluated on a set of auxiliary torsion points. This structural choice completely circumvents the polynomial-time attacks that broke <a href="../../schemes/key-exchange/sidh.html">SIDH</a>, which intrinsically require the exact degree of the targeted isogeny to be known.</p>
+</section>
+<section id="scheme-design" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="scheme-design"><span class="header-section-number">2</span> Scheme Design</h2>
+<p>The POKÉ scheme relies on establishing a commutative diagram between two parties (Alice and Bob) using separate sets of torsion points. Before any operations take place, a set of global public parameters is defined.</p>
+<div class="tikz-diagram"><svg xmlns="http://www.w3.org/2000/svg" width="603.432" height="239.253" viewbox="-72 -72 452.574 179.44"><defs><style>@import url(../../assets/fonts.css);</style></defs><g stroke="#000" stroke-miterlimit="10" stroke-width=".4"><g stroke="none"><text x="14.574" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(-5.487 2.575)">E</text><text x="21.381" y="-19.178" font-family="cmr6" font-size="6" transform="translate(-5.487 2.575)">0</text></g><g stroke="none"><text x="14.574" y="-20.178" fill="#ff8000" font-family="cmmi9" font-size="9" transform="translate(192.744 2.575)">E</text><text x="21.381" y="-19.178" fill="#ff8000" font-family="cmmi6" font-size="6" transform="translate(192.744 2.575)">A</text></g><g stroke="none"><text x="14.574" y="-20.178" fill="#00f" font-family="cmmi9" font-size="9" transform="translate(-6.577 87.933)">E</text><text x="21.381" y="-19.178" fill="#00f" font-family="cmmi6" font-size="6" transform="translate(-6.577 87.933)">B</text></g><g stroke="none"><text x="14.574" y="-20.178" fill="#00f" font-family="cmmi9" font-size="9" transform="translate(189.82 87.933)">E</text><text x="21.381" y="-19.178" fill="#00f" font-family="cmmi6" font-size="6" transform="translate(189.82 87.933)">AB</text></g><g fill="red" stroke="red" stroke-width=".8"><path fill="none" d="M23.594-20.178h176.065"></path><path d="m202.646-20.178-4.17-1.576 1.383 1.576-1.382 1.577Z"></path><text x="14.574" y="-20.178" fill="red" stroke="none" font-family="cmmi9" font-size="9" transform="translate(96.362 -6.483)">Á</text><g fill="red" stroke="none"><text x="14.574" y="-20.178" font-family="cmr7" font-size="7" transform="translate(68.483 9.983)">deg</text><text x="28.006" y="-20.178" font-family="cmmi7" font-size="7" transform="translate(68.483 9.983)">Á</text><text x="35.091" y="-20.178" font-family="cmr7" font-size="7" transform="translate(68.483 9.983)">=</text><text x="43.506" y="-20.178" font-family="cmmi7" font-size="7" transform="translate(68.483 9.983)">q</text><text x="47.422" y="-20.178" font-family="cmr7" font-size="7" transform="translate(68.483 9.983)">(2</text><text x="54.533" y="-23.195" font-family="cmmi5" font-size="5" transform="translate(68.483 9.983)">a</text><text x="60.726" y="-20.178" font-family="cmsy7" font-size="7" transform="translate(68.483 9.983)">¡</text><text x="68.797" y="-20.178" font-family="cmmi7" font-size="7" transform="translate(68.483 9.983)">q</text><text x="72.714" y="-20.178" font-family="cmr7" font-size="7" transform="translate(68.483 9.983)">)</text></g></g><g fill="#c08040" stroke="#c08040" stroke-width=".8"><path fill="none" d="M14.574-13.07v67.017"></path><path d="m14.574 56.933 1.577-4.169-1.577 1.383-1.576-1.383Z"></path><text x="14.574" y="-20.178" fill="#bf8040" stroke="none" font-family="cmmi9" font-size="9" transform="translate(-11.09 44.93)">Ã</text></g><g fill="#c08040" stroke="#c08040" stroke-width=".8"><path fill="none" d="M213.743-13.07v67.017"></path><path d="m213.743 56.933 1.577-4.169-1.577 1.383-1.576-1.383Z"></path><g fill="#c08040" stroke="none"><text x="14.574" y="-20.178" fill="#bf8040" font-family="cmmi9" font-size="9" transform="translate(203.902 45.382)">Ã</text><text x="20.932" y="-24.001" fill="#bf8040" font-family="cmsy6" font-size="6" transform="translate(203.902 45.382)">0</text></g></g><g fill="red" stroke="red" stroke-width=".8"><path fill="none" d="M24.684 65.18h172.052"></path><path d="m199.722 65.18-4.169-1.576 1.383 1.577-1.383 1.576Z"></path><g fill="red" stroke="none"><text x="14.574" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(94.099 97.248)">Á</text><text x="20.08" y="-24.001" font-family="cmsy6" font-size="6" transform="translate(94.099 97.248)">0</text></g></g><g stroke="none"><text x="14.574" y="-42.178" font-family="cmmi9" font-size="9" transform="translate(-24.92 -20.01)">P</text><text x="20.48" y="-41.178" font-family="cmr6" font-size="6" transform="translate(-24.92 -20.01)">0</text><text x="24.647" y="-42.178" font-family="cmmi9" font-size="9" transform="translate(-24.92 -20.01)">;</text><text x="28.758" y="-42.178" font-family="cmmi9" font-size="9" transform="translate(-24.92 -20.01)">Q</text><text x="36.053" y="-41.178" font-family="cmr6" font-size="6" transform="translate(-24.92 -20.01)">0</text><text x="42.789" y="-42.178" font-family="cmsy9" font-size="9" transform="translate(-24.92 -20.01)">2</text><text x="51.525" y="-42.178" font-family="cmmi9" font-size="9" transform="translate(-24.92 -20.01)">E</text><text x="58.332" y="-41.178" font-family="cmr6" font-size="6" transform="translate(-24.92 -20.01)">0</text><text x="62.499" y="-42.178" font-family="cmr9" font-size="9" transform="translate(-24.92 -20.01)">[2</text><text x="69.693" y="-46.001" font-family="cmmi6" font-size="6" transform="translate(-24.92 -20.01)">a</text><text x="74.243" y="-42.178" font-family="cmr9" font-size="9" transform="translate(-24.92 -20.01)">],</text><text x="14.574" y="-31.178" font-family="cmmi9" font-size="9" transform="translate(-24.92 -20.01)">R</text><text x="21.573" y="-30.178" font-family="cmr6" font-size="6" transform="translate(-24.92 -20.01)">0</text><text x="25.74" y="-31.178" font-family="cmmi9" font-size="9" transform="translate(-24.92 -20.01)">;</text><text x="29.851" y="-31.178" font-family="cmmi9" font-size="9" transform="translate(-24.92 -20.01)">S</text><text x="35.501" y="-30.178" font-family="cmr6" font-size="6" transform="translate(-24.92 -20.01)">0</text><text x="42.237" y="-31.178" font-family="cmsy9" font-size="9" transform="translate(-24.92 -20.01)">2</text><text x="50.973" y="-31.178" font-family="cmmi9" font-size="9" transform="translate(-24.92 -20.01)">E</text><text x="57.78" y="-30.178" font-family="cmr6" font-size="6" transform="translate(-24.92 -20.01)">0</text><text x="61.947" y="-31.178" font-family="cmr9" font-size="9" transform="translate(-24.92 -20.01)">[3</text><text x="69.141" y="-35.001" font-family="cmmi6" font-size="6" transform="translate(-24.92 -20.01)">b</text><text x="72.927" y="-31.178" font-family="cmr9" font-size="9" transform="translate(-24.92 -20.01)">],</text><text x="14.574" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(-24.92 -20.01)">X</text><text x="22.215" y="-19.178" font-family="cmr6" font-size="6" transform="translate(-24.92 -20.01)">0</text><text x="26.381" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(-24.92 -20.01)">;</text><text x="30.493" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(-24.92 -20.01)">Y</text><text x="35.861" y="-19.178" font-family="cmr6" font-size="6" transform="translate(-24.92 -20.01)">0</text><text x="42.597" y="-20.178" font-family="cmsy9" font-size="9" transform="translate(-24.92 -20.01)">2</text><text x="51.333" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(-24.92 -20.01)">E</text><text x="58.14" y="-19.178" font-family="cmr6" font-size="6" transform="translate(-24.92 -20.01)">0</text><text x="62.307" y="-20.178" font-family="cmr9" font-size="9" transform="translate(-24.92 -20.01)">[5</text><text x="69.501" y="-24.001" font-family="cmmi6" font-size="6" transform="translate(-24.92 -20.01)">c</text><text x="73.356" y="-20.178" font-family="cmr9" font-size="9" transform="translate(-24.92 -20.01)">]</text></g><g stroke="none"><text x="14.574" y="-42.178" fill="#ff8000" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">P</text><text x="20.48" y="-41.178" fill="#ff8000" font-family="cmmi6" font-size="6" transform="translate(145.797 -20.01)">A</text><text x="26.525" y="-42.178" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">;</text><text x="30.636" y="-42.178" fill="#ff8000" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">Q</text><text x="37.931" y="-41.178" fill="#ff8000" font-family="cmmi6" font-size="6" transform="translate(145.797 -20.01)">A</text><text x="46.545" y="-42.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">=</text><text x="56.309" y="-42.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">[</text><text x="58.878" y="-42.178" fill="red" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">®</text><text x="64.806" y="-41.178" fill="red" font-family="cmr6" font-size="6" transform="translate(145.797 -20.01)">2</text><text x="68.973" y="-42.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">]</text><text x="71.542" y="-42.178" fill="red" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">Á</text><text x="77.048" y="-42.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">(</text><text x="80.645" y="-42.178" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">P</text><text x="86.551" y="-41.178" font-family="cmr6" font-size="6" transform="translate(145.797 -20.01)">0</text><text x="90.718" y="-42.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">)</text><text x="94.315" y="-42.178" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">;</text><text x="99.967" y="-42.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">[</text><text x="102.537" y="-42.178" fill="red" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">¯</text><text x="107.75" y="-41.178" fill="red" font-family="cmr6" font-size="6" transform="translate(145.797 -20.01)">2</text><text x="111.916" y="-42.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">]</text><text x="114.486" y="-42.178" fill="red" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">Á</text><text x="119.991" y="-42.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">(</text><text x="123.589" y="-42.178" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">Q</text><text x="130.884" y="-41.178" font-family="cmr6" font-size="6" transform="translate(145.797 -20.01)">0</text><text x="135.051" y="-42.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">),</text><text x="14.574" y="-31.178" fill="#ff8000" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">R</text><text x="21.573" y="-30.178" fill="#ff8000" font-family="cmmi6" font-size="6" transform="translate(145.797 -20.01)">A</text><text x="27.617" y="-31.178" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">;</text><text x="31.728" y="-31.178" fill="#ff8000" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">S</text><text x="37.379" y="-30.178" fill="#ff8000" font-family="cmmi6" font-size="6" transform="translate(145.797 -20.01)">A</text><text x="45.993" y="-31.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">=</text><text x="55.757" y="-31.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">[</text><text x="58.326" y="-31.178" fill="red" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">°</text><text x="63.104" y="-30.178" fill="red" font-family="cmr6" font-size="6" transform="translate(145.797 -20.01)">3</text><text x="67.27" y="-31.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">]</text><text x="69.84" y="-31.178" fill="red" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">Á</text><text x="75.345" y="-31.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">(</text><text x="78.943" y="-31.178" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">R</text><text x="85.941" y="-30.178" font-family="cmr6" font-size="6" transform="translate(145.797 -20.01)">0</text><text x="90.108" y="-31.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">)</text><text x="93.705" y="-31.178" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">;</text><text x="99.358" y="-31.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">[</text><text x="101.927" y="-31.178" fill="red" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">°</text><text x="106.705" y="-30.178" fill="red" font-family="cmr6" font-size="6" transform="translate(145.797 -20.01)">3</text><text x="110.871" y="-31.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">]</text><text x="113.441" y="-31.178" fill="red" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">Á</text><text x="118.946" y="-31.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">(</text><text x="122.543" y="-31.178" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">S</text><text x="128.194" y="-30.178" font-family="cmr6" font-size="6" transform="translate(145.797 -20.01)">0</text><text x="132.361" y="-31.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">),</text><text x="14.574" y="-20.178" fill="#ff8000" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">X</text><text x="22.215" y="-19.178" fill="#ff8000" font-family="cmmi6" font-size="6" transform="translate(145.797 -20.01)">A</text><text x="28.259" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">;</text><text x="32.37" y="-20.178" fill="#ff8000" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">Y</text><text x="37.739" y="-19.178" fill="#ff8000" font-family="cmmi6" font-size="6" transform="translate(145.797 -20.01)">A</text><text x="46.353" y="-20.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">=</text><text x="56.117" y="-20.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">[</text><text x="58.686" y="-20.178" fill="red" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">±</text><text x="62.789" y="-19.178" fill="red" font-family="cmr6" font-size="6" transform="translate(145.797 -20.01)">5</text><text x="66.955" y="-20.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">]</text><text x="69.525" y="-20.178" fill="red" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">Á</text><text x="75.03" y="-20.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">(</text><text x="78.628" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">X</text><text x="86.268" y="-19.178" font-family="cmr6" font-size="6" transform="translate(145.797 -20.01)">0</text><text x="90.435" y="-20.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">)</text><text x="94.032" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">;</text><text x="99.685" y="-20.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">[</text><text x="102.254" y="-20.178" fill="red" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">±</text><text x="106.357" y="-19.178" fill="red" font-family="cmr6" font-size="6" transform="translate(145.797 -20.01)">5</text><text x="110.524" y="-20.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">]</text><text x="113.093" y="-20.178" fill="red" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">Á</text><text x="118.598" y="-20.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">(</text><text x="122.196" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(145.797 -20.01)">Y</text><text x="127.564" y="-19.178" font-family="cmr6" font-size="6" transform="translate(145.797 -20.01)">0</text><text x="131.731" y="-20.178" font-family="cmr9" font-size="9" transform="translate(145.797 -20.01)">)</text></g><g stroke="none"><text x="14.574" y="-31.178" fill="#00f" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">P</text><text x="20.48" y="-30.178" fill="#00f" font-family="cmmi6" font-size="6" transform="translate(-83.511 121.561)">B</text><text x="26.827" y="-31.178" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">;</text><text x="30.938" y="-31.178" fill="#00f" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">Q</text><text x="38.233" y="-30.178" fill="#00f" font-family="cmmi6" font-size="6" transform="translate(-83.511 121.561)">B</text><text x="47.149" y="-31.178" font-family="cmr9" font-size="9" transform="translate(-83.511 121.561)">=</text><text x="56.913" y="-31.178" font-family="cmr9" font-size="9" transform="translate(-83.511 121.561)">[</text><text x="59.482" y="-31.178" fill="#bf8040" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">!</text><text x="65.237" y="-30.178" fill="#bf8040" font-family="cmr6" font-size="6" transform="translate(-83.511 121.561)">2</text><text x="69.404" y="-31.178" font-family="cmr9" font-size="9" transform="translate(-83.511 121.561)">]</text><text x="71.973" y="-31.178" fill="#bf8040" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">Ã</text><text x="78.331" y="-31.178" font-family="cmr9" font-size="9" transform="translate(-83.511 121.561)">(</text><text x="81.928" y="-31.178" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">P</text><text x="87.834" y="-30.178" font-family="cmr6" font-size="6" transform="translate(-83.511 121.561)">0</text><text x="92" y="-31.178" font-family="cmr9" font-size="9" transform="translate(-83.511 121.561)">)</text><text x="95.598" y="-31.178" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">;</text><text x="101.25" y="-31.178" font-family="cmr9" font-size="9" transform="translate(-83.511 121.561)">[1</text><text x="108.445" y="-31.178" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">=</text><text x="113.07" y="-31.178" fill="#bf8040" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">!</text><text x="118.825" y="-30.178" fill="#bf8040" font-family="cmr6" font-size="6" transform="translate(-83.511 121.561)">2</text><text x="122.991" y="-31.178" font-family="cmr9" font-size="9" transform="translate(-83.511 121.561)">]</text><text x="125.561" y="-31.178" fill="#bf8040" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">Ã</text><text x="131.918" y="-31.178" font-family="cmr9" font-size="9" transform="translate(-83.511 121.561)">(</text><text x="135.515" y="-31.178" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">Q</text><text x="142.811" y="-30.178" font-family="cmr6" font-size="6" transform="translate(-83.511 121.561)">0</text><text x="146.978" y="-31.178" font-family="cmr9" font-size="9" transform="translate(-83.511 121.561)">),</text><text x="14.574" y="-20.178" fill="#00f" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">X</text><text x="22.215" y="-19.178" fill="#00f" font-family="cmmi6" font-size="6" transform="translate(-83.511 121.561)">B</text><text x="28.561" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">;</text><text x="32.672" y="-20.178" fill="#00f" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">Y</text><text x="38.041" y="-19.178" fill="#00f" font-family="cmmi6" font-size="6" transform="translate(-83.511 121.561)">B</text><text x="46.957" y="-20.178" font-family="cmr9" font-size="9" transform="translate(-83.511 121.561)">=</text><text x="56.721" y="-20.178" fill="#bf8040" font-family="cmbx9" font-size="9" transform="translate(-83.511 121.561)">D</text><text x="64.88" y="-19.178" fill="#bf8040" font-family="cmr6" font-size="6" transform="translate(-83.511 121.561)">5</text><text x="69.047" y="-20.178" font-family="cmr9" font-size="9" transform="translate(-83.511 121.561)">[</text><text x="71.617" y="-20.178" fill="#bf8040" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">Ã</text><text x="77.974" y="-20.178" font-family="cmr9" font-size="9" transform="translate(-83.511 121.561)">(</text><text x="81.571" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">X</text><text x="89.212" y="-19.178" font-family="cmr6" font-size="6" transform="translate(-83.511 121.561)">0</text><text x="93.379" y="-20.178" font-family="cmr9" font-size="9" transform="translate(-83.511 121.561)">)</text><text x="96.976" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">;</text><text x="102.628" y="-20.178" fill="#bf8040" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">Ã</text><text x="108.986" y="-20.178" font-family="cmr9" font-size="9" transform="translate(-83.511 121.561)">(</text><text x="112.583" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(-83.511 121.561)">Y</text><text x="117.952" y="-19.178" font-family="cmr6" font-size="6" transform="translate(-83.511 121.561)">0</text><text x="122.119" y="-20.178" font-family="cmr9" font-size="9" transform="translate(-83.511 121.561)">)]</text><text x="128.285" y="-24.001" font-family="cmmi6" font-size="6" transform="translate(-83.511 121.561)">T</text></g><g stroke="none"><text x="14.574" y="-31.178" fill="#00f" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">P</text><text x="20.48" y="-30.178" fill="#00f" font-family="cmmi6" font-size="6" transform="translate(121.3 121.764)">AB</text><text x="32.371" y="-31.178" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">;</text><text x="36.482" y="-31.178" fill="#00f" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">Q</text><text x="43.778" y="-30.178" fill="#00f" font-family="cmmi6" font-size="6" transform="translate(121.3 121.764)">AB</text><text x="58.238" y="-31.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">=</text><text x="68.002" y="-31.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">[</text><text x="70.571" y="-31.178" fill="#bf8040" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">!</text><text x="76.326" y="-30.178" fill="#bf8040" font-family="cmr6" font-size="6" transform="translate(121.3 121.764)">2</text><text x="80.493" y="-31.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">]</text><text x="83.062" y="-31.178" fill="#bf8040" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">Ã</text><text x="89.42" y="-35.001" fill="#bf8040" font-family="cmsy6" font-size="6" transform="translate(121.3 121.764)">0</text><text x="92.114" y="-31.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">(</text><text x="95.711" y="-31.178" fill="#ff8000" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">P</text><text x="101.617" y="-30.178" fill="#ff8000" font-family="cmmi6" font-size="6" transform="translate(121.3 121.764)">A</text><text x="107.662" y="-31.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">)</text><text x="111.259" y="-31.178" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">;</text><text x="116.911" y="-31.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">[1</text><text x="124.106" y="-31.178" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">=</text><text x="128.731" y="-31.178" fill="#bf8040" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">!</text><text x="134.486" y="-30.178" fill="#bf8040" font-family="cmr6" font-size="6" transform="translate(121.3 121.764)">2</text><text x="138.652" y="-31.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">]</text><text x="141.222" y="-31.178" fill="#bf8040" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">Ã</text><text x="147.579" y="-35.001" fill="#bf8040" font-family="cmsy6" font-size="6" transform="translate(121.3 121.764)">0</text><text x="150.274" y="-31.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">(</text><text x="153.871" y="-31.178" fill="#ff8000" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">Q</text><text x="161.166" y="-30.178" fill="#ff8000" font-family="cmmi6" font-size="6" transform="translate(121.3 121.764)">A</text><text x="167.211" y="-31.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">),</text><text x="14.574" y="-20.178" fill="purple" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">X</text><text x="22.215" y="-19.178" fill="purple" font-family="cmmi6" font-size="6" transform="translate(121.3 121.764)">AB</text><text x="34.106" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">;</text><text x="38.217" y="-20.178" fill="purple" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">Y</text><text x="43.586" y="-19.178" fill="purple" font-family="cmmi6" font-size="6" transform="translate(121.3 121.764)">AB</text><text x="58.046" y="-20.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">=</text><text x="67.81" y="-20.178" fill="#bf8040" font-family="cmbx9" font-size="9" transform="translate(121.3 121.764)">D</text><text x="75.969" y="-19.178" fill="#bf8040" font-family="cmr6" font-size="6" transform="translate(121.3 121.764)">5</text><text x="80.136" y="-20.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">[</text><text x="82.705" y="-20.178" fill="#bf8040" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">Ã</text><text x="89.063" y="-24.001" fill="#bf8040" font-family="cmsy6" font-size="6" transform="translate(121.3 121.764)">0</text><text x="91.757" y="-20.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">(</text><text x="95.355" y="-20.178" fill="#ff8000" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">X</text><text x="102.995" y="-19.178" fill="#ff8000" font-family="cmmi6" font-size="6" transform="translate(121.3 121.764)">A</text><text x="109.04" y="-20.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">)</text><text x="112.637" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">;</text><text x="118.289" y="-20.178" fill="#bf8040" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">Ã</text><text x="124.647" y="-24.001" fill="#bf8040" font-family="cmsy6" font-size="6" transform="translate(121.3 121.764)">0</text><text x="127.342" y="-20.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">(</text><text x="130.939" y="-20.178" fill="#ff8000" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">Y</text><text x="136.307" y="-19.178" fill="#ff8000" font-family="cmmi6" font-size="6" transform="translate(121.3 121.764)">A</text><text x="142.352" y="-20.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">)]</text><text x="148.518" y="-24.001" font-family="cmmi6" font-size="6" transform="translate(121.3 121.764)">T</text><text x="156.947" y="-20.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">=</text><text x="166.711" y="-20.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">[</text><text x="169.28" y="-20.178" fill="red" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">±</text><text x="173.383" y="-19.178" fill="red" font-family="cmr6" font-size="6" transform="translate(121.3 121.764)">5</text><text x="177.549" y="-20.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">]</text><text x="180.119" y="-20.178" fill="red" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">Á</text><text x="185.624" y="-24.001" fill="red" font-family="cmsy6" font-size="6" transform="translate(121.3 121.764)">0</text><text x="188.319" y="-20.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">(</text><text x="191.916" y="-20.178" fill="#00f" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">X</text><text x="199.557" y="-19.178" fill="#00f" font-family="cmmi6" font-size="6" transform="translate(121.3 121.764)">B</text><text x="205.903" y="-20.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">)</text><text x="209.5" y="-20.178" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">;</text><text x="215.153" y="-20.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">[</text><text x="217.722" y="-20.178" fill="red" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">±</text><text x="221.825" y="-19.178" fill="red" font-family="cmr6" font-size="6" transform="translate(121.3 121.764)">5</text><text x="225.992" y="-20.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">]</text><text x="228.561" y="-20.178" fill="red" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">Á</text><text x="234.067" y="-24.001" fill="red" font-family="cmsy6" font-size="6" transform="translate(121.3 121.764)">0</text><text x="236.761" y="-20.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">(</text><text x="240.358" y="-20.178" fill="#00f" font-family="cmmi9" font-size="9" transform="translate(121.3 121.764)">Y</text><text x="245.727" y="-19.178" fill="#00f" font-family="cmmi6" font-size="6" transform="translate(121.3 121.764)">B</text><text x="252.074" y="-20.178" font-family="cmr9" font-size="9" transform="translate(121.3 121.764)">)</text></g></g></svg></div>
+<section id="setup-and-parameters" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="setup-and-parameters"><span class="header-section-number">2.1</span> Setup and Parameters</h3>
+<p>The scheme is built on a finite field where the parameters scale strictly with the targeted security parameter <span class="math inline">\(\lambda\)</span>.</p>
+<ul>
+<li><strong><span class="math inline">\(p\)</span></strong>: A prime characteristic <span class="math inline">\(p = 2^a 3^b 5^c f - 1\)</span>.
+<ul>
+<li><strong><span class="math inline">\(a \approx \lambda\)</span></strong>: Bounds the search space for the Alice’s secret degree <span class="math inline">\(q(2^a - q)\)</span>. <span class="math inline">\(a \approx \lambda\)</span> ensures brute-forcing the unknown degree is exponentially hard.</li>
+<li><strong><span class="math inline">\(3^b \approx 2^{2\lambda}\)</span></strong>: The known degree of the Bob’s isogeny. It is sized to prevent meet-in-the-middle key-recovery attacks while keeping evaluations fast.</li>
+<li><strong><span class="math inline">\(5^c \approx 2^{\lambda/3}\)</span></strong>: The order of the shared secret points. It provides exactly enough entropy to prevent an attacker from guessing the three unknown change-of-basis coefficients.</li>
+</ul></li>
+<li><strong><span class="math inline">\(E_0\)</span></strong>: A supersingular elliptic curve over <span class="math inline">\(\mathbb{F}_{p^2}\)</span> with <span class="math inline">\(j\)</span>-invariant 1728.</li>
+<li><strong>Bases</strong>: <span class="math inline">\((P_0, Q_0) \in E_0[2^a]\)</span>, <span class="math inline">\((R_0, S_0) \in E_0[3^b]\)</span>, and <span class="math inline">\((X_0, Y_0) \in E_0[5^c]\)</span>.</li>
+<li><strong><span class="math inline">\(\text{KDF}\)</span></strong>: A standard key derivation function.</li>
+</ul>
+</section>
+<section id="key-generation-alice" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="key-generation-alice"><span class="header-section-number">2.2</span> Key Generation (Alice)</h3>
+<ul>
+<li><strong>Secret Variables</strong>:
+<ul>
+<li><span class="math inline">\(q \in [1, 2^a - 1]\)</span>: A random integer coprime to 2, 3, and 5.</li>
+<li><span class="math inline">\(\phi: E_0 \to E_A\)</span>: The secret isogeny of degree <span class="math inline">\(q(2^a - q)\)</span>. Because the factors sum to <span class="math inline">\(2^a\)</span> (i.e., <span class="math inline">\(q + (2^a - q) = 2^a\)</span>), Kani’s Lemma allows this 1D isogeny to be computed via a 2D isogeny over Abelian surfaces. Moreover, the non-smooth degree prevents SIDH-style polynomial attacks.</li>
+<li><span class="math inline">\(\alpha_2, \beta_2 \in \mathbb{Z}/2^a\mathbb{Z}^\times\)</span>: Independent diagonal masking scalars.</li>
+<li><span class="math inline">\(\gamma_3 \in \mathbb{Z}/3^b\mathbb{Z}^\times, \delta_5 \in \mathbb{Z}/5^c\mathbb{Z}^\times\)</span>: Uniform masking scalars.</li>
+</ul></li>
+<li><strong>Masked Points on <span class="math inline">\(E_A\)</span></strong>:
+<ul>
+<li><strong><span class="math inline">\(2^a\)</span>-torsion</strong>: <span class="math inline">\(P_A = [\alpha_2]\phi(P_0), \quad Q_A = [\beta_2]\phi(Q_0)\)</span></li>
+<li><strong><span class="math inline">\(3^b\)</span>-torsion</strong>: <span class="math inline">\(R_A = [\gamma_3]\phi(R_0), \quad S_A = [\gamma_3]\phi(S_0)\)</span></li>
+<li><strong><span class="math inline">\(5^c\)</span>-torsion</strong>: <span class="math inline">\(X_A = [\delta_5]\phi(X_0), \quad Y_A = [\delta_5]\phi(Y_0)\)</span></li>
+</ul></li>
+<li><strong>Output</strong>:
+<ul>
+<li><strong>Public Key</strong>: <span class="math inline">\((E_A, P_A, Q_A, R_A, S_A, X_A, Y_A)\)</span></li>
+<li><strong>Secret Key</strong>: <span class="math inline">\((q, \alpha_2, \beta_2, \delta_5)\)</span> alongside the higher-dimensional representation of <span class="math inline">\(\phi\)</span>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="encryption-bob" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="encryption-bob"><span class="header-section-number">2.3</span> Encryption (Bob)</h3>
+<ul>
+<li><strong>Secret Variables</strong>:
+<ul>
+<li><span class="math inline">\(r_3 \in \mathbb{Z}/3^b\mathbb{Z}\)</span>: An ephemeral scalar to define the isogeny kernel.</li>
+<li><span class="math inline">\(\omega_2 \in \mathbb{Z}/2^a\mathbb{Z}^\times\)</span>: A masking scalar to prevent pairing leakage.</li>
+<li><span class="math inline">\(\mathbf{D}_5 \in SL_2(\mathbb{Z}/5^c\mathbb{Z})\)</span>: A determinant-1 masking matrix.</li>
+</ul></li>
+<li><strong>Parallel Isogenies</strong>:
+<ul>
+<li><span class="math inline">\(\psi: E_0 \to E_B\)</span>: Degree <span class="math inline">\(3^b\)</span> isogeny with kernel <span class="math inline">\(\langle R_0 + [r_3]S_0 \rangle\)</span>.</li>
+<li><span class="math inline">\(\psi': E_A \to E_{AB}\)</span>: Pushforward isogeny <span class="math inline">\([\phi]_*\psi\)</span> with kernel <span class="math inline">\(\langle R_A + [r_3]S_A \rangle=\phi(\mathrm{ker}(\psi))\)</span>.</li>
+</ul></li>
+<li><strong>Masked Points on <span class="math inline">\(E_B\)</span> and <span class="math inline">\(E_{AB}\)</span></strong>:
+<ul>
+<li><span class="math inline">\(P_B = [\omega_2]\psi(P_0), \quad Q_B = [1/\omega_2]\psi(Q_0)\)</span></li>
+<li><span class="math inline">\(P_{AB} = [\omega_2]\psi'(P_A), \quad Q_{AB} = [1/\omega_2]\psi'(Q_A)\)</span></li>
+<li><span class="math inline">\([X_B, Y_B]^T = \mathbf{D}_5[\psi(X_0), \psi(Y_0)]^T\)</span></li>
+</ul></li>
+<li><strong>Shared Secret Points</strong>:
+<ul>
+<li><span class="math inline">\([X_{AB}, Y_{AB}]^T = \mathbf{D}_5[\psi'(X_A), \psi'(Y_A)]^T\)</span></li>
+</ul></li>
+<li><strong>Message Encoding</strong>:
+<ul>
+<li><span class="math inline">\(ct' = m \oplus \text{KDF}(X_{AB}, Y_{AB})\)</span></li>
+</ul></li>
+<li><strong>Output</strong>:
+<ul>
+<li><strong>Ciphertext</strong>: <span class="math inline">\(((E_B, P_B, Q_B, X_B, Y_B), (E_{AB}, P_{AB}, Q_{AB}), ct')\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="decryption-alice" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="decryption-alice"><span class="header-section-number">2.4</span> Decryption (Alice)</h3>
+<ul>
+<li><strong>Unmasking Phase</strong>:
+<ul>
+<li>Unmask the target points on the final curve: <span class="math inline">\(P'_{AB} = [1/\alpha_2]P_{AB}, \quad Q'_{AB} = [1/\beta_2]Q_{AB}\)</span></li>
+</ul></li>
+<li><strong>Building the 2D Representation</strong>:
+<ul>
+<li><span class="math inline">\(\phi' = \psi_*\phi\)</span>: The hidden pushforward isogeny mapping <span class="math inline">\(E_B \to E_{AB}\)</span>.</li>
+<li><span class="math inline">\(\Phi'\)</span>: The explicit 2-dimensional matrix representation of <span class="math inline">\(\phi'\)</span> (constructed via Kani’s theorem) using the kernel <span class="math inline">\(\langle([-q]P_B, P'_{AB}), ([-q]Q_B, Q'_{AB})\rangle\)</span>.</li>
+</ul></li>
+<li><strong>Evaluation Phase</strong>:
+<ul>
+<li>Map <span class="math inline">\((X_B, Y_B)\)</span> through <span class="math inline">\(\Phi'\)</span> via intermediate curves.</li>
+<li>Solve discrete logarithms against a new basis <span class="math inline">\(U, V \in E_{AB}[5^c]\)</span>.</li>
+<li>Scale evaluations by <span class="math inline">\(\delta_5\)</span> and <span class="math inline">\([2^a-q]\)</span> (an artifact of computing the dual) to precisely reconstruct <span class="math inline">\(X_{AB}\)</span> and <span class="math inline">\(Y_{AB}\)</span>.</li>
+</ul></li>
+<li><strong>Message Decoding</strong>:
+<ul>
+<li><span class="math inline">\(m = ct' \oplus \text{KDF}(X_{AB}, Y_{AB})\)</span></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="security-assumptions" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
+<ul>
+<li><strong>C-POKE Problem (Computational)</strong>: Given the public transcripts of Key Generation and Encryption, an adversary cannot efficiently compute the shared secret points <span class="math inline">\(X_{AB}\)</span> and <span class="math inline">\(Y_{AB}\)</span>. It relies on the hardness of recovering either secret isogeny.</li>
+<li><strong>D-POKE Problem (Decisional)</strong>: An adversary cannot distinguish the true shared secret points <span class="math inline">\((X_{AB}, Y_{AB})\)</span> from a pair of random points on <span class="math inline">\(E_{AB}[5^c]\)</span> with identical Weil pairings. (Required for standard-model IND-CPA security).</li>
+<li><strong>Receiver’s Isogeny Security</strong>: The use of an unknown degree <span class="math inline">\(q(2^a-q)\)</span> combined with independent diagonal masking (<span class="math inline">\(\alpha_2 \neq \beta_2\)</span>) breaks the structural prerequisites needed for known pairing-based or torsion-exploiting attacks.</li>
+<li><strong>Sender’s Isogeny Security</strong>: The hardness of recovering the sender’s isogeny <span class="math inline">\(\psi\)</span> from diagonally scaled target points reduces to a parallel variant of the CIST problem.</li>
+<li><strong>Heuristic Key Generation Indistinguishability</strong>: If the optimized heuristic approach is used for Key Generation, it relies on the assumption that the output curve is computationally indistinguishable from a uniformly sampled <span class="math inline">\(q(2^a-q)\)</span>-isogenous curve.</li>
+</ul>
+</section>
+<section id="progress" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="progress"><span class="header-section-number">4</span> Progress</h2>
+<p>TODO</p>
+
+
+</section>
+<section id="references" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="references"><span class="header-section-number">5</span> References</h2>
+<div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-poke" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[BaMa25] </div><div class="csl-right-inline"><span class="smallcaps">Basso, Andrea</span> ; <span class="smallcaps">Maino, Luciano</span>: <a href="https://eprint.iacr.org/2024/624"><span>POKÉ</span>: A compact and efficient <span>PKE</span> from higher-dimensional isogenies</a>. In: <em>EUROCRYPT</em>&nbsp;: Springer, 2025, pp.&nbsp;94–123</div>
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

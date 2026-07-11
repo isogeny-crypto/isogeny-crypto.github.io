@@ -433,6 +433,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/poke.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">POKÉ</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../schemes/key-exchange/psidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">pSIDH</span></a>
   </div>
@@ -494,6 +500,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../../schemes/digital-signature/sqisign.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SQISign</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/digital-signature/sqisignhd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SQIsignHD</span></a>
   </div>
 </li>
       </ul>
@@ -561,7 +573,7 @@ window.Quarto = {
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>CSIDH is a post-quantum commutative group action that enables efficient non-interactive key exchange <span class="citation" data-cites="csidh">[<a href="#ref-csidh" role="doc-biblioref">CLMP18</a>]</span>. The construction adapts the layout of earlier cryptosystems proposed by <a href="https://eprint.iacr.org/2006/291">Couveignes</a> and <a href="https://eprint.iacr.org/2006/145">Rostovtsev-Stolbunov</a>, but replaces the use of ordinary elliptic curves with supersingular elliptic curves defined over a large prime field <span class="math inline">\(\mathbb{F}_p\)</span> . A key advantage of using supersingular curves over <span class="math inline">\(\mathbb{F}_p\)</span> (for <span class="math inline">\(p \ge 5\)</span>) is that they always have exactly <span class="math inline">\(p + 1\)</span> rational points, which trivially yields the highly composite order needed for efficiency.</p>
+<p>CSIDH is a post-quantum commutative group action based scheme that enables non-interactive key exchange <span class="citation" data-cites="csidh">[<a href="#ref-csidh" role="doc-biblioref">CLMP18</a>]</span>. The construction adapts the layout of earlier cryptosystems proposed by <a href="https://eprint.iacr.org/2006/291">Couveignes</a> and <a href="https://eprint.iacr.org/2006/145">Rostovtsev-Stolbunov</a>, but replaces the use of ordinary elliptic curves with supersingular elliptic curves defined over a large prime field <span class="math inline">\(\mathbb{F}_p\)</span>. A key advantage of using supersingular curves over <span class="math inline">\(\mathbb{F}_p\)</span> (for <span class="math inline">\(p \ge 5\)</span>) is that they always have exactly <span class="math inline">\(p + 1\)</span> rational points, which trivially yields the highly composite order needed for efficiency.</p>
 </section>
 <section id="scheme-design" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="scheme-design"><span class="header-section-number">2</span> Scheme Design</h2>

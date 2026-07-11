@@ -14,7 +14,7 @@
     "href": "index.html#getting-started",
     "title": "Isogeny-based Cryptography Wiki",
     "section": "1 Getting Started",
-    "text": "1 Getting Started\nIf you are not familiar with cryptographic schemes, we recommend this book draft by Dan Boneh and Victor Shoup. For the underlying mathematics, see Steven Galbraith’s book. You may also benefit from reading PhD theses in this area, for instance this list curated by Giacomo Pope. You may also find good reference material in past schools, such as Bristol 2020, ANTS 2020, PCMI 2022, IPAM 2022, VaNTAGe 2022, SLMath 2024, CIMPA 2024, PQCSA 2025, and AWS 2026. Once you are ready to engage with the community, consider joining activities such as the Isogeny Club, Leuven Isogeny Days, BIRS workshops, and Swissogeny Day.",
+    "text": "1 Getting Started\nIf you are not familiar with cryptographic schemes, we recommend this book draft by Dan Boneh and Victor Shoup. For the underlying mathematics, see Steven Galbraith’s book. You may also benefit from reading PhD theses in this area, for instance this list curated by Giacomo Pope.\nYou may also find good reference material in past schools, such as Bristol 2020, ANTS 2020, PCMI 2022, IPAM 2022, VaNTAGe 2022, CIMPA 2024, SLMath 2024, PQCSA 2025, and AWS 2026.\nTo engage with the community, consider joining activities such as the Isogeny Club, Leuven Isogeny Days, BIRS workshops, and Swissogeny Day.",
     "crumbs": [
       "Home"
     ]
@@ -110,7 +110,7 @@
     "href": "schemes/key-exchange/csidh.html",
     "title": "CSIDH",
     "section": "",
-    "text": "CSIDH is a post-quantum commutative group action that enables efficient non-interactive key exchange [CLMP18]. The construction adapts the layout of earlier cryptosystems proposed by Couveignes and Rostovtsev-Stolbunov, but replaces the use of ordinary elliptic curves with supersingular elliptic curves defined over a large prime field \\(\\mathbb{F}_p\\) . A key advantage of using supersingular curves over \\(\\mathbb{F}_p\\) (for \\(p \\ge 5\\)) is that they always have exactly \\(p + 1\\) rational points, which trivially yields the highly composite order needed for efficiency.",
+    "text": "CSIDH is a post-quantum commutative group action based scheme that enables non-interactive key exchange [CLMP18]. The construction adapts the layout of earlier cryptosystems proposed by Couveignes and Rostovtsev-Stolbunov, but replaces the use of ordinary elliptic curves with supersingular elliptic curves defined over a large prime field \\(\\mathbb{F}_p\\). A key advantage of using supersingular curves over \\(\\mathbb{F}_p\\) (for \\(p \\ge 5\\)) is that they always have exactly \\(p + 1\\) rational points, which trivially yields the highly composite order needed for efficiency.",
     "crumbs": [
       "Key Exchange",
       "CSIDH"
@@ -121,7 +121,7 @@
     "href": "schemes/key-exchange/csidh.html#overview",
     "title": "CSIDH",
     "section": "",
-    "text": "CSIDH is a post-quantum commutative group action that enables efficient non-interactive key exchange [CLMP18]. The construction adapts the layout of earlier cryptosystems proposed by Couveignes and Rostovtsev-Stolbunov, but replaces the use of ordinary elliptic curves with supersingular elliptic curves defined over a large prime field \\(\\mathbb{F}_p\\) . A key advantage of using supersingular curves over \\(\\mathbb{F}_p\\) (for \\(p \\ge 5\\)) is that they always have exactly \\(p + 1\\) rational points, which trivially yields the highly composite order needed for efficiency.",
+    "text": "CSIDH is a post-quantum commutative group action based scheme that enables non-interactive key exchange [CLMP18]. The construction adapts the layout of earlier cryptosystems proposed by Couveignes and Rostovtsev-Stolbunov, but replaces the use of ordinary elliptic curves with supersingular elliptic curves defined over a large prime field \\(\\mathbb{F}_p\\). A key advantage of using supersingular curves over \\(\\mathbb{F}_p\\) (for \\(p \\ge 5\\)) is that they always have exactly \\(p + 1\\) rational points, which trivially yields the highly composite order needed for efficiency.",
     "crumbs": [
       "Key Exchange",
       "CSIDH"
@@ -634,6 +634,72 @@
     ]
   },
   {
+    "objectID": "schemes/key-exchange/poke.html",
+    "href": "schemes/key-exchange/poke.html",
+    "title": "POKÉ",
+    "section": "",
+    "text": "POKÉ is a public-key encryption scheme constructed from isogenies of unknown degrees. The primary motivation behind POKÉ is to bridge two distinct paradigms in isogeny-based cryptography: the traditional one-dimensional SIDH-like commutative diagrams, and the newer, higher-dimensional representations (such as those used in FESTA or SQIsignHD) [BaMa25]. By having one party compute isogenies of an unknown, non-smooth degree (requiring higher-dimensional representation techniques to evaluate) and the other party compute smooth-degree isogenies (with kernel generators defined over the base field), POKÉ establishes a commutative diagram where all four elliptic curves are made public. Despite the curves being known, the scheme achieves a shared secret by exploiting the commutativity of the hidden isogenies evaluated on a set of auxiliary torsion points. This structural choice completely circumvents the polynomial-time attacks that broke SIDH, which intrinsically require the exact degree of the targeted isogeny to be known.",
+    "crumbs": [
+      "Key Exchange",
+      "POKÉ"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/poke.html#overview",
+    "href": "schemes/key-exchange/poke.html#overview",
+    "title": "POKÉ",
+    "section": "",
+    "text": "POKÉ is a public-key encryption scheme constructed from isogenies of unknown degrees. The primary motivation behind POKÉ is to bridge two distinct paradigms in isogeny-based cryptography: the traditional one-dimensional SIDH-like commutative diagrams, and the newer, higher-dimensional representations (such as those used in FESTA or SQIsignHD) [BaMa25]. By having one party compute isogenies of an unknown, non-smooth degree (requiring higher-dimensional representation techniques to evaluate) and the other party compute smooth-degree isogenies (with kernel generators defined over the base field), POKÉ establishes a commutative diagram where all four elliptic curves are made public. Despite the curves being known, the scheme achieves a shared secret by exploiting the commutativity of the hidden isogenies evaluated on a set of auxiliary torsion points. This structural choice completely circumvents the polynomial-time attacks that broke SIDH, which intrinsically require the exact degree of the targeted isogeny to be known.",
+    "crumbs": [
+      "Key Exchange",
+      "POKÉ"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/poke.html#scheme-design",
+    "href": "schemes/key-exchange/poke.html#scheme-design",
+    "title": "POKÉ",
+    "section": "2 Scheme Design",
+    "text": "2 Scheme Design\nThe POKÉ scheme relies on establishing a commutative diagram between two parties (Alice and Bob) using separate sets of torsion points. Before any operations take place, a set of global public parameters is defined.\nE0EAEBEABÁdegÁ=q(2a¡q)ÃÃ0Á0P0;Q02E0[2a],R0;S02E0[3b],X0;Y02E0[5c]PA;QA=[®2]Á(P0);[¯2]Á(Q0),RA;SA=[°3]Á(R0);[°3]Á(S0),XA;YA=[±5]Á(X0);[±5]Á(Y0)PB;QB=[!2]Ã(P0);[1=!2]Ã(Q0),XB;YB=D5[Ã(X0);Ã(Y0)]TPAB;QAB=[!2]Ã0(PA);[1=!2]Ã0(QA),XAB;YAB=D5[Ã0(XA);Ã0(YA)]T=[±5]Á0(XB);[±5]Á0(YB)\n\n2.1 Setup and Parameters\nThe scheme is built on a finite field where the parameters scale strictly with the targeted security parameter \\(\\lambda\\).\n\n\\(p\\): A prime characteristic \\(p = 2^a 3^b 5^c f - 1\\).\n\n\\(a \\approx \\lambda\\): Bounds the search space for the Alice’s secret degree \\(q(2^a - q)\\). \\(a \\approx \\lambda\\) ensures brute-forcing the unknown degree is exponentially hard.\n\\(3^b \\approx 2^{2\\lambda}\\): The known degree of the Bob’s isogeny. It is sized to prevent meet-in-the-middle key-recovery attacks while keeping evaluations fast.\n\\(5^c \\approx 2^{\\lambda/3}\\): The order of the shared secret points. It provides exactly enough entropy to prevent an attacker from guessing the three unknown change-of-basis coefficients.\n\n\\(E_0\\): A supersingular elliptic curve over \\(\\mathbb{F}_{p^2}\\) with \\(j\\)-invariant 1728.\nBases: \\((P_0, Q_0) \\in E_0[2^a]\\), \\((R_0, S_0) \\in E_0[3^b]\\), and \\((X_0, Y_0) \\in E_0[5^c]\\).\n\\(\\text{KDF}\\): A standard key derivation function.\n\n\n\n2.2 Key Generation (Alice)\n\nSecret Variables:\n\n\\(q \\in [1, 2^a - 1]\\): A random integer coprime to 2, 3, and 5.\n\\(\\phi: E_0 \\to E_A\\): The secret isogeny of degree \\(q(2^a - q)\\). Because the factors sum to \\(2^a\\) (i.e., \\(q + (2^a - q) = 2^a\\)), Kani’s Lemma allows this 1D isogeny to be computed via a 2D isogeny over Abelian surfaces. Moreover, the non-smooth degree prevents SIDH-style polynomial attacks.\n\\(\\alpha_2, \\beta_2 \\in \\mathbb{Z}/2^a\\mathbb{Z}^\\times\\): Independent diagonal masking scalars.\n\\(\\gamma_3 \\in \\mathbb{Z}/3^b\\mathbb{Z}^\\times, \\delta_5 \\in \\mathbb{Z}/5^c\\mathbb{Z}^\\times\\): Uniform masking scalars.\n\nMasked Points on \\(E_A\\):\n\n\\(2^a\\)-torsion: \\(P_A = [\\alpha_2]\\phi(P_0), \\quad Q_A = [\\beta_2]\\phi(Q_0)\\)\n\\(3^b\\)-torsion: \\(R_A = [\\gamma_3]\\phi(R_0), \\quad S_A = [\\gamma_3]\\phi(S_0)\\)\n\\(5^c\\)-torsion: \\(X_A = [\\delta_5]\\phi(X_0), \\quad Y_A = [\\delta_5]\\phi(Y_0)\\)\n\nOutput:\n\nPublic Key: \\((E_A, P_A, Q_A, R_A, S_A, X_A, Y_A)\\)\nSecret Key: \\((q, \\alpha_2, \\beta_2, \\delta_5)\\) alongside the higher-dimensional representation of \\(\\phi\\).\n\n\n\n\n2.3 Encryption (Bob)\n\nSecret Variables:\n\n\\(r_3 \\in \\mathbb{Z}/3^b\\mathbb{Z}\\): An ephemeral scalar to define the isogeny kernel.\n\\(\\omega_2 \\in \\mathbb{Z}/2^a\\mathbb{Z}^\\times\\): A masking scalar to prevent pairing leakage.\n\\(\\mathbf{D}_5 \\in SL_2(\\mathbb{Z}/5^c\\mathbb{Z})\\): A determinant-1 masking matrix.\n\nParallel Isogenies:\n\n\\(\\psi: E_0 \\to E_B\\): Degree \\(3^b\\) isogeny with kernel \\(\\langle R_0 + [r_3]S_0 \\rangle\\).\n\\(\\psi': E_A \\to E_{AB}\\): Pushforward isogeny \\([\\phi]_*\\psi\\) with kernel \\(\\langle R_A + [r_3]S_A \\rangle=\\phi(\\mathrm{ker}(\\psi))\\).\n\nMasked Points on \\(E_B\\) and \\(E_{AB}\\):\n\n\\(P_B = [\\omega_2]\\psi(P_0), \\quad Q_B = [1/\\omega_2]\\psi(Q_0)\\)\n\\(P_{AB} = [\\omega_2]\\psi'(P_A), \\quad Q_{AB} = [1/\\omega_2]\\psi'(Q_A)\\)\n\\([X_B, Y_B]^T = \\mathbf{D}_5[\\psi(X_0), \\psi(Y_0)]^T\\)\n\nShared Secret Points:\n\n\\([X_{AB}, Y_{AB}]^T = \\mathbf{D}_5[\\psi'(X_A), \\psi'(Y_A)]^T\\)\n\nMessage Encoding:\n\n\\(ct' = m \\oplus \\text{KDF}(X_{AB}, Y_{AB})\\)\n\nOutput:\n\nCiphertext: \\(((E_B, P_B, Q_B, X_B, Y_B), (E_{AB}, P_{AB}, Q_{AB}), ct')\\)\n\n\n\n\n2.4 Decryption (Alice)\n\nUnmasking Phase:\n\nUnmask the target points on the final curve: \\(P'_{AB} = [1/\\alpha_2]P_{AB}, \\quad Q'_{AB} = [1/\\beta_2]Q_{AB}\\)\n\nBuilding the 2D Representation:\n\n\\(\\phi' = \\psi_*\\phi\\): The hidden pushforward isogeny mapping \\(E_B \\to E_{AB}\\).\n\\(\\Phi'\\): The explicit 2-dimensional matrix representation of \\(\\phi'\\) (constructed via Kani’s theorem) using the kernel \\(\\langle([-q]P_B, P'_{AB}), ([-q]Q_B, Q'_{AB})\\rangle\\).\n\nEvaluation Phase:\n\nMap \\((X_B, Y_B)\\) through \\(\\Phi'\\) via intermediate curves.\nSolve discrete logarithms against a new basis \\(U, V \\in E_{AB}[5^c]\\).\nScale evaluations by \\(\\delta_5\\) and \\([2^a-q]\\) (an artifact of computing the dual) to precisely reconstruct \\(X_{AB}\\) and \\(Y_{AB}\\).\n\nMessage Decoding:\n\n\\(m = ct' \\oplus \\text{KDF}(X_{AB}, Y_{AB})\\)",
+    "crumbs": [
+      "Key Exchange",
+      "POKÉ"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/poke.html#security-assumptions",
+    "href": "schemes/key-exchange/poke.html#security-assumptions",
+    "title": "POKÉ",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\n\nC-POKE Problem (Computational): Given the public transcripts of Key Generation and Encryption, an adversary cannot efficiently compute the shared secret points \\(X_{AB}\\) and \\(Y_{AB}\\). It relies on the hardness of recovering either secret isogeny.\nD-POKE Problem (Decisional): An adversary cannot distinguish the true shared secret points \\((X_{AB}, Y_{AB})\\) from a pair of random points on \\(E_{AB}[5^c]\\) with identical Weil pairings. (Required for standard-model IND-CPA security).\nReceiver’s Isogeny Security: The use of an unknown degree \\(q(2^a-q)\\) combined with independent diagonal masking (\\(\\alpha_2 \\neq \\beta_2\\)) breaks the structural prerequisites needed for known pairing-based or torsion-exploiting attacks.\nSender’s Isogeny Security: The hardness of recovering the sender’s isogeny \\(\\psi\\) from diagonally scaled target points reduces to a parallel variant of the CIST problem.\nHeuristic Key Generation Indistinguishability: If the optimized heuristic approach is used for Key Generation, it relies on the assumption that the output curve is computationally indistinguishable from a uniformly sampled \\(q(2^a-q)\\)-isogenous curve.",
+    "crumbs": [
+      "Key Exchange",
+      "POKÉ"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/poke.html#progress",
+    "href": "schemes/key-exchange/poke.html#progress",
+    "title": "POKÉ",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "POKÉ"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/poke.html#references",
+    "href": "schemes/key-exchange/poke.html#references",
+    "title": "POKÉ",
+    "section": "5 References",
+    "text": "5 References\n\n\n[BaMa25] Basso, Andrea ; Maino, Luciano: POKÉ: A compact and efficient PKE from higher-dimensional isogenies. In: EUROCRYPT : Springer, 2025, pp. 94–123",
+    "crumbs": [
+      "Key Exchange",
+      "POKÉ"
+    ]
+  },
+  {
     "objectID": "schemes/digital-signature/csi-fish.html",
     "href": "schemes/digital-signature/csi-fish.html",
     "title": "CSI-FiSh",
@@ -686,6 +752,17 @@
     "crumbs": [
       "Digital Signature",
       "SQISign"
+    ]
+  },
+  {
+    "objectID": "schemes/digital-signature/sqisignhd.html",
+    "href": "schemes/digital-signature/sqisignhd.html",
+    "title": "SQIsignHD",
+    "section": "",
+    "text": "TODO\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Digital Signature",
+      "SQIsignHD"
     ]
   },
   {
@@ -825,7 +902,7 @@
     "href": "schemes/key-exchange/sidh.html",
     "title": "SIDH",
     "section": "",
-    "text": "It was a NIST PQC competition candidate but is now broken by a polynomial time classical algorithm.\n\nThe Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange scheme designed to be secure against quantum computer attacks. Diffie-Hellman-type schemes inherently require commutativity to establish a shared secret [JaFe11]. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input.",
+    "text": "It was a NIST PQC competition candidate but is now broken by a polynomial time classical algorithm.\n\nThe Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange scheme designed to be secure against quantum computer attacks. Diffie-Hellman-type schemes inherently require commutativity to establish a shared secret. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input [JaFe11].",
     "crumbs": [
       "Key Exchange",
       "SIDH"
@@ -836,7 +913,7 @@
     "href": "schemes/key-exchange/sidh.html#overview",
     "title": "SIDH",
     "section": "",
-    "text": "It was a NIST PQC competition candidate but is now broken by a polynomial time classical algorithm.\n\nThe Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange scheme designed to be secure against quantum computer attacks. Diffie-Hellman-type schemes inherently require commutativity to establish a shared secret [JaFe11]. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input.",
+    "text": "It was a NIST PQC competition candidate but is now broken by a polynomial time classical algorithm.\n\nThe Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange scheme designed to be secure against quantum computer attacks. Diffie-Hellman-type schemes inherently require commutativity to establish a shared secret. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input [JaFe11].",
     "crumbs": [
       "Key Exchange",
       "SIDH"
