@@ -6,7 +6,7 @@ date: 2026-06-01
 
 ##  Overview
 
-CSIDH is a post-quantum commutative group action that enables efficient non-interactive key exchange [@csidh]. The construction adapts the layout of earlier cryptosystems proposed by [Couveignes](https://eprint.iacr.org/2006/291) and [Rostovtsev-Stolbunov](https://eprint.iacr.org/2006/145), but replaces the use of ordinary elliptic curves with supersingular elliptic curves defined over a large prime field $\mathbb{F}_p$ . A key advantage of using supersingular curves over $\mathbb{F}_p$ (for $p \ge 5$) is that they always have exactly $p + 1$ rational points, which trivially yields the highly composite order needed for efficiency.
+CSIDH is a post-quantum commutative group action based scheme that enables non-interactive key exchange [@csidh]. The construction adapts the layout of earlier cryptosystems proposed by [Couveignes](https://eprint.iacr.org/2006/291) and [Rostovtsev-Stolbunov](https://eprint.iacr.org/2006/145), but replaces the use of ordinary elliptic curves with supersingular elliptic curves defined over a large prime field $\mathbb{F}_p$. A key advantage of using supersingular curves over $\mathbb{F}_p$ (for $p \ge 5$) is that they always have exactly $p + 1$ rational points, which trivially yields the highly composite order needed for efficiency.
 
 ## Scheme Design
 

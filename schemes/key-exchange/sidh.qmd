@@ -8,12 +8,11 @@ date: 2026-06-12
 
 >  It was a [NIST PQC competition](https://sike.org/) candidate but is now broken by a polynomial time classical algorithm.
 
-The Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange scheme designed to be secure against quantum computer attacks. Diffie-Hellman-type schemes inherently require commutativity to establish a shared secret [@sidh]. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input. 
+The Supersingular Isogeny Diffie-Hellman (SIDH) scheme is a public-key exchange scheme designed to be secure against quantum computer attacks. Diffie-Hellman-type schemes inherently require commutativity to establish a shared secret. SIDH overcomes the noncommutativity of the supersingular endomorphism ring by having parties transmit the images of specific torsion bases under their secret isogenies as auxiliary input [@sidh]. 
 
 ## Scheme Design
 
 The scheme dictates that Alice and Bob conduct random walks on two distinct isogeny graphs (of degrees $\ell_A$ and $\ell_B$ respectively) and use auxiliary points to arrive at an isomorphic destination curve.
-
 
 ```{.tikz}
 \usetikzlibrary{arrows.meta, bending, calc}

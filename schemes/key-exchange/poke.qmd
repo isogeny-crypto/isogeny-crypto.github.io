@@ -1,0 +1,130 @@
+---
+title: "POKÉ"
+subtitle: "POint-based Key Exchange"
+date: 2026-07-11
+---
+
+## Overview
+
+POKÉ is a public-key encryption scheme constructed from isogenies of unknown degrees. The primary motivation behind POKÉ is to bridge two distinct paradigms in isogeny-based cryptography: the traditional one-dimensional SIDH-like commutative diagrams, and the newer, higher-dimensional representations (such as those used in [FESTA](/schemes/key-exchange/festa.qmd) or [SQIsignHD](/schemes/digital-signature/sqisignhd.qmd)) [@poke]. By having one party compute isogenies of an unknown, non-smooth degree (requiring higher-dimensional representation techniques to evaluate) and the other party compute smooth-degree isogenies (with kernel generators defined over the base field), POKÉ establishes a commutative diagram where all four elliptic curves are made public. Despite the curves being known, the scheme achieves a shared secret by exploiting the commutativity of the hidden isogenies evaluated on a set of auxiliary torsion points. This structural choice completely circumvents the polynomial-time attacks that broke [SIDH](/schemes/key-exchange/sidh.qmd), which intrinsically require the exact degree of the targeted isogeny to be known.
+
+## Scheme Design
+
+The POKÉ scheme relies on establishing a commutative diagram between two parties (Alice and Bob) using separate sets of torsion points. Before any operations take place, a set of global public parameters is defined.
+
+```{.tikz}
+\usetikzlibrary{arrows.meta, bending, calc}
+\begin{tikzpicture}[
+  every node/.style={font=\small},
+  arr/.style={-{Stealth}, thick}
+]
+
+  % Main square nodes
+  \node (E0)  at (0, 0)   {$E_0$};
+  \node (EA)  at (7, 0)   {${\color{orange}E_A}$};
+  \node (EB)  at (0, -3)  {${\color{blue}E_B}$};
+  \node (EAB) at (7, -3)  {${\color{blue}E_{AB}}$};
+
+  % Arrows
+  \draw[arr, red] (E0) -- node[pos=0.5, red, above=1pt] {$\phi$} node[pos=0.5, below=1pt, red, font=\scriptsize] {$\deg \phi = q(2^a - q)$} (EA);
+  \draw[arr, brown] (E0) -- node[pos=0.5, brown, left=1pt]  {$\psi$}  (EB);
+  \draw[arr, brown] (EA) -- node[pos=0.5, brown, right=1pt] {$\psi'$} (EAB);
+  \draw[arr, red] (EB) -- node[pos=0.5, red, below=1pt] {$\phi'$} (EAB);
+
+  % Top-left text block (E0)
+  \node[align=left, anchor=south west] at (-1, 0.5) {
+    $P_0,Q_0 \in E_0[2^a]$, \\
+    $R_0,S_0 \in E_0[3^b]$, \\
+    $X_0,Y_0 \in E_0[5^c]$
+  };
+
+  % Top-right text block (EA)
+  \node[align=left, anchor=south west] at (5, 0.5) {
+    ${\color{orange}P_A},{\color{orange}Q_A} = [{\color{red}\alpha_2}]{\color{red}\phi}(P_0),\,[{\color{red}\beta_2}]{\color{red}\phi}(Q_0)$, \\
+    ${\color{orange}R_A},{\color{orange}S_A} = [{\color{red}\gamma_3}]{\color{red}\phi}(R_0),\,[{\color{red}\gamma_3}]{\color{red}\phi}(S_0)$, \\
+    ${\color{orange}X_A},{\color{orange}Y_A} = [{\color{red}\delta_5}]{\color{red}\phi}(X_0),\,[{\color{red}\delta_5}]{\color{red}\phi}(Y_0)$
+  };
+
+  % Bottom-left text block (EB)
+  \node[align=left] at (-0.5, -4) {
+    ${\color{blue}P_B},{\color{blue}Q_B} = [{\color{brown}\omega_2}]{\color{brown}\psi}(P_0),\,[1/{\color{brown}\omega_2}]{\color{brown}\psi}(Q_0)$, \\
+    ${\color{blue}X_B},{\color{blue}Y_B} = {\color{brown}\mathbf{D}_5}[{\color{brown}\psi}(X_0),\,{\color{brown}\psi}(Y_0)]^T$
+  };
+
+  % Bottom-right text block (EAB)
+  \node[align=left] at (8.5, -4) {
+    ${\color{blue}P_{AB}},{\color{blue}Q_{AB}} = [{\color{brown}\omega_2}]{\color{brown}\psi'}({\color{orange}P_A}),\,[1/{\color{brown}\omega_2}]{\color{brown}\psi'}({\color{orange}Q_A})$, \\
+    ${\color{violet}X_{AB}},{\color{violet}Y_{AB}} = {\color{brown}\mathbf{D}_5}[{\color{brown}\psi'}({\color{orange}X_A}),\,{\color{brown}\psi'}({\color{orange}Y_A})]^T = [{\color{red}\delta_5}]{\color{red}\phi'}({\color{blue}X_B}),\,[{\color{red}\delta_5}]{\color{red}\phi'}({\color{blue}Y_B})$
+  };
+
+\end{tikzpicture}
+```
+
+### Setup and Parameters
+The scheme is built on a finite field where the parameters scale strictly with the targeted security parameter $\lambda$.
+
+* **$p$**: A prime characteristic $p = 2^a 3^b 5^c f - 1$.
+  * **$a \approx \lambda$**: Bounds the search space for the Alice's secret degree $q(2^a - q)$. $a \approx \lambda$ ensures brute-forcing the unknown degree is exponentially hard.
+  * **$3^b \approx 2^{2\lambda}$**: The known degree of the Bob's isogeny. It is sized to prevent meet-in-the-middle key-recovery attacks while keeping evaluations fast.
+  * **$5^c \approx 2^{\lambda/3}$**: The order of the shared secret points. It provides exactly enough entropy to prevent an attacker from guessing the three unknown change-of-basis coefficients.
+* **$E_0$**: A supersingular elliptic curve over $\mathbb{F}_{p^2}$ with $j$-invariant 1728.
+* **Bases**: $(P_0, Q_0) \in E_0[2^a]$, $(R_0, S_0) \in E_0[3^b]$, and $(X_0, Y_0) \in E_0[5^c]$.
+* **$\text{KDF}$**: A standard key derivation function.
+
+### Key Generation (Alice)
+* **Secret Variables**: 
+  * $q \in [1, 2^a - 1]$: A random integer coprime to 2, 3, and 5.
+  * $\phi: E_0 \to E_A$: The secret isogeny of degree $q(2^a - q)$. Because the factors sum to $2^a$ (i.e., $q + (2^a - q) = 2^a$), Kani's Lemma allows this 1D isogeny to be computed via a 2D isogeny over Abelian surfaces. Moreover, the non-smooth degree prevents SIDH-style polynomial attacks. 
+  * $\alpha_2, \beta_2 \in \mathbb{Z}/2^a\mathbb{Z}^\times$: Independent diagonal masking scalars.
+  * $\gamma_3 \in \mathbb{Z}/3^b\mathbb{Z}^\times, \delta_5 \in \mathbb{Z}/5^c\mathbb{Z}^\times$: Uniform masking scalars.
+* **Masked Points on $E_A$**:
+  * **$2^a$-torsion**: $P_A = [\alpha_2]\phi(P_0), \quad Q_A = [\beta_2]\phi(Q_0)$
+  * **$3^b$-torsion**: $R_A = [\gamma_3]\phi(R_0), \quad S_A = [\gamma_3]\phi(S_0)$
+  * **$5^c$-torsion**: $X_A = [\delta_5]\phi(X_0), \quad Y_A = [\delta_5]\phi(Y_0)$
+* **Output**: 
+  * **Public Key**: $(E_A, P_A, Q_A, R_A, S_A, X_A, Y_A)$
+  * **Secret Key**: $(q, \alpha_2, \beta_2, \delta_5)$ alongside the higher-dimensional representation of $\phi$.
+
+### Encryption (Bob)
+* **Secret Variables**:
+  * $r_3 \in \mathbb{Z}/3^b\mathbb{Z}$: An ephemeral scalar to define the isogeny kernel.
+  * $\omega_2 \in \mathbb{Z}/2^a\mathbb{Z}^\times$: A masking scalar to prevent pairing leakage.
+  * $\mathbf{D}_5 \in SL_2(\mathbb{Z}/5^c\mathbb{Z})$: A determinant-1 masking matrix.
+* **Parallel Isogenies**:
+  * $\psi: E_0 \to E_B$: Degree $3^b$ isogeny with kernel $\langle R_0 + [r_3]S_0 \rangle$.
+  * $\psi': E_A \to E_{AB}$: Pushforward isogeny $[\phi]_*\psi$ with kernel $\langle R_A + [r_3]S_A \rangle=\phi(\mathrm{ker}(\psi))$.
+* **Masked Points on $E_B$ and $E_{AB}$**:
+  * $P_B = [\omega_2]\psi(P_0), \quad Q_B = [1/\omega_2]\psi(Q_0)$
+  * $P_{AB} = [\omega_2]\psi'(P_A), \quad Q_{AB} = [1/\omega_2]\psi'(Q_A)$
+  * $[X_B, Y_B]^T = \mathbf{D}_5[\psi(X_0), \psi(Y_0)]^T$
+* **Shared Secret Points**:
+  * $[X_{AB}, Y_{AB}]^T = \mathbf{D}_5[\psi'(X_A), \psi'(Y_A)]^T$
+* **Message Encoding**: 
+  * $ct' = m \oplus \text{KDF}(X_{AB}, Y_{AB})$
+* **Output**: 
+  * **Ciphertext**: $((E_B, P_B, Q_B, X_B, Y_B), (E_{AB}, P_{AB}, Q_{AB}), ct')$
+
+### Decryption (Alice)
+* **Unmasking Phase**: 
+  * Unmask the target points on the final curve: $P'_{AB} = [1/\alpha_2]P_{AB}, \quad Q'_{AB} = [1/\beta_2]Q_{AB}$
+* **Building the 2D Representation**: 
+  * $\phi' = \psi_*\phi$: The hidden pushforward isogeny mapping $E_B \to E_{AB}$.
+  * $\Phi'$: The explicit 2-dimensional matrix representation of $\phi'$ (constructed via Kani's theorem) using the kernel $\langle([-q]P_B, P'_{AB}), ([-q]Q_B, Q'_{AB})\rangle$.
+* **Evaluation Phase**:
+  * Map $(X_B, Y_B)$ through $\Phi'$ via intermediate curves.
+  * Solve discrete logarithms against a new basis $U, V \in E_{AB}[5^c]$.
+  * Scale evaluations by $\delta_5$ and $[2^a-q]$ (an artifact of computing the dual) to precisely reconstruct $X_{AB}$ and $Y_{AB}$.
+* **Message Decoding**: 
+  * $m = ct' \oplus \text{KDF}(X_{AB}, Y_{AB})$
+
+## Security Assumptions
+
+* **C-POKE Problem (Computational)**: Given the public transcripts of Key Generation and Encryption, an adversary cannot efficiently compute the shared secret points $X_{AB}$ and $Y_{AB}$. It relies on the hardness of recovering either secret isogeny.
+* **D-POKE Problem (Decisional)**: An adversary cannot distinguish the true shared secret points $(X_{AB}, Y_{AB})$ from a pair of random points on $E_{AB}[5^c]$ with identical Weil pairings. (Required for standard-model IND-CPA security).
+* **Receiver's Isogeny Security**: The use of an unknown degree $q(2^a-q)$ combined with independent diagonal masking ($\alpha_2 \neq \beta_2$) breaks the structural prerequisites needed for known pairing-based or torsion-exploiting attacks.
+* **Sender's Isogeny Security**: The hardness of recovering the sender's isogeny $\psi$ from diagonally scaled target points reduces to a parallel variant of the CIST problem.
+* **Heuristic Key Generation Indistinguishability**: If the optimized heuristic approach is used for Key Generation, it relies on the assumption that the output curve is computationally indistinguishable from a uniformly sampled $q(2^a-q)$-isogenous curve.
+
+## Progress
+
+TODO
