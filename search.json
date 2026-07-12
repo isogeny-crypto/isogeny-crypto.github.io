@@ -660,7 +660,7 @@
     "href": "schemes/key-exchange/poke.html#scheme-design",
     "title": "POKÉ",
     "section": "2 Scheme Design",
-    "text": "2 Scheme Design\nThe POKÉ scheme relies on establishing a commutative diagram between two parties (Alice and Bob) using separate sets of torsion points. Before any operations take place, a set of global public parameters is defined.\nE0EAEBEABÁdegÁ=q(2a¡q)ÃÃ0Á0P0;Q02E0[2a],R0;S02E0[3b],X0;Y02E0[5c]PA;QA=[®2]Á(P0);[¯2]Á(Q0),RA;SA=[°3]Á(R0);[°3]Á(S0),XA;YA=[±5]Á(X0);[±5]Á(Y0)PB;QB=[!2]Ã(P0);[1=!2]Ã(Q0),XB;YB=D5[Ã(X0);Ã(Y0)]TPAB;QAB=[!2]Ã0(PA);[1=!2]Ã0(QA),XAB;YAB=D5[Ã0(XA);Ã0(YA)]T=[±5]Á0(XB);[±5]Á0(YB)\n\n2.1 Setup and Parameters\nThe scheme is built on a finite field where the parameters scale strictly with the targeted security parameter \\(\\lambda\\).\n\n\\(p\\): A prime characteristic \\(p = 2^a 3^b 5^c f - 1\\).\n\n\\(a \\approx \\lambda\\): Bounds the search space for the Alice’s secret degree \\(q(2^a - q)\\). \\(a \\approx \\lambda\\) ensures brute-forcing the unknown degree is exponentially hard.\n\\(3^b \\approx 2^{2\\lambda}\\): The known degree of the Bob’s isogeny. It is sized to prevent meet-in-the-middle key-recovery attacks while keeping evaluations fast.\n\\(5^c \\approx 2^{\\lambda/3}\\): The order of the shared secret points. It provides exactly enough entropy to prevent an attacker from guessing the three unknown change-of-basis coefficients.\n\n\\(E_0\\): A supersingular elliptic curve over \\(\\mathbb{F}_{p^2}\\) with \\(j\\)-invariant 1728.\nBases: \\((P_0, Q_0) \\in E_0[2^a]\\), \\((R_0, S_0) \\in E_0[3^b]\\), and \\((X_0, Y_0) \\in E_0[5^c]\\).\n\\(\\text{KDF}\\): A standard key derivation function.\n\n\n\n2.2 Key Generation (Alice)\n\nSecret Variables:\n\n\\(q \\in [1, 2^a - 1]\\): A random integer coprime to 2, 3, and 5.\n\\(\\phi: E_0 \\to E_A\\): The secret isogeny of degree \\(q(2^a - q)\\). Because the factors sum to \\(2^a\\) (i.e., \\(q + (2^a - q) = 2^a\\)), Kani’s Lemma allows this 1D isogeny to be computed via a 2D isogeny over Abelian surfaces. Moreover, the non-smooth degree prevents SIDH-style polynomial attacks.\n\\(\\alpha_2, \\beta_2 \\in \\mathbb{Z}/2^a\\mathbb{Z}^\\times\\): Independent diagonal masking scalars.\n\\(\\gamma_3 \\in \\mathbb{Z}/3^b\\mathbb{Z}^\\times, \\delta_5 \\in \\mathbb{Z}/5^c\\mathbb{Z}^\\times\\): Uniform masking scalars.\n\nMasked Points on \\(E_A\\):\n\n\\(2^a\\)-torsion: \\(P_A = [\\alpha_2]\\phi(P_0), \\quad Q_A = [\\beta_2]\\phi(Q_0)\\)\n\\(3^b\\)-torsion: \\(R_A = [\\gamma_3]\\phi(R_0), \\quad S_A = [\\gamma_3]\\phi(S_0)\\)\n\\(5^c\\)-torsion: \\(X_A = [\\delta_5]\\phi(X_0), \\quad Y_A = [\\delta_5]\\phi(Y_0)\\)\n\nOutput:\n\nPublic Key: \\((E_A, P_A, Q_A, R_A, S_A, X_A, Y_A)\\)\nSecret Key: \\((q, \\alpha_2, \\beta_2, \\delta_5)\\) alongside the higher-dimensional representation of \\(\\phi\\).\n\n\n\n\n2.3 Encryption (Bob)\n\nSecret Variables:\n\n\\(r_3 \\in \\mathbb{Z}/3^b\\mathbb{Z}\\): An ephemeral scalar to define the isogeny kernel.\n\\(\\omega_2 \\in \\mathbb{Z}/2^a\\mathbb{Z}^\\times\\): A masking scalar to prevent pairing leakage.\n\\(\\mathbf{D}_5 \\in SL_2(\\mathbb{Z}/5^c\\mathbb{Z})\\): A determinant-1 masking matrix.\n\nParallel Isogenies:\n\n\\(\\psi: E_0 \\to E_B\\): Degree \\(3^b\\) isogeny with kernel \\(\\langle R_0 + [r_3]S_0 \\rangle\\).\n\\(\\psi': E_A \\to E_{AB}\\): Pushforward isogeny \\([\\phi]_*\\psi\\) with kernel \\(\\langle R_A + [r_3]S_A \\rangle=\\phi(\\mathrm{ker}(\\psi))\\).\n\nMasked Points on \\(E_B\\) and \\(E_{AB}\\):\n\n\\(P_B = [\\omega_2]\\psi(P_0), \\quad Q_B = [1/\\omega_2]\\psi(Q_0)\\)\n\\(P_{AB} = [\\omega_2]\\psi'(P_A), \\quad Q_{AB} = [1/\\omega_2]\\psi'(Q_A)\\)\n\\([X_B, Y_B]^T = \\mathbf{D}_5[\\psi(X_0), \\psi(Y_0)]^T\\)\n\nShared Secret Points:\n\n\\([X_{AB}, Y_{AB}]^T = \\mathbf{D}_5[\\psi'(X_A), \\psi'(Y_A)]^T\\)\n\nMessage Encoding:\n\n\\(ct' = m \\oplus \\text{KDF}(X_{AB}, Y_{AB})\\)\n\nOutput:\n\nCiphertext: \\(((E_B, P_B, Q_B, X_B, Y_B), (E_{AB}, P_{AB}, Q_{AB}), ct')\\)\n\n\n\n\n2.4 Decryption (Alice)\n\nUnmasking Phase:\n\nUnmask the target points on the final curve: \\(P'_{AB} = [1/\\alpha_2]P_{AB}, \\quad Q'_{AB} = [1/\\beta_2]Q_{AB}\\)\n\nBuilding the 2D Representation:\n\n\\(\\phi' = \\psi_*\\phi\\): The hidden pushforward isogeny mapping \\(E_B \\to E_{AB}\\).\n\\(\\Phi'\\): The explicit 2-dimensional matrix representation of \\(\\phi'\\) (constructed via Kani’s theorem) using the kernel \\(\\langle([-q]P_B, P'_{AB}), ([-q]Q_B, Q'_{AB})\\rangle\\).\n\nEvaluation Phase:\n\nMap \\((X_B, Y_B)\\) through \\(\\Phi'\\) via intermediate curves.\nSolve discrete logarithms against a new basis \\(U, V \\in E_{AB}[5^c]\\).\nScale evaluations by \\(\\delta_5\\) and \\([2^a-q]\\) (an artifact of computing the dual) to precisely reconstruct \\(X_{AB}\\) and \\(Y_{AB}\\).\n\nMessage Decoding:\n\n\\(m = ct' \\oplus \\text{KDF}(X_{AB}, Y_{AB})\\)",
+    "text": "2 Scheme Design\nThe POKÉ scheme relies on establishing a commutative diagram between two parties (Alice and Bob) using separate sets of torsion points. Before any operations take place, a set of global public parameters is defined.\nE0EAEBEABÁdegÁ=q(2a¡q)ÃÃ0Á0P0;Q02E0[2a],R0;S02E0[3b],X0;Y02E0[5c]PA;QA=[®2]Á(P0);[¯2]Á(Q0),RA;SA=[°3]Á(R0);[°3]Á(S0),XA;YA=[±5]Á(X0);[±5]Á(Y0)PB;QB=[!2]Ã(P0);[1=!2]Ã(Q0),XB;YB=D5[Ã(X0);Ã(Y0)]TPAB;QAB=[!2]Ã0(PA);[1=!2]Ã0(QA),XAB;YAB=D5[Ã0(XA);Ã0(YA)]T=[±5]Á0(XB);[±5]Á0(YB)\n\n2.1 Setup and Parameters\nThe scheme is built on a finite field where the parameters scale strictly with the targeted security parameter \\(\\lambda\\).\n\n\\(p\\): A prime characteristic \\(p = 2^a 3^b 5^c f - 1\\).\n\n\\(a \\approx \\lambda\\): Bounds the search space for the Alice’s secret degree \\(q(2^a - q)\\). \\(a \\approx \\lambda\\) ensures brute-forcing the unknown degree is exponentially hard.\n\\(3^b \\approx 2^{2\\lambda}\\): The known degree of the Bob’s isogeny. It is sized to prevent meet-in-the-middle key-recovery attacks while keeping evaluations fast.\n\\(5^c \\approx 2^{\\lambda/3}\\): The order of the shared secret points. It provides exactly enough entropy to prevent an attacker from guessing the three unknown change-of-basis coefficients.\n\n\\(E_0\\): A supersingular elliptic curve over \\(\\mathbb{F}_{p^2}\\) with \\(j\\)-invariant 1728.\nBases: \\((P_0, Q_0) \\in E_0[2^a]\\), \\((R_0, S_0) \\in E_0[3^b]\\), and \\((X_0, Y_0) \\in E_0[5^c]\\).\n\\(\\text{KDF}\\): A standard key derivation function.\n\n\n\n2.2 Key Generation (Alice)\n\nSecret Variables:\n\n\\(q \\in [1, 2^a - 1]\\): A random integer coprime to 2, 3, and 5.\n\\(\\phi: E_0 \\to E_A\\): The secret isogeny of degree \\(q(2^a - q)\\). Because the factors sum to \\(2^a\\) (i.e., \\(q + (2^a - q) = 2^a\\)), Kani’s Lemma allows this 1D isogeny to be computed via a 2D isogeny over Abelian surfaces. Moreover, the non-smooth degree prevents SIDH-style polynomial attacks.\n\\(\\alpha_2, \\beta_2 \\in (\\mathbb{Z}/2^a\\mathbb{Z})^\\times\\): Independent diagonal masking scalars.\n\\(\\gamma_3 \\in (\\mathbb{Z}/3^b\\mathbb{Z})^\\times, \\delta_5 \\in (\\mathbb{Z}/5^c\\mathbb{Z})^\\times\\): Uniform masking scalars.\n\nMasked Points on \\(E_A\\):\n\n\\(2^a\\)-torsion: \\(P_A = [\\alpha_2]\\phi(P_0), \\quad Q_A = [\\beta_2]\\phi(Q_0)\\)\n\\(3^b\\)-torsion: \\(R_A = [\\gamma_3]\\phi(R_0), \\quad S_A = [\\gamma_3]\\phi(S_0)\\)\n\\(5^c\\)-torsion: \\(X_A = [\\delta_5]\\phi(X_0), \\quad Y_A = [\\delta_5]\\phi(Y_0)\\)\n\nOutput:\n\nPublic Key: \\((E_A, P_A, Q_A, R_A, S_A, X_A, Y_A)\\)\nSecret Key: \\((q, \\alpha_2, \\beta_2, \\delta_5)\\) alongside the higher-dimensional representation of \\(\\phi\\).\n\n\n\n\n2.3 Encryption (Bob)\n\nSecret Variables:\n\n\\(r_3 \\in \\mathbb{Z}/3^b\\mathbb{Z}\\): An ephemeral scalar to define the isogeny kernel.\n\\(\\omega_2 \\in (\\mathbb{Z}/2^a\\mathbb{Z})^\\times\\): A masking scalar to prevent pairing leakage.\n\\(\\mathbf{D}_5 \\in SL_2(\\mathbb{Z}/5^c\\mathbb{Z})\\): A determinant-1 masking matrix.\n\nParallel Isogenies:\n\n\\(\\psi: E_0 \\to E_B\\): Degree \\(3^b\\) isogeny with kernel \\(\\langle R_0 + [r_3]S_0 \\rangle\\).\n\\(\\psi': E_A \\to E_{AB}\\): Pushforward isogeny \\([\\phi]_*\\psi\\) with kernel \\(\\langle R_A + [r_3]S_A \\rangle=\\phi(\\mathrm{ker}(\\psi))\\).\n\nMasked Points on \\(E_B\\) and \\(E_{AB}\\):\n\n\\(P_B = [\\omega_2]\\psi(P_0), \\quad Q_B = [1/\\omega_2]\\psi(Q_0)\\)\n\\(P_{AB} = [\\omega_2]\\psi'(P_A), \\quad Q_{AB} = [1/\\omega_2]\\psi'(Q_A)\\)\n\\([X_B, Y_B]^T = \\mathbf{D}_5[\\psi(X_0), \\psi(Y_0)]^T\\)\n\nShared Secret Points:\n\n\\([X_{AB}, Y_{AB}]^T = \\mathbf{D}_5[\\psi'(X_A), \\psi'(Y_A)]^T\\)\n\nMessage Encoding:\n\n\\(ct' = m \\oplus \\text{KDF}(X_{AB}, Y_{AB})\\)\n\nOutput:\n\nCiphertext: \\(((E_B, P_B, Q_B, X_B, Y_B), (E_{AB}, P_{AB}, Q_{AB}), ct')\\)\n\n\n\n\n2.4 Decryption (Alice)\n\nUnmasking Phase:\n\nUnmask the target points on the final curve: \\(P'_{AB} = [1/\\alpha_2]P_{AB}, \\quad Q'_{AB} = [1/\\beta_2]Q_{AB}\\)\n\nBuilding the 2D Representation:\n\n\\(\\phi' = \\psi_*\\phi\\): The hidden pushforward isogeny mapping \\(E_B \\to E_{AB}\\).\n\\(\\Phi'\\): The explicit 2-dimensional matrix representation of \\(\\phi'\\) (constructed via Kani’s theorem) using the kernel \\(\\langle([-q]P_B, P'_{AB}), ([-q]Q_B, Q'_{AB})\\rangle\\).\n\nEvaluation Phase:\n\nMap \\((X_B, Y_B)\\) through \\(\\Phi'\\) via intermediate curves.\nSolve discrete logarithms against a new basis \\(U, V \\in E_{AB}[5^c]\\).\nScale evaluations by \\(\\delta_5\\) and \\([2^a-q]\\) (an artifact of computing the dual) to precisely reconstruct \\(X_{AB}\\) and \\(Y_{AB}\\).\n\nMessage Decoding:\n\n\\(m = ct' \\oplus \\text{KDF}(X_{AB}, Y_{AB})\\)",
     "crumbs": [
       "Key Exchange",
       "POKÉ"
@@ -700,47 +700,14 @@
     ]
   },
   {
-    "objectID": "schemes/digital-signature/csi-fish.html",
-    "href": "schemes/digital-signature/csi-fish.html",
-    "title": "CSI-FiSh",
+    "objectID": "schemes/digital-signature/sqisignhd.html",
+    "href": "schemes/digital-signature/sqisignhd.html",
+    "title": "SQIsignHD",
     "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH.",
+    "text": "TODO\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "schemes/digital-signature/csi-fish.html#overview",
-    "href": "schemes/digital-signature/csi-fish.html#overview",
-    "title": "CSI-FiSh",
-    "section": "",
-    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "schemes/digital-signature/csi-fish.html#key-mechanism",
-    "href": "schemes/digital-signature/csi-fish.html#key-mechanism",
-    "title": "CSI-FiSh",
-    "section": "2 Key Mechanism",
-    "text": "2 Key Mechanism\nBy computing the exact structure of \\(\\text{Cl}(R)\\) for a 512-bit prime \\(p\\), CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical Fiat-Shamir transform to the isogeny setting.\n\nUnderlying Hard Problem: The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational CSIDH protocol.",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
-    ]
-  },
-  {
-    "objectID": "schemes/digital-signature/csi-fish.html#references",
-    "href": "schemes/digital-signature/csi-fish.html#references",
-    "title": "CSI-FiSh",
-    "section": "3 References",
-    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT : Springer, 2019, pp. 227–255\n\n\n\nContributors: @gkorpal",
-    "crumbs": [
-      "Digital Signature",
-      "CSI-FiSh"
+      "SQIsignHD"
     ]
   },
   {
@@ -755,14 +722,113 @@
     ]
   },
   {
-    "objectID": "schemes/digital-signature/sqisignhd.html",
-    "href": "schemes/digital-signature/sqisignhd.html",
-    "title": "SQIsignHD",
+    "objectID": "schemes/digital-signature/csifish.html",
+    "href": "schemes/digital-signature/csifish.html",
+    "title": "CSI-FiSh",
     "section": "",
-    "text": "TODO\n\n\n\nContributors: @gkorpal",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH.",
     "crumbs": [
       "Digital Signature",
-      "SQIsignHD"
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "schemes/digital-signature/csifish.html#overview",
+    "href": "schemes/digital-signature/csifish.html#overview",
+    "title": "CSI-FiSh",
+    "section": "",
+    "text": "CSI-FiSh (Commutative Supersingular Isogeny Signatures with Fiat-Shamir) is an efficient isogeny-based digital signature scheme introduced by Beullens, Kleinjung, and Vercauteren [BeKlVe19].\nThe primary hurdle in building efficient signatures from the CSIDH group action is that evaluating the group action can be slow, and the structure of the class group \\(\\text{Cl}(R)\\) is generally unknown. CSI-FiSh circumvents this by working with a specific parameter set where the class group can be fully computed.\nCSI-FiSh relies on the same hardness assumptions outlined in the CSIDH.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "schemes/digital-signature/csifish.html#key-mechanism",
+    "href": "schemes/digital-signature/csifish.html#key-mechanism",
+    "title": "CSI-FiSh",
+    "section": "2 Key Mechanism",
+    "text": "2 Key Mechanism\nBy computing the exact structure of \\(\\text{Cl}(R)\\) for a 512-bit prime \\(p\\), CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical Fiat-Shamir transform to the isogeny setting.\n\nUnderlying Hard Problem: The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational CSIDH protocol.",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "schemes/digital-signature/csifish.html#references",
+    "href": "schemes/digital-signature/csifish.html#references",
+    "title": "CSI-FiSh",
+    "section": "3 References",
+    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT : Springer, 2019, pp. 227–255\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/litsigamal.html",
+    "href": "schemes/key-exchange/litsigamal.html",
+    "title": "LIT-SiGamal",
+    "section": "",
+    "text": "LIT-SiGamal is a public key encryption (PKE) scheme that constructs an ElGamal-like mechanism over supersingular elliptic curve isogenies by combining the structural approach of SiGamal with the Long Isogeny with Torsion (LIT) diagram framework [MoSt25]. The original SiGamal scheme relied on a commutative CSIDH-based diagram to enable the sender and receiver to compute parallel isogenies without revealing their secret paths. However, CSIDH-based constructions require computing group actions over extremely large primes (often exceeding 3,000 bits for baseline security), rendering them highly inefficient. LIT-SiGamal bypasses this bottleneck by replacing the CSIDH diagram with a LIT diagram, a commutative diagram parameterized to consist of large-degree horizontal isogenies and relatively low-degree vertical isogenies. To make the bottom isogeny computable without knowledge of the vertical secret isogenies, LIT-SiGamal incorporates auxiliary torsion points masked by matrices, a technique adapted from the FESTA scheme. This design allows for significantly smaller primes and faster execution times while maintaining robust post-quantum security. Moreover, the constructions of POKÉ and LIT-SiGamal are nearly identical, with the key distinction being the degree of the isogeny used in the public key: POKÉ employs an isogeny of degree approximately \\(2^{2\\lambda}\\), whereas LIT-SiGamal uses one of degree approximately \\(2^{6\\lambda}\\).",
+    "crumbs": [
+      "Key Exchange",
+      "LIT-SiGamal"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/litsigamal.html#overview",
+    "href": "schemes/key-exchange/litsigamal.html#overview",
+    "title": "LIT-SiGamal",
+    "section": "",
+    "text": "LIT-SiGamal is a public key encryption (PKE) scheme that constructs an ElGamal-like mechanism over supersingular elliptic curve isogenies by combining the structural approach of SiGamal with the Long Isogeny with Torsion (LIT) diagram framework [MoSt25]. The original SiGamal scheme relied on a commutative CSIDH-based diagram to enable the sender and receiver to compute parallel isogenies without revealing their secret paths. However, CSIDH-based constructions require computing group actions over extremely large primes (often exceeding 3,000 bits for baseline security), rendering them highly inefficient. LIT-SiGamal bypasses this bottleneck by replacing the CSIDH diagram with a LIT diagram, a commutative diagram parameterized to consist of large-degree horizontal isogenies and relatively low-degree vertical isogenies. To make the bottom isogeny computable without knowledge of the vertical secret isogenies, LIT-SiGamal incorporates auxiliary torsion points masked by matrices, a technique adapted from the FESTA scheme. This design allows for significantly smaller primes and faster execution times while maintaining robust post-quantum security. Moreover, the constructions of POKÉ and LIT-SiGamal are nearly identical, with the key distinction being the degree of the isogeny used in the public key: POKÉ employs an isogeny of degree approximately \\(2^{2\\lambda}\\), whereas LIT-SiGamal uses one of degree approximately \\(2^{6\\lambda}\\).",
+    "crumbs": [
+      "Key Exchange",
+      "LIT-SiGamal"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/litsigamal.html#scheme-design",
+    "href": "schemes/key-exchange/litsigamal.html#scheme-design",
+    "title": "LIT-SiGamal",
+    "section": "2 Scheme Design",
+    "text": "2 Scheme Design\nThe LIT-SiGamal protocol operates over a carefully structured prime field and relies on the exchange of evaluated torsion bases to enable a shared commutative diagram.\nE0E1E00kE0=hPB+sQBiE01kE1=hÁ1(PB)+sÁ1(QB)iÁ1degÁ1=`2aA¡n2Á2Á02Á01A¡1µP3Q3¶=µÁ01(P2)Á01(Q2)¶µPAQA¶,µPBQB¶,RµP1Q1¶:=AµÁ1(PA)Á1(QA)¶,µÁ1(PB)Á1(QB)¶,R1:=®Á1(R)µP2Q2¶:=BµÁ2(PA)Á2(QA)¶,R0:=¯Á2(R)µP3Q3¶:=BµÁ02(P1)Á02(Q1)¶,R01:=¹¯Á02(R1)\n\n2.1 Public Parameters\n\nPrime Characteristic: The scheme operates over \\(\\mathbb{F}_{p^2}\\) where the prime \\(p\\) is of the form \\(p = \\ell_A^a \\ell_B^b \\ell_C^c f - 1\\). Here, \\(\\ell_A\\), \\(\\ell_B\\), and \\(\\ell_C\\) are pairwise coprime small integers, and \\(f\\) is a small positive cofactor.\nMatrix Group (\\(\\mathcal{M}_a\\)): The subgroup of diagonal matrices within \\(GL_2(\\mathbb{Z}/\\ell_A^a\\mathbb{Z})\\).\nPlaintext Space (\\(\\mathcal{P}\\)): The unit group of \\(\\mathbb{Z}/\\ell_C^c\\mathbb{Z}\\), meaning \\(\\mathcal{P} = (\\mathbb{Z}/\\ell_C^c\\mathbb{Z})^\\times\\).\nSecurity Parameter (\\(\\lambda\\)): Determines the exact exponents \\(a, b, c\\) such that \\(\\ell_B^b \\approx 2^{2\\lambda}\\), \\(\\ell_C^c \\approx 2^\\lambda\\), and \\(\\ell_A^{2a} \\approx \\ell_B^{2b} \\cdot 2^{2\\lambda}\\).\n\n\n\n2.2 Key Generation (Receiver)\nReceiver’s goal is to establish the top horizontal isogeny of the LIT diagram and publicize its action on specific torsion subgroups.\n\nCurve and Isogeny Generation: Generates a pair of supersingular elliptic curves \\((E_0, E_1)\\) over \\(\\mathbb{F}_{p^2}\\) along with a cyclic isogeny \\(\\phi_1: E_0 \\rightarrow E_1\\) of large degree \\(\\ell_A^{2a} - n^2\\). The integer \\(n\\) is chosen such that \\(\\ell_A^{2a} - n^2 &gt; \\ell_B^{2b} \\cdot 2^{2\\lambda}\\).\nTorsion Bases: Defines \\(\\mathcal{B}_A=(P_A,Q_A)\\) as an ordered basis of \\(E_0[\\ell_A^a]\\), and \\(\\mathcal{B}_B = (P_B, Q_B)\\) as an ordered basis of \\(E_0[\\ell_B^b]\\).\nAuxiliary Point: Selects a random point \\(R \\in E_0\\) of order \\(\\ell_C^c\\).\nMasking: Samples a random masking matrix \\(\\mathbf{A} \\in \\mathcal{M}_a\\) and a random scalar \\(\\alpha \\in (\\mathbb{Z}/\\ell_C^c\\mathbb{Z})^\\times\\).\nEvaluation: Computes the masked image of the torsion basis as \\({}^t\\mathcal{B}_1 := \\mathbf{A} \\cdot {}^t\\phi_1(\\mathcal{B}_A)\\) and the scaled image of the auxiliary point as \\(R_1 := \\alpha\\phi_1(R)\\).\nKeys:\n\nPublic Key: \\((E_0, \\mathcal{B}_A, \\mathcal{B}_B, R), (E_1, \\mathcal{B}_1, \\phi_1(\\mathcal{B}_B), R_1)\\).\nSecret Key: The masking matrix and scalar \\((\\mathbf{A}, \\alpha)\\).\n\n\n\n\n2.3 Encryption (Sender)\nSender embeds his plaintext \\(\\mu \\in (\\mathbb{Z}/\\ell_C^c\\mathbb{Z})^\\times\\) by pushing the public parameters through random vertical \\(\\ell_B^b\\)-isogenies.\n\nSecret Isogeny Kernels: Sender samples \\(s \\in (\\mathbb{Z}/\\ell_B^b\\mathbb{Z})^\\times\\), which defines the kernels for his vertical isogenies. Computes \\(\\phi_2: E_0 \\rightarrow E_0' := E_0/\\langle P_B + sQ_B \\rangle\\) and \\(\\phi_2': E_1 \\rightarrow E_1' := E_1/\\langle \\phi_1(P_B) + s\\phi_1(Q_B) \\rangle\\).\nMasking: Samples his own random masking matrix \\(\\mathbf{B} \\in \\mathcal{M}_a\\) and scalar \\(\\beta \\in (\\mathbb{Z}/\\ell_C^c\\mathbb{Z})^\\times\\).\nEvaluation: Pushes receiver’s bases through his vertical isogenies and masks them:\n\n\\({}^t\\mathcal{B}_2 := \\mathbf{B} \\cdot {}^t\\phi_2(\\mathcal{B}_A)\\).\n\\({}^t\\mathcal{B}_3 := \\mathbf{B} \\cdot {}^t\\phi_2'(\\mathcal{B}_1)\\).\n\nMessage Embedding: Scales the torsion points: \\(R' := \\beta\\phi_2(R)\\) and embeds the plaintext into the target point: \\(R_1' := \\mu\\beta\\phi_2'(R_1)\\).\nCiphertext: Sender outputs \\((E_0', \\mathcal{B}_2, R'), (E_1', \\mathcal{B}_3, R_1')\\).\n\n\n\n2.4 Decryption (Receiver)\nReceiver must recover the bottom horizontal isogeny \\(\\phi_1': E_0' \\rightarrow E_1'\\) to unmask the plaintext, without knowing sender’s vertical isogenies.\n\nUnmasking: Uses secret matrix \\(\\mathbf{A}\\) to compute \\({}^t(P_2', Q_2') := \\mathbf{A} \\cdot {}^t\\mathcal{B}_2\\), where \\(\\mathcal{B}_2 = (P_2,Q_2)\\). Also scales the intermediate point \\(R'' := \\alpha R'\\).\nHigher-Dimensional Recovery: Using techniques originally developed for SIDH attacks, constructs two 2-dimensional isogenies from \\(E_0' \\times E_1'\\) to an abelian surface \\(V\\).\n\n\\(\\Psi_0: E_0' \\times E_1' \\rightarrow V\\) with kernel \\(\\langle (nP_2', P_3), (nQ_2', Q_3) \\rangle\\)\n\\(\\Psi_1: E_0' \\times E_1' \\rightarrow V\\) with kernel \\(\\langle (nP_2', -P_3), (nQ_2', -Q_3) \\rangle\\)\n\nwhere \\((P_3, Q_3) := \\mathcal{B}_3\\).\nEvaluating the Hidden Isogeny: The map \\(\\phi_1'\\) is implicitly captured within these dimension-2 isogenies via Kani’s theorem. Recovers the un-blinded target point \\(R_1'' := \\pi_2 \\circ \\hat{\\Psi}_1 \\circ \\Psi_0((-R'', 0))\\), where \\(\\pi_2\\) is the projection \\(E_0'\\times E_1'\\to E_1'\\).\nMessage Extraction: Finally, using Pohlig-Hellman, solves the discrete logarithm problem in the smooth subgroup of order \\(\\ell_C^c\\) to find \\(\\mu'\\) such that \\(R_1' = \\mu' R_1''\\), outputting \\(\\mu'\\) as the plaintext.",
+    "crumbs": [
+      "Key Exchange",
+      "LIT-SiGamal"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/litsigamal.html#security-assumptions",
+    "href": "schemes/key-exchange/litsigamal.html#security-assumptions",
+    "title": "LIT-SiGamal",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nThe security of LIT-SiGamal relies on variants of the isogeny problem structured around torsion point revelations.\n\nLIT-DDH Assumption: The primary assumption under which LIT-SiGamal is proven IND-CPA secure is the LIT-DDH assumption. This is a decisional assumption analogous to the standard Decisional Diffie-Hellman (DDH) assumption, but formulated specifically for the tuples generated within a LIT diagram. It asserts that an adversary cannot computationally distinguish between a valid completed commutative isogeny square (with associated evaluated torsion points) and a randomized tuple.\nCIST Problem: The vertical isogenies executed by the encryptor are protected by the Hardness of the CIST problem. The CIST problem assumes that extracting the secret isogeny is hard when the images of the torsion points are masked by an unknown matrix from a structured subgroup. Because sender masks their torsion evaluations with the matrix \\(\\mathbf{B} \\in \\mathcal{M}_a\\), an attacker is prevented from performing direct torsion-based attacks to reveal \\(\\phi_2\\) and \\(\\phi_2'\\).\nLIT Problem: The top horizontal isogeny \\(\\phi_1\\) is protected by the LIT (Long Isogeny with Torsion) problem. In the LIT problem setting, torsion points are explicitly revealed (unmasked), but the degree of the isogeny \\(d_1\\) is strictly required to be significantly larger than the order of the revealed torsion subgroup (\\(d_1 &gt; d_2^2\\)). By choosing the horizontal isogeny degree \\(\\ell_A^{2a} - n^2 \\gg \\ell_B^{2b} \\cdot 2^{2\\lambda}\\), LIT-SiGamal ensures that the revealed \\(\\phi_1(\\mathcal{B}_B)\\) does not leak enough information to mount an attack against \\(\\phi_1\\).\n\nWhile LIT-SiGamal achieves IND-CPA security under these assumptions, it is not inherently IND-CCA secure due to malleability in the ciphertext components (similar to the original SiGamal). To achieve IND-CCA security for practical KEM use, the scheme must be combined with standard transformations such as the Fujisaki-Okamoto transform.",
+    "crumbs": [
+      "Key Exchange",
+      "LIT-SiGamal"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/litsigamal.html#progress",
+    "href": "schemes/key-exchange/litsigamal.html#progress",
+    "title": "LIT-SiGamal",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "LIT-SiGamal"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/litsigamal.html#references",
+    "href": "schemes/key-exchange/litsigamal.html#references",
+    "title": "LIT-SiGamal",
+    "section": "5 References",
+    "text": "5 References\n\n\n[MoSt25] Moriya, Tomoki ; Stopar, Miha: LIT-SiGamal: An efficient isogeny-based PKE based on a LIT diagram. In: ASIACRYPT : Springer, 2025, pp. 275–306\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "LIT-SiGamal"
     ]
   },
   {

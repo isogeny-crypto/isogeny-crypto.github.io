@@ -415,6 +415,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/litsigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LIT-SiGamal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../schemes/key-exchange/mdsidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">MD-SIDH</span></a>
   </div>
@@ -492,7 +498,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../schemes/digital-signature/csi-fish.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/digital-signature/csifish.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSI-FiSh</span></a>
   </div>
 </li>
@@ -559,7 +565,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">July 11, 2026</p>
+      <p class="date-modified">July 12, 2026</p>
     </div>
   </div>
     
@@ -572,7 +578,7 @@ window.Quarto = {
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>The Key-Updatable Public-Key Encryption (UPKE) scheme based on <a href="../../schemes/key-exchange/csidh.html">CSIDH</a> is the first post-quantum secure scheme of its kind, designed to improve the forward-secrecy and post-compromise security of secure messaging schemes <span class="citation" data-cites="csidhupke">[<a href="#ref-csidhupke" role="doc-biblioref">EJKM21</a>]</span>. UPKE constructions allow cryptographic keys to be updated over time, repairing security in the event of a key compromise. The scheme is a “Symmetric UPKE”, meaning that the same secret update value is applied to both the decryption key and the encryption key. A defining feature of this CSIDH UPKE variant is that it mandates the use of a parameter set where the structure of the class group is completely known (such as <a href="../../schemes/digital-signature/csi-fish.html">CSI-FiSh</a>). This algebraic property ensures that secret elements and updates can be uniquely represented and uniformly sampled, completely preventing information leakage across sequential key updates.</p>
+<p>The Key-Updatable Public-Key Encryption (UPKE) scheme based on <a href="../../schemes/key-exchange/csidh.html">CSIDH</a> is the first post-quantum secure scheme of its kind, designed to improve the forward-secrecy and post-compromise security of secure messaging schemes <span class="citation" data-cites="csidhupke">[<a href="#ref-csidhupke" role="doc-biblioref">EJKM21</a>]</span>. UPKE constructions allow cryptographic keys to be updated over time, repairing security in the event of a key compromise. The scheme is a “Symmetric UPKE”, meaning that the same secret update value is applied to both the decryption key and the encryption key. A defining feature of this CSIDH UPKE variant is that it mandates the use of a parameter set where the structure of the class group is completely known (such as <a href="../../schemes/digital-signature/csifish.html">CSI-FiSh</a>). This algebraic property ensures that secret elements and updates can be uniquely represented and uniformly sampled, completely preventing information leakage across sequential key updates.</p>
 </section>
 <section id="scheme-design" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="scheme-design"><span class="header-section-number">2</span> Scheme Design</h2>

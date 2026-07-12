@@ -415,6 +415,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/litsigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LIT-SiGamal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../schemes/key-exchange/mdsidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">MD-SIDH</span></a>
   </div>
@@ -492,7 +498,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../schemes/digital-signature/csi-fish.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/digital-signature/csifish.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSI-FiSh</span></a>
   </div>
 </li>
@@ -559,7 +565,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">July 11, 2026</p>
+      <p class="date-modified">July 12, 2026</p>
     </div>
   </div>
     
@@ -600,8 +606,8 @@ window.Quarto = {
 <ul>
 <li><span class="math inline">\(q \in [1, 2^a - 1]\)</span>: A random integer coprime to 2, 3, and 5.</li>
 <li><span class="math inline">\(\phi: E_0 \to E_A\)</span>: The secret isogeny of degree <span class="math inline">\(q(2^a - q)\)</span>. Because the factors sum to <span class="math inline">\(2^a\)</span> (i.e., <span class="math inline">\(q + (2^a - q) = 2^a\)</span>), Kani’s Lemma allows this 1D isogeny to be computed via a 2D isogeny over Abelian surfaces. Moreover, the non-smooth degree prevents SIDH-style polynomial attacks.</li>
-<li><span class="math inline">\(\alpha_2, \beta_2 \in \mathbb{Z}/2^a\mathbb{Z}^\times\)</span>: Independent diagonal masking scalars.</li>
-<li><span class="math inline">\(\gamma_3 \in \mathbb{Z}/3^b\mathbb{Z}^\times, \delta_5 \in \mathbb{Z}/5^c\mathbb{Z}^\times\)</span>: Uniform masking scalars.</li>
+<li><span class="math inline">\(\alpha_2, \beta_2 \in (\mathbb{Z}/2^a\mathbb{Z})^\times\)</span>: Independent diagonal masking scalars.</li>
+<li><span class="math inline">\(\gamma_3 \in (\mathbb{Z}/3^b\mathbb{Z})^\times, \delta_5 \in (\mathbb{Z}/5^c\mathbb{Z})^\times\)</span>: Uniform masking scalars.</li>
 </ul></li>
 <li><strong>Masked Points on <span class="math inline">\(E_A\)</span></strong>:
 <ul>
@@ -622,7 +628,7 @@ window.Quarto = {
 <li><strong>Secret Variables</strong>:
 <ul>
 <li><span class="math inline">\(r_3 \in \mathbb{Z}/3^b\mathbb{Z}\)</span>: An ephemeral scalar to define the isogeny kernel.</li>
-<li><span class="math inline">\(\omega_2 \in \mathbb{Z}/2^a\mathbb{Z}^\times\)</span>: A masking scalar to prevent pairing leakage.</li>
+<li><span class="math inline">\(\omega_2 \in (\mathbb{Z}/2^a\mathbb{Z})^\times\)</span>: A masking scalar to prevent pairing leakage.</li>
 <li><span class="math inline">\(\mathbf{D}_5 \in SL_2(\mathbb{Z}/5^c\mathbb{Z})\)</span>: A determinant-1 masking matrix.</li>
 </ul></li>
 <li><strong>Parallel Isogenies</strong>:
@@ -681,7 +687,7 @@ window.Quarto = {
 <li><strong>C-POKE Problem (Computational)</strong>: Given the public transcripts of Key Generation and Encryption, an adversary cannot efficiently compute the shared secret points <span class="math inline">\(X_{AB}\)</span> and <span class="math inline">\(Y_{AB}\)</span>. It relies on the hardness of recovering either secret isogeny.</li>
 <li><strong>D-POKE Problem (Decisional)</strong>: An adversary cannot distinguish the true shared secret points <span class="math inline">\((X_{AB}, Y_{AB})\)</span> from a pair of random points on <span class="math inline">\(E_{AB}[5^c]\)</span> with identical Weil pairings. (Required for standard-model IND-CPA security).</li>
 <li><strong>Receiver’s Isogeny Security</strong>: The use of an unknown degree <span class="math inline">\(q(2^a-q)\)</span> combined with independent diagonal masking (<span class="math inline">\(\alpha_2 \neq \beta_2\)</span>) breaks the structural prerequisites needed for known pairing-based or torsion-exploiting attacks.</li>
-<li><strong>Sender’s Isogeny Security</strong>: The hardness of recovering the sender’s isogeny <span class="math inline">\(\psi\)</span> from diagonally scaled target points reduces to a parallel variant of the CIST problem.</li>
+<li><strong>Sender’s Isogeny Security</strong>: The hardness of recovering the sender’s isogeny <span class="math inline">\(\psi\)</span> from diagonally scaled target points reduces to a parallel variant of the <a href="../../schemes/key-exchange/festa.html#security-assumptions">CIST problem</a>.</li>
 <li><strong>Heuristic Key Generation Indistinguishability</strong>: If the optimized heuristic approach is used for Key Generation, it relies on the assumption that the output curve is computationally indistinguishable from a uniformly sampled <span class="math inline">\(q(2^a-q)\)</span>-isogenous curve.</li>
 </ul>
 </section>
