@@ -1,0 +1,114 @@
+---
+title: "LIT-SiGamal"
+subtitle: "Long Isogeny with Torsion based "
+date: 2026-07-12
+---
+
+## Overview
+
+LIT-SiGamal is a public key encryption (PKE) scheme that constructs an ElGamal-like mechanism over supersingular elliptic curve isogenies by combining the structural approach of SiGamal with the Long Isogeny with Torsion (LIT) diagram framework [@litsigamal]. The original [SiGamal](/schemes/key-exchange/sigamal.qmd) scheme relied on a commutative [CSIDH](/schemes/key-exchange/csidh.qmd)-based diagram to enable the sender and receiver to compute parallel isogenies without revealing their secret paths. However, CSIDH-based constructions require computing group actions over extremely large primes (often exceeding 3,000 bits for baseline security), rendering them highly inefficient. LIT-SiGamal bypasses this bottleneck by replacing the CSIDH diagram with a LIT diagram, a commutative diagram parameterized to consist of large-degree horizontal isogenies and relatively low-degree vertical isogenies. To make the bottom isogeny computable without knowledge of the vertical secret isogenies, LIT-SiGamal incorporates auxiliary torsion points masked by matrices, a technique adapted from the [FESTA](/schemes/key-exchange/festa.qmd) scheme. This design allows for significantly smaller primes and faster execution times while maintaining robust post-quantum security. Moreover, the constructions of [POKÉ](/schemes/key-exchange/poke.qmd) and LIT-SiGamal are nearly identical, with the key distinction being the degree of the isogeny used in the public key: POKÉ employs an isogeny of degree approximately $2^{2\lambda}$, whereas LIT-SiGamal uses one of degree approximately $2^{6\lambda}$.
+
+## Scheme Design
+
+The LIT-SiGamal protocol operates over a carefully structured prime field and relies on the exchange of evaluated torsion bases to enable a shared commutative diagram.
+
+```{.tikz}
+\usetikzlibrary{arrows.meta, bending, calc}
+\begin{tikzpicture}[
+  every node/.style={font=\small},
+  arr/.style={-{Stealth}, thick}
+]
+
+  % Main square nodes
+  \node (E0)  at (0, 0)   {$E_0$};
+  \node (E1)  at (9, 0)   {$E_1$};
+  \node (E0prime)  at (0, -3)  {$E_0'$};
+  \node at    (0,  -3.4)    {$\|$};
+  \node at    (0,  -3.7)   {$E_0/\langle P_B + sQ_B\rangle$};
+  \node (E1prime) at (9, -3)  {$E_1'$};
+  \node at    (9,  -3.4)    {$\|$};
+  \node at    (9,  -3.7)  {$E_1/\langle \phi_1(P_B) + s\phi_1(Q_B)\rangle$};
+
+  % Arrows
+  \draw[arr] (E0) -- node[pos=0.5, above=1pt] {$\phi_1$} node[pos=0.5, below=1pt] {$\deg \phi_1 = \ell_A^{2a}-n^2$} (E1);
+  \draw[arr] (E0) -- node[pos=0.5, left=1pt]  {$\phi_2$}  (E0prime);
+  \draw[arr] (E1) -- node[pos=0.5, right=1pt] {$\phi_2'$} (E1prime);
+  \draw[arr, dashed] (E0prime) -- node[pos=0.5, above=1pt] {$\phi_1'$} node[pos=0.5, below=1pt] {$\mathbf{A}^{-1}\left(\begin{array}{c} P_3 \\ Q_3 \end{array}\right) = \left(\begin{array}{c}\phi_1'(P_2)\\ \phi_1'(Q_2)\end{array}\right)$}  (E1prime);
+
+  % Top-left text block
+  \node[align=left, anchor=south west] at (-2, 0.5) {
+    $\left(\begin{array}{c} P_A \\ Q_A \end{array}\right)$, $\left(\begin{array}{c} P_B \\ Q_B \end{array}\right)$, $R$
+  };
+
+  % Top-right text block
+  \node[align=left, anchor=south west] at (6, 0.5) {
+    $\left(\begin{array}{c}P_1\\ Q_1\end{array}\right) := \mathbf{A}\left(\begin{array}{c} \phi_1(P_A) \\ \phi_1(Q_A) \end{array}\right)$,\\ $\left(\begin{array}{c} \phi_1(P_B) \\ \phi_1(Q_B) \end{array}\right)$, $R_1:=\alpha\phi_1(R)$
+  };
+
+  % Bottom-left text block
+  \node[align=left] at (0, -5) {
+    $\left(\begin{array}{c}P_2\\ Q_2\end{array}\right) := \mathbf{B}\left(\begin{array}{c} \phi_2(P_A) \\ \phi_2(Q_A) \end{array}\right)$,\\ $R':=\beta\phi_2(R)$
+  };
+
+  % Bottom-right text block
+  \node[align=left] at (9, -5) {
+    $\left(\begin{array}{c}P_3\\ Q_3\end{array}\right) := \mathbf{B}\left(\begin{array}{c} \phi_2'(P_1) \\ \phi_2'(Q_1) \end{array}\right)$,\\ $R_1':=\mu\beta\phi_2'(R_1)$
+  };
+
+\end{tikzpicture}
+```
+
+### Public Parameters
+* **Prime Characteristic**: The scheme operates over $\mathbb{F}_{p^2}$ where the prime $p$ is of the form $p = \ell_A^a \ell_B^b \ell_C^c f - 1$. Here, $\ell_A$, $\ell_B$, and $\ell_C$ are pairwise coprime small integers, and $f$ is a small positive cofactor.
+* **Matrix Group ($\mathcal{M}_a$)**: The subgroup of diagonal matrices within $GL_2(\mathbb{Z}/\ell_A^a\mathbb{Z})$.
+* **Plaintext Space ($\mathcal{P}$)**: The unit group of $\mathbb{Z}/\ell_C^c\mathbb{Z}$, meaning $\mathcal{P} = (\mathbb{Z}/\ell_C^c\mathbb{Z})^\times$.
+* **Security Parameter ($\lambda$)**: Determines the exact exponents $a, b, c$ such that $\ell_B^b \approx 2^{2\lambda}$, $\ell_C^c \approx 2^\lambda$, and $\ell_A^{2a} \approx \ell_B^{2b} \cdot 2^{2\lambda}$.
+
+### Key Generation (Receiver)
+Receiver's goal is to establish the top horizontal isogeny of the LIT diagram and publicize its action on specific torsion subgroups.
+
+1.  **Curve and Isogeny Generation**: Generates a pair of supersingular elliptic curves $(E_0, E_1)$ over $\mathbb{F}_{p^2}$ along with a cyclic isogeny $\phi_1: E_0 \rightarrow E_1$ of large degree $\ell_A^{2a} - n^2$. The integer $n$ is chosen such that $\ell_A^{2a} - n^2 > \ell_B^{2b} \cdot 2^{2\lambda}$.
+2.  **Torsion Bases**: Defines $\mathcal{B}_A=(P_A,Q_A)$ as an ordered basis of $E_0[\ell_A^a]$, and $\mathcal{B}_B = (P_B, Q_B)$ as an ordered basis of $E_0[\ell_B^b]$.
+3.  **Auxiliary Point**: Selects a random point $R \in E_0$ of order $\ell_C^c$.
+4.  **Masking**: Samples a random masking matrix $\mathbf{A} \in \mathcal{M}_a$ and a random scalar $\alpha \in (\mathbb{Z}/\ell_C^c\mathbb{Z})^\times$.
+5.  **Evaluation**: Computes the masked image of the torsion basis as ${}^t\mathcal{B}_1 := \mathbf{A} \cdot {}^t\phi_1(\mathcal{B}_A)$ and the scaled image of the auxiliary point as $R_1 := \alpha\phi_1(R)$.
+6.  **Keys**:
+    * **Public Key**: $(E_0, \mathcal{B}_A, \mathcal{B}_B, R), (E_1, \mathcal{B}_1, \phi_1(\mathcal{B}_B), R_1)$.
+    * **Secret Key**: The masking matrix and scalar $(\mathbf{A}, \alpha)$.
+
+### Encryption (Sender)
+Sender embeds his plaintext $\mu \in (\mathbb{Z}/\ell_C^c\mathbb{Z})^\times$ by pushing the public parameters through random vertical $\ell_B^b$-isogenies.
+
+1.  **Secret Isogeny Kernels**: Sender samples $s \in (\mathbb{Z}/\ell_B^b\mathbb{Z})^\times$, which defines the kernels for his vertical isogenies. Computes $\phi_2: E_0 \rightarrow E_0' := E_0/\langle P_B + sQ_B \rangle$ and $\phi_2': E_1 \rightarrow E_1' := E_1/\langle \phi_1(P_B) + s\phi_1(Q_B) \rangle$.
+2.  **Masking**: Samples his own random masking matrix $\mathbf{B} \in \mathcal{M}_a$ and scalar $\beta \in (\mathbb{Z}/\ell_C^c\mathbb{Z})^\times$.
+3.  **Evaluation**: Pushes receiver's bases through his vertical isogenies and masks them:
+    * ${}^t\mathcal{B}_2 := \mathbf{B} \cdot {}^t\phi_2(\mathcal{B}_A)$.
+    * ${}^t\mathcal{B}_3 := \mathbf{B} \cdot {}^t\phi_2'(\mathcal{B}_1)$.
+4.  **Message Embedding**: Scales the torsion points: $R' := \beta\phi_2(R)$ and embeds the plaintext into the target point: $R_1' := \mu\beta\phi_2'(R_1)$.
+5.  **Ciphertext**: Sender outputs $(E_0', \mathcal{B}_2, R'), (E_1', \mathcal{B}_3, R_1')$.
+
+### Decryption (Receiver)
+Receiver must recover the bottom horizontal isogeny $\phi_1': E_0' \rightarrow E_1'$ to unmask the plaintext, without knowing sender's vertical isogenies.
+
+1.  **Unmasking**: Uses secret matrix $\mathbf{A}$ to compute ${}^t(P_2', Q_2') := \mathbf{A} \cdot {}^t\mathcal{B}_2$, where $\mathcal{B}_2 = (P_2,Q_2)$. Also scales the intermediate point $R'' := \alpha R'$.
+2.  **Higher-Dimensional Recovery**: Using techniques originally developed for [SIDH attacks](/schemes/key-exchange/sidh.qmd#progress), constructs two 2-dimensional isogenies from $E_0' \times E_1'$ to an abelian surface $V$.
+    * $\Psi_0: E_0' \times E_1' \rightarrow V$ with kernel $\langle (nP_2', P_3), (nQ_2', Q_3) \rangle$
+    * $\Psi_1: E_0' \times E_1' \rightarrow V$ with kernel $\langle (nP_2', -P_3), (nQ_2', -Q_3) \rangle$
+    
+    where $(P_3, Q_3) := \mathcal{B}_3$.
+3.  **Evaluating the Hidden Isogeny**: The map $\phi_1'$ is implicitly captured within these dimension-2 isogenies via Kani's theorem. Recovers the un-blinded target point $R_1'' := \pi_2 \circ \hat{\Psi}_1 \circ \Psi_0((-R'', 0))$, where $\pi_2$ is the projection $E_0'\times E_1'\to E_1'$.
+4.  **Message Extraction**: Finally, using Pohlig-Hellman, solves the discrete logarithm problem in the smooth subgroup of order $\ell_C^c$ to find $\mu'$ such that $R_1' = \mu' R_1''$, outputting $\mu'$ as the plaintext.
+
+## Security Assumptions
+
+The security of LIT-SiGamal relies on variants of the isogeny problem structured around torsion point revelations.
+
+* **LIT-DDH Assumption**: The primary assumption under which LIT-SiGamal is proven IND-CPA secure is the LIT-DDH assumption. This is a decisional assumption analogous to the standard Decisional Diffie-Hellman (DDH) assumption, but formulated specifically for the tuples generated within a LIT diagram. It asserts that an adversary cannot computationally distinguish between a valid completed commutative isogeny square (with associated evaluated torsion points) and a randomized tuple.
+* **CIST Problem**: The vertical isogenies executed by the encryptor are protected by the Hardness of the [CIST problem](/schemes/key-exchange/festa.qmd#security-assumptions). The CIST problem assumes that extracting the secret isogeny is hard when the images of the torsion points are masked by an unknown matrix from a structured subgroup. Because sender masks their torsion evaluations with the matrix $\mathbf{B} \in \mathcal{M}_a$, an attacker is prevented from performing direct torsion-based attacks to reveal $\phi_2$ and $\phi_2'$.
+* **LIT Problem**: The top horizontal isogeny $\phi_1$ is protected by the LIT (Long Isogeny with Torsion) problem. In the LIT problem setting, torsion points are explicitly revealed (unmasked), but the degree of the isogeny $d_1$ is strictly required to be significantly larger than the order of the revealed torsion subgroup ($d_1 > d_2^2$). By choosing the horizontal isogeny degree $\ell_A^{2a} - n^2 \gg \ell_B^{2b} \cdot 2^{2\lambda}$, LIT-SiGamal ensures that the revealed $\phi_1(\mathcal{B}_B)$ does not leak enough information to mount an attack against $\phi_1$.
+
+While LIT-SiGamal achieves IND-CPA security under these assumptions, it is not inherently IND-CCA secure due to malleability in the ciphertext components (similar to the original SiGamal). To achieve IND-CCA security for practical KEM use, the scheme must be combined with standard transformations such as the Fujisaki-Okamoto transform.
+
+## Progress
+
+TODO

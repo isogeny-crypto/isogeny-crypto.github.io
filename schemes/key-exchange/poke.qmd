@@ -75,8 +75,8 @@ The scheme is built on a finite field where the parameters scale strictly with t
 * **Secret Variables**: 
   * $q \in [1, 2^a - 1]$: A random integer coprime to 2, 3, and 5.
   * $\phi: E_0 \to E_A$: The secret isogeny of degree $q(2^a - q)$. Because the factors sum to $2^a$ (i.e., $q + (2^a - q) = 2^a$), Kani's Lemma allows this 1D isogeny to be computed via a 2D isogeny over Abelian surfaces. Moreover, the non-smooth degree prevents SIDH-style polynomial attacks. 
-  * $\alpha_2, \beta_2 \in \mathbb{Z}/2^a\mathbb{Z}^\times$: Independent diagonal masking scalars.
-  * $\gamma_3 \in \mathbb{Z}/3^b\mathbb{Z}^\times, \delta_5 \in \mathbb{Z}/5^c\mathbb{Z}^\times$: Uniform masking scalars.
+  * $\alpha_2, \beta_2 \in (\mathbb{Z}/2^a\mathbb{Z})^\times$: Independent diagonal masking scalars.
+  * $\gamma_3 \in (\mathbb{Z}/3^b\mathbb{Z})^\times, \delta_5 \in (\mathbb{Z}/5^c\mathbb{Z})^\times$: Uniform masking scalars.
 * **Masked Points on $E_A$**:
   * **$2^a$-torsion**: $P_A = [\alpha_2]\phi(P_0), \quad Q_A = [\beta_2]\phi(Q_0)$
   * **$3^b$-torsion**: $R_A = [\gamma_3]\phi(R_0), \quad S_A = [\gamma_3]\phi(S_0)$
@@ -88,7 +88,7 @@ The scheme is built on a finite field where the parameters scale strictly with t
 ### Encryption (Bob)
 * **Secret Variables**:
   * $r_3 \in \mathbb{Z}/3^b\mathbb{Z}$: An ephemeral scalar to define the isogeny kernel.
-  * $\omega_2 \in \mathbb{Z}/2^a\mathbb{Z}^\times$: A masking scalar to prevent pairing leakage.
+  * $\omega_2 \in (\mathbb{Z}/2^a\mathbb{Z})^\times$: A masking scalar to prevent pairing leakage.
   * $\mathbf{D}_5 \in SL_2(\mathbb{Z}/5^c\mathbb{Z})$: A determinant-1 masking matrix.
 * **Parallel Isogenies**:
   * $\psi: E_0 \to E_B$: Degree $3^b$ isogeny with kernel $\langle R_0 + [r_3]S_0 \rangle$.
@@ -122,7 +122,7 @@ The scheme is built on a finite field where the parameters scale strictly with t
 * **C-POKE Problem (Computational)**: Given the public transcripts of Key Generation and Encryption, an adversary cannot efficiently compute the shared secret points $X_{AB}$ and $Y_{AB}$. It relies on the hardness of recovering either secret isogeny.
 * **D-POKE Problem (Decisional)**: An adversary cannot distinguish the true shared secret points $(X_{AB}, Y_{AB})$ from a pair of random points on $E_{AB}[5^c]$ with identical Weil pairings. (Required for standard-model IND-CPA security).
 * **Receiver's Isogeny Security**: The use of an unknown degree $q(2^a-q)$ combined with independent diagonal masking ($\alpha_2 \neq \beta_2$) breaks the structural prerequisites needed for known pairing-based or torsion-exploiting attacks.
-* **Sender's Isogeny Security**: The hardness of recovering the sender's isogeny $\psi$ from diagonally scaled target points reduces to a parallel variant of the CIST problem.
+* **Sender's Isogeny Security**: The hardness of recovering the sender's isogeny $\psi$ from diagonally scaled target points reduces to a parallel variant of the [CIST problem](/schemes/key-exchange/festa.qmd#security-assumptions).
 * **Heuristic Key Generation Indistinguishability**: If the optimized heuristic approach is used for Key Generation, it relies on the assumption that the output curve is computationally indistinguishable from a uniformly sampled $q(2^a-q)$-isogenous curve.
 
 ## Progress

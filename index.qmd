@@ -10,7 +10,7 @@ Welcome to the **Isogeny-based Cryptography Wiki**. This site serves as an open-
 
 If you are not familiar with cryptographic schemes, we recommend [this book draft](https://toc.cryptobook.us/) by Dan Boneh and Victor Shoup. For the underlying mathematics, see [Steven Galbraith's book](https://www.math.auckland.ac.nz/~sgal018/crypto-book/crypto-book.html). You may also benefit from reading PhD theses in this area, for instance [this list](https://github.com/GiacomoPope/maths-theses) curated by Giacomo Pope.
 
-You may also find good reference material in past schools, such as [Bristol 2020](https://isogenyschool2020.co.uk/schedule/), [ANTS 2020](https://www.youtube.com/@ANTSSummerSchool/videos), [PCMI 2022](https://www.youtube.com/playlist?list=PLldN_DpkXL3amFV76Dmimhbrm0MYa4d32), [IPAM 2022](https://www.youtube.com/playlist?list=PLHyI3Fbmv0SdibCMJcJFBZPARwec6fPnQ), [VaNTAGe 2022](https://www.youtube.com/playlist?list=PLo3uxbU5v05z8XnaEeNYI_xbn_IrvgLvJ),  [CIMPA 2024](https://www.youtube.com/playlist?list=PLLxG_np9o-2fSsZcOq0woYWBxbiSFy1qI), [SLMath 2024](https://www.slmath.org/summer-schools/1068#schedule_notes), [PQCSA 2025](https://www.youtube.com/playlist?list=PLiHaXFHjrqYcvzIxFEo118XCzxI-KSctT), and [AWS 2026](https://swc-math.github.io/aws/2026/index.html).
+You may also find good reference material in past schools, such as [Bristol 2020](https://isogenyschool2020.co.uk/schedule/), [ANTS 2020](https://www.youtube.com/@ANTSSummerSchool/videos), [PCMI 2022](https://www.youtube.com/playlist?list=PLldN_DpkXL3amFV76Dmimhbrm0MYa4d32), [IPAM 2022](https://www.youtube.com/playlist?list=PLHyI3Fbmv0SdibCMJcJFBZPARwec6fPnQ), [VaNTAGe 2022](https://www.youtube.com/playlist?list=PLo3uxbU5v05z8XnaEeNYI_xbn_IrvgLvJ), [CIMPA 2024](https://www.youtube.com/playlist?list=PLLxG_np9o-2fSsZcOq0woYWBxbiSFy1qI), [SLMath 2024](https://www.slmath.org/summer-schools/1068#schedule_notes), [PQCSA 2025](https://www.youtube.com/playlist?list=PLiHaXFHjrqYcvzIxFEo118XCzxI-KSctT), and [AWS 2026](https://swc-math.github.io/aws/2026/index.html).
 
 To engage with the community, consider joining activities such as the [Isogeny Club](https://isogeny.club/), [Leuven Isogeny Days](https://www.esat.kuleuven.be/cosic/projects/isocrypt/workshops/), [BIRS workshops](https://www.birs.ca/events/2025/5-day-workshops/25w5500), and [Swissogeny Day](https://swissogeny.github.io/).
 
@@ -49,7 +49,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes (in
 - []{g=100} COM-UE (2024)
 - []{r=100} SILBE (2024)
 - []{r=50 b=50} [POKÉ](/schemes/key-exchange/poke.qmd) (2025)
-- []{r=50 b=50} LIT-SiGamal (2025)
+- []{r=50 b=50} [LIT-SiGamal](/schemes/key-exchange/litsigamal.qmd) (2025)
 - []{r=50 b=50} PIKE (2026)
 :::
 :::
