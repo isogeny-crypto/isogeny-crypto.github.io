@@ -660,7 +660,7 @@
     "href": "schemes/key-exchange/poke.html#scheme-design",
     "title": "POKÉ",
     "section": "2 Scheme Design",
-    "text": "2 Scheme Design\nThe POKÉ scheme relies on establishing a commutative diagram between two parties (Alice and Bob) using separate sets of torsion points. Before any operations take place, a set of global public parameters is defined.\nE0EAEBEABÁdegÁ=q(2a¡q)ÃÃ0Á0P0;Q02E0[2a],R0;S02E0[3b],X0;Y02E0[5c]PA;QA=[®2]Á(P0);[¯2]Á(Q0),RA;SA=[°3]Á(R0);[°3]Á(S0),XA;YA=[±5]Á(X0);[±5]Á(Y0)PB;QB=[!2]Ã(P0);[1=!2]Ã(Q0),XB;YB=D5[Ã(X0);Ã(Y0)]TPAB;QAB=[!2]Ã0(PA);[1=!2]Ã0(QA),XAB;YAB=D5[Ã0(XA);Ã0(YA)]T=[±5]Á0(XB);[±5]Á0(YB)\n\n2.1 Setup and Parameters\nThe scheme is built on a finite field where the parameters scale strictly with the targeted security parameter \\(\\lambda\\).\n\n\\(p\\): A prime characteristic \\(p = 2^a 3^b 5^c f - 1\\).\n\n\\(a \\approx \\lambda\\): Bounds the search space for the Alice’s secret degree \\(q(2^a - q)\\). \\(a \\approx \\lambda\\) ensures brute-forcing the unknown degree is exponentially hard.\n\\(3^b \\approx 2^{2\\lambda}\\): The known degree of the Bob’s isogeny. It is sized to prevent meet-in-the-middle key-recovery attacks while keeping evaluations fast.\n\\(5^c \\approx 2^{\\lambda/3}\\): The order of the shared secret points. It provides exactly enough entropy to prevent an attacker from guessing the three unknown change-of-basis coefficients.\n\n\\(E_0\\): A supersingular elliptic curve over \\(\\mathbb{F}_{p^2}\\) with \\(j\\)-invariant 1728.\nBases: \\((P_0, Q_0) \\in E_0[2^a]\\), \\((R_0, S_0) \\in E_0[3^b]\\), and \\((X_0, Y_0) \\in E_0[5^c]\\).\n\\(\\text{KDF}\\): A standard key derivation function.\n\n\n\n2.2 Key Generation (Alice)\n\nSecret Variables:\n\n\\(q \\in [1, 2^a - 1]\\): A random integer coprime to 2, 3, and 5.\n\\(\\phi: E_0 \\to E_A\\): The secret isogeny of degree \\(q(2^a - q)\\). Because the factors sum to \\(2^a\\) (i.e., \\(q + (2^a - q) = 2^a\\)), Kani’s Lemma allows this 1D isogeny to be computed via a 2D isogeny over Abelian surfaces. Moreover, the non-smooth degree prevents SIDH-style polynomial attacks.\n\\(\\alpha_2, \\beta_2 \\in (\\mathbb{Z}/2^a\\mathbb{Z})^\\times\\): Independent diagonal masking scalars.\n\\(\\gamma_3 \\in (\\mathbb{Z}/3^b\\mathbb{Z})^\\times, \\delta_5 \\in (\\mathbb{Z}/5^c\\mathbb{Z})^\\times\\): Uniform masking scalars.\n\nMasked Points on \\(E_A\\):\n\n\\(2^a\\)-torsion: \\(P_A = [\\alpha_2]\\phi(P_0), \\quad Q_A = [\\beta_2]\\phi(Q_0)\\)\n\\(3^b\\)-torsion: \\(R_A = [\\gamma_3]\\phi(R_0), \\quad S_A = [\\gamma_3]\\phi(S_0)\\)\n\\(5^c\\)-torsion: \\(X_A = [\\delta_5]\\phi(X_0), \\quad Y_A = [\\delta_5]\\phi(Y_0)\\)\n\nOutput:\n\nPublic Key: \\((E_A, P_A, Q_A, R_A, S_A, X_A, Y_A)\\)\nSecret Key: \\((q, \\alpha_2, \\beta_2, \\delta_5)\\) alongside the higher-dimensional representation of \\(\\phi\\).\n\n\n\n\n2.3 Encryption (Bob)\n\nSecret Variables:\n\n\\(r_3 \\in \\mathbb{Z}/3^b\\mathbb{Z}\\): An ephemeral scalar to define the isogeny kernel.\n\\(\\omega_2 \\in (\\mathbb{Z}/2^a\\mathbb{Z})^\\times\\): A masking scalar to prevent pairing leakage.\n\\(\\mathbf{D}_5 \\in SL_2(\\mathbb{Z}/5^c\\mathbb{Z})\\): A determinant-1 masking matrix.\n\nParallel Isogenies:\n\n\\(\\psi: E_0 \\to E_B\\): Degree \\(3^b\\) isogeny with kernel \\(\\langle R_0 + [r_3]S_0 \\rangle\\).\n\\(\\psi': E_A \\to E_{AB}\\): Pushforward isogeny \\([\\phi]_*\\psi\\) with kernel \\(\\langle R_A + [r_3]S_A \\rangle=\\phi(\\mathrm{ker}(\\psi))\\).\n\nMasked Points on \\(E_B\\) and \\(E_{AB}\\):\n\n\\(P_B = [\\omega_2]\\psi(P_0), \\quad Q_B = [1/\\omega_2]\\psi(Q_0)\\)\n\\(P_{AB} = [\\omega_2]\\psi'(P_A), \\quad Q_{AB} = [1/\\omega_2]\\psi'(Q_A)\\)\n\\([X_B, Y_B]^T = \\mathbf{D}_5[\\psi(X_0), \\psi(Y_0)]^T\\)\n\nShared Secret Points:\n\n\\([X_{AB}, Y_{AB}]^T = \\mathbf{D}_5[\\psi'(X_A), \\psi'(Y_A)]^T\\)\n\nMessage Encoding:\n\n\\(ct' = m \\oplus \\text{KDF}(X_{AB}, Y_{AB})\\)\n\nOutput:\n\nCiphertext: \\(((E_B, P_B, Q_B, X_B, Y_B), (E_{AB}, P_{AB}, Q_{AB}), ct')\\)\n\n\n\n\n2.4 Decryption (Alice)\n\nUnmasking Phase:\n\nUnmask the target points on the final curve: \\(P'_{AB} = [1/\\alpha_2]P_{AB}, \\quad Q'_{AB} = [1/\\beta_2]Q_{AB}\\)\n\nBuilding the 2D Representation:\n\n\\(\\phi' = \\psi_*\\phi\\): The hidden pushforward isogeny mapping \\(E_B \\to E_{AB}\\).\n\\(\\Phi'\\): The explicit 2-dimensional matrix representation of \\(\\phi'\\) (constructed via Kani’s theorem) using the kernel \\(\\langle([-q]P_B, P'_{AB}), ([-q]Q_B, Q'_{AB})\\rangle\\).\n\nEvaluation Phase:\n\nMap \\((X_B, Y_B)\\) through \\(\\Phi'\\) via intermediate curves.\nSolve discrete logarithms against a new basis \\(U, V \\in E_{AB}[5^c]\\).\nScale evaluations by \\(\\delta_5\\) and \\([2^a-q]\\) (an artifact of computing the dual) to precisely reconstruct \\(X_{AB}\\) and \\(Y_{AB}\\).\n\nMessage Decoding:\n\n\\(m = ct' \\oplus \\text{KDF}(X_{AB}, Y_{AB})\\)",
+    "text": "2 Scheme Design\nThe POKÉ scheme relies on establishing a commutative diagram between two parties (Alice and Bob) using separate sets of torsion points. Before any operations take place, a set of global public parameters is defined.\nE0EAEBEABÁdegÁ=q(2a¡q)ÃÃ0Á0P0;Q02E0[2a],R0;S02E0[3b],X0;Y02E0[5c]PA;QA=[®2]Á(P0);[¯2]Á(Q0),RA;SA=[°3]Á(R0);[°3]Á(S0),XA;YA=[±5]Á(X0);[±5]Á(Y0)PB;QB=[!2]Ã(P0);[1=!2]Ã(Q0),XB;YB=D5[Ã(X0);Ã(Y0)]TPAB;QAB=[!2]Ã0(PA);[1=!2]Ã0(QA),XAB;YAB=D5[Ã0(XA);Ã0(YA)]T=[±5]Á0(XB);[±5]Á0(YB)\n\n2.1 Setup and Parameters\nThe scheme is built on a finite field where the parameters scale strictly with the targeted security parameter \\(\\lambda\\).\n\n\\(p\\): A prime characteristic \\(p = 2^a 3^b 5^c f - 1\\).\n\n\\(a \\approx \\lambda\\): Bounds the search space for the Alice’s secret degree \\(q(2^a - q)\\). \\(a \\approx \\lambda\\) ensures brute-forcing the unknown degree is exponentially hard.\n\\(3^b \\approx 2^{2\\lambda}\\): The known degree of the Bob’s isogeny. It is sized to prevent meet-in-the-middle key-recovery attacks while keeping evaluations fast.\n\\(5^c \\approx 2^{\\lambda/3}\\): The order of the shared secret points. It provides exactly enough entropy to prevent an attacker from guessing the three unknown change-of-basis coefficients.\n\n\\(E_0\\): A supersingular elliptic curve over \\(\\mathbb{F}_{p^2}\\) with \\(j\\)-invariant 1728.\nBases: \\((P_0, Q_0) \\in E_0[2^a]\\), \\((R_0, S_0) \\in E_0[3^b]\\), and \\((X_0, Y_0) \\in E_0[5^c]\\).\n\\(\\text{KDF}\\): A standard key derivation function.\n\n\n\n2.2 Key Generation (Alice)\n\nSecret Variables:\n\n\\(q \\in [1, 2^a - 1]\\): A random integer coprime to 2, 3, and 5.\n\\(\\phi: E_0 \\to E_A\\): The secret isogeny of degree \\(q(2^a - q)\\) is generated by adapting RandIsogImages algorithm proposed in QFESTA.\n\\(\\alpha_2, \\beta_2 \\in (\\mathbb{Z}/2^a\\mathbb{Z})^\\times\\): Independent diagonal masking scalars.\n\\(\\gamma_3 \\in (\\mathbb{Z}/3^b\\mathbb{Z})^\\times, \\delta_5 \\in (\\mathbb{Z}/5^c\\mathbb{Z})^\\times\\): Uniform masking scalars.\n\nMasked Points on \\(E_A\\):\n\n\\(2^a\\)-torsion: \\(P_A = [\\alpha_2]\\phi(P_0), \\quad Q_A = [\\beta_2]\\phi(Q_0)\\)\n\\(3^b\\)-torsion: \\(R_A = [\\gamma_3]\\phi(R_0), \\quad S_A = [\\gamma_3]\\phi(S_0)\\)\n\\(5^c\\)-torsion: \\(X_A = [\\delta_5]\\phi(X_0), \\quad Y_A = [\\delta_5]\\phi(Y_0)\\)\n\nOutput:\n\nPublic Key: \\((E_A, P_A, Q_A, R_A, S_A, X_A, Y_A)\\)\nSecret Key: \\((q, \\alpha_2, \\beta_2, \\delta_5)\\) alongside the higher-dimensional representation of \\(\\phi\\).\n\n\n\n\n2.3 Encryption (Bob)\n\nSecret Variables:\n\n\\(r_3 \\in \\mathbb{Z}/3^b\\mathbb{Z}\\): An ephemeral scalar to define the isogeny kernel.\n\\(\\omega_2 \\in (\\mathbb{Z}/2^a\\mathbb{Z})^\\times\\): A masking scalar to prevent pairing leakage.\n\\(\\mathbf{D}_5 \\in SL_2(\\mathbb{Z}/5^c\\mathbb{Z})\\): A determinant-1 masking matrix.\n\nParallel Isogenies:\n\n\\(\\psi: E_0 \\to E_B\\): Degree \\(3^b\\) isogeny with kernel \\(\\langle R_0 + [r_3]S_0 \\rangle\\).\n\\(\\psi': E_A \\to E_{AB}\\): Pushforward isogeny \\([\\phi]_*\\psi\\) with kernel \\(\\langle R_A + [r_3]S_A \\rangle=\\phi(\\mathrm{ker}(\\psi))\\).\n\nMasked Points on \\(E_B\\) and \\(E_{AB}\\):\n\n\\(P_B = [\\omega_2]\\psi(P_0), \\quad Q_B = [1/\\omega_2]\\psi(Q_0)\\)\n\\(P_{AB} = [\\omega_2]\\psi'(P_A), \\quad Q_{AB} = [1/\\omega_2]\\psi'(Q_A)\\)\n\\([X_B, Y_B]^T = \\mathbf{D}_5[\\psi(X_0), \\psi(Y_0)]^T\\)\n\nShared Secret Points:\n\n\\([X_{AB}, Y_{AB}]^T = \\mathbf{D}_5[\\psi'(X_A), \\psi'(Y_A)]^T\\)\n\nMessage Encoding:\n\n\\(ct' = m \\oplus \\text{KDF}(X_{AB}, Y_{AB})\\)\n\nOutput:\n\nCiphertext: \\(((E_B, P_B, Q_B, X_B, Y_B), (E_{AB}, P_{AB}, Q_{AB}), ct')\\)\n\n\n\n\n2.4 Decryption (Alice)\nThe goal of decryption is for Alice (receiver) to push the Bob’s (sender) points \\((X_B, Y_B)\\) through their secret pushforward isogeny \\(\\phi': E_B \\to E_{AB}\\) to reconstruct the shared secret \\((X_{AB}, Y_{AB})\\).\n\nUnmask Anchor Points:\n\nCompute \\(P'_{AB} = [1/\\alpha_2]P_{AB}\\) and \\(Q'_{AB} = [1/\\beta_2]Q_{AB}\\).\n\nConstruct 2D Isogeny (\\(\\Phi'\\)):\n\nDefine kernel \\(\\langle([-q]P_B, P'_{AB}), ([-q]Q_B, Q'_{AB})\\rangle\\).\nApply Kani’s Theorem to generate a 2-dimensional isogeny matrix \\(\\Phi': E_B \\times E_{AB} \\to F \\times F'\\).\n\n2D Evaluation:\n\nEmbed input points as \\((X_B, \\mathcal{O}_{E_{AB}})\\) and \\((Y_B, \\mathcal{O}_{E_{AB}})\\).\nEvaluate via \\(\\Phi'\\) to obtain points \\(X'_B\\) and \\(Y'_B\\) on the intermediate curve \\(F\\).\n\nCoordinate Translation:\n\nGenerate a reference basis \\((U, V)\\) on \\(E_{AB}\\).\nEmbed and evaluate \\((\\mathcal{O}_{E_B}, U)\\) and \\((\\mathcal{O}_{E_B}, V)\\) via \\(\\Phi'\\) to obtain basis \\(U'\\) and \\(V'\\) on \\(F\\).\nSolve discrete logarithms in \\(\\mathbb{Z}_{5^c}\\) to find coefficients \\(x, y, w, z\\) such that:\n\n\\(X'_B = [x]U' + [y]V'\\)\n\\(Y'_B = [w]U' + [z]V'\\)\n\n\nReconstruct Shared Secret: Compute target points on \\(E_{AB}\\):\n\n\\(X_{AB} = [\\delta_5][2^a-q]([x]U + [y]V)\\)\n\\(Y_{AB} = [\\delta_5][2^a-q]([w]U + [z]V)\\)\n\nMessage Decoding: \\(m = ct' \\oplus \\text{KDF}(X_{AB}, Y_{AB})\\)",
     "crumbs": [
       "Key Exchange",
       "POKÉ"
@@ -700,25 +700,69 @@
     ]
   },
   {
-    "objectID": "schemes/digital-signature/sqisignhd.html",
-    "href": "schemes/digital-signature/sqisignhd.html",
-    "title": "SQIsignHD",
+    "objectID": "schemes/key-exchange/pike.html",
+    "href": "schemes/key-exchange/pike.html",
+    "title": "PIKE",
     "section": "",
-    "text": "TODO\n\n\n\nContributors: @gkorpal",
+    "text": "PIKE (Pairing-assisted Isogeny-based Key Encryption) is a public key encryption scheme that builds upon the recent ElGamal-type POKÉ design framework [CCLL26]. While POKÉ relies on deriving a shared secret on a higher-dimensional, SIDH-like commutative diagram through basis evaluations and solving discrete logarithms, PIKE modifies this approach by using bilinear pairings to establish the shared secret. This careful integration of pairings preserves post-quantum security while bringing two distinct advantages: it yields faster decryption by bypassing the discrete logarithm step entirely, and it significantly relaxes the required prime form. Consequently, PIKE can operate over smaller prime fields, yielding faster overall runtime performance and competitive compactness compared to other isogeny schemes.",
     "crumbs": [
-      "Digital Signature",
-      "SQIsignHD"
+      "Key Exchange",
+      "PIKE"
     ]
   },
   {
-    "objectID": "schemes/digital-signature/sqisign.html",
-    "href": "schemes/digital-signature/sqisign.html",
-    "title": "SQISign",
+    "objectID": "schemes/key-exchange/pike.html#overview",
+    "href": "schemes/key-exchange/pike.html#overview",
+    "title": "PIKE",
     "section": "",
-    "text": "TODO\n\n\n\nContributors: @gkorpal",
+    "text": "PIKE (Pairing-assisted Isogeny-based Key Encryption) is a public key encryption scheme that builds upon the recent ElGamal-type POKÉ design framework [CCLL26]. While POKÉ relies on deriving a shared secret on a higher-dimensional, SIDH-like commutative diagram through basis evaluations and solving discrete logarithms, PIKE modifies this approach by using bilinear pairings to establish the shared secret. This careful integration of pairings preserves post-quantum security while bringing two distinct advantages: it yields faster decryption by bypassing the discrete logarithm step entirely, and it significantly relaxes the required prime form. Consequently, PIKE can operate over smaller prime fields, yielding faster overall runtime performance and competitive compactness compared to other isogeny schemes.",
     "crumbs": [
-      "Digital Signature",
-      "SQISign"
+      "Key Exchange",
+      "PIKE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/pike.html#scheme-design",
+    "href": "schemes/key-exchange/pike.html#scheme-design",
+    "title": "PIKE",
+    "section": "2 Scheme Design",
+    "text": "2 Scheme Design\nJust like POKÉ, the PIKE scheme relies on establishing a commutative diagram between two parties (Alice and Bob) using separate sets of torsion points.\nE0EAEBEMEABÁdegÁ=q(2a¡q)ÃÃ0Á01Á02Á0(=Á02±Á01)P0;Q02E0[2a],R0;S02E0[C],X0;Y02E0[D]PA;QA=[®2]Á(P0);[¯2]Á(Q0),RA;SA=[°C]Á(R0);[°C]Á(S0),XA=[±D]Á(X0)PB;QB=[!2]Ã(P0);[1=!2]Ã(Q0),YB=[´D]Ã(Y0)PAB;QAB=[!2]Ã0(PA);[1=!2]Ã0(QA),XAB=[³D]Ã0(XA)\n\n2.1 Public Parameters\nThe scheme is built on a finite field where the parameters scale strictly with the targeted security parameter \\(\\lambda\\).\n\n\\(p\\): A prime chosen such that \\(2^a C D\\) divides \\(p^2-1\\).\n\n\\(a\\):To resist brute-force message-recovery attacks against the masking nonce, \\(a\\) must be chosen such that \\(a \\approx \\lambda\\).\n\\(C\\): A smooth integer chosen such that \\(C \\ge 2^{2\\lambda}\\). Its size is dictated by the need to prevent \\(O(\\sqrt{C})\\) meet-in-the-middle attacks against the secret isogeny.\n\\(D\\): An integer dividing \\(p^2 - 1\\), chosen such that \\(D \\ge 2^\\lambda\\). This minimum size guarantees \\(\\lambda\\)-bit resistance against direct brute-force guesses of the shared secret pairing value.\n\n\\(E_0\\): A starting supersingular elliptic curve defined over \\(\\mathbb{F}_{p^2}\\) with a known endomorphism ring.\n\\(\\{P_0, Q_0\\}\\): A basis of the \\(2^a\\)-torsion subgroup \\(E_0[2^a]\\).\n\\(\\{R_0, S_0\\}\\): A basis of the \\(C\\)-torsion subgroup \\(E_0[C]\\).\n\\(\\{X_0, Y_0\\}\\): A basis of the \\(D\\)-torsion subgroup \\(E_0[D]\\).\n\\(w_0 = e_D(X_0, Y_0)\\): The precomputed Weil pairing value of the \\(D\\)-torsion basis, defined over \\(\\mathbb{F}_{p^2}\\).\n\\(\\text{H}\\): A cryptographic hash function modeled as a random oracle. To derive the plaintext pad, it is evaluated with a specific domain-separator prefix as \\(\\text{H}(\\text{KDF} \\parallel \\cdot)\\).\n\nThe public parameters for PIKE are defined as \\(\\mathsf{pp} = (p, a, C, D, E_0, (P_0, Q_0), (R_0, S_0), (X_0, Y_0), w_0)\\).\n\n\n2.2 Key Generation (Alice)\nThe receiver (Alice) computes a secret isogeny and masked basis evaluations to form the public key.\n\nSecret Prime Selection: Alice samples a positive integer \\(q &lt; 2^a\\) such that \\(q(2^a - q)\\) is coprime to \\(2\\), \\(C\\), and \\(D\\).\nSecret Isogeny: She generates a random isogeny \\(\\phi: E_0 \\rightarrow E_A\\) of degree \\(q(2^a - q)\\) by adapting RandIsogImages algorithm proposed in QFESTA.\nMasking Scalars: Alice randomly samples \\(\\alpha_2, \\beta_2 \\in (\\mathbb{Z}/2^a\\mathbb{Z})^\\times\\), \\(\\gamma_C \\in (\\mathbb{Z}/C\\mathbb{Z})^\\times\\), and \\(\\delta_D \\in (\\mathbb{Z}/D\\mathbb{Z})^\\times\\).\nBasis Evaluation: She evaluates \\(\\phi\\) on the torsion bases and masks them using the scalars:\n\n\\(P_A = [\\alpha_2]\\phi(P_0)\\), \\(Q_A = [\\beta_2]\\phi(Q_0)\\)\n\\(R_A = [\\gamma_C]\\phi(R_0)\\), \\(S_A = [\\gamma_C]\\phi(S_0)\\). And \\(\\gamma_C\\) is deleted.\n\\(X_A = [\\delta_D]\\phi(X_0)\\)\n\nOutput:\n\nSecret Key \\(\\mathsf{sk} = \\{q, \\alpha_2, \\beta_2, \\delta_D\\}\\).\nPublic Key \\(\\mathsf{pk} = \\{E_A, P_A, Q_A, R_A, S_A, X_A\\}\\).\n\n\n\n\n2.3 Encryption (Bob)\nThe sender (Bob) encrypts a message \\(\\text{msg} \\in \\{0,1\\}^{2\\lambda}\\) using the public key.\n\nNonce Selection: Bob samples \\(r_3 \\in \\mathbb{Z}/C\\mathbb{Z}\\) uniformly at random, alongside random masking scalars \\(\\omega_2 \\in (\\mathbb{Z}/2^a\\mathbb{Z})^\\times\\), and \\(\\eta_D, \\zeta_D \\in (\\mathbb{Z}/D\\mathbb{Z})^\\times\\).\nShared Secret Hash: Bob computes the plaintext padding \\(\\text{pad} = \\text{H}(KDF || tr(w_0^{\\eta_D \\zeta_D}))\\), where \\(tr\\) denotes the trace over \\(\\mathbb{F}_p\\) to avoid ambiguity in coordinate transmission.\nSender Isogenies: Bob computes a 1-dimensional isogeny \\(\\psi: E_0 \\rightarrow E_B\\) of degree \\(C\\) with kernel \\(\\langle R_0 + [r_3]S_0 \\rangle\\). Concurrently, he computes the parallel isogeny \\(\\psi': E_A \\rightarrow E_{AB}\\) with kernel \\(\\langle R_A + [r_3]S_A \\rangle\\).\nMasked Evaluations: Bob evaluates these isogenies on the remaining torsion points:\n\nOn \\(E_B\\):\n\n\\(P_B = [\\omega_2]\\psi(P_0)\\),\n\\(Q_B = [1/\\omega_2]\\psi(Q_0)\\),\n\\(Y_B = [\\eta_D]\\psi(Y_0)\\)\n\nOn \\(E_{AB}\\):\n\n\\(P_{AB} = [\\omega_2]\\psi'(P_A)\\),\n\\(Q_{AB} = [1/\\omega_2]\\psi'(Q_A)\\),\n\\(X_{AB} = [\\zeta_D]\\psi'(X_A)\\)\n\n\nOutput: The ciphertext \\(\\mathsf{ct} = (E_B, P_B, Q_B, Y_B, E_{AB}, P_{AB}, Q_{AB}, X_{AB}, \\text{pad} \\oplus \\text{msg})\\).\n\n\n\n2.4 Decryption (Alice)\nAlice’s goal is to reconstruct the exact shared pairing value Bob used, \\(w_0^{\\eta_D \\zeta_D}\\), without knowing Bob’s secret scalars (\\(\\eta_D, \\zeta_D\\)). She achieves this by mapping Bob’s public points to a “middle” curve and using her own secret key to strip away the mathematical pollution.\n\nConstruct the 2D Isogeny: Alice uses her secret key (\\(q, \\alpha_2, \\beta_2\\)) alongside the \\(2^a\\)-torsion points from the ciphertext (\\(P_B, Q_B, P_{AB}, Q_{AB}\\)) to construct a 2-dimensional isogeny \\(\\Phi: E_B \\times E_{AB} \\rightarrow E_M \\times E\\). Kani’s Lemma guarantees that the kernel of this isogeny is \\(\\langle ([-q]P_B, [1/\\alpha_2]P_{AB}), ([-q]Q_B, [1/\\beta_2]Q_{AB}) \\rangle\\).\nMap to the Middle Curve (\\(E_M\\)): Alice pushes the \\(D\\)-torsion points provided by Bob (\\(Y_B\\) and \\(X_{AB}\\)) through this 2-dimensional isogeny. This maps them to a new, shared “middle” curve, \\(E_M\\).\n\n\\((X_M, \\_) = \\Phi(O_{E_B}, X_{AB})\\)\n\\((Y_M, \\_) = \\Phi(Y_B, O_{E_{AB}})\\)\n\nCompute the Polluted Pairing: Alice calculates the Weil pairing of these two new points on the middle curve: \\(w = e_D(X_M, Y_M)\\). Due to the properties of the commutative diagram, this pairing contains Bob’s secret combined with Alice’s parameters: \\[w = e_D(X_0, Y_0)^{q(2^a - q) C \\cdot \\delta_D \\cdot \\eta_D \\zeta_D}\\]\nUnmasking (Scalar Inversion): To strip away her own variables (\\(q, \\delta_D\\)) and the public constants (\\(2^a, C\\)) from the exponent, Alice computes their modular inverse: \\[t = [ \\delta_D \\cdot C \\cdot q(2^a - q) ]^{-1} \\pmod D\\] She raises the polluted pairing \\(w\\) to this power \\(t\\), perfectly isolating Bob’s shared secret: \\[w^t = e_D(X_0, Y_0)^{\\eta_D \\zeta_D} = w_0^{\\eta_D \\zeta_D}\\]\nMessage Recovery: Alice takes the \\(\\mathbb{F}_p\\)-trace of this recovered value and hashes it to recreate the padding, denoted as \\(\\widetilde{\\text{pad}}\\). She then XORs this recreated padding against the ciphertext component to read the original message: \\[\\widetilde{\\text{pad}} = H(\\text{KDF} \\parallel tr(w^t))\\] \\[\\text{msg} = \\widetilde{\\text{pad}} \\oplus (\\text{pad} \\oplus \\text{msg})\\]",
+    "crumbs": [
+      "Key Exchange",
+      "PIKE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/pike.html#security-assumptions",
+    "href": "schemes/key-exchange/pike.html#security-assumptions",
+    "title": "PIKE",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nPIKE’s IND-CPA security reduces to the underlying Computational-PIKE (C-PIKE) problem in the random oracle model.\n\nThe C-PIKE Problem: Given the public parameters and the protocol’s transmitted tuple \\((E_A, P_A, Q_A, R_A, S_A, X_A)\\) and \\((P_B, Q_B, Y_B, P_{AB}, Q_{AB}, X_{AB})\\), an adversary must compute the target pairing value \\(e_D(X_0, Y_0)^{\\eta_D \\zeta_D}\\). The problem bears heuristic equivalence to C-LIT-SiGamal where \\(X_A, X_B, X_{AB}\\) are revealed. However, there is no known one-sided reduction between C-PIKE and C-POKÉ.\nResistance to Concrete Attacks: The core of the C-PIKE problem assumes the hardness of the Receiver Isogeny Recovery Problem and the Sender Isogeny Recovery Problem. The masking scalars (\\(\\alpha_2, \\beta_2, \\gamma_C, \\delta_D\\)) are drawn randomly and independently, which neutralizes the vulnerabilities exploited by SIDH key-recovery attacks. Furthermore, the scheme resists meet-in-the-middle attacks and variants mapped in FESTA by keeping torsion points evaluated sufficiently masked or restricted.",
+    "crumbs": [
+      "Key Exchange",
+      "PIKE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/pike.html#progress",
+    "href": "schemes/key-exchange/pike.html#progress",
+    "title": "PIKE",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "PIKE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/pike.html#references",
+    "href": "schemes/key-exchange/pike.html#references",
+    "title": "PIKE",
+    "section": "5 References",
+    "text": "5 References\n\n\n[CCLL26] Cai, Shiping ; Chen, Mingjie ; Lai, Yi-Fu ; Lin, Kaizhan: PIKE: Faster isogeny-based public key encryption with pairing-assisted decryption. In: PKC : Springer, 2026, pp. 58–91\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "PIKE"
     ]
   },
   {
@@ -763,6 +807,28 @@
     "crumbs": [
       "Digital Signature",
       "CSI-FiSh"
+    ]
+  },
+  {
+    "objectID": "schemes/digital-signature/sqisign.html",
+    "href": "schemes/digital-signature/sqisign.html",
+    "title": "SQISign",
+    "section": "",
+    "text": "TODO\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Digital Signature",
+      "SQISign"
+    ]
+  },
+  {
+    "objectID": "schemes/digital-signature/sqisignhd.html",
+    "href": "schemes/digital-signature/sqisignhd.html",
+    "title": "SQIsignHD",
+    "section": "",
+    "text": "TODO\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Digital Signature",
+      "SQIsignHD"
     ]
   },
   {
