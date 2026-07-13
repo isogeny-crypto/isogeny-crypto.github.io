@@ -570,7 +570,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">July 11, 2026</p>
+      <p class="date-modified">July 13, 2026</p>
     </div>
   </div>
     
@@ -583,56 +583,56 @@ window.Quarto = {
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>The Masked-Degree Supersingular Isogeny Diffie-Hellman (MD-SIDH) scheme is a countermeasure designed to secure the SIDH key exchange against <a href="../../schemes/key-exchange/sidh.html#progress">devastating torsion point attacks</a>. In the original SIDH scheme, the fixed degrees of the secret isogenies, combined with exact torsion point images, allow attackers to embed the secret isogeny into a higher-dimensional isogeny problem and break the scheme. MD-SIDH mitigates this by masking the degree of the secret isogeny <span class="citation" data-cites="msidh-mdsidh">[<a href="#ref-msidh-mdsidh" role="doc-biblioref">FoMoPe23</a>]</span>. Specifically, the degrees of the secret isogenies are no longer fixed public parameters, but are instead chosen as uniformly random divisors of public smooth integers. To prevent the efficient recovery of this secret degree using Weil pairing computations and discrete logarithms, the scheme requires masking the images of the torsion points by scaling them with a random invertible integer. This ensures the true degree remains hidden, preserving the security of the scheme while facilitating a successful key exchange.</p>
+<p>The Masked-Degree Supersingular Isogeny Diffie-Hellman (MD-SIDH) scheme is a generalization of <a href="../../schemes/key-exchange/msidh.html">M-SIDH</a> designed to secure the <a href="../../schemes/key-exchange/sidh.html">SIDH</a> key exchange against devastating torsion point attacks. In the original SIDH scheme, the fixed degrees of the secret isogenies, combined with exact torsion point images, allow attackers to embed the secret isogeny into a higher-dimensional isogeny problem and break the scheme. MD-SIDH mitigates this by masking the degree of the secret isogeny <span class="citation" data-cites="msidh-mdsidh">[<a href="#ref-msidh-mdsidh" role="doc-biblioref">FoMoPe23</a>]</span>. Specifically, the degrees of the secret isogenies are no longer fixed public parameters, but are instead chosen as uniformly random divisors of public smooth integers. To prevent the efficient recovery of this secret degree using Weil pairing computations and discrete logarithms, the scheme requires masking the images of the torsion points by scaling them with a random invertible integer. This ensures the true degree remains hidden, preserving the security of the scheme while facilitating a successful key exchange.</p>
 </section>
 <section id="scheme-design" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="scheme-design"><span class="header-section-number">2</span> Scheme Design</h2>
-<p>The MD-SIDH scheme relies on algebraic structures similar SIDH, but introduces variable secret degrees and masking scalars to obscure the exact torsion point mappings and isogeny degrees.</p>
+<p>The MD-SIDH scheme relies on algebraic structures similar to SIDH, but introduces variable secret degrees and masking scalars to obscure the exact torsion point mappings and isogeny degrees.</p>
 <section id="public-parameters" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="public-parameters"><span class="header-section-number">2.1</span> Public Parameters</h3>
-<p>The global parameters dictate the structure of the underlying finite fields and curves. Let <span class="math inline">\(\lambda\)</span> be the target security parameter and let <span class="math inline">\(t = t(\lambda) \in \mathbb{N}\)</span> be an integer dependent on <span class="math inline">\(\lambda\)</span>.</p>
+<p>The global parameters dictate the structure of the underlying finite fields and curves.</p>
 <ul>
-<li><strong>Isogeny Degree Bounds (<span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>):</strong> Let <span class="math inline">\(A = l_1^{a_1}\cdots l_t^{a_t}\)</span> and <span class="math inline">\(B = q_1^{b_1}\cdots q_t^{b_t}\)</span> be two smooth, coprime integers.</li>
-<li><strong>Characteristic (<span class="math inline">\(p\)</span>):</strong> Let <span class="math inline">\(p = ABf - 1\)</span> be a prime, where <span class="math inline">\(f\)</span> is a small cofactor. The parameters are chosen such that <span class="math inline">\(A \approx B\)</span>.</li>
-<li><strong>Starting Curve (<span class="math inline">\(E_0\)</span>):</strong> Let <span class="math inline">\(E_0\)</span> be a supersingular elliptic curve defined over <span class="math inline">\(\mathbb{F}_{p^2}\)</span>.</li>
+<li><strong>Security Parameter:</strong> Let <span class="math inline">\(\lambda\)</span> be the target security parameter and let <span class="math inline">\(t = t(\lambda) \in \mathbb{N}\)</span> be an integer dependent on <span class="math inline">\(\lambda\)</span>.</li>
+<li><strong>Isogeny Degree Bounds:</strong> Let <span class="math inline">\(A = l_1^{a_1}\cdots l_t^{a_t}\)</span> and <span class="math inline">\(B = q_1^{b_1}\cdots q_t^{b_t}\)</span> be two smooth, coprime integers.</li>
+<li><strong>Characteristic:</strong> Let <span class="math inline">\(p = ABf - 1\)</span> be a prime, where <span class="math inline">\(f\)</span> is a small cofactor.</li>
+<li><strong>Starting Curve:</strong> Let <span class="math inline">\(E_0\)</span> be a supersingular elliptic curve.</li>
 <li><strong>Torsion Bases:</strong> The bases for the <span class="math inline">\(A\)</span>-torsion and <span class="math inline">\(B\)</span>-torsion subgroups are fixed publicly as <span class="math inline">\(E_0[A] = \langle P_A, Q_A \rangle\)</span> and <span class="math inline">\(E_0[B] = \langle P_B, Q_B \rangle\)</span>.</li>
 </ul>
-<p>The complete public parameters are <span class="math inline">\((E_0, p, A, B, P_A, Q_A, P_B, Q_B)\)</span>.</p>
 </section>
 <section id="key-generation-and-exchange" class="level3" data-number="2.2">
 <h3 data-number="2.2" class="anchored" data-anchor-id="key-generation-and-exchange"><span class="header-section-number">2.2</span> Key Generation and Exchange</h3>
 <p>During this phase, Alice and Bob generate their secret isogenies using random divisors of the bounds, mask the resulting torsion points with random invertible scalars, and transmit them.</p>
 <p><strong>Alice’s Operations:</strong></p>
-<ol type="1">
+<ul>
 <li><strong>Secret Key:</strong> Alice samples a uniformly random divisor <span class="math inline">\(A'\)</span> of <span class="math inline">\(A\)</span> and a random point <span class="math inline">\(R_A \in E_0[A']\)</span>. Her secret key is <span class="math inline">\(sk_A = R_A\)</span>.</li>
+<li><strong>Isogeny Computation:</strong> She computes the isogeny <span class="math inline">\(\phi_A: E_0 \rightarrow E_A := E_0/\langle R_A \rangle\)</span> together with the mapped points <span class="math inline">\(\phi_A(P_B)\)</span> and <span class="math inline">\(\phi_A(Q_B)\)</span>.</li>
 <li><strong>Masking Scalar:</strong> Alice samples a uniformly random integer <span class="math inline">\(\alpha \in \mathbb{Z}/B\mathbb{Z}^\times\)</span>. The integer <span class="math inline">\(\alpha\)</span> can be deleted immediately after the public key is generated.</li>
-<li><strong>Isogeny Computation:</strong> She computes the isogeny <span class="math inline">\(\phi_A: E_0 \rightarrow E_A := E_0/\langle R_A \rangle\)</span>.</li>
-<li><strong>Public Key:</strong> Alice masks her output torsion points by computing <span class="math inline">\([\alpha]\phi_A(P_B)\)</span> and <span class="math inline">\([\alpha]\phi_A(Q_B)\)</span>. She publishes her public key as <span class="math inline">\(pk_A = (E_A, [\alpha]\phi_A(P_B), [\alpha]\phi_A(Q_B))\)</span>.</li>
-</ol>
+<li><strong>Public Key:</strong> Alice masks her output torsion points and publishes her public key as <span class="math inline">\(pk_A = (E_A, [\alpha]\phi_A(P_B), [\alpha]\phi_A(Q_B))\)</span>.</li>
+</ul>
 <p><strong>Bob’s Operations:</strong></p>
-<ol type="1">
+<ul>
 <li><strong>Secret Key:</strong> Bob samples a uniformly random divisor <span class="math inline">\(B'\)</span> of <span class="math inline">\(B\)</span> and a random point <span class="math inline">\(R_B \in E_0[B']\)</span>. His secret key is <span class="math inline">\(sk_B = R_B\)</span>.</li>
+<li><strong>Isogeny Computation:</strong> He computes the isogeny <span class="math inline">\(\phi_B: E_0 \rightarrow E_B := E_0/\langle R_B \rangle\)</span> together with the mapped points <span class="math inline">\(\phi_B(P_A)\)</span> and <span class="math inline">\(\phi_B(Q_A)\)</span>.</li>
 <li><strong>Masking Scalar:</strong> Bob samples a uniformly random integer <span class="math inline">\(\beta \in \mathbb{Z}/A\mathbb{Z}^\times\)</span>. The integer <span class="math inline">\(\beta\)</span> can be deleted immediately after use.</li>
-<li><strong>Isogeny Computation:</strong> He computes the isogeny <span class="math inline">\(\phi_B: E_0 \rightarrow E_B := E_0/\langle R_B \rangle\)</span>.</li>
-<li><strong>Public Key:</strong> Bob masks his output torsion points by computing <span class="math inline">\([\beta]\phi_B(P_A)\)</span> and <span class="math inline">\([\beta]\phi_B(Q_A)\)</span>. He publishes his public key as <span class="math inline">\(pk_B = (E_B, [\beta]\phi_B(P_A), [\beta]\phi_B(Q_A))\)</span>.</li>
-</ol>
+<li><strong>Public Key:</strong> Bob masks his output torsion points and publishes his public key as <span class="math inline">\(pk_B = (E_B, [\beta]\phi_B(P_A), [\beta]\phi_B(Q_A))\)</span>.</li>
+</ul>
 </section>
 <section id="shared-key-computation" class="level3" data-number="2.3">
 <h3 data-number="2.3" class="anchored" data-anchor-id="shared-key-computation"><span class="header-section-number">2.3</span> Shared Key Computation</h3>
-<p>Upon receiving each other’s public keys, the parties use the masked points to recover the unmasked kernels for their respective second-step isogenies. Because the masking scalars are simply constant invertible multipliers over the entire torsion group, the subgroups generated by the mapped secret points remain unaffected.</p>
+<p>Upon receiving each other’s public keys, the parties use the masked points to recover the unmasked kernels for their respective second-step isogenies.</p>
 <p><strong>Alice’s Computation:</strong></p>
-<ol type="1">
-<li>Upon receiving Bob’s public key <span class="math inline">\((E_B, [\beta]\phi_B(P_A), [\beta]\phi_B(Q_A))\)</span>, Alice uses her knowledge of <span class="math inline">\(R_A\)</span> to linearly combine the received points and recover the subgroup <span class="math inline">\(\langle R'_A \rangle = \langle \phi_B(R_A) \rangle\)</span>.</li>
-<li>She computes the isogeny <span class="math inline">\(E_{AB} := E_B/\langle R'_A \rangle\)</span>.</li>
-<li>Her shared key is the <span class="math inline">\(j\)</span>-invariant <span class="math inline">\(j(E_{AB})\)</span>.</li>
-</ol>
+<ul>
+<li><strong>Kernel Recovery:</strong> From the masked points <span class="math inline">\([\beta]\phi_B(P_A)\)</span> and <span class="math inline">\([\beta]\phi_B(Q_A)\)</span>, Alice recovers the subgroup <span class="math inline">\(\langle R'_A \rangle = \langle \phi_B(R_A) \rangle\)</span>.</li>
+<li><strong>Isogeny Definition:</strong> She computes the second-step isogeny defined as <span class="math inline">\(\phi'_A: E_B \rightarrow E_{AB} := E_B/\langle R'_A \rangle\)</span>.</li>
+<li><strong>Shared Key:</strong> The value <span class="math inline">\(j(E_{AB})\)</span> is computed as the shared key.</li>
+</ul>
 <p><strong>Bob’s Computation:</strong></p>
-<ol type="1">
-<li>Upon receiving Alice’s public key <span class="math inline">\((E_A, [\alpha]\phi_A(P_B), [\alpha]\phi_A(Q_B))\)</span>, Bob uses his knowledge of <span class="math inline">\(R_B\)</span> to linearly combine the received points and recover the subgroup <span class="math inline">\(\langle R'_B \rangle = \langle \phi_A(R_B) \rangle\)</span>.</li>
-<li>He computes the isogeny <span class="math inline">\(E_{BA} := E_A/\langle R'_B \rangle\)</span>.</li>
-<li>His shared key is the <span class="math inline">\(j\)</span>-invariant <span class="math inline">\(j(E_{BA})\)</span>.</li>
-</ol>
-<p>Due to the commutative nature of the isogeny kernels, <span class="math inline">\(j(E_{AB}) = j(E_{BA})\)</span>, meaning both parties derive the exact same value as their shared secret.</p>
+<ul>
+<li><strong>Kernel Recovery:</strong> From the masked points <span class="math inline">\([\alpha]\phi_A(P_B)\)</span> and <span class="math inline">\([\alpha]\phi_A(Q_B)\)</span>, Bob recovers the subgroup <span class="math inline">\(\langle R'_B \rangle = \langle \phi_A(R_B) \rangle\)</span>.</li>
+<li><strong>Isogeny Definition:</strong> He computes the second-step isogeny defined as <span class="math inline">\(\phi'_B: E_A \rightarrow E_{BA} := E_A/\langle R'_B \rangle\)</span>.</li>
+<li><strong>Shared Key:</strong> The value <span class="math inline">\(j(E_{BA})\)</span> is computed as the shared key.</li>
+</ul>
+<p>Due to the commutative nature of the isogeny kernels, <span class="math inline">\(j(E_{AB}) = j(E_{BA})\)</span>, ensuring both parties derive the exact same value as their shared secret.</p>
 </section>
 </section>
 <section id="security-assumptions" class="level2" data-number="3">
