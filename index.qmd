@@ -50,7 +50,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes (in
 - []{r=100} SILBE (2024)
 - []{r=50 b=50} [POKÉ](/schemes/key-exchange/poke.qmd) (2025)
 - []{r=50 b=50} [LIT-SiGamal](/schemes/key-exchange/litsigamal.qmd) (2025)
-- []{r=50 b=50} PIKE (2026)
+- []{r=50 b=50} [PIKE](/schemes/key-exchange/pike.qmd) (2026)
 :::
 :::
 

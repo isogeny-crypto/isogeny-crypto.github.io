@@ -205,7 +205,7 @@ Upload the paper to an LLM model (e.g. Google Gemini Pro) with the following pro
 
 ```
 Study the attached file and generate a detailed, concrete description of the newly introduced scheme [NAME] in Quarto Markdown (.qmd) format. The target audience is researchers working in isogeny-based cryptography. Organize the information under the following headings:
-1. Overview (one paragraph summarizing the scheme motivation in plain english without sounding like a sales pitch) 
+1. Overview (one paragraph summarizing the scheme motivation in plain English without sounding like a sales pitch) 
 2. Scheme Design (walk through the scheme while defining each symbol before usage)
 3. Security Assumptions (what problems are assumed hard, whether assumptions are new or borrowed from previous schemes) 
 ```
