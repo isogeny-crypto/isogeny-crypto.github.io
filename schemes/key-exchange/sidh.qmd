@@ -94,11 +94,9 @@ The scheme dictates that Alice and Bob conduct random walks on two distinct isog
 
 * **Resistance to Quantum Group Actions:** Because the scheme is not fundamentally based on an abelian group action, it is completely immune to the subexponential quantum attacks that rendered ordinary isogeny networks insecure.
 
-## Progress {#progress}
+## Progress
 
-TODO
+TODO: In chronological order, discuss follow-up work about performance and security. For example, papers like 2016/413 and 2017/571.
 
-https://sike.org/ and 2017/571 
-
-
+https://sike.org/ 
 
