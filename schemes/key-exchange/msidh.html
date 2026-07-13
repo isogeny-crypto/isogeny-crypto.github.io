@@ -570,7 +570,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">July 11, 2026</p>
+      <p class="date-modified">July 13, 2026</p>
     </div>
   </div>
     
@@ -583,7 +583,7 @@ window.Quarto = {
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>The Masked torsion points Supersingular Isogeny Diffie-Hellman (M-SIDH) scheme is a countermeasure designed to secure the SIDH key exchange against the <a href="../../schemes/key-exchange/sidh.html#progress">devastating torsion point attacks</a>. In the original SIDH scheme, the exact images of torsion points are revealed, which allows attackers to embed the secret isogeny into a higher-dimensional isogeny problem and break the scheme. M-SIDH mitigates this by keeping the degrees of the secret isogenies fixed while partially hiding the torsion point information <span class="citation" data-cites="msidh-mdsidh">[<a href="#ref-msidh-mdsidh" role="doc-biblioref">FoMoPe23</a>]</span>. Specifically, the scheme masks the torsion point images by scaling them with a random integer (a square root of unity). To prevent the efficient recovery of this hidden scalar using pairings and discrete logarithms, the scheme requires the isogeny degrees to be smooth integers with a large number of distinct prime factors. This ensures that the masking scalar has an exponential number of square roots modulo the isogeny degrees, thereby preserving the security of the scheme while facilitating a successful key exchange.</p>
+<p>The Masked torsion points Supersingular Isogeny Diffie-Hellman (M-SIDH) scheme is a countermeasure designed to secure the <a href="../../schemes/key-exchange/sidh.html">SIDH</a> key exchange against the devastating torsion point attacks. In the original SIDH scheme, the exact images of torsion points are revealed, which allows attackers to embed the secret isogeny into a higher-dimensional isogeny problem and break the scheme. M-SIDH mitigates this by keeping the degrees of the secret isogenies fixed while partially hiding the torsion point information <span class="citation" data-cites="msidh-mdsidh">[<a href="#ref-msidh-mdsidh" role="doc-biblioref">FoMoPe23</a>]</span>. Specifically, the scheme masks the torsion point images by scaling them with a random integer (a square root of unity). To prevent the efficient recovery of this hidden scalar using pairings and discrete logarithms, the scheme requires the isogeny degrees to be smooth integers with a large number of distinct prime factors. This ensures that the masking scalar has an exponential number of square roots modulo the isogeny degrees, thereby preserving the security of the scheme while facilitating a successful key exchange.</p>
 </section>
 <section id="scheme-design" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="scheme-design"><span class="header-section-number">2</span> Scheme Design</h2>
