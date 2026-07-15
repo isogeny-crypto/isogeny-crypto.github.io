@@ -154,7 +154,7 @@
     "href": "schemes/key-exchange/csidh.html#progress",
     "title": "CSIDH",
     "section": "4 Progress",
-    "text": "4 Progress\nTODO\n2023/793 and 2020/1188 and 2018/537 and 2019/1202 and 2019/725 and 2025/847 and 2025/1098",
+    "text": "4 Progress\nTODO\n2023/793 and 2020/1188 and 2018/537 and 2019/1202 and 2019/725 and 2025/847 and 2025/1098 and 2023/186 and 2019/1288",
     "crumbs": [
       "Key Exchange",
       "CSIDH"
@@ -799,11 +799,22 @@
     ]
   },
   {
+    "objectID": "schemes/digital-signature/csifish.html#progress",
+    "href": "schemes/digital-signature/csifish.html#progress",
+    "title": "CSI-FiSh",
+    "section": "3 Progress",
+    "text": "3 Progress\n2019/1288",
+    "crumbs": [
+      "Digital Signature",
+      "CSI-FiSh"
+    ]
+  },
+  {
     "objectID": "schemes/digital-signature/csifish.html#references",
     "href": "schemes/digital-signature/csifish.html#references",
     "title": "CSI-FiSh",
-    "section": "3 References",
-    "text": "3 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT : Springer, 2019, pp. 227–255\n\n\n\nContributors: @gkorpal",
+    "section": "4 References",
+    "text": "4 References\n\n\n[BeKlVe19] Beullens, Ward ; Kleinjung, Thorsten ; Vercauteren, Frederik: CSI-FiSh: Efficient Isogeny-Based Signatures from Commutative Group Actions. In: ASIACRYPT : Springer, 2019, pp. 227–255\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Digital Signature",
       "CSI-FiSh"
