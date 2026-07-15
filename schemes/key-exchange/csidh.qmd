@@ -41,4 +41,4 @@ The security of the CSIDH scheme relies on the hardness of an isogeny-finding pr
 
 TODO
 
-2023/793 and 2020/1188 and 2018/537 and 2019/1202 and 2019/725 and 2025/847 and 2025/1098
+2023/793 and 2020/1188 and 2018/537 and 2019/1202 and 2019/725 and 2025/847 and 2025/1098 and 2023/186 and 2019/1288

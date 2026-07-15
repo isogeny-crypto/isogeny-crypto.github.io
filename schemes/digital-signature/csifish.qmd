@@ -19,3 +19,7 @@ CSI-FiSh relies on the same hardness assumptions outlined in the
 By computing the exact structure of $\text{Cl}(R)$ for a 512-bit prime $p$, CSI-FiSh can perform fast, uniform sampling of elements. This allows a direct, efficient adaptation of the classical **Fiat-Shamir transform** to the isogeny setting.
 
 * **Underlying Hard Problem:** The security relies on the hardness of finding paths between supersingular elliptic curves (the Vectorization Problem), similar to the security assumptions laid out in the foundational [CSIDH protocol](../key-exchange/csidh.qmd).
+
+## Progress
+
+2019/1288
