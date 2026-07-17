@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2026-07-17">
 
-<title>Isogeny-based Cryptography Wiki</title>
+<title>SILBE – Isogeny-based Cryptography Wiki</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,30 +24,49 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-7e462b68550b93e95c1625bbce22e1a6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-e87c5c1d56de9691d994e10447346916.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-7e462b68550b93e95c1625bbce22e1a6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-7e462b68550b93e95c1625bbce22e1a6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e87c5c1d56de9691d994e10447346916.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-7e462b68550b93e95c1625bbce22e1a6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": true,
@@ -74,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <!-- Self-hosted fonts for pre-rendered TikZ SVGs -->
-<link rel="stylesheet" type="text/css" href="./assets/fonts.css">
+<link rel="stylesheet" type="text/css" href="../../assets/fonts.css">
 
 <style>
 .tikz-diagram {
@@ -121,8 +141,8 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="./assets/fonts.css">
-<link rel="stylesheet" href="./assets/scheme-list.css">
+<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/scheme-list.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -296,7 +316,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Home</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../schemes/key-exchange/binsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../schemes/key-exchange/silbe.html">SILBE</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -311,7 +331,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Isogeny-based Cryptography Wiki</a> 
+      <a href="../../">Isogeny-based Cryptography Wiki</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
@@ -326,7 +346,7 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
@@ -341,151 +361,151 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/binsidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/binsidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">binSIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/binue.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/binue.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">BIN-UE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/bsidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/bsidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">B-SIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/csidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/csidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/csidhupke.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/csidhupke.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSIDH UPKE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/csigamal.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/csigamal.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">C-SiGamal</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/csurf.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/csurf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSURF</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/festa.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/festa.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">FESTA</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/healsidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/healsidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">HealSIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/ksidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/ksidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="math inline">\(k\)</span>-SIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/litsigamal.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/litsigamal.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">LIT-SiGamal</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/mdsidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/mdsidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">MD-SIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/msidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/msidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">M-SIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/osidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/osidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">OSIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/pike.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/pike.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">PIKE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/poke.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/poke.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">POKÉ</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/psidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/psidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">pSIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/qfesta.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/qfesta.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">QFESTA</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/seta.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/seta.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Séta</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/sigamal.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/sigamal.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SiGamal</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/silbe.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/silbe.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">SILBE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/sims.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/sims.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SimS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/tersidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/tersidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">terSIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/togaue.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/togaue.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">TOGA-UE</span></a>
   </div>
 </li>
@@ -502,19 +522,19 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/digital-signature/csifish.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/digital-signature/csifish.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSI-FiSh</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/digital-signature/sqisign.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/digital-signature/sqisign.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SQISign</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/digital-signature/sqisignhd.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/digital-signature/sqisignhd.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SQIsignHD</span></a>
   </div>
 </li>
@@ -530,9 +550,18 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started"><span class="header-section-number">1</span> Getting Started</a></li>
-  <li><a href="#cryptographic-schemes" id="toc-cryptographic-schemes" class="nav-link" data-scroll-target="#cryptographic-schemes"><span class="header-section-number">2</span> Cryptographic Schemes</a></li>
-  <li><a href="#contributing" id="toc-contributing" class="nav-link" data-scroll-target="#contributing"><span class="header-section-number">3</span> Contributing</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
+  <li><a href="#scheme-design" id="toc-scheme-design" class="nav-link" data-scroll-target="#scheme-design"><span class="header-section-number">2</span> Scheme Design</a>
+  <ul class="collapse">
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">2.1</span> Setup</a></li>
+  <li><a href="#key-generation" id="toc-key-generation" class="nav-link" data-scroll-target="#key-generation"><span class="header-section-number">2.2</span> Key Generation</a></li>
+  <li><a href="#encryption" id="toc-encryption" class="nav-link" data-scroll-target="#encryption"><span class="header-section-number">2.3</span> Encryption</a></li>
+  <li><a href="#decryption" id="toc-decryption" class="nav-link" data-scroll-target="#decryption"><span class="header-section-number">2.4</span> Decryption</a></li>
+  <li><a href="#update-mechanisms" id="toc-update-mechanisms" class="nav-link" data-scroll-target="#update-mechanisms"><span class="header-section-number">2.5</span> Update Mechanisms</a></li>
+  </ul></li>
+  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a></li>
+  <li><a href="#progress" id="toc-progress" class="nav-link" data-scroll-target="#progress"><span class="header-section-number">4</span> Progress</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">5</span> References</a></li>
   </ul>
 </nav>
     </div>
@@ -540,10 +569,10 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../schemes/key-exchange/binsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../schemes/key-exchange/silbe.html">SILBE</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Isogeny-based Cryptography Wiki</h1>
-<p class="subtitle lead">A collaborative, accessible reference for isogeny-based cryptographic schemes.</p>
+<h1 class="title">SILBE</h1>
+<p class="subtitle lead">Supersingular Isogeny Lollipop Based Encryption</p>
 </div>
 
 
@@ -551,7 +580,19 @@ window.Quarto = {
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 17, 2026</p>
+    </div>
+  </div>
   
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">July 17, 2026</p>
+    </div>
+  </div>
     
   </div>
   
@@ -560,107 +601,115 @@ window.Quarto = {
 </header>
 
 
-<p>Welcome to the <strong>Isogeny-based Cryptography Wiki</strong>. This site serves as an open-source, mathematically rigorous, and accessible repository of knowledge detailing post-quantum cryptographic schemes built on the hardness of finding isogenies between elliptic curves.</p>
-<section id="getting-started" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="getting-started"><span class="header-section-number">1</span> Getting Started</h2>
-<p>If you are not familiar with cryptographic schemes, we recommend <a href="https://joyofcryptography.com/">Mike Rosulek’s book</a>. For the underlying mathematics, see <a href="https://www.math.auckland.ac.nz/~sgal018/crypto-book/crypto-book.html">Steven Galbraith’s book</a>. You may also benefit from reading PhD theses in this area, for instance <a href="https://github.com/GiacomoPope/maths-theses">this list</a> curated by Giacomo Pope.</p>
-<p>You may also find good reference material in past schools, such as <a href="https://isogenyschool2020.co.uk/schedule/">Bristol 2020</a>, <a href="https://www.youtube.com/@ANTSSummerSchool/videos">ANTS 2020</a>, <a href="https://www.youtube.com/playlist?list=PLldN_DpkXL3amFV76Dmimhbrm0MYa4d32">PCMI 2022</a>, <a href="https://www.youtube.com/playlist?list=PLHyI3Fbmv0SdibCMJcJFBZPARwec6fPnQ">IPAM 2022</a>, <a href="https://www.youtube.com/playlist?list=PLo3uxbU5v05z8XnaEeNYI_xbn_IrvgLvJ">VaNTAGe 2022</a>, <a href="https://www.youtube.com/playlist?list=PLLxG_np9o-2fSsZcOq0woYWBxbiSFy1qI">CIMPA 2024</a>, <a href="https://www.slmath.org/summer-schools/1068#schedule_notes">SLMath 2024</a>, <a href="https://www.youtube.com/playlist?list=PLiHaXFHjrqYcvzIxFEo118XCzxI-KSctT">PQCSA 2025</a>, and <a href="https://swc-math.github.io/aws/2026/index.html">AWS 2026</a>.</p>
-<p>To engage with the community, consider joining activities such as the <a href="https://isogeny.club/">Isogeny Club</a>, <a href="https://www.esat.kuleuven.be/cosic/projects/isocrypt/workshops/">Leuven Isogeny Days</a>, <a href="https://www.birs.ca/events/2025/5-day-workshops/25w5500">BIRS workshops</a>, and <a href="https://swissogeny.github.io/">Swissogeny Day</a>.</p>
+<section id="overview" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
+<p>SILBE (Supersingular Isogeny Lollipop Based Encryption) is an isogeny-based Updatable Public Key Encryption (UPKE) scheme that serves as an alternative to <a href="../../schemes/key-exchange/csidhupke.html">CSIDH UPKE</a> by operating without reliance on group actions. It follows the same principle as <a href="../../schemes/key-exchange/seta.html">Séta</a>, where torsion point attacks on <a href="../../schemes/key-exchange/sidh.html#progress">SIDH</a> were fundamentally inverted to design a Public Key Encryption (PKE) scheme. Specifically, if the starting curve <span class="math inline">\(E_0\)</span> is defined over <span class="math inline">\(\mathbb{F}_p\)</span>, one can use a generalization of the so-called “lollipop attack” to break <a href="../../schemes/key-exchange/msidh.html#progress">M-SIDH</a>. The above observation hints that one could use the generalized lollipop attack to design a public key encryption scheme, by generating a public key as a random supersingular curve and keeping the isogeny connecting it to <span class="math inline">\(E_0\)</span> as the secret key to facilitate decryption <span class="citation" data-cites="silbe">[<a href="#ref-silbe" role="doc-biblioref">DuFoVa24</a>]</span>.</p>
 </section>
-<section id="cryptographic-schemes" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="cryptographic-schemes"><span class="header-section-number">2</span> Cryptographic Schemes</h2>
-<p>This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes (including KEM, etc.) and digital signature schemes.</p>
-<p><strong>Legend:</strong> <span class="scheme-disc" style="background: var(--dot-red);"></span> torsion points; <span class="scheme-disc" style="background: var(--dot-blue);"></span> quaternion algebra; <span class="scheme-disc" style="background: var(--dot-green);"></span> group action;</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<section id="key-exchange" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="key-exchange"><span class="header-section-number">2.1</span> Key Exchange</h3>
-<div class="unlisted-schemes">
+<section id="scheme-design" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="scheme-design"><span class="header-section-number">2</span> Scheme Design</h2>
+<p>The SILBE scheme alternates between different representations of isogenies (kernel, ideal, and higher-dimensional) and utilizes the Deuring correspondence and Kani’s Lemma.</p>
+<div class="tikz-diagram"><svg xmlns="http://www.w3.org/2000/svg" width="409.955" height="146.143" viewbox="-72 -72 307.467 109.607"><defs><style>@import url(../../assets/fonts.css);</style></defs><g stroke="#000" stroke-miterlimit="10" stroke-width=".4"><g stroke="none"><text x="-37.448" y="-28.751" font-family="cmmi9" font-size="9" transform="translate(-5.487 2.575)">E</text><text x="-30.641" y="-27.751" font-family="cmr6" font-size="6" transform="translate(-5.487 2.575)">0</text></g><g stroke="none"><text x="-37.448" y="-28.751" font-family="cmmi9" font-size="9" transform="translate(107.385 -25.878)">E</text><text x="-30.641" y="-27.751" font-family="cmmi6" font-size="6" transform="translate(107.385 -25.878)">A</text></g><g stroke="none"><text x="-37.448" y="-28.751" font-family="cmmi9" font-size="9" transform="translate(221.045 -25.878)">E</text><text x="-30.641" y="-27.751" font-family="cmmi6" font-size="6" transform="translate(221.045 -25.878)">B</text></g><g stroke="none"><text x="-37.448" y="-28.751" font-family="cmmi9" font-size="9" transform="translate(105.085 60.156)">E</text><text x="-30.128" y="-33.351" font-family="cmr6" font-size="6" transform="translate(105.085 60.156)">(</text><text x="-27.239" y="-33.351" font-family="cmmi6" font-size="6" transform="translate(105.085 60.156)">p</text><text x="-23.384" y="-33.351" font-family="cmr6" font-size="6" transform="translate(105.085 60.156)">)</text><text x="-30.641" y="-26.151" font-family="cmmi6" font-size="6" transform="translate(105.085 60.156)">A</text></g><g stroke="none"><text x="-37.448" y="-28.751" font-family="cmmi9" font-size="9" transform="translate(218.896 60.156)">E</text><text x="-30.128" y="-33.351" font-family="cmr6" font-size="6" transform="translate(218.896 60.156)">(</text><text x="-27.239" y="-33.351" font-family="cmmi6" font-size="6" transform="translate(218.896 60.156)">p</text><text x="-23.384" y="-33.351" font-family="cmr6" font-size="6" transform="translate(218.896 60.156)">)</text><text x="-30.641" y="-26.151" font-family="cmmi6" font-size="6" transform="translate(218.896 60.156)">B</text></g><g stroke-dasharray="3.0,3.0"><path fill="none" d="M-46.467-25.47c-20.01 7.285-7.727-26.102 3.17-12.942"></path><path stroke-dasharray="none" stroke-width=".39997600000000005" d="m-41.874-36.328-.93-3.715-.44 1.738-1.78-.2Z"></path></g><text x="-37.448" y="-28.751" stroke="none" font-family="cmmi9" font-size="9" transform="translate(-31.49 -8.021)">¼</text><g fill="red" stroke="red" stroke-width=".8"><path fill="none" d="m-28.428-31.006 90.83-22.711"></path><path stroke-width=".799984" d="m65.3-54.442-4.427-.518 1.723 1.194-.958 1.865Z"></path><g fill="red" stroke="none"><text x="-37.448" y="-28.751" font-family="cmmi9" font-size="9" transform="rotate(-14.037 -87.848 -232.134)scale(.99998)">I</text><text x="-33.404" y="-27.685" font-family="cmmi6" font-size="6" transform="rotate(-14.037 -87.848 -232.134)scale(.99998)">Á</text><text x="-28.951" y="-26.335" font-family="cmmi5" font-size="5" transform="rotate(-14.037 -87.848 -232.134)scale(.99998)">A</text></g></g><g fill="red" stroke="red" stroke-width=".8"><path fill="none" d="m-28.428-24.243 88.843 44.431"></path><path stroke-width=".799968" d="m63.086 21.524-3.024-3.274.532 2.028-1.942.791Z"></path><g fill="red" stroke="none"><text x="-37.448" y="-28.751" font-family="cmr9" font-size="9" transform="scale(.99996)rotate(26.57 -83.107 65.39)">[</text><text x="-34.878" y="-28.751" font-family="cmmi9" font-size="9" transform="scale(.99996)rotate(26.57 -83.107 65.39)">¼</text><text x="-29.261" y="-28.751" font-family="cmr9" font-size="9" transform="scale(.99996)rotate(26.57 -83.107 65.39)">]</text><text x="-26.692" y="-27.751" font-family="cmsy6" font-size="6" transform="scale(.99996)rotate(26.57 -83.107 65.39)">¤</text><text x="-22.358" y="-28.751" font-family="cmmi9" font-size="9" transform="scale(.99996)rotate(26.57 -83.107 65.39)">I</text><text x="-18.315" y="-27.685" font-family="cmmi6" font-size="6" transform="scale(.99996)rotate(26.57 -83.107 65.39)">Á</text><text x="-13.862" y="-26.335" font-family="cmmi5" font-size="5" transform="scale(.99996)rotate(26.57 -83.107 65.39)">A</text></g></g><g fill="#00f" stroke="#00f" stroke-width=".8"><path fill="none" d="M86.322-57.204h89.617"></path><path d="m178.926-57.204-4.17-1.577 1.383 1.577-1.382 1.576Z"></path><g fill="#00f" stroke="none"><text x="-37.448" y="-28.751" font-family="cmmi9" font-size="9" transform="translate(164.715 -33.936)">Á</text><text x="-31.942" y="-27.751" font-family="cmmi6" font-size="6" transform="translate(164.715 -33.936)">B</text></g></g><g fill="#00f" stroke="#00f" stroke-width=".8"><path fill="none" d="M88.622 28.154h85.168"></path><path d="m176.776 28.154-4.169-1.576 1.383 1.576-1.383 1.577Z"></path><g fill="#00f" stroke="none"><text x="-37.448" y="-28.751" font-family="cmmi9" font-size="9" transform="translate(162.897 50.573)">Á</text><text x="-31.942" y="-33.351" font-family="cmr6" font-size="6" transform="translate(162.897 50.573)">(</text><text x="-29.053" y="-33.351" font-family="cmmi6" font-size="6" transform="translate(162.897 50.573)">p</text><text x="-25.198" y="-33.351" font-family="cmr6" font-size="6" transform="translate(162.897 50.573)">)</text><text x="-31.942" y="-26.151" font-family="cmmi6" font-size="6" transform="translate(162.897 50.573)">B</text></g></g><g stroke-dasharray="3.0,3.0"><path fill="none" d="M76.363-50.096v65.792"></path><path stroke-dasharray="none" d="m76.363 18.202 1.351-3.585-1.35 1.179-1.351-1.179Z"></path><text x="-37.448" y="-28.751" stroke="none" font-family="cmmi9" font-size="9" transform="translate(118.344 15.026)">¼</text></g><g stroke-dasharray="3.0,3.0"><path fill="none" d="M190.174-50.096v65.792"></path><path stroke-dasharray="none" d="m190.174 18.202 1.351-3.585-1.35 1.179-1.351-1.179Z"></path><text x="-37.448" y="-28.751" stroke="none" font-family="cmmi9" font-size="9" transform="translate(232.155 15.026)">¼</text></g><g stroke-width=".8"><path fill="none" d="M200.284-51.371c23.75 12.79 26.097 53.305 5.51 70.06"></path><path stroke-width=".799968" d="m203.358 20.416 4.305-1.155-2.043-.472.202-2.087Z"></path><text x="-37.448" y="-28.751" stroke="none" font-family="cmmi9" font-size="9" transform="translate(262.954 15.31)">Ã</text></g></g></svg></div>
+<section id="setup" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">2.1</span> Setup</h3>
+<p>The public parameters <span class="math inline">\(pp\)</span> are generated from the security parameter <span class="math inline">\(1^\lambda\)</span> to support the underlying algebraic structures:</p>
 <ul>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/sidh.html">SIDH</a> (2011–2022)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/ksidh.html"><span class="math inline">\(k\)</span>-SIDH</a> (2017-2022)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> <a href="./schemes/key-exchange/csidh.html">CSIDH</a> (2018)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> <a href="./schemes/key-exchange/osidh.html">OSIDH</a> (2019)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> <a href="./schemes/key-exchange/csurf.html">CSURF</a> (2020)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/bsidh.html">B-SIDH</a> (2020–2022)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-green) 50% 100%);"></span> <a href="./schemes/key-exchange/sigamal.html">SiGamal</a> (2020)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-green) 50% 100%);"></span> <a href="./schemes/key-exchange/csigamal.html">C-SiGamal</a> (2020)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-green) 50% 100%);"></span> <a href="./schemes/key-exchange/sims.html">SimS</a> (2021)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> <a href="./schemes/key-exchange/csidhupke.html">CSIDH UPKE</a> (2021)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> <a href="./schemes/key-exchange/seta.html">Séta</a> (2021–2022)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/healsidh.html">HealSIDH</a> (2021-2022)</li>
-<li><span class="scheme-disc" style="background: var(--dot-blue);"></span> <a href="./schemes/key-exchange/psidh.html">pSIDH</a> (2022–2023)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/msidh.html">M-SIDH</a> (2023)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/mdsidh.html">MD-SIDH</a> (2023)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/festa.html">FESTA</a> (2023)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/binsidh.html">binSIDH</a> (2023)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/tersidh.html">terSIDH</a> (2023)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> <a href="./schemes/key-exchange/qfesta.html">QFESTA</a> (2024)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-green) 50% 100%);"></span> <a href="./schemes/key-exchange/togaue.html">TOGA-UE</a> (2024)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> <a href="./schemes/key-exchange/binue.html">BIN-UE</a> (2024)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> <a href="./schemes/key-exchange/silbe.html">SILBE</a> (2024)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> <a href="./schemes/key-exchange/poke.html">POKÉ</a> (2025)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> <a href="./schemes/key-exchange/litsigamal.html">LIT-SiGamal</a> (2025)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> <a href="./schemes/key-exchange/pike.html">PIKE</a> (2026)</li>
+<li><strong><span class="math inline">\(\lambda\)</span></strong>: The primary security parameter determining the strict size and structure of the modulus <span class="math inline">\(N\)</span> to resist partial product attacks.<br>
+</li>
+<li><strong><span class="math inline">\(p\)</span></strong>: A prime of the form <span class="math inline">\(p = 3^\beta N f + 1\)</span> such that <span class="math inline">\(p \equiv 3 \pmod 4\)</span>.<br>
+</li>
+<li><strong><span class="math inline">\(N\)</span></strong>: A highly composite integer <span class="math inline">\(N = \prod_{i=1}^n p_i\)</span> composed of distinct odd small primes, ensuring an exponentially large number of square roots of unity. The parameter <span class="math inline">\(\lambda\)</span> enforces that for any partial product <span class="math inline">\(N_k = \prod_{i=k}^n p_i\)</span>, if <span class="math inline">\(N_k \ge \sqrt{3^\beta}\)</span>, then <span class="math inline">\(n - k \ge \lambda\)</span>. Additionally, <span class="math inline">\(N\)</span> must be co-prime to 3 and satisfy <span class="math inline">\(N \ge 3^\beta p^{1/2}\log(p)^2\)</span>.<br>
+</li>
+<li><strong><span class="math inline">\(\beta\)</span></strong>: An integer exponent used to define the degree of the encryption isogenies (<span class="math inline">\(3^\beta\)</span>).<br>
+</li>
+<li><strong><span class="math inline">\(E_0\)</span></strong>: The starting supersingular elliptic curve defined over <span class="math inline">\(\mathbb{F}_p\)</span> with a known endomorphism ring, typically with a j-invariant of 1728.<br>
+</li>
+<li><strong><span class="math inline">\(P_0, Q_0\)</span></strong>: A canonical torsion basis generating <span class="math inline">\(E_0[N]\)</span>, deterministically sampled.<br>
+</li>
+<li><strong><span class="math inline">\(U_0, V_0\)</span></strong>: A canonical torsion basis generating <span class="math inline">\(E_0[3^\beta]\)</span>, deterministically sampled.<br>
+</li>
+<li><strong><span class="math inline">\(M_\pi\)</span></strong>: A <span class="math inline">\(2 \times 2\)</span> matrix in <span class="math inline">\(GL_2(N)\)</span> computed via Weil’s pairing, representing the action of the Frobenius endomorphism <span class="math inline">\(\pi\)</span> on the basis <span class="math inline">\((P_0, Q_0)\)</span>.<br>
+</li>
+<li><strong><span class="math inline">\(t\)</span></strong>: An integer bounding the length of the isogeny walks, explicitly calculated as <span class="math inline">\(t = \lfloor 2 \log_2(p) / (\beta \log_2(3)) \rfloor\)</span> to ensure <span class="math inline">\(3^{\beta t} \ge p^2\)</span>.</li>
 </ul>
-</div>
 </section>
-</div><div class="column" style="width:50%;">
-<section id="digital-signature" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="digital-signature"><span class="header-section-number">2.2</span> Digital Signature</h3>
-<div class="unlisted-schemes">
+<section id="key-generation" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="key-generation"><span class="header-section-number">2.2</span> Key Generation</h3>
+<p>Alice establishes her keys by constructing an iterative, non-backtracking isogeny walk while simultaneously updating an evaluation basis:</p>
 <ul>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> JS (2014)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> YAJJS (2017)</li>
-<li><span class="scheme-disc" style="background: var(--dot-blue);"></span> GPS (2017)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> SeaSign (2019)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> <a href="./schemes/digital-signature/csifish.html">CSI-FiSh</a> (2019)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> Sashimi (2020)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> Lossy CSI-FiSh (2020)</li>
-<li><span class="scheme-disc" style="background: var(--dot-blue);"></span> <a href="./schemes/digital-signature/sqisign.html">SQISign</a> (2020)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> Calamari (2020)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> IAS (2021)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> BDKLP (2022)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> SIDH PoK (2022)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> SCALLOP (2023)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> CJSS (2023)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> CSI-Otter (2023)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> JSD (2024)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> SCALLOP-HD (2024)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> <a href="./schemes/digital-signature/sqisignhd.html">SQIsignHD</a> (2024)</li>
-<li><span class="scheme-disc" style="background: var(--dot-blue);"></span> AprèsSQI (2024)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQIsign2D-East (2024)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQIsign2D-West (2024)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQIPrime (2024)</li>
-<li><span class="scheme-disc" style="background: var(--dot-blue);"></span> Erebor (2025)</li>
-<li><span class="scheme-disc" style="background: var(--dot-blue);"></span> Durian (2025)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> PRISM (2025)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> PEARL-SCALLOP (2025)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> Tanuki (2025)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQIsign2D<span class="math inline">\(^2\)</span> (2025)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SPIDER (2026)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> ORCAS (2026)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> Wombat (2026)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQIsign2DPush (2026)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> WaterSQI (2026)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> PRISMO (2026)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQInstructor (2026)</li>
+<li><strong>Walk Construction</strong>: Alice executes a loop of <span class="math inline">\(t\)</span> steps. At each step, she samples a random scalar in <span class="math inline">\(\mathbb{Z}_{3^\beta}\)</span> and computes the next curve and isogeny step from the generated kernel.<br>
+</li>
+<li><strong>Ideal Representation</strong>: For each step, she extracts the corresponding kernel ideal and finds an equivalent ideal representing the entire walk up to that point. This ideal is validated to ensure it evaluates to a prime number and meets specific modular arithmetic conditions (such as ensuring <span class="math inline">\(\tilde{N}^2 - n(J_i) \equiv 1 \pmod 4\)</span>) before proceeding.<br>
+</li>
+<li><strong><span class="math inline">\(E_A\)</span> (Public Key)</strong>: A uniformly random supersingular elliptic curve representing the final destination after the <span class="math inline">\(t\)</span>-step walk.<br>
+</li>
+<li><strong><span class="math inline">\(\phi_A\)</span> (Secret Key)</strong>: An efficiently computable, relatively short isogeny <span class="math inline">\(\phi_A: E_0 \rightarrow E_A\)</span>. She computes a connecting ideal <span class="math inline">\(I_{\phi_A}\)</span> from the final walk ideal, verifying that <span class="math inline">\(N' - n(I_{\phi_A})^2 3^{2\beta} \equiv 1 \pmod 4\)</span> and is prime, where <span class="math inline">\(N' = p_1 \prod_{i=2}^n p_i^2\)</span>. The final secret key tuple consists of an evaluation basis <span class="math inline">\(\mathfrak{O}_{E_A}\)</span>, the corresponding ideal <span class="math inline">\(I_{\phi_A}\)</span>, and a mapping matrix <span class="math inline">\(M_{\phi_A}\)</span>.</li>
 </ul>
-</div>
 </section>
-</div>
-</div>
+<section id="encryption" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="encryption"><span class="header-section-number">2.3</span> Encryption</h3>
+<p>Bob encrypts a binary message using the public key <span class="math inline">\(E_A\)</span>:</p>
+<ul>
+<li><strong><span class="math inline">\(m\)</span></strong>: The <span class="math inline">\(n\)</span>-bit plaintext message, mapped to a square root of unity modulo <span class="math inline">\(N\)</span> using the Chinese Remainder Theorem, such that <span class="math inline">\(m \in \mu_2(N) = \{x \in \mathbb{Z}_N \vert{} x^2 = 1\}\)</span>.<br>
+</li>
+<li><strong><span class="math inline">\(\phi_B\)</span></strong>: Bob deterministically extracts the canonical torsion bases from <span class="math inline">\(E_A\)</span>, samples a uniformly random scalar in <span class="math inline">\(\mathbb{Z}_{3^\beta}\)</span>, and computes a random isogeny <span class="math inline">\(\phi_B: E_A \rightarrow E_B\)</span> of degree <span class="math inline">\(3^\beta\)</span> based on the generated kernel.<br>
+</li>
+<li><strong><span class="math inline">\(P_A, Q_A\)</span></strong>: A canonical <span class="math inline">\(N\)</span>-torsion basis on <span class="math inline">\(E_A\)</span>.<br>
+</li>
+<li><strong><span class="math inline">\(R_1, R_2\)</span></strong>: The masked images of the basis points, computed by evaluating the isogeny and scaling by the message: <span class="math inline">\(R_1 = [m]\phi_B(P_A)\)</span> and <span class="math inline">\(R_2 = [m]\phi_B(Q_A)\)</span>.<br>
+</li>
+<li><strong><span class="math inline">\(ct\)</span> (Ciphertext)</strong>: Bob outputs the tuple <span class="math inline">\((E_B, R_1, R_2)\)</span>.</li>
+</ul>
 </section>
-<section id="contributing" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="contributing"><span class="header-section-number">3</span> Contributing</h2>
-<p>This wiki is maintained by the <strong>isogeny-crypto</strong> organization. If you spot a mathematical error, want to expand on a protocol’s performance metrics, or wish to add a new primitive:</p>
-<ol type="1">
-<li>Fork the repository on <a href="https://github.com/isogeny-crypto/isogeny-crypto.github.io">GitHub</a>.</li>
-<li>Create your article using a <code>.qmd</code> file in the <code>schemes/</code> directory.</li>
-<li>Submit a Pull Request.</li>
-</ol>
+<section id="decryption" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="decryption"><span class="header-section-number">2.4</span> Decryption</h3>
+<p>Alice uses her stored ideal and matrix to efficiently break the masking via a specialized, dimension-4 lollipop attack:</p>
+<ul>
+<li><strong><span class="math inline">\(S, T\)</span></strong>: Alice extracts canonical bases from the Frobenius-pushed curve and translates the ciphertext torsion points back to <span class="math inline">\(E_0\)</span>, computing <span class="math inline">\(\binom{S}{T} = M_{\phi_A} \binom{R_1}{R_2} = [m]\phi_B \circ \phi_A \binom{P_0}{Q_0}\)</span>.<br>
+</li>
+<li><strong><span class="math inline">\(\psi\)</span></strong>: Alice defines an unmasked isogeny <span class="math inline">\(\psi = \phi_B^{(p)} \circ \phi_A^{(p)} \circ \widehat{\phi_A} \circ \widehat{\phi_B}\)</span>, where <span class="math inline">\((p)\)</span> denotes the pushforward through the Frobenius endomorphism.<br>
+</li>
+<li><strong>Evaluate <span class="math inline">\(\psi\)</span></strong>: Alice calculates secondary evaluation points by computing <span class="math inline">\(\binom{K}{L} = [n(I_{\phi_A})3^\beta]M_\pi^{-1}\pi\binom{S}{T}\)</span>. This evaluates <span class="math inline">\(\psi\)</span> over <span class="math inline">\(E_B[N]\)</span>.<br>
+</li>
+<li><strong>Evaluate <span class="math inline">\(\hat{\psi}\)</span></strong>: Using a higher-dimensional Kani’s Lemma evaluation in dimension 4 over the combined primary and secondary points, Alice evaluates <span class="math inline">\(\hat{\psi}\)</span> over <span class="math inline">\(E_B^{(p)}[3^\beta]\)</span> to isolate the dual points and retrieve the generator for <span class="math inline">\(ker(\widehat{\phi_B})\)</span>.<br>
+</li>
+<li><strong>Unmask <span class="math inline">\(m\)</span></strong>: Once <span class="math inline">\(\phi_B\)</span> is reconstructed, Alice computes <span class="math inline">\(\phi_B(R_1) = [m 3^\beta] P_A\)</span>. She extracts the mask <span class="math inline">\(m\)</span> by solving a discrete logarithm in <span class="math inline">\(E[N]\)</span> and multiplying the result by the modular inverse <span class="math inline">\((3^\beta)^{-1} \pmod N\)</span>.</li>
+</ul>
+</section>
+<section id="update-mechanisms" class="level3" data-number="2.5">
+<h3 data-number="2.5" class="anchored" data-anchor-id="update-mechanisms"><span class="header-section-number">2.5</span> Update Mechanisms</h3>
+<p>Because the public key is just a uniformly random supersingular elliptic curve <span class="math inline">\(E_A\)</span>, updating it simply means taking a random isogeny walk to a new curve <span class="math inline">\(E'_A\)</span>. The secret key is updated without leaking the update path or letting the key grow infinitely long.</p>
+<ul>
+<li><strong>Update Generation (UG)</strong>: Generates a random seed <span class="math inline">\(\mu \in \{0,1\}^{4 \log(p)}\)</span>. This specific size ensures the distribution of the newly generated public key will be statistically close to a uniform distribution in the supersingular isogeny graph.<br>
+</li>
+<li><strong>Update Public Key (Upk)</strong>: Applies a hash function <span class="math inline">\(H\)</span> to the seed <span class="math inline">\(\mu\)</span> to generate a sequence of <span class="math inline">\(t\)</span> elements in <span class="math inline">\(\mathbb{Z}_{3^\beta}\)</span>. These elements define the specific sequence of kernels to construct a new, non-backtracking isogeny walk from <span class="math inline">\(E_A\)</span> to the new public key <span class="math inline">\(E'_A\)</span>.<br>
+</li>
+<li><strong>Update Secret Key (Usk)</strong>: Alice computes the exact same walk from <span class="math inline">\(E_A\)</span> to <span class="math inline">\(E'_A\)</span> using the hashed seed. Instead of insecurely concatenating the new walk to the old secret key, SILBE leverages the known endomorphism ring of the starting curve <span class="math inline">\(E_0\)</span> and the Deuring correspondence. By computing prime-norm ideals equivalent to the discrete steps and evaluating isogenies in higher dimensions, it recursively translates the long, concatenated walk into a completely new, relatively short isogeny <span class="math inline">\(\phi'_A : E_0 \to E'_A\)</span>. This connects <span class="math inline">\(E_0\)</span> directly to the new public key <span class="math inline">\(E'_A\)</span> without revealing the update path.</li>
+</ul>
+</section>
+</section>
+<section id="security-assumptions" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
+<p>SILBE relies on assumptions inherited from established isogeny-based schemes and the nature of pseudo-random walks.</p>
+<ul>
+<li><strong>Supersingular Isogeny Problem with Masked Torsion Point Information</strong>: This is the primary hard problem, borrowed from the <a href="../../schemes/key-exchange/msidh.html#security-assumptions">M-SIDH</a> scheme. It states that given a basis <span class="math inline">\(P, Q\)</span> and its masked images <span class="math inline">\([m]\phi(P), [m]\phi(Q)\)</span> through an isogeny <span class="math inline">\(\phi\)</span>, it is computationally hard to compute <span class="math inline">\(\phi\)</span> without knowing the mask <span class="math inline">\(m\)</span>. Based on this assumption over random curves, the base SILBE scheme achieves One-Wayness under Plaintext Checking Attack with Updatability (OW-PCA-U).</li>
+<li><strong>Isogeny Walk Problem</strong>: The key update mechanism relies on the standard isogeny walk problem, assuming that finding a path between two pseudorandom curves is hard. SILBE borrows the Fujisaki-Okamoto (FO) transform for UPKE to upgrade its baseline OW-PCA-U security into a fully secure IND-CCA-U scheme (Indistinguishability under Chosen Ciphertext Attack with Updatability) in the Random Oracle Model (ROM).</li>
+</ul>
+</section>
+<section id="progress" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="progress"><span class="header-section-number">4</span> Progress</h2>
+<p>TODO</p>
 
 
+</section>
+<section id="references" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="references"><span class="header-section-number">5</span> References</h2>
+<div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-silbe" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[DuFoVa24] </div><div class="csl-right-inline"><span class="smallcaps">Duparc, Max</span> ; <span class="smallcaps">Fouotsa, Tako Boris</span> ; <span class="smallcaps">Vaudenay, Serge</span>: <a href="https://eprint.iacr.org/2024/400"><span>SILBE</span>: An updatable public key encryption scheme from lollipop attacks</a>. In: <em>SAC</em>&nbsp;: Springer, 2024, pp.&nbsp;151–177</div>
+</div>
+</div>
+<hr>
+<p><strong>Contributors:</strong> <a href="https://github.com/gkorpal">@gkorpal</a></p>
 </section>
 
 </main> <!-- /main -->
