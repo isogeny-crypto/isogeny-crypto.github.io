@@ -46,7 +46,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes (in
 - []{r=50 b=50} [QFESTA](schemes/key-exchange/qfesta.qmd) (2024)
 - []{r=50 g=50} [TOGA-UE](/schemes/key-exchange/togaue.qmd) (2024)
 - []{g=100} [BIN-UE](/schemes/key-exchange/binue.qmd) (2024)
-- []{r=100} SILBE (2024)
+- []{r=50 b=50} [SILBE](/schemes/key-exchange/silbe.qmd) (2024)
 - []{r=50 b=50} [POKÉ](/schemes/key-exchange/poke.qmd) (2025)
 - []{r=50 b=50} [LIT-SiGamal](/schemes/key-exchange/litsigamal.qmd) (2025)
 - []{r=50 b=50} [PIKE](/schemes/key-exchange/pike.qmd) (2026)

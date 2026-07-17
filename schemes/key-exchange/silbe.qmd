@@ -1,0 +1,111 @@
+---
+title: "SILBE"
+subtitle: "Supersingular Isogeny Lollipop Based Encryption"
+date: 2026-07-17
+---
+
+## Overview
+
+SILBE (Supersingular Isogeny Lollipop Based Encryption) is an isogeny-based Updatable Public Key Encryption (UPKE) scheme that serves as an alternative to [CSIDH UPKE](/schemes/key-exchange/csidhupke.qmd) by operating without reliance on group actions. It follows the same principle as [Séta](/schemes/key-exchange/seta.qmd), where torsion point attacks on [SIDH](/schemes/key-exchange/sidh.qmd#progress) were fundamentally inverted to design a Public Key Encryption (PKE) scheme. Specifically, if the starting curve $E_0$ is defined over $\mathbb{F}_p$, one can use a generalization of the so-called "lollipop attack" to break [M-SIDH](/schemes/key-exchange/msidh.qmd#progress). The above observation hints that one could use the generalized lollipop attack to design a public key encryption scheme, by generating a public key as a random supersingular curve and keeping the isogeny connecting it to $E_0$ as the secret key to facilitate decryption [@silbe]. 
+
+## Scheme Design
+
+The SILBE scheme alternates between different representations of isogenies (kernel, ideal, and higher-dimensional) and utilizes the Deuring correspondence and Kani's Lemma.
+
+```{.tikz}
+\usetikzlibrary{arrows.meta, bending, calc}
+\begin{tikzpicture}[
+  every node/.style={font=\small},
+  arr/.style={-{Stealth}, thick}
+]
+
+  % Nodes
+  \node (E0)   at (0, 0)    {$E_0$};
+  \node (EA)   at (4, 1)    {$E_A$};
+  \node (EB)   at (8, 1)    {$E_B$};
+  \node (EAp)  at (4, -2)   {$E_A^{(p)}$};
+  \node (EBp)  at (8, -2)   {$E_B^{(p)}$};
+
+  % Self-loop at E0 labeled pi 
+  \draw[dashed, -{Stealth}] (E0) to[out=200, in=120, looseness=5] (E0);
+  \node[left=1pt] at ($(E0)+(-0.75,0.35)$) {$\pi$};
+
+  % Red arrows from E0
+  \draw[arr, red] (E0) -- node[pos=0.5, above, sloped, red] {$I_{\phi_A}$} (EA);
+  \draw[arr, red] (E0) -- node[pos=0.5, below, sloped, red] {$[\pi]_* I_{\phi_A}$} (EAp);
+
+  % Blue horizontal arrows
+  \draw[arr, blue] (EA) -- node[pos=0.5, above, blue] {$\phi_B$} (EB);
+  \draw[arr, blue] (EAp) -- node[pos=0.5, above, blue] {$\phi_B^{(p)}$} (EBp);
+
+  % Dashed pi arrows down
+  \draw[dashed, -{Stealth}] (EA) -- node[pos=0.5, right=1pt] {$\pi$} (EAp);
+  \draw[dashed, -{Stealth}] (EB) -- node[pos=0.5, right=1pt] {$\pi$} (EBp);
+
+  % Curved psi arrow from EB to EBp
+  \draw[-{Stealth}, thick] (EB) to[bend left=60] node[pos=0.5, right=2pt] {$\psi$} (EBp);
+
+\end{tikzpicture}
+```
+
+### Setup
+
+The public parameters $pp$ are generated from the security parameter $1^\lambda$ to support the underlying algebraic structures:
+
+* **$\lambda$**: The primary security parameter determining the strict size and structure of the modulus $N$ to resist partial product attacks.  
+* **$p$**: A prime of the form $p = 3^\beta N f + 1$ such that $p \equiv 3 \pmod 4$.  
+* **$N$**: A highly composite integer $N = \prod_{i=1}^n p_i$ composed of distinct odd small primes, ensuring an exponentially large number of square roots of unity. The parameter $\lambda$ enforces that for any partial product $N_k = \prod_{i=k}^n p_i$, if $N_k \ge \sqrt{3^\beta}$, then $n - k \ge \lambda$. Additionally, $N$ must be co-prime to 3 and satisfy $N \ge 3^\beta p^{1/2}\log(p)^2$.  
+* **$\beta$**: An integer exponent used to define the degree of the encryption isogenies ($3^\beta$).  
+* **$E_0$**: The starting supersingular elliptic curve defined over $\mathbb{F}_p$ with a known endomorphism ring, typically with a j-invariant of 1728.  
+* **$P_0, Q_0$**: A canonical torsion basis generating $E_0[N]$, deterministically sampled.  
+* **$U_0, V_0$**: A canonical torsion basis generating $E_0[3^\beta]$, deterministically sampled.  
+* **$M_\pi$**: A $2 \times 2$ matrix in $GL_2(N)$ computed via Weil's pairing, representing the action of the Frobenius endomorphism $\pi$ on the basis $(P_0, Q_0)$.  
+* **$t$**: An integer bounding the length of the isogeny walks, explicitly calculated as $t = \lfloor 2 \log_2(p) / (\beta \log_2(3)) \rfloor$ to ensure $3^{\beta t} \ge p^2$.
+
+### Key Generation
+
+Alice establishes her keys by constructing an iterative, non-backtracking isogeny walk while simultaneously updating an evaluation basis:
+
+* **Walk Construction**: Alice executes a loop of $t$ steps. At each step, she samples a random scalar in $\mathbb{Z}_{3^\beta}$ and computes the next curve and isogeny step from the generated kernel.  
+* **Ideal Representation**: For each step, she extracts the corresponding kernel ideal and finds an equivalent ideal representing the entire walk up to that point. This ideal is validated to ensure it evaluates to a prime number and meets specific modular arithmetic conditions (such as ensuring $\tilde{N}^2 - n(J_i) \equiv 1 \pmod 4$) before proceeding.  
+* **$E_A$ (Public Key)**: A uniformly random supersingular elliptic curve representing the final destination after the $t$-step walk.  
+* **$\phi_A$ (Secret Key)**: An efficiently computable, relatively short isogeny $\phi_A: E_0 \rightarrow E_A$. She computes a connecting ideal $I_{\phi_A}$ from the final walk ideal, verifying that $N' - n(I_{\phi_A})^2 3^{2\beta} \equiv 1 \pmod 4$ and is prime, where $N' = p_1 \prod_{i=2}^n p_i^2$. The final secret key tuple consists of an evaluation basis $\mathfrak{O}_{E_A}$, the corresponding ideal $I_{\phi_A}$, and a mapping matrix $M_{\phi_A}$.
+
+### Encryption
+
+Bob encrypts a binary message using the public key $E_A$:
+
+* **$m$**: The $n$-bit plaintext message, mapped to a square root of unity modulo $N$ using the Chinese Remainder Theorem, such that $m \in \mu_2(N) = \{x \in \mathbb{Z}_N \vert{} x^2 = 1\}$.  
+* **$\phi_B$**: Bob deterministically extracts the canonical torsion bases from $E_A$, samples a uniformly random scalar in $\mathbb{Z}_{3^\beta}$, and computes a random isogeny $\phi_B: E_A \rightarrow E_B$ of degree $3^\beta$ based on the generated kernel.  
+* **$P_A, Q_A$**: A canonical $N$-torsion basis on $E_A$.  
+* **$R_1, R_2$**: The masked images of the basis points, computed by evaluating the isogeny and scaling by the message: $R_1 = [m]\phi_B(P_A)$ and $R_2 = [m]\phi_B(Q_A)$.  
+* **$ct$ (Ciphertext)**: Bob outputs the tuple $(E_B, R_1, R_2)$.
+
+### Decryption
+
+Alice uses her stored ideal and matrix to efficiently break the masking via a specialized, dimension-4 lollipop attack:
+
+* **$S, T$**: Alice extracts canonical bases from the Frobenius-pushed curve and translates the ciphertext torsion points back to $E_0$, computing $\binom{S}{T} = M_{\phi_A} \binom{R_1}{R_2} = [m]\phi_B \circ \phi_A \binom{P_0}{Q_0}$.  
+* **$\psi$**: Alice defines an unmasked isogeny $\psi = \phi_B^{(p)} \circ \phi_A^{(p)} \circ \widehat{\phi_A} \circ \widehat{\phi_B}$, where $(p)$ denotes the pushforward through the Frobenius endomorphism.  
+* **Evaluate $\psi$**: Alice calculates secondary evaluation points by computing $\binom{K}{L} = [n(I_{\phi_A})3^\beta]M_\pi^{-1}\pi\binom{S}{T}$. This evaluates $\psi$ over $E_B[N]$.  
+* **Evaluate $\hat{\psi}$**: Using a higher-dimensional Kani's Lemma evaluation in dimension 4 over the combined primary and secondary points, Alice evaluates $\hat{\psi}$ over $E_B^{(p)}[3^\beta]$ to isolate the dual points and retrieve the generator for $ker(\widehat{\phi_B})$.  
+* **Unmask $m$**: Once $\phi_B$ is reconstructed, Alice computes $\phi_B(R_1) = [m 3^\beta] P_A$. She extracts the mask $m$ by solving a discrete logarithm in $E[N]$ and multiplying the result by the modular inverse $(3^\beta)^{-1} \pmod N$.
+
+### Update Mechanisms
+
+Because the public key is just a uniformly random supersingular elliptic curve $E_A$, updating it simply means taking a random isogeny walk to a new curve $E'_A$. The secret key is updated without leaking the update path or letting the key grow infinitely long.
+
+* **Update Generation (UG)**: Generates a random seed $\mu \in \{0,1\}^{4 \log(p)}$. This specific size ensures the distribution of the newly generated public key will be statistically close to a uniform distribution in the supersingular isogeny graph.  
+* **Update Public Key (Upk)**: Applies a hash function $H$ to the seed $\mu$ to generate a sequence of $t$ elements in $\mathbb{Z}_{3^\beta}$. These elements define the specific sequence of kernels to construct a new, non-backtracking isogeny walk from $E_A$ to the new public key $E'_A$.  
+* **Update Secret Key (Usk)**: Alice computes the exact same walk from $E_A$ to $E'_A$ using the hashed seed. Instead of insecurely concatenating the new walk to the old secret key, SILBE leverages the known endomorphism ring of the starting curve $E_0$ and the Deuring correspondence. By computing prime-norm ideals equivalent to the discrete steps and evaluating isogenies in higher dimensions, it recursively translates the long, concatenated walk into a completely new, relatively short isogeny $\phi'_A : E_0 \to E'_A$. This connects $E_0$ directly to the new public key $E'_A$ without revealing the update path.
+
+## Security Assumptions
+
+SILBE relies on assumptions inherited from established isogeny-based schemes and the nature of pseudo-random walks.
+
+*   **Supersingular Isogeny Problem with Masked Torsion Point Information**: This is the primary hard problem, borrowed from the [M-SIDH](/schemes/key-exchange/msidh.qmd#security-assumptions) scheme. It states that given a basis $P, Q$ and its masked images $[m]\phi(P), [m]\phi(Q)$ through an isogeny $\phi$, it is computationally hard to compute $\phi$ without knowing the mask $m$. Based on this assumption over random curves, the base SILBE scheme achieves One-Wayness under Plaintext Checking Attack with Updatability (OW-PCA-U).
+*   **Isogeny Walk Problem**: The key update mechanism relies on the standard isogeny walk problem, assuming that finding a path between two pseudorandom curves is hard. SILBE borrows the Fujisaki-Okamoto (FO) transform for UPKE to upgrade its baseline OW-PCA-U security into a fully secure IND-CCA-U scheme (Indistinguishability under Chosen Ciphertext Attack with Updatability) in the Random Oracle Model (ROM).
+
+## Progress
+
+TODO
