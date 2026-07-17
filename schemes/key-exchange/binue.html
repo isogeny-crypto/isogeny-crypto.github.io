@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-07-07">
+<meta name="dcterms.date" content="2026-07-17">
 
-<title>pSIDH – Isogeny-based Cryptography Wiki</title>
+<title>BIN-UE – Isogeny-based Cryptography Wiki</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -316,7 +316,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../schemes/key-exchange/binsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../schemes/key-exchange/psidh.html">pSIDH</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../schemes/key-exchange/binsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../schemes/key-exchange/binue.html">BIN-UE</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -367,7 +367,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../schemes/key-exchange/binue.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/binue.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">BIN-UE</span></a>
   </div>
 </li>
@@ -457,7 +457,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../schemes/key-exchange/psidh.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../schemes/key-exchange/psidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">pSIDH</span></a>
   </div>
 </li>
@@ -547,9 +547,12 @@ window.Quarto = {
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
   <li><a href="#scheme-design" id="toc-scheme-design" class="nav-link" data-scroll-target="#scheme-design"><span class="header-section-number">2</span> Scheme Design</a>
   <ul class="collapse">
-  <li><a href="#global-parameters" id="toc-global-parameters" class="nav-link" data-scroll-target="#global-parameters"><span class="header-section-number">2.1</span> Global Parameters</a></li>
+  <li><a href="#setup-and-csidh-instantiation" id="toc-setup-and-csidh-instantiation" class="nav-link" data-scroll-target="#setup-and-csidh-instantiation"><span class="header-section-number">2.1</span> Setup and CSIDH Instantiation</a></li>
   <li><a href="#key-generation" id="toc-key-generation" class="nav-link" data-scroll-target="#key-generation"><span class="header-section-number">2.2</span> Key Generation</a></li>
-  <li><a href="#key-exchange" id="toc-key-exchange" class="nav-link" data-scroll-target="#key-exchange"><span class="header-section-number">2.3</span> Key Exchange</a></li>
+  <li><a href="#encryption" id="toc-encryption" class="nav-link" data-scroll-target="#encryption"><span class="header-section-number">2.3</span> Encryption</a></li>
+  <li><a href="#token-generation" id="toc-token-generation" class="nav-link" data-scroll-target="#token-generation"><span class="header-section-number">2.4</span> Token Generation</a></li>
+  <li><a href="#ciphertext-update" id="toc-ciphertext-update" class="nav-link" data-scroll-target="#ciphertext-update"><span class="header-section-number">2.5</span> Ciphertext Update</a></li>
+  <li><a href="#decryption" id="toc-decryption" class="nav-link" data-scroll-target="#decryption"><span class="header-section-number">2.6</span> Decryption</a></li>
   </ul></li>
   <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a></li>
   <li><a href="#progress" id="toc-progress" class="nav-link" data-scroll-target="#progress"><span class="header-section-number">4</span> Progress</a></li>
@@ -561,10 +564,10 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../schemes/key-exchange/binsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../schemes/key-exchange/psidh.html">pSIDH</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../schemes/key-exchange/binsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../schemes/key-exchange/binue.html">BIN-UE</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">pSIDH</h1>
-<p class="subtitle lead">prime-SIDH</p>
+<h1 class="title">BIN-UE</h1>
+<p class="subtitle lead">Bit wise updatable encryption</p>
 </div>
 
 
@@ -575,14 +578,14 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 7, 2026</p>
+      <p class="date">July 17, 2026</p>
     </div>
   </div>
   
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">July 11, 2026</p>
+      <p class="date-modified">July 17, 2026</p>
     </div>
   </div>
     
@@ -595,68 +598,103 @@ window.Quarto = {
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<blockquote class="blockquote">
-<p>Broken by a polynomial time quantum algorithm.</p>
-</blockquote>
-<p>The pSIDH (prime-SIDH) scheme is a novel Non-Interactive Key Exchange (NIKE) scheme introduced to circumvent the catastrophic torsion-point attacks that broke smooth-degree isogeny schemes like <a href="../../schemes/key-exchange/sidh.html">SIDH</a> and <a href="../../schemes/key-exchange/seta.html">Séta</a>. While SIDH utilizes secret isogenies of smooth degrees to allow for efficient evaluation via Vélu’s formulas, this smooth-degree structure fundamentally enables the polynomial-time attacks. pSIDH transitions the SIDH-style commutative isogeny diagram to the setting of large prime degrees.</p>
-<p>Because standard evaluation of large prime-degree isogenies is computationally infeasible, pSIDH relies on a novel cryptographic tool: the suborder representation <span class="citation" data-cites="psidh">[<a href="#ref-psidh" role="doc-biblioref">Lero22</a>]</span>. In this scheme, secret keys are represented as quaternion ideals (the ideal representation), while public keys are broadcast as suborder representations.</p>
+<p>Constructing post-quantum, ciphertext-independent Updatable Encryption (UE) schemes from group actions has historically faced significant structural barriers. Previous approaches either rely on idealized models that require a mappable group action (which natural isogeny-based group actions like <a href="../../schemes/key-exchange/csidh.html">CSIDH</a> do not satisfy) or necessitate complex algebraic abstractions. For instance, schemes like <a href="../../schemes/key-exchange/togaue.html">TOGA-UE</a> circumvent the need for an ideal cipher by introducing Triple Orbital Group Actions, which inherently rely on non-standard computational assumptions (e.g., <a href="../../schemes/key-exchange/sigamal.html#security-assumptions">P-CSSDDH</a>) and lack active security. BIN-UE is introduced to resolve these limitations <span class="citation" data-cites="binue">[<a href="#ref-binue" role="doc-biblioref">MeRi24</a>]</span>. By adopting a bit-wise encryption approach, BIN-UE securely instantiates updatable encryption from any plain, non-mappable effective group action (such as standard CSIDH). It operates entirely in the standard model and relies strictly on the well-established assumption of weak pseudorandomness. However, these theoretical benefits come with significant practical drawbacks. The primary disadvantage of BIN-UE’s bit-wise approach is that both the key size and the overall scheme efficiency scale poorly, as key and ciphertext sizes grow linearly with the bit-length of the messages.</p>
 </section>
 <section id="scheme-design" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="scheme-design"><span class="header-section-number">2</span> Scheme Design</h2>
-<p>The pSIDH scheme involves two parties, Alice and Bob, agreeing on a shared secret over supersingular elliptic curves.</p>
-<div class="tikz-diagram"><svg xmlns="http://www.w3.org/2000/svg" width="256.291" height="151.421" viewbox="-72 -72 192.218 113.566"><defs><style>@import url(../../assets/fonts.css);</style></defs><g stroke="#000" stroke-miterlimit="10" stroke-width=".4"><g stroke="none"><text x="-63.45" y="-15.464" font-family="cmmi9" font-size="9" transform="translate(-5.487 2.575)">E</text><text x="-56.643" y="-14.464" font-family="cmr6" font-size="6" transform="translate(-5.487 2.575)">0</text></g><g stroke="none"><text x="-63.45" y="-15.464" font-family="cmmi9" font-size="9" transform="translate(78.933 -25.878)">E</text><text x="-56.643" y="-14.464" font-family="cmmi6" font-size="6" transform="translate(78.933 -25.878)">A</text></g><g stroke="none"><text x="-63.45" y="-15.464" font-family="cmmi9" font-size="9" transform="translate(78.782 31.028)">E</text><text x="-56.643" y="-14.464" font-family="cmmi6" font-size="6" transform="translate(78.782 31.028)">B</text></g><g stroke="none"><text x="-63.45" y="-15.464" font-family="cmmi9" font-size="9" transform="translate(161.368 2.575)">E</text><text x="-56.643" y="-14.464" font-family="cmmi6" font-size="6" transform="translate(161.368 2.575)">AB</text></g><g stroke-width=".8"><path fill="none" d="M-54.43-18.47 8.035-39.295"></path><path stroke-width=".79996" d="m10.869-40.24-4.454-.177 1.81 1.058-.813 1.933Z"></path><g stroke="none"><text x="-63.45" y="-15.464" font-family="cmmi9" font-size="9" transform="matrix(.94862 -.31625 .31625 .94862 36.374 -38.222)">'</text><text x="-57.41" y="-14.464" font-family="cmmi6" font-size="6" transform="matrix(.94862 -.31625 .31625 .94862 36.374 -38.222)">A</text></g></g><g stroke-width=".8"><path fill="none" d="M-54.43-12.46 7.884 8.318"></path><path stroke-width=".79996" d="M10.718 9.262 7.262 6.448l.812 1.933-1.81 1.058Z"></path><g stroke="none"><text x="-63.45" y="-15.464" font-family="cmmi9" font-size="9" transform="matrix(.94861 .3163 -.3163 .94861 25.7 38.578)">'</text><text x="-57.41" y="-14.464" font-family="cmmi6" font-size="6" transform="matrix(.94861 .3163 -.3163 .94861 25.7 38.578)">B</text></g></g><g stroke-width=".8"><path fill="none" d="m31.867-40.597 58.604 19.54"></path><path stroke-width=".79996" d="m93.304-20.113-3.457-2.814.813 1.932-1.81 1.059Z"></path><g stroke="none"><text x="-63.45" y="-15.464" font-family="cmr9" font-size="9" transform="scale(.99995)rotate(18.438 72.08 317.821)">[</text><text x="-60.881" y="-15.464" font-family="cmmi9" font-size="9" transform="scale(.99995)rotate(18.438 72.08 317.821)">'</text><text x="-54.841" y="-14.464" font-family="cmmi6" font-size="6" transform="scale(.99995)rotate(18.438 72.08 317.821)">A</text><text x="-48.796" y="-15.464" font-family="cmr9" font-size="9" transform="scale(.99995)rotate(18.438 72.08 317.821)">]</text><text x="-46.227" y="-14.464" font-family="cmsy6" font-size="6" transform="scale(.99995)rotate(18.438 72.08 317.821)">¤</text><text x="-41.893" y="-15.464" font-family="cmmi9" font-size="9" transform="scale(.99995)rotate(18.438 72.08 317.821)">'</text><text x="-35.853" y="-14.464" font-family="cmmi6" font-size="6" transform="scale(.99995)rotate(18.438 72.08 317.821)">B</text></g></g><g stroke-width=".8"><path fill="none" d="M32.018 9.62 90.47-9.87"></path><path stroke-width=".799968" d="m93.304-10.814-4.454-.177 1.81 1.059L89.847-8Z"></path><g stroke="none"><text x="-63.45" y="-15.464" font-family="cmr9" font-size="9" transform="matrix(.94862 -.31628 .31628 .94862 115.498 9.136)">[</text><text x="-60.881" y="-15.464" font-family="cmmi9" font-size="9" transform="matrix(.94862 -.31628 .31628 .94862 115.498 9.136)">'</text><text x="-54.841" y="-14.464" font-family="cmmi6" font-size="6" transform="matrix(.94862 -.31628 .31628 .94862 115.498 9.136)">B</text><text x="-48.494" y="-15.464" font-family="cmr9" font-size="9" transform="matrix(.94862 -.31628 .31628 .94862 115.498 9.136)">]</text><text x="-45.925" y="-14.464" font-family="cmsy6" font-size="6" transform="matrix(.94862 -.31628 .31628 .94862 115.498 9.136)">¤</text><text x="-41.591" y="-15.464" font-family="cmmi9" font-size="9" transform="matrix(.94862 -.31628 .31628 .94862 115.498 9.136)">'</text><text x="-35.551" y="-14.464" font-family="cmmi6" font-size="6" transform="matrix(.94862 -.31628 .31628 .94862 115.498 9.136)">A</text></g></g><g stroke-width=".8"><path fill="none" d="M31.867-50.028c25.229-14.148 59.294-2.346 71.056 23.625"></path><path stroke-width=".799984" d="m104.03-23.628-.102-4.455-.943 1.872-1.98-.69Z"></path><g stroke="none"><text x="-61.556" y="-17.839" font-family="cmr9" font-size="9" transform="rotate(20.717 125.085 328.639)scale(.99995)">^</text><text x="-63.45" y="-15.464" font-family="cmmi9" font-size="9" transform="rotate(20.717 125.085 328.639)scale(.99995)">Ã</text><text x="-57.416" y="-14.464" font-family="cmmi6" font-size="6" transform="rotate(20.717 125.085 328.639)scale(.99995)">B</text></g></g><g stroke-width=".8"><path fill="none" d="M32.018 19.194c25.2 14.07 59.214 2.22 70.912-23.716"></path><path stroke-width=".799976" d="m104.032-7.299-3.02 3.278 1.98-.693.945 1.871Z"></path><g stroke="none"><text x="-61.556" y="-17.839" font-family="cmr9" font-size="9" transform="rotate(-20.822 143.167 -361.817)scale(.99996)">^</text><text x="-63.45" y="-15.464" font-family="cmmi9" font-size="9" transform="rotate(-20.822 143.167 -361.817)scale(.99996)">Ã</text><text x="-57.416" y="-14.464" font-family="cmmi6" font-size="6" transform="rotate(-20.822 143.167 -361.817)scale(.99996)">A</text></g></g></g></svg></div>
-<p>Here isogenies <span class="math inline">\([\varphi_A]_* \varphi_B\)</span> and <span class="math inline">\([\varphi_B]_* \varphi_A\)</span> are defined as the separable isogenies of respective kernels <span class="math inline">\(\varphi_A(\text{ker}(\varphi_B))\)</span> and <span class="math inline">\(\varphi_B(\text{ker}(\varphi_A))\)</span>.</p>
-<section id="global-parameters" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="global-parameters"><span class="header-section-number">2.1</span> Global Parameters</h3>
+<p>BIN-UE leverages an Effective Group Action (EGA) to encrypt messages bit-by-bit. Because BIN-UE does not require the group action to be mappable, it can be instantiated concretely and securely from plain CSIDH.</p>
+<section id="setup-and-csidh-instantiation" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="setup-and-csidh-instantiation"><span class="header-section-number">2.1</span> Setup and CSIDH Instantiation</h3>
+<p>The EGA is defined as a tuple <span class="math inline">\((\mathcal{G}, \mathcal{X}, *, \tilde{x})\)</span>. When instantiated with CSIDH, this setup directly corresponds to isogenies between elliptic curves:</p>
 <ul>
-<li><span class="math inline">\(p\)</span>: A large prime characterizing the field <span class="math inline">\(\mathbb{F}_{p^2}\)</span>.</li>
-<li><span class="math inline">\(E_0\)</span>: A starting supersingular elliptic curve defined over <span class="math inline">\(\mathbb{F}_{p^2}\)</span>.</li>
-<li><span class="math inline">\(\mathcal{O}_0\)</span>: A known maximal order in the quaternion algebra <span class="math inline">\(B_{p, \infty}\)</span> such that <span class="math inline">\(\text{End}(E_0) \cong \mathcal{O}_0\)</span>.</li>
+<li><span class="math inline">\(\mathcal{X}\)</span>: Represents a finite set of supersingular elliptic curves defined over a finite field <span class="math inline">\(\mathbb{F}_p\)</span>.</li>
+<li><span class="math inline">\(\mathcal{G}\)</span>: Represents a finite commutative group (the ideal class group) that acts on the set of elliptic curves.</li>
+<li><span class="math inline">\(*\)</span>: Represents the group action map <span class="math inline">\(*: \mathcal{G} \times \mathcal{X} \rightarrow \mathcal{X}\)</span>, evaluated by computing isogenies between the supersingular elliptic curves.</li>
+<li><span class="math inline">\(\tilde{x} \in \mathcal{X}\)</span>: A distinguished origin element, representing a known starting elliptic curve.</li>
+</ul>
+<p>Before outlining the algorithms, we define the following parameters and symbols:</p>
+<ul>
+<li><span class="math inline">\(n\)</span>: The bit-length of the message.</li>
+<li><span class="math inline">\(M\)</span>: The message to be encrypted, represented as a bitstring <span class="math inline">\(M = (m_1, \dots, m_n) \in \{0, 1\}^n \setminus \{0^n, 1^n\}\)</span>. The all-zero and all-one strings are excluded to prevent decryption ambiguity.</li>
+<li><span class="math inline">\(k\)</span>: The secret key, structured as a vector of <span class="math inline">\(n\)</span> group elements <span class="math inline">\(k = (k_1, \dots, k_n) \in \mathcal{G}^n\)</span>.</li>
+<li><span class="math inline">\(x_0, x_1\)</span>: Two randomly sampled basis set elements from <span class="math inline">\(\mathcal{X}\)</span> serving as explicit encryption randomness, strictly ordered lexicographically such that <span class="math inline">\(x_0 &lt;_{lex} x_1\)</span>.</li>
+<li><span class="math inline">\(C\)</span>: The resulting ciphertext, represented as a vector of <span class="math inline">\(n\)</span> set elements <span class="math inline">\(C = (c_1, \dots, c_n) \in \mathcal{X}^n\)</span>.</li>
+<li><span class="math inline">\(\Delta\)</span>: The update token, consisting of <span class="math inline">\(n\)</span> group elements <span class="math inline">\(\Delta = (\Delta_1, \dots, \Delta_n) \in \mathcal{G}^n\)</span>.</li>
 </ul>
 </section>
 <section id="key-generation" class="level3" data-number="2.2">
 <h3 data-number="2.2" class="anchored" data-anchor-id="key-generation"><span class="header-section-number">2.2</span> Key Generation</h3>
-<p>Alice selects a large secret prime <span class="math inline">\(D_A \neq p\)</span>.</p>
-<ol type="1">
-<li><strong>Secret Key (<span class="math inline">\(I_A\)</span>, <span class="math inline">\(\varphi_A\)</span>):</strong> Alice samples a random integral left-<span class="math inline">\(\mathcal{O}_0\)</span> ideal <span class="math inline">\(I_A\)</span> of norm <span class="math inline">\(D_A\)</span>. Through the Deuring correspondence, <span class="math inline">\(I_A\)</span> represents a cyclic isogeny <span class="math inline">\(\varphi_A: E_0 \to E_A\)</span> of degree <span class="math inline">\(D_A\)</span>.</li>
-<li><strong>Public Key (<span class="math inline">\(E_A, \pi_A\)</span>):</strong> Alice computes the suborder representation <span class="math inline">\(\pi_A = \text{IdealToSuborder}(I_A)\)</span>. This representation consists of the codomain curve <span class="math inline">\(E_A\)</span> and a collection of endomorphisms that reveal a specific suborder <span class="math inline">\(\mathbb{Z} + D_A \mathcal{O}_0\)</span> embedded within <span class="math inline">\(\text{End}(E_A)\)</span>.</li>
-</ol>
-<p>Bob symmetrically generates his keys using a distinct prime <span class="math inline">\(D_B\)</span>, producing an ideal <span class="math inline">\(I_B\)</span> (corresponding to <span class="math inline">\(\varphi_B: E_0 \to E_B\)</span>) and public key <span class="math inline">\((E_B, \pi_B)\)</span>.</p>
+<ul>
+<li>Uniformly sample <span class="math inline">\(n\)</span> group elements from the group <span class="math inline">\(\mathcal{G}\)</span>.</li>
+<li>Output the new epoch key as the vector <span class="math inline">\(k := (k_1, \dots, k_n) \leftarrow \mathcal{G}^n\)</span>.</li>
+</ul>
 </section>
-<section id="key-exchange" class="level3" data-number="2.3">
-<h3 data-number="2.3" class="anchored" data-anchor-id="key-exchange"><span class="header-section-number">2.3</span> Key Exchange</h3>
-<p>To compute the shared curve <span class="math inline">\(E\)</span>, Alice uses Bob’s public key <span class="math inline">\((E_B, \pi_B)\)</span> alongside her secret key <span class="math inline">\(I_A\)</span>. Because Alice cannot directly compute the push-forward isogeny <span class="math inline">\([\varphi_B]_* \varphi_A : E_B \to E_{AB}\)</span> due to <span class="math inline">\(D_A\)</span> being a large prime, she relies on an auxiliary smooth-degree path to reach <span class="math inline">\(E\)</span>:</p>
-<ol type="1">
-<li>Alice uses the algorithm <code>IdealSuborderNormEquation</code> to find an element <span class="math inline">\(\theta \in (\mathbb{Z} + D_B \mathcal{O}_0) \cap I_A\)</span> with norm <span class="math inline">\(D_A \cdot S\)</span>, where <span class="math inline">\(S\)</span> is a carefully chosen powersmooth integer. Moreover, because <span class="math inline">\(\theta \in I_A\)</span>, under the Deuring correspondence it maps to an endomorphism on <span class="math inline">\(E_0\)</span> that factors through her secret isogeny <span class="math inline">\(\varphi_A\)</span>. That is, the endomorphism <span class="math inline">\(\theta\)</span> can be written as <span class="math inline">\(\sigma_A \circ \varphi_A\)</span>, where <span class="math inline">\(\sigma_A : E_A \to E_0\)</span> is an auxiliary isogeny of smooth degree <span class="math inline">\(S\)</span>.</li>
-<li>By pushing this endomorphism forward through Bob’s isogeny <span class="math inline">\(\varphi_B\)</span>, Alice utilizes Bob’s suborder representation <span class="math inline">\(\pi_B\)</span> to obtain an embedding <span class="math inline">\(\iota_B(\theta)\)</span> into <span class="math inline">\(\text{End}(E_B)\)</span>.</li>
-<li>This embedded endomorphism on <span class="math inline">\(E_B\)</span> is equivalent to <span class="math inline">\(\psi_A \circ [\varphi_B]_*\varphi_A\)</span>, where <span class="math inline">\(\psi_A: E_{AB} \to E_B\)</span> is an auxiliary isogeny of degree <span class="math inline">\(S\)</span>.</li>
-<li>Since <span class="math inline">\(S\)</span> is smooth, Alice can use the <code>SuborderEvaluation</code> algorithm on this endomorphism to explicitly find the kernel of the dual isogeny <span class="math inline">\(\hat{\psi}_A : E_B \to E_{AB}\)</span>.</li>
-<li>Taking the quotient by this kernel, Alice computes the isogeny <span class="math inline">\(\hat{\psi}_A\)</span>. The codomain of <span class="math inline">\(\hat{\psi}_A\)</span> is the target shared curve <span class="math inline">\(E_{AB}\)</span>, satisfying the commutativity of the diagram.</li>
-<li>Symmetrically, Bob computes an analogous auxiliary isogeny <span class="math inline">\(\hat{\psi}_B: E_A \to E_{AB}\)</span> using Alice’s public key and his secret key.</li>
-</ol>
-<p>Both parties arrive at the identical curve <span class="math inline">\(E_{AB}\)</span>, allowing them to use the <span class="math inline">\(j\)</span>-invariant <span class="math inline">\(j(E_{AB})\)</span> as the shared secret.</p>
+<section id="encryption" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="encryption"><span class="header-section-number">2.3</span> Encryption</h3>
+<ul>
+<li>Receive the public parameters, secret key <span class="math inline">\(k\)</span>, and an <span class="math inline">\(n\)</span>-bit message <span class="math inline">\(M\)</span>.</li>
+<li>Sample two random basis elements (elliptic curves) <span class="math inline">\(x_0, x_1 \leftarrow \mathcal{X}\)</span> to serve as explicit randomness, avoiding the need for nonces or programmable ideal ciphers.</li>
+<li>Order the basis elements lexicographically to ensure <span class="math inline">\(x_0 &lt;_{lex} x_1\)</span>.</li>
+<li>Iterate through each bit <span class="math inline">\(m_i\)</span> of the message.</li>
+<li>Apply the corresponding group element <span class="math inline">\(k_i\)</span> from the key vector to the basis element <span class="math inline">\(x_{m_i}\)</span>.</li>
+<li>Compute the ciphertext components as <span class="math inline">\(c_i := k_i * x_{m_i}\)</span> for <span class="math inline">\(i \in [1, n]\)</span>.</li>
+<li>Output the final ciphertext vector <span class="math inline">\(C := (c_1, \dots, c_n)\)</span>.</li>
+</ul>
+</section>
+<section id="token-generation" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="token-generation"><span class="header-section-number">2.4</span> Token Generation</h3>
+<ul>
+<li>Receive the key from the old epoch <span class="math inline">\(k = (k_1, \dots, k_n)\)</span> and the key for the new epoch <span class="math inline">\(k' = (k'_1, \dots, k'_n)\)</span>.</li>
+<li>Compute the relative group difference for each vector position.</li>
+<li>Calculate <span class="math inline">\(\Delta_i := k'_i \cdot k_i^{-1}\)</span> for <span class="math inline">\(i \in [1, n]\)</span>.</li>
+<li>Output the update token <span class="math inline">\(\Delta := (\Delta_1, \dots, \Delta_n)\)</span>.</li>
+</ul>
+</section>
+<section id="ciphertext-update" class="level3" data-number="2.5">
+<h3 data-number="2.5" class="anchored" data-anchor-id="ciphertext-update"><span class="header-section-number">2.5</span> Ciphertext Update</h3>
+<ul>
+<li>Receive an update token <span class="math inline">\(\Delta\)</span> and an existing ciphertext <span class="math inline">\(C\)</span>.</li>
+<li>Advance the ciphertext to the new key epoch by applying the token’s group elements to the ciphertext’s set elements.</li>
+<li>Compute the updated components as <span class="math inline">\(c'_i := \Delta_i * c_i\)</span> for <span class="math inline">\(i \in [1, n]\)</span>.</li>
+<li>Maintain perfect correctness due to the compatibility property of the group action, where <span class="math inline">\(\Delta_i * c_i = (k'_i \cdot k_i^{-1}) * (k_i * x_{m_i}) = k'_i * x_{m_i}\)</span>.</li>
+</ul>
+</section>
+<section id="decryption" class="level3" data-number="2.6">
+<h3 data-number="2.6" class="anchored" data-anchor-id="decryption"><span class="header-section-number">2.6</span> Decryption</h3>
+<ul>
+<li>Receive the epoch key <span class="math inline">\(k\)</span> and the ciphertext <span class="math inline">\(C\)</span>.</li>
+<li>Invert the group action at each position to recover the base set elements.</li>
+<li>Compute <span class="math inline">\(y_i := k_i^{-1} * c_i\)</span> for <span class="math inline">\(i \in [1, n]\)</span>.</li>
+<li>Identify the two distinct set elements from the collection <span class="math inline">\(\{y_1, \dots, y_n\}\)</span>, which is guaranteed because the message space excludes the uniform strings <span class="math inline">\(0^n\)</span> and <span class="math inline">\(1^n\)</span>.</li>
+<li>Sort these two recovered elements lexicographically as <span class="math inline">\(\tilde{x}_0 &lt;_{lex} \tilde{x}_1\)</span>.</li>
+<li>Recover the original message bits by mapping <span class="math inline">\(\tilde{x}_1\)</span> to 1 and <span class="math inline">\(\tilde{x}_0\)</span> to 0.</li>
+<li>Set <span class="math inline">\(m_i := 1\)</span> if <span class="math inline">\(y_i = \tilde{x}_1\)</span>, and set <span class="math inline">\(m_i := 0\)</span> if <span class="math inline">\(y_i = \tilde{x}_0\)</span>.</li>
+</ul>
 </section>
 </section>
 <section id="security-assumptions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
-<p>The core security of pSIDH is tied to the SubOrder to Ideal Problem (SOIP), which relates more closely to the key recovery of <a href="../../schemes/key-exchange/csidh.html">CSIDH</a> (involving partial endomorphism ring knowledge) than that of SIDH, yet maintains an SIDH-like key agreement flow.</p>
 <ul>
-<li><strong>SubOrder to Ideal Problem (SOIP):</strong> This is the underlying key recovery assumption. It states that given a suborder representation <span class="math inline">\(\pi\)</span> of an isogeny <span class="math inline">\(\varphi\)</span> of prime degree <span class="math inline">\(D\)</span>, it is computationally infeasible to recover the ideal representation <span class="math inline">\(I_\varphi\)</span> (the secret key). Because the degree <span class="math inline">\(D\)</span> is a large prime, the <span class="math inline">\(D\)</span>-torsion points are defined over an exponentially large field extension <span class="math inline">\(\mathbb{F}_{p^k}\)</span> (where <span class="math inline">\(k = O(D)\)</span>). This prevents the polynomial-time torsion point attacks that devastated SIDH from being applied to SOIP. However, there is a sub-exponential quantum attack against the SOIP.</li>
-<li><strong>prime Supersingular Decisional Diffie-Hellman (pSSDDH):</strong> The semantic security of the key exchange relies on this decisional assumption. pSSDDH assumes that an adversary cannot distinguish the valid shared curve <span class="math inline">\(E_{AB}\)</span> (where <span class="math inline">\(\text{End}(E_{AB}) \cong \mathcal{O}_R(I_A \cap I_B)\)</span>) from a random curve <span class="math inline">\(E_C\)</span> that is merely <span class="math inline">\(D_A D_B\)</span>-isogenous to <span class="math inline">\(E_0\)</span>. This assumption directly borrows its structural formulation from the <a href="../../schemes/key-exchange/sidh.html#security-assumptions">SSDDH problem</a> introduced in the original SIDH proposal, but strictly limits the isogeny degrees to large primes and leverages suborder representations rather than torsion point images.</li>
+<li><p><strong>Weak Pseudorandomness (Wk-PR)</strong>: The confidentiality of BIN-UE (detIND-UE-CPA security) is based entirely on the Weak Pseudorandomness (Wk-PR) assumption of the underlying effective group action. Wk-PR is a well-established, standard assumption for CSIDH, functioning essentially as a multi-instance decisional Diffie-Hellman assumption for group actions.</p></li>
+<li><p><strong>Multi Strong Pseudorandomness (Multi-St-PR)</strong>: The security proof relies on an intermediate hardness assumption called Multi Strong Pseudorandomness (Multi-St-PR), which abstractly models the ability of an adversary to distinguish between honestly evaluated group actions on chosen base elements and uniformly random set elements. Crucially, Multi-St-PR is not a new or isolated assumption; it is proven to reduce tightly to the standard Wk-PR assumption via a hybrid argument. This ensures that BIN-UE achieves its security entirely in the standard model, completely bypassing the need for Random Oracles or Ideal Ciphers.</p></li>
+<li><p><strong>Tag-then-Encrypt</strong>: While BIN-UE achieves CPA security, it does not prevent chosen-ciphertext attacks (detIND-UE-CCA). To achieve CCA security, BIN-UE can be seamlessly extended into the COM-UE scheme using the Tag-then-Encrypt paradigm. Instead of treating COM-UE as a different construction, it utilizes BIN-UE as its core cryptographic engine. In COM-UE, a message <span class="math inline">\(M\)</span> with randomness <span class="math inline">\(r\)</span> is prepended/appended with a cryptographic tag generated by a random oracle <span class="math inline">\(H(M, r)\)</span>. The combined string <span class="math inline">\(M' = M || H(M, r)\)</span> is then directly encrypted using the standard BIN-UE bit-wise encryption logic under an expanded key <span class="math inline">\(k \in \mathcal{G}^{n+t}\)</span>. Because it employs the Tag-then-Encrypt framework, COM-UE inherits the exact updatability properties of BIN-UE but requires an augmented security assumption to prove CCA integrity (INT-CTXT):</p>
+<ol type="1">
+<li><strong>Multi Strong Unpredictability (Multi-St-UP):</strong> A new, non-standard computational assumption required for the ROM-based proof of COM-UE’s ciphertext integrity.</li>
+<li><strong>Discrete Logarithm with Auxiliary Input (DLAI):</strong> To justify the plausibility of Multi-St-UP, it is shown that in the Algebraic Group Action Model (AGAM), Multi-St-UP is directly implied by the DLAI problem, connecting the CCA security of COM-UE back to hard, structured discrete logarithm equivalents in the group action setting.</li>
+</ol></li>
 </ul>
 </section>
 <section id="progress" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="progress"><span class="header-section-number">4</span> Progress</h2>
 <p>TODO</p>
-<p>2021/282 and 2023/779</p>
 
 
 </section>
 <section id="references" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="references"><span class="header-section-number">5</span> References</h2>
 <div id="refs" class="references csl-bib-body" role="list">
-<div id="ref-psidh" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[Lero22] </div><div class="csl-right-inline"><span class="smallcaps">Leroux, Antonin</span>: <a href="https://eprint.iacr.org/2021/1600">A new isogeny representation and applications to cryptography</a>. In: <em>ASIACRYPT</em>&nbsp;: Springer, 2022, pp.&nbsp;3–35</div>
+<div id="ref-binue" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[MeRi24] </div><div class="csl-right-inline"><span class="smallcaps">Meers, Jonas</span> ; <span class="smallcaps">Riepel, Doreen</span>: <a href="https://eprint.iacr.org/2024/499"><span>CCA</span> secure updatable encryption from non-mappable group actions</a>. In: <em>PQCrypto</em>&nbsp;: Springer, 2024, pp.&nbsp;137–169</div>
 </div>
 </div>
 <hr>

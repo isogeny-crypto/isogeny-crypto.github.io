@@ -367,6 +367,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-exchange/binue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">BIN-UE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../schemes/key-exchange/bsidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">B-SIDH</span></a>
   </div>
@@ -592,7 +598,7 @@ window.Quarto = {
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>The development of Updatable Encryption (UE) schemes using post-quantum group actions has historically been bottlenecked by the requirement for Mappable Effective Group Actions (MEGA). In the isogeny setting, instantiating a MEGA is practically infeasible due to the notorious difficulty of hashing into the set of supersingular elliptic curves. The TOGA-UE (Triple Orbital Group Action Updatable Encryption) scheme circumvents this limitation by drawing inspiration from the <a href="../../schemes/key-exchange/sigamal.html">SiGamal</a> encryption scheme <span class="citation" data-cites="togaue">[<a href="#ref-togaue" role="doc-biblioref">LeRo24</a>]</span>. Instead of attempting to map messages directly to an isogeny graph vertex (a curve), TOGA-UE maps messages as scalars to specific points on an elliptic curve via scalar multiplication. The underlying curve and the points are then transformed using the isogeny group action. This architectural shift eliminates the need to hash into supersingular curves while natively supporting an unbounded number of ciphertext updates. Consequently, TOGA-UE instantiated from <a href="../../schemes/key-exchange/csidh.html">CSIDH</a> stands as the first post-quantum UE scheme that is not based on lattices and places no limits on key rotations.</p>
+<p>Updatable Encryption (UE) allows untrusted servers to update ciphertexts via tokens without exposing secret keys, ensuring forward and post-compromise security for outsourced storage. Crucially, UE differs significantly from <a href="../../schemes/key-exchange/csidhupke.html">UPKE</a>: while UE fundamentally requires ciphertext updatability, UPKE generally does not. Historically, building post-quantum UE from group actions required Mappable Effective Group Actions (MEGA). In the isogeny setting, this is practically infeasible due to the notorious difficulty of hashing into supersingular elliptic curves. The TOGA-UE (Triple Orbital Group Action Updatable Encryption) scheme circumvents this limitation by drawing inspiration from the <a href="../../schemes/key-exchange/sigamal.html">SiGamal</a> encryption scheme <span class="citation" data-cites="togaue">[<a href="#ref-togaue" role="doc-biblioref">LeRo24</a>]</span>. Instead of attempting to map messages directly to an isogeny graph vertex (a curve), TOGA-UE maps messages as scalars to specific points on an elliptic curve via scalar multiplication. The underlying curve and the points are then transformed using the isogeny group action. This architectural shift eliminates the need to hash into supersingular curves while natively supporting an unbounded number of ciphertext updates. Consequently, TOGA-UE instantiated from <a href="../../schemes/key-exchange/csidh.html">CSIDH</a> stands as the first post-quantum UE scheme that is not based on lattices and places no limits on key rotations.</p>
 </section>
 <section id="scheme-design" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="scheme-design"><span class="header-section-number">2</span> Scheme Design</h2>

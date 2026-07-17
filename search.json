@@ -14,7 +14,7 @@
     "href": "index.html#getting-started",
     "title": "Isogeny-based Cryptography Wiki",
     "section": "1 Getting Started",
-    "text": "1 Getting Started\nIf you are not familiar with cryptographic schemes, we recommend this book draft by Dan Boneh and Victor Shoup. For the underlying mathematics, see Steven Galbraith’s book. You may also benefit from reading PhD theses in this area, for instance this list curated by Giacomo Pope.\nYou may also find good reference material in past schools, such as Bristol 2020, ANTS 2020, PCMI 2022, IPAM 2022, VaNTAGe 2022, CIMPA 2024, SLMath 2024, PQCSA 2025, and AWS 2026.\nTo engage with the community, consider joining activities such as the Isogeny Club, Leuven Isogeny Days, BIRS workshops, and Swissogeny Day.",
+    "text": "1 Getting Started\nIf you are not familiar with cryptographic schemes, we recommend Mike Rosulek’s book. For the underlying mathematics, see Steven Galbraith’s book. You may also benefit from reading PhD theses in this area, for instance this list curated by Giacomo Pope.\nYou may also find good reference material in past schools, such as Bristol 2020, ANTS 2020, PCMI 2022, IPAM 2022, VaNTAGe 2022, CIMPA 2024, SLMath 2024, PQCSA 2025, and AWS 2026.\nTo engage with the community, consider joining activities such as the Isogeny Club, Leuven Isogeny Days, BIRS workshops, and Swissogeny Day.",
     "crumbs": [
       "Home"
     ]
@@ -495,7 +495,7 @@
     "href": "schemes/key-exchange/csidh.html#progress",
     "title": "CSIDH",
     "section": "4 Progress",
-    "text": "4 Progress\nTODO\n2023/793 and 2020/1188 and 2018/537 and 2019/1202 and 2019/725 and 2025/847 and 2025/1098 and 2023/186 and 2019/1288",
+    "text": "4 Progress\nTODO\n2023/793 and 2020/1188 and 2018/537 and 2019/1202 and 2019/725 and 2025/847 and 2025/1098 and 2023/186 and 2019/1288 and 2022/1230 amd 2019/837",
     "crumbs": [
       "Key Exchange",
       "CSIDH"
@@ -513,531 +513,69 @@
     ]
   },
   {
-    "objectID": "schemes/key-exchange/binsidh.html",
-    "href": "schemes/key-exchange/binsidh.html",
-    "title": "binSIDH",
+    "objectID": "schemes/key-exchange/ksidh.html",
+    "href": "schemes/key-exchange/ksidh.html",
+    "title": "\\(k\\)-SIDH",
     "section": "",
-    "text": "The binSIDH scheme is designed to provide a secure and efficient isogeny-based key exchange in the wake of the polynomial-time key-recovery attacks that broke the original SIDH scheme [BaFo23]. Originally, SIDH required revealing the images of torsion points to enable parties to compute parallel isogenies and arrive at a shared secret, but this extra torsion information was ultimately exploited to recover the secret isogeny. To circumvent these attacks without sacrificing the efficiency of SIDH too heavily, binSIDH introduces the concept of “artificially oriented curves.” By equipping an elliptic curve with a pair of cyclic disjoint subgroups (an artificial orientation), the scheme limits the set of allowable isogenies and restricts the revealed information strictly to the push-forwards of these orientations. This formulation interpolates between the original SIDH and group-action based schemes (like CSIDH), revealing sufficiently less information to prevent the known torsion-based attacks while preserving the parallel isogeny structure necessary for a Diffie-Hellman-like key agreement.",
+    "text": "Broken by a polynomial time classical algorithm.\n\nThe \\(k\\)-SIDH scheme introduces a generic transformation designed to secure SIDH key agreement against active attacks in the static-static setting [AzJaLe17].\nIn a standard SIDH static-static key exchange, a malicious participant can mount an adaptive attack by sending specialized, manipulated public torsion points. By observing whether the subsequent key validation succeeds or fails, the attacker can iteratively leak the honest party’s static private key. Extant countermeasures, such as the Fujisaki-Okamoto transform, enforce indirect validation by requiring the untrusted party to disclose their private key. While secure, this precludes the use of static-static drop-in replacements.\nTo thwart these attacks without exposing private keys, \\(k\\)-SIDH uses a multiple instances model. Instead of a single key, each party generates \\(k\\) different keys. During the exchange, the participants perform key agreement using all \\(k^2\\) combinations of their individual keys. The resulting \\(k^2\\) shared secrets are hashed together. If a malicious, modified public key is used, it will almost certainly cause at least one of the \\(k^2\\) key derivations to fail, causing the final hashed validation to fail. This expands the space of failure outcomes exponentially, rendering it computationally infeasible for an attacker to predict the correct final hash and salvage the attack.",
     "crumbs": [
       "Key Exchange",
-      "binSIDH"
+      "$k$-SIDH"
     ]
   },
   {
-    "objectID": "schemes/key-exchange/binsidh.html#overview",
-    "href": "schemes/key-exchange/binsidh.html#overview",
-    "title": "binSIDH",
+    "objectID": "schemes/key-exchange/ksidh.html#overview",
+    "href": "schemes/key-exchange/ksidh.html#overview",
+    "title": "\\(k\\)-SIDH",
     "section": "",
-    "text": "The binSIDH scheme is designed to provide a secure and efficient isogeny-based key exchange in the wake of the polynomial-time key-recovery attacks that broke the original SIDH scheme [BaFo23]. Originally, SIDH required revealing the images of torsion points to enable parties to compute parallel isogenies and arrive at a shared secret, but this extra torsion information was ultimately exploited to recover the secret isogeny. To circumvent these attacks without sacrificing the efficiency of SIDH too heavily, binSIDH introduces the concept of “artificially oriented curves.” By equipping an elliptic curve with a pair of cyclic disjoint subgroups (an artificial orientation), the scheme limits the set of allowable isogenies and restricts the revealed information strictly to the push-forwards of these orientations. This formulation interpolates between the original SIDH and group-action based schemes (like CSIDH), revealing sufficiently less information to prevent the known torsion-based attacks while preserving the parallel isogeny structure necessary for a Diffie-Hellman-like key agreement.",
+    "text": "Broken by a polynomial time classical algorithm.\n\nThe \\(k\\)-SIDH scheme introduces a generic transformation designed to secure SIDH key agreement against active attacks in the static-static setting [AzJaLe17].\nIn a standard SIDH static-static key exchange, a malicious participant can mount an adaptive attack by sending specialized, manipulated public torsion points. By observing whether the subsequent key validation succeeds or fails, the attacker can iteratively leak the honest party’s static private key. Extant countermeasures, such as the Fujisaki-Okamoto transform, enforce indirect validation by requiring the untrusted party to disclose their private key. While secure, this precludes the use of static-static drop-in replacements.\nTo thwart these attacks without exposing private keys, \\(k\\)-SIDH uses a multiple instances model. Instead of a single key, each party generates \\(k\\) different keys. During the exchange, the participants perform key agreement using all \\(k^2\\) combinations of their individual keys. The resulting \\(k^2\\) shared secrets are hashed together. If a malicious, modified public key is used, it will almost certainly cause at least one of the \\(k^2\\) key derivations to fail, causing the final hashed validation to fail. This expands the space of failure outcomes exponentially, rendering it computationally infeasible for an attacker to predict the correct final hash and salvage the attack.",
     "crumbs": [
       "Key Exchange",
-      "binSIDH"
+      "$k$-SIDH"
     ]
   },
   {
-    "objectID": "schemes/key-exchange/binsidh.html#scheme-design",
-    "href": "schemes/key-exchange/binsidh.html#scheme-design",
-    "title": "binSIDH",
+    "objectID": "schemes/key-exchange/ksidh.html#scheme-design",
+    "href": "schemes/key-exchange/ksidh.html#scheme-design",
+    "title": "\\(k\\)-SIDH",
     "section": "2 Scheme Design",
-    "text": "2 Scheme Design\nThe binSIDH scheme restricts computations to full-degree artificially oriented isogenies. Below is a detailed walkthrough of the scheme setup, key generation, and shared key derivation.\n\n2.1 Setup\nThe public parameters are generated as follows:\n\n\\(\\lambda\\): The security parameter (e.g., 128, 192, 256) that dictates the targeted security level.\n\\(t\\): An integer depending on \\(\\lambda\\), representing the number of distinct prime factors required to achieve the desired security.\n\\(l_i, q_i\\): Small, distinct prime numbers for \\(i \\in \\{1, \\dots, t\\}\\).\n\\(A, B\\): Coprime integers where \\(A = \\prod_{i=1}^t l_i\\) and \\(B = \\prod_{i=1}^t q_i\\). \\(A\\) dictates the degree of Alice’s isogenies, while \\(B\\) dictates Bob’s. The values are chosen such that \\(A \\approx B \\approx \\sqrt{p}\\).\n\\(f\\): A small cofactor used to ensure the resulting \\(p\\) is a valid prime.\n\\(p\\): A large prime of the form \\(p = ABf - 1\\).\n\\(E_0\\): A starting supersingular elliptic curve defined over \\(\\mathbb{F}_{p^2}\\) with cardinality \\(\\#E_0(\\mathbb{F}_{p^2}) = (p+1)^2\\). To avoid special endomorphism ring properties that could lead to attacks, this curve should be generated via a uniformly random walk.\n\\(\\mathfrak{A}, \\mathfrak{B}\\): Artificial orientations on \\(E_0\\). Specifically, the artificial \\(A\\)-orientation is defined as \\(\\mathfrak{A} = (G_1, G_2)\\), where \\(G_1, G_2 \\subset E_0[A]\\) are cyclic disjoint subgroups of order \\(A\\). The artificial \\(B\\)-orientation is similarly defined as \\(\\mathfrak{B} = (H_1, H_2)\\), a pair of cyclic disjoint subgroups of order \\(B\\).\n\nThe globally public parameters are \\((E_0, p, A, B, \\mathfrak{A}, \\mathfrak{B})\\).\n\n\n2.2 Key Generation\nBoth parties independently sample random secret vectors that dictate the specific subgroups used to construct their secret isogenies.\nAlice:\n\nSamples a secret vector \\(\\mathbf{a}\\) uniformly at random from \\(\\{1, 2\\}^t\\).\nDecomposes her artificial \\(A\\)-orientation \\(\\mathfrak{A} = (G_1, G_2)\\). Since \\(G_1\\) and \\(G_2\\) are cyclic groups of order \\(A = \\prod_{i=1}^t l_i\\), they can be written as the direct sum of their prime-order components: \\(G_1 = G_1^1 \\oplus \\dots \\oplus G_1^t\\) and \\(G_2 = G_2^1 \\oplus \\dots \\oplus G_2^t\\), where each \\(G_1^i\\) and \\(G_2^i\\) has order \\(l_i\\).\nConstructs the \\(\\mathfrak{A}\\)-isogeny \\(\\phi_A : E_0 \\to E_A\\) of degree \\(A\\). The kernel of \\(\\phi_A\\) is strictly dictated by the vector \\(\\mathbf{a}\\): for each \\(i\\)-th prime factor \\(l_i\\), she selects the kernel component from either \\(G_1^i\\) (if \\(\\mathbf{a}_i = 1\\)) or \\(G_2^i\\) (if \\(\\mathbf{a}_i = 2\\)). Formally, \\(\\ker \\phi_A = \\langle G_{\\mathbf{a}_1}^1, G_{\\mathbf{a}_2}^2, \\dots, G_{\\mathbf{a}_t}^t \\rangle\\).\nComputes the image of Bob’s artificial \\(B\\)-orientation \\(\\mathfrak{B}\\) under her isogeny. This is simply the evaluation of \\(\\phi_A\\) on the subgroups of \\(\\mathfrak{B}\\), yielding \\(\\mathfrak{B}' = \\phi_A(\\mathfrak{B}) = (\\phi_A(H_1),\\phi_A(H_2))\\).\nAlice’s secret key is \\(\\mathbf{a}\\) and her public key is \\((E_A, \\mathfrak{B}')\\).\n\nBob:\n\nSamples a secret vector \\(\\mathbf{b}\\) uniformly at random from \\(\\{1, 2\\}^t\\).\nDecomposes his artificial \\(B\\)-orientation \\(\\mathfrak{B} = (H_1, H_2)\\) into its prime-order components \\(H_1^i\\) and \\(H_2^i\\) of order \\(q_i\\).\nConstructs the \\(\\mathfrak{B}\\)-isogeny \\(\\phi_B : E_0 \\to E_B\\) of degree \\(B\\). The kernel is chosen from \\(\\mathfrak{B}\\) according to the vector \\(\\mathbf{b}\\), such that \\(\\ker \\phi_B = \\langle H_{\\mathbf{b}_1}^1, H_{\\mathbf{b}_2}^2, \\dots, H_{\\mathbf{b}_t}^t \\rangle\\).\nComputes the image of Alice’s artificial \\(A\\)-orientation \\(\\mathfrak{A}\\) under his isogeny, yielding \\(\\mathfrak{A}' = \\phi_B(\\mathfrak{A})\\).\nBob’s secret key is \\(\\mathbf{b}\\) and his public key is \\((E_B, \\mathfrak{A}')\\).\n\n\n\n2.3 Shared Key Computation\nUpon exchanging public keys, the parties compute their parallel isogenies to arrive at a common curve.\nAlice:\n\nReceives Bob’s public key \\((E_B, \\mathfrak{A}')\\). She verifies that \\(\\mathfrak{A}'\\) is indeed a valid artificial \\(A\\)-orientation on \\(E_B\\); if not, she aborts.\nShe computes the \\(\\mathfrak{A}'\\)-isogeny \\(\\phi_A' : E_B \\to E_{BA}\\) of degree \\(A\\), defined by her secret vector \\(\\mathbf{a}\\).\nHer shared key is the \\(j\\)-invariant of the resulting curve, \\(j(E_{BA})\\).\n\nBob:\n\nReceives Alice’s public key \\((E_A, \\mathfrak{B}')\\). He verifies that \\(\\mathfrak{B}'\\) is a valid artificial \\(B\\)-orientation on \\(E_A\\); if not, he aborts.\nHe computes the \\(\\mathfrak{B}'\\)-isogeny \\(\\phi_B' : E_A \\to E_{AB}\\) of degree \\(B\\), defined by his secret vector \\(\\mathbf{b}\\).\nHis shared key is the \\(j\\)-invariant of the resulting curve, \\(j(E_{AB})\\).\n\nDue to the structure of parallel isogenies over artificially oriented curves, the resulting codomain curves \\(E_{AB}\\) and \\(E_{BA}\\) are isomorphic, ensuring \\(j(E_{AB}) = j(E_{BA})\\).",
+    "text": "2 Scheme Design\nThe \\(k\\)-SIDH key agreement process requires both parties (Alice and Bob) to perform \\(k^2\\) pairwise derivations.\n\n2.1 Setup\nThe global parameters \\(gp\\) are identical to standard SIDH:\n\nA preimage-resistant hash function \\(H\\).\nA prime number \\(p = 2^m 3^n f \\pm 1\\).\nA supersingular elliptic curve \\(E/\\mathbb{F}_{p^2}\\).\nFixed, independent torsion bases: \\(P_A, Q_A \\in E[2^m]\\) and \\(P_B, Q_B \\in E[3^n]\\).\n\n\n\n2.2 Key Generation\n\n2.2.1 Alice’s Key Generation\n\nAlice generates \\(k\\) random private keys: \\(\\alpha_i \\in_R \\mathbb{Z}/2^m\\mathbb{Z}\\) for \\(1 \\le i \\le k\\).\nFor each key, she computes a \\(2^m\\)-isogeny: \\(\\phi_{Ai}: E \\rightarrow E_{Ai} = E / \\langle P_A + [\\alpha_i]Q_A \\rangle\\).\nShe projects Bob’s torsion bases through each isogeny: \\(R_i = \\phi_{Ai}(P_B)\\) and \\(S_i = \\phi_{Ai}(Q_B)\\).\nHer public key is the set of \\(k\\) tuples: \\(\\{(E_{Ai}, R_i, S_i)\\}_{i=1}^k\\).\n\n\n\n2.2.2 Bob’s Key Generation\n\nBob generates \\(k\\) random private keys: \\(\\beta_j \\in_R \\mathbb{Z}/3^n\\mathbb{Z}\\) for \\(1 \\le j \\le k\\).\nFor each key, he computes a \\(3^n\\)-isogeny: \\(\\phi_{Bj}: E \\rightarrow E_{Bj} = E / \\langle P_B + [\\beta_j]Q_B \\rangle\\).\nHe projects Alice’s torsion bases through each isogeny: \\(U_j = \\phi_{Bj}(P_A)\\) and \\(V_j = \\phi_{Bj}(Q_A)\\).\nHis public key is the set of \\(k\\) tuples: \\(\\{(E_{Bj}, U_j, V_j)\\}_{j=1}^k\\).\n\n\n\n\n2.3 Communication\nAlice and Bob exchange their respective lists of \\(k\\) public keys.\n\n2.3.1 Alice’s Computation\n\nFor every pair \\((i, j)\\) where \\(1 \\le i, j \\le k\\), Alice uses Bob’s \\(i\\)-th public key and her \\(j\\)-th private key to compute the \\(k^2\\) shared curves: \\[E_{BiAj} = E_{Bi} / \\langle U_i + [\\alpha_j]V_i \\rangle\\]\nShe extracts the j-invariants to form the shared secrets: \\(z_{i,j} = j(E_{BiAj})\\).\nShe computes the combined hash: \\(h = H(z_{1,1}, \\dots, z_{k,k})\\).\n\n\n\n2.3.2 Bob’s Computation\n\nFor every pair \\((i, j)\\), Bob uses Alice’s \\(j\\)-th public key and his \\(i\\)-th private key to compute: \\[E_{AjBi} = E_{Aj} / \\langle R_j + [\\beta_i]S_j \\rangle\\]\nHe extracts the j-invariants: \\(z'_{i,j} = j(E_{AjBi})\\).\nHe computes the combined hash: \\(h' = H(z'_{1,1}, \\dots, z'_{k,k})\\).\n\n\n\n\n2.4 Verification\n\nValidation: Both parties perform validation tests on the received public keys. Alice verifies that for each \\(j\\), \\(U_j\\) and \\(V_j\\) are independent points of order \\(2^m\\) on \\(E_{Bj}\\) and that the Weil pairing holds: \\[e_{2^m}(U_j, V_j) = e_{2^m}(P_A, Q_A)^{3^n}\\] Bob performs the analogous checks.\nKey Confirmation:\n\nAlice sends \\(H(H(h))\\) to Bob. Bob verifies it equals \\(H(H(h'))\\).\nBob sends \\(H(h')\\) to Alice. Alice verifies it equals \\(H(h)\\).\n\nTermination: If any public key pair fails validation, or if the hashes mismatch, the scheme terminates. Otherwise, they continue with \\(h = h'\\) as their shared secret key.",
     "crumbs": [
       "Key Exchange",
-      "binSIDH"
+      "$k$-SIDH"
     ]
   },
   {
-    "objectID": "schemes/key-exchange/binsidh.html#security-assumptions",
-    "href": "schemes/key-exchange/binsidh.html#security-assumptions",
-    "title": "binSIDH",
+    "objectID": "schemes/key-exchange/ksidh.html#security-assumptions",
+    "href": "schemes/key-exchange/ksidh.html#security-assumptions",
+    "title": "\\(k\\)-SIDH",
     "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nThe security of binSIDH relies on a set of computational problems related to artificially oriented curves, some of which are generalizations of recently introduced isogeny problems.\n\nSupersingular Isogeny Problem for artificially A-oriented curves (SSIP-A): Given an artificially \\(A\\)-oriented curve \\((E, \\mathfrak{A})\\), a codomain curve \\(E'\\), the image orientation \\(\\mathfrak{A}'\\), and a degree \\(B\\), compute the isogeny of degree \\(B\\) connecting them. This is a generalization of the CIST problem previously introduced in the FESTA cryptosystem.\nArtificially Oriented Isogeny Problem (AOIP): Given a starting curve \\(E\\) with an artificial \\(A\\)-orientation \\(\\mathfrak{A}\\) and an artificial \\(B\\)-orientation \\(\\mathfrak{B}\\), along with the codomain curve \\(E'\\) and the image orientation \\(\\mathfrak{A}'\\), compute the cyclic \\(B\\)-isogeny.\nArtificially Oriented Computational Diffie-Hellman (AO-CDH): Given the initial public parameters and the two public keys \\((E_A, \\phi_A(\\mathfrak{B}))\\) and \\((E_B, \\phi_B(\\mathfrak{A}))\\), compute the shared invariant \\(j(E_{AB})\\).",
+    "text": "3 Security Assumptions\nThe security of the \\(k\\)-SIDH scheme relies on the following foundational assumptions.\n\nIntractability of the Supersingular Isogeny (SSI) Problem: The underlying primitive relies on the hardness of finding an isogeny of a specific degree with a cyclic kernel between two known supersingular elliptic curves defined over \\(\\mathbb{F}_{p^2}\\).\nIrreducibility of SIDH: The multiple-instances transformation requires the underlying key establishment to be irreducible. A scheme is irreducible if it is computationally infeasible for a malicious participant to craft a modified public key that successfully passes all public validation tests while generating the exact same shared secret across multiple different honest private keys. The authors prove that if an attacker could violate this irreducibility in SIDH, they could use that capability to efficiently solve the SSI problem.\nPreimage Resistance of the Hash Function: The hash function \\(H\\) must be strong and preimage-resistant. Since a dishonest Bob only receives \\(H(h)\\) (or \\(H(H(h))\\)), he must guess the entirety of the \\(k\\)-element preimage correctly. The hash prevents the attacker from successfully testing failures instance-by-instance.\nNo Curve Manipulation: The proof model primarily addresses adversaries that manipulate elliptic curve torsion points. It relies on the heuristic assumption that the curves themselves are not being maliciously generated or manipulated in unverified ways, noting that there are no known active attacks exploiting manipulated curves directly in this context.",
     "crumbs": [
       "Key Exchange",
-      "binSIDH"
+      "$k$-SIDH"
     ]
   },
   {
-    "objectID": "schemes/key-exchange/binsidh.html#progress",
-    "href": "schemes/key-exchange/binsidh.html#progress",
-    "title": "binSIDH",
+    "objectID": "schemes/key-exchange/ksidh.html#progress",
+    "href": "schemes/key-exchange/ksidh.html#progress",
+    "title": "\\(k\\)-SIDH",
     "section": "4 Progress",
-    "text": "4 Progress\nTODO\n2026/032",
+    "text": "4 Progress\nTODO 2019/890",
     "crumbs": [
       "Key Exchange",
-      "binSIDH"
+      "$k$-SIDH"
     ]
   },
   {
-    "objectID": "schemes/key-exchange/binsidh.html#references",
-    "href": "schemes/key-exchange/binsidh.html#references",
-    "title": "binSIDH",
+    "objectID": "schemes/key-exchange/ksidh.html#references",
+    "href": "schemes/key-exchange/ksidh.html#references",
+    "title": "\\(k\\)-SIDH",
     "section": "5 References",
-    "text": "5 References\n\n\n[BaFo23] Basso, Andrea ; Fouotsa, Tako Boris: New SIDH countermeasures for a more efficient key exchange. In: ASIACRYPT : Springer, 2023, pp. 208–233\n\n\n\nContributors: @gkorpal",
+    "text": "5 References\n\n\n[AzJaLe17] Azarderakhsh, Reza ; Jao, David ; Leonar, Christopher: Post-quantum static-static key agreement using multiple protocol instances. In: SAC : Springer, 2017, pp. 45–63\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Key Exchange",
-      "binSIDH"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/qfesta.html",
-    "href": "schemes/key-exchange/qfesta.html",
-    "title": "QFESTA",
-    "section": "",
-    "text": "QFESTA (Quaternion Fast Encapsulation from Supersingular Torsion Attacks) is a new isogeny-based public-key encryption (PKE) and key encapsulation mechanism (KEM) based on the FESTA scheme [NaOn24]. The main innovation in QFESTA’s design is the sub-algorithm RandIsogImages, which evaluates non-smooth degree isogenies using Kani’s lemma and quaternion endomorphisms. Finally, to achieve indistinguishability against chosen ciphertext attacks (IND-CCA) in the quantum random oracle model (QROM), the core One-Way Chosen Plaintext Attack (OW-CPA) secure PKE is wrapped using the Fujisaki-Okamoto (\\(FO^{\\not\\perp}\\)) transform.\n\n\nGiven a special supersingular elliptic curve \\(E_0/\\mathbb{F}_{p^2}\\) with \\(j\\)-invariant 1728, its known maximal order \\(\\mathcal{O}_0 \\cong \\text{End}(E_0)\\), and an target non-smooth isogeny degree \\(d\\):\nE0EA¿:d¡isogeny½:(D¡d)¡isogeny®\n\nA smooth integer \\(D = 2^{3a}\\) is chosen such that \\(E_0[D] \\subset E_0(\\mathbb{F}_{p^2})\\) and \\(D - d \\approx p\\).\nThe algorithm computes an element \\(\\alpha \\in \\mathcal{O}_0\\) with a reduced norm of \\(d(D-d)\\) using an extension of Cornacchia’s algorithm.\nThe quaternion element \\(\\alpha\\) is formally decomposed into \\(\\hat{\\rho} \\circ \\tau\\), where \\(\\tau\\) and \\(\\rho\\) are isogenies of degrees \\(d\\) and \\(D-d\\), respectively.\nBy leveraging Kani’s lemma (via SIDH attack components), the algorithm extracts the codomain of \\(\\tau\\) and the images of arbitrary torsion points under \\(\\tau\\) entirely through (2,2)-isogeny chains.",
-    "crumbs": [
-      "Key Exchange",
-      "QFESTA"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/qfesta.html#overview",
-    "href": "schemes/key-exchange/qfesta.html#overview",
-    "title": "QFESTA",
-    "section": "",
-    "text": "QFESTA (Quaternion Fast Encapsulation from Supersingular Torsion Attacks) is a new isogeny-based public-key encryption (PKE) and key encapsulation mechanism (KEM) based on the FESTA scheme [NaOn24]. The main innovation in QFESTA’s design is the sub-algorithm RandIsogImages, which evaluates non-smooth degree isogenies using Kani’s lemma and quaternion endomorphisms. Finally, to achieve indistinguishability against chosen ciphertext attacks (IND-CCA) in the quantum random oracle model (QROM), the core One-Way Chosen Plaintext Attack (OW-CPA) secure PKE is wrapped using the Fujisaki-Okamoto (\\(FO^{\\not\\perp}\\)) transform.\n\n\nGiven a special supersingular elliptic curve \\(E_0/\\mathbb{F}_{p^2}\\) with \\(j\\)-invariant 1728, its known maximal order \\(\\mathcal{O}_0 \\cong \\text{End}(E_0)\\), and an target non-smooth isogeny degree \\(d\\):\nE0EA¿:d¡isogeny½:(D¡d)¡isogeny®\n\nA smooth integer \\(D = 2^{3a}\\) is chosen such that \\(E_0[D] \\subset E_0(\\mathbb{F}_{p^2})\\) and \\(D - d \\approx p\\).\nThe algorithm computes an element \\(\\alpha \\in \\mathcal{O}_0\\) with a reduced norm of \\(d(D-d)\\) using an extension of Cornacchia’s algorithm.\nThe quaternion element \\(\\alpha\\) is formally decomposed into \\(\\hat{\\rho} \\circ \\tau\\), where \\(\\tau\\) and \\(\\rho\\) are isogenies of degrees \\(d\\) and \\(D-d\\), respectively.\nBy leveraging Kani’s lemma (via SIDH attack components), the algorithm extracts the codomain of \\(\\tau\\) and the images of arbitrary torsion points under \\(\\tau\\) entirely through (2,2)-isogeny chains.",
-    "crumbs": [
-      "Key Exchange",
-      "QFESTA"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/qfesta.html#scheme-design",
-    "href": "schemes/key-exchange/qfesta.html#scheme-design",
-    "title": "QFESTA",
-    "section": "2 Scheme Design",
-    "text": "2 Scheme Design\nFESTA uses the SIDH attack machinery for decryption, which natively imposes strong smoothness constraints on the degrees of the underlying isogenies (\\(d_A, d_1, d_2\\)), forcing them to be large and leading to significant data sizes and computational overhead. To circumvent these limitations, QFESTA introduces a novel technique leveraging quaternion algebras to compute the codomain and point images of non-smooth degree isogenies from a special starting curve. This eliminates the smoothness restriction for degrees \\(d_A\\) and \\(d_1\\), vastly shrinking parameter sizes.\nE0EA;1EAE1E2ÁA;1:dA;1¡isogenyÁA;2:3b¡isogenyÁAµP0Q0¶µRASA¶=AµÁA(P0)ÁA(Q0)¶µR1S1¶=BµÁ1(P0)Á1(Q0)¶µR2S2¶=BµÁ2(RA)Á2(SA)¶Á1:d1¡isogenyÁ2:32b¡isogenyÃ1Ã2\n\n2.1 System Setup and Parameters\nBefore key generation, the system initializes global parameters based on a chosen security parameter \\(\\lambda\\). This setup routine computes the necessary constants and defines the mathematical structures used by all parties:\n\nDegree Exponents (\\(a, b\\)): To achieve the desired security level, the protocol sets \\(b = \\lceil \\log_3 2^\\lambda \\rceil\\) and \\(a = \\lceil \\log_2 (2^\\lambda + 3^b) \\rceil\\). This ensures the sizes of the isogeny walks are properly balanced.\nSecret Isogeny Degrees (\\(d_{A,1}, d_1\\)): Using the exponents above, the non-smooth isogeny degrees are defined as \\(d_{A,1} = 2^a - 3^b\\) and \\(d_1 = 2^{2a} + 2^a \\cdot 3^b + 3^{2b}\\).\nCharacteristic (\\(p\\)): A prime \\(p\\) is calculated as \\(p = 2^{3a} \\cdot 3f - 1\\), where \\(f\\) is a small positive integer found by ascending search until \\(p\\) is prime.\nBase Curve and Ring: The initial supersingular elliptic curve is defined over \\(\\mathbb{F}_{p^2}\\) as \\(E_0 : y^2 = x^3 + x\\), and its known endomorphism ring is \\(\\mathcal{O}_0 = \\mathbb{Z}\\langle1, i, \\frac{i+j}{2}, \\frac{1+k}{2}\\rangle\\).\nTorsion Basis: A basis \\((P_0, Q_0)\\) is established for the \\(2^{3a}\\)-torsion subgroup \\(E_0[2^{3a}]\\).\nMatrix Space (\\(\\mathcal{M}_{2^{3a}}\\)): Let \\(\\mathcal{M}_{2^{3a}}\\) denote the set of \\(2 \\times 2\\) diagonal invertible matrices over the ring \\(\\mathbb{Z}/2^{3a}\\mathbb{Z}\\). These matrices are used to “mask” the torsion point images.\n\nThe resulting public system parameter set available to all parties is \\(\\text{param} = (p, a, b, d_{A,1}, d_1, E_0, \\mathcal{O}_0, P_0, Q_0)\\).\n\n\n2.2 Key Generation (Receiver)\n\nSecret Isogeny 1 (\\(\\phi_{A,1}\\)): Using the global parameters, an intermediate curve \\(E_{A,1}\\) and mapped torsion points \\((P_{A,1}, Q_{A,1})\\) are generated by executing \\(\\text{RandIsogImages}_{\\mathcal{O}_0}(d_{A,1}, 2^{3a}; P_0, Q_0)\\).\nSecret Isogeny 2 (\\(\\phi_{A,2}\\)): A random \\(3^b\\)-isogeny \\(\\phi_{A,2}\\) is computed from \\(E_{A,1}\\) to the final public curve \\(E_A\\), mapping the torsion points to \\((P_A, Q_A) = (\\phi_{A,2}(P_{A,1}), \\phi_{A,2}(Q_{A,1}))\\).\nMasking: A diagonal matrix \\(\\mathbf{A} \\in_U \\mathcal{M}_{2^{3a}}\\) is chosen uniformly at random. This matrix is used to mask the torsion points, computing \\((R_A, S_A)^\\top = \\mathbf{A}(P_A, Q_A)^\\top\\).\nKeys: The resulting public key is \\(\\text{pk} = (E_A, R_A, S_A)\\), while the secret key is retained as \\(\\text{sk} = (E_{A,1}, P_{A,1}, Q_{A,1}, \\mathbf{A})\\).\n\n\n\n2.3 Encryption (Sender)\n\nMessage Encoding: A message \\(m \\in \\{0, 1\\}^{3a-2}\\) is treated as an integer \\(m \\in [0, 2^{3a-2}-1]\\). To map this integer bijectively into the invertible elements of the modular ring, the sender maps it to an odd integer: \\(s_B = 2m + 1\\). The sender then reduces \\(s_B \\pmod{2^{3a}}\\) and calculates its modular inverse \\(s_B^{-1} \\pmod{2^{3a}}\\) to construct the diagonal masking matrix \\(\\mathbf{B} = \\text{diag}(s_B, s_B^{-1}) \\in \\mathcal{M}_{2^{3a}}\\).\nIsogeny \\(\\phi_1\\): An isogeny of degree \\(d_1\\) to curve \\(E_1\\), alongside mapped points \\((P_1, Q_1)\\), is generated via \\(\\text{RandIsogImages}_{\\mathcal{O}_0}(d_1, 2^{3a}; P_0, Q_0)\\).\nFirst Ciphertext Component: The intermediate points are masked using the encoded matrix \\(\\mathbf{B}\\) to compute \\((R_1, S_1)^\\top = \\mathbf{B}(P_1, Q_1)^\\top\\).\nIsogeny \\(\\phi_2\\): A random \\(3^{2b}\\)-isogeny \\(\\phi_2\\) is computed from the public key’s curve \\(E_A\\) to a new curve \\(E_2\\).\nSecond Ciphertext Component: The masked points from the public key are evaluated through \\(\\phi_2\\) and further masked by \\(\\mathbf{B}\\) to yield \\((R_2, S_2)^\\top = \\mathbf{B}(\\phi_2(R_A), \\phi_2(S_A))^\\top\\).\nOutput: The final ciphertext encapsulates these elements as \\(\\text{ct} = (E_1, R_1, S_1, E_2, R_2, S_2)\\).\n\n\n\n2.4 Decryption (Receiver)\n\nInitialization & Kani’s Criterion: The receiver begins by setting the combined degrees of the parallel isogeny paths: \\(N_1 = d_{A,1}d_1\\) and \\(N_2 = 3^{3b}\\). Crucially, the system parameters guarantee that \\(N_1 + N_2 = 2^{3a}\\), which perfectly matches the \\(2^{3a}\\)-torsion space and strictly satisfies Kani’s criterion for the subsequent step.\nUnmasking Setup: Using the secret matrix \\(\\mathbf{A}\\), the receiver computes the partially unmasked ciphertext points: \\((R_2', S_2')^\\top = d_1 \\mathbf{A}^{-1}(R_2, S_2)^\\top\\).\nKani’s Evaluation: The core of the decryption uses Kani’s lemma to navigate the commutative isogeny square. To achieve this, the algorithm constructs a higher-dimensional \\((2^{3a}, 2^{3a})\\)-isogeny originating from the product of the two ciphertext curves, \\(E_1 \\times E_2\\). By combining the points \\((R_1, S_1)\\) from the first curve and the partially unmasked points \\((R_2', S_2')\\) from the second curve to form the kernel of this product isogeny, the receiver systematically strips away the outer isogeny layers. This geometric projection recovers the target point images \\((R_{A,1}, S_{A,1})\\) resting on the intermediate secret curve \\(E_{A,1}\\).\nMatrix Recovery: Kani’s evaluation yields the matrix equation \\((R_{A,1}, S_{A,1})^\\top = d_1 \\mathbf{B}(P_{A,1}, Q_{A,1})^\\top\\). Because the masking matrix is strictly defined as \\(\\mathbf{B} = \\text{diag}(s_B, s_B^{-1})\\), this expands into a direct scalar multiplication: \\(R_{A,1} = [d_1 \\cdot s_B] P_{A,1}\\). The receiver isolates the unknown scalar \\(s_B\\) by solving this discrete logarithm problem via the \\(2^{3a}\\)-Tate pairing, which fully reconstructs \\(\\mathbf{B}\\).\nMessage Decoding: Kani’s evaluation recovers the point images up to a curve automorphism (which is \\(\\{\\pm 1\\}\\) for standard curves), yielding a modular representative \\(s_B\\). To resolve the sign ambiguity and step out of the modular ring, the algorithm lifts the value back into a bounded integer: \\(s_B = \\min(s_B, 2^{3a} - s_B)\\). This isolates the exact odd integer \\(s_B \\in [1, 2^{3a-1}-1]\\) chosen during encoding. Finally, using standard integer arithmetic, the original plaintext message is retrieved: \\(m = (s_B - 1) / 2\\).",
-    "crumbs": [
-      "Key Exchange",
-      "QFESTA"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/qfesta.html#security-assumptions",
-    "href": "schemes/key-exchange/qfesta.html#security-assumptions",
-    "title": "QFESTA",
-    "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nThe core OW-CPA security of the QFESTA PKE relies on specialized variants of FESTA’s distinguishing and computational problems.\n\nPseudorandomness of RandIsogImages: The foundational assumption assumes that the codomain elliptic curve \\(E_1\\) and its mapped torsion points \\((P_1, Q_1)\\) produced by RandIsogImages are computationally indistinguishable from a tuple drawn uniformly at random from valid configurations.\nVariant DIST Problem: The security proof extends this to the public keys themselves, assuming an adversary cannot distinguish the legitimate masked points \\((R_A, S_A)\\) on \\(E_A\\) from uniformly random torsion points.\nHardness of Isogeny Recovery: Finding the secret isogenies (\\(\\phi_A, \\phi_1, \\phi_2\\)) given the degrees (\\(d_A, d_1, d_2\\)) requires \\(O(2^{\\lambda})\\) operations classically and \\(O(2^{\\lambda/2})\\) operations via quantum attacks (using Grover’s algorithm or meet-in-the-middle strategies), satisfying the targeted security levels.",
-    "crumbs": [
-      "Key Exchange",
-      "QFESTA"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/qfesta.html#progress",
-    "href": "schemes/key-exchange/qfesta.html#progress",
-    "title": "QFESTA",
-    "section": "4 Progress",
-    "text": "4 Progress\nTODO",
-    "crumbs": [
-      "Key Exchange",
-      "QFESTA"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/qfesta.html#references",
-    "href": "schemes/key-exchange/qfesta.html#references",
-    "title": "QFESTA",
-    "section": "5 References",
-    "text": "5 References\n\n\n[NaOn24] Nakagawa, Kohei ; Onuki, Hiroshi: QFESTA: Efficient algorithms and parameters for FESTA using quaternion algebras. In: CRYPTO : Springer, 2024, pp. 75–106\n\n\n\nContributors: @gkorpal",
-    "crumbs": [
-      "Key Exchange",
-      "QFESTA"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/psidh.html",
-    "href": "schemes/key-exchange/psidh.html",
-    "title": "pSIDH",
-    "section": "",
-    "text": "Broken by a polynomial time quantum algorithm.\n\nThe pSIDH (prime-SIDH) scheme is a novel Non-Interactive Key Exchange (NIKE) scheme introduced to circumvent the catastrophic torsion-point attacks that broke smooth-degree isogeny schemes like SIDH and Séta. While SIDH utilizes secret isogenies of smooth degrees to allow for efficient evaluation via Vélu’s formulas, this smooth-degree structure fundamentally enables the polynomial-time attacks. pSIDH transitions the SIDH-style commutative isogeny diagram to the setting of large prime degrees.\nBecause standard evaluation of large prime-degree isogenies is computationally infeasible, pSIDH relies on a novel cryptographic tool: the suborder representation [Lero22]. In this scheme, secret keys are represented as quaternion ideals (the ideal representation), while public keys are broadcast as suborder representations.",
-    "crumbs": [
-      "Key Exchange",
-      "pSIDH"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/psidh.html#overview",
-    "href": "schemes/key-exchange/psidh.html#overview",
-    "title": "pSIDH",
-    "section": "",
-    "text": "Broken by a polynomial time quantum algorithm.\n\nThe pSIDH (prime-SIDH) scheme is a novel Non-Interactive Key Exchange (NIKE) scheme introduced to circumvent the catastrophic torsion-point attacks that broke smooth-degree isogeny schemes like SIDH and Séta. While SIDH utilizes secret isogenies of smooth degrees to allow for efficient evaluation via Vélu’s formulas, this smooth-degree structure fundamentally enables the polynomial-time attacks. pSIDH transitions the SIDH-style commutative isogeny diagram to the setting of large prime degrees.\nBecause standard evaluation of large prime-degree isogenies is computationally infeasible, pSIDH relies on a novel cryptographic tool: the suborder representation [Lero22]. In this scheme, secret keys are represented as quaternion ideals (the ideal representation), while public keys are broadcast as suborder representations.",
-    "crumbs": [
-      "Key Exchange",
-      "pSIDH"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/psidh.html#scheme-design",
-    "href": "schemes/key-exchange/psidh.html#scheme-design",
-    "title": "pSIDH",
-    "section": "2 Scheme Design",
-    "text": "2 Scheme Design\nThe pSIDH scheme involves two parties, Alice and Bob, agreeing on a shared secret over supersingular elliptic curves.\nE0EAEBEAB'A'B['A]¤'B['B]¤'A^ÃB^ÃA\nHere isogenies \\([\\varphi_A]_* \\varphi_B\\) and \\([\\varphi_B]_* \\varphi_A\\) are defined as the separable isogenies of respective kernels \\(\\varphi_A(\\text{ker}(\\varphi_B))\\) and \\(\\varphi_B(\\text{ker}(\\varphi_A))\\).\n\n2.1 Global Parameters\n\n\\(p\\): A large prime characterizing the field \\(\\mathbb{F}_{p^2}\\).\n\\(E_0\\): A starting supersingular elliptic curve defined over \\(\\mathbb{F}_{p^2}\\).\n\\(\\mathcal{O}_0\\): A known maximal order in the quaternion algebra \\(B_{p, \\infty}\\) such that \\(\\text{End}(E_0) \\cong \\mathcal{O}_0\\).\n\n\n\n2.2 Key Generation\nAlice selects a large secret prime \\(D_A \\neq p\\).\n\nSecret Key (\\(I_A\\), \\(\\varphi_A\\)): Alice samples a random integral left-\\(\\mathcal{O}_0\\) ideal \\(I_A\\) of norm \\(D_A\\). Through the Deuring correspondence, \\(I_A\\) represents a cyclic isogeny \\(\\varphi_A: E_0 \\to E_A\\) of degree \\(D_A\\).\nPublic Key (\\(E_A, \\pi_A\\)): Alice computes the suborder representation \\(\\pi_A = \\text{IdealToSuborder}(I_A)\\). This representation consists of the codomain curve \\(E_A\\) and a collection of endomorphisms that reveal a specific suborder \\(\\mathbb{Z} + D_A \\mathcal{O}_0\\) embedded within \\(\\text{End}(E_A)\\).\n\nBob symmetrically generates his keys using a distinct prime \\(D_B\\), producing an ideal \\(I_B\\) (corresponding to \\(\\varphi_B: E_0 \\to E_B\\)) and public key \\((E_B, \\pi_B)\\).\n\n\n2.3 Key Exchange\nTo compute the shared curve \\(E\\), Alice uses Bob’s public key \\((E_B, \\pi_B)\\) alongside her secret key \\(I_A\\). Because Alice cannot directly compute the push-forward isogeny \\([\\varphi_B]_* \\varphi_A : E_B \\to E_{AB}\\) due to \\(D_A\\) being a large prime, she relies on an auxiliary smooth-degree path to reach \\(E\\):\n\nAlice uses the algorithm IdealSuborderNormEquation to find an element \\(\\theta \\in (\\mathbb{Z} + D_B \\mathcal{O}_0) \\cap I_A\\) with norm \\(D_A \\cdot S\\), where \\(S\\) is a carefully chosen powersmooth integer. Moreover, because \\(\\theta \\in I_A\\), under the Deuring correspondence it maps to an endomorphism on \\(E_0\\) that factors through her secret isogeny \\(\\varphi_A\\). That is, the endomorphism \\(\\theta\\) can be written as \\(\\sigma_A \\circ \\varphi_A\\), where \\(\\sigma_A : E_A \\to E_0\\) is an auxiliary isogeny of smooth degree \\(S\\).\nBy pushing this endomorphism forward through Bob’s isogeny \\(\\varphi_B\\), Alice utilizes Bob’s suborder representation \\(\\pi_B\\) to obtain an embedding \\(\\iota_B(\\theta)\\) into \\(\\text{End}(E_B)\\).\nThis embedded endomorphism on \\(E_B\\) is equivalent to \\(\\psi_A \\circ [\\varphi_B]_*\\varphi_A\\), where \\(\\psi_A: E_{AB} \\to E_B\\) is an auxiliary isogeny of degree \\(S\\).\nSince \\(S\\) is smooth, Alice can use the SuborderEvaluation algorithm on this endomorphism to explicitly find the kernel of the dual isogeny \\(\\hat{\\psi}_A : E_B \\to E_{AB}\\).\nTaking the quotient by this kernel, Alice computes the isogeny \\(\\hat{\\psi}_A\\). The codomain of \\(\\hat{\\psi}_A\\) is the target shared curve \\(E_{AB}\\), satisfying the commutativity of the diagram.\nSymmetrically, Bob computes an analogous auxiliary isogeny \\(\\hat{\\psi}_B: E_A \\to E_{AB}\\) using Alice’s public key and his secret key.\n\nBoth parties arrive at the identical curve \\(E_{AB}\\), allowing them to use the \\(j\\)-invariant \\(j(E_{AB})\\) as the shared secret.",
-    "crumbs": [
-      "Key Exchange",
-      "pSIDH"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/psidh.html#security-assumptions",
-    "href": "schemes/key-exchange/psidh.html#security-assumptions",
-    "title": "pSIDH",
-    "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nThe core security of pSIDH is tied to the SubOrder to Ideal Problem (SOIP), which relates more closely to the key recovery of CSIDH (involving partial endomorphism ring knowledge) than that of SIDH, yet maintains an SIDH-like key agreement flow.\n\nSubOrder to Ideal Problem (SOIP): This is the underlying key recovery assumption. It states that given a suborder representation \\(\\pi\\) of an isogeny \\(\\varphi\\) of prime degree \\(D\\), it is computationally infeasible to recover the ideal representation \\(I_\\varphi\\) (the secret key). Because the degree \\(D\\) is a large prime, the \\(D\\)-torsion points are defined over an exponentially large field extension \\(\\mathbb{F}_{p^k}\\) (where \\(k = O(D)\\)). This prevents the polynomial-time torsion point attacks that devastated SIDH from being applied to SOIP. However, there is a sub-exponential quantum attack against the SOIP.\nprime Supersingular Decisional Diffie-Hellman (pSSDDH): The semantic security of the key exchange relies on this decisional assumption. pSSDDH assumes that an adversary cannot distinguish the valid shared curve \\(E_{AB}\\) (where \\(\\text{End}(E_{AB}) \\cong \\mathcal{O}_R(I_A \\cap I_B)\\)) from a random curve \\(E_C\\) that is merely \\(D_A D_B\\)-isogenous to \\(E_0\\). This assumption directly borrows its structural formulation from the SSDDH problem introduced in the original SIDH proposal, but strictly limits the isogeny degrees to large primes and leverages suborder representations rather than torsion point images.",
-    "crumbs": [
-      "Key Exchange",
-      "pSIDH"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/psidh.html#progress",
-    "href": "schemes/key-exchange/psidh.html#progress",
-    "title": "pSIDH",
-    "section": "4 Progress",
-    "text": "4 Progress\nTODO\n2021/282 and 2023/779",
-    "crumbs": [
-      "Key Exchange",
-      "pSIDH"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/psidh.html#references",
-    "href": "schemes/key-exchange/psidh.html#references",
-    "title": "pSIDH",
-    "section": "5 References",
-    "text": "5 References\n\n\n[Lero22] Leroux, Antonin: A new isogeny representation and applications to cryptography. In: ASIACRYPT : Springer, 2022, pp. 3–35\n\n\n\nContributors: @gkorpal",
-    "crumbs": [
-      "Key Exchange",
-      "pSIDH"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/poke.html",
-    "href": "schemes/key-exchange/poke.html",
-    "title": "POKÉ",
-    "section": "",
-    "text": "POKÉ is a public-key encryption scheme constructed from isogenies of unknown degrees. The primary motivation behind POKÉ is to bridge two distinct paradigms in isogeny-based cryptography: the traditional one-dimensional SIDH-like commutative diagrams, and the newer, higher-dimensional representations (such as those used in FESTA or SQIsignHD) [BaMa25]. By having one party compute isogenies of an unknown, non-smooth degree (requiring higher-dimensional representation techniques to evaluate) and the other party compute smooth-degree isogenies (with kernel generators defined over the base field), POKÉ establishes a commutative diagram where all four elliptic curves are made public. Despite the curves being known, the scheme achieves a shared secret by exploiting the commutativity of the hidden isogenies evaluated on a set of auxiliary torsion points. This structural choice completely circumvents the polynomial-time attacks that broke SIDH, which intrinsically require the exact degree of the targeted isogeny to be known.",
-    "crumbs": [
-      "Key Exchange",
-      "POKÉ"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/poke.html#overview",
-    "href": "schemes/key-exchange/poke.html#overview",
-    "title": "POKÉ",
-    "section": "",
-    "text": "POKÉ is a public-key encryption scheme constructed from isogenies of unknown degrees. The primary motivation behind POKÉ is to bridge two distinct paradigms in isogeny-based cryptography: the traditional one-dimensional SIDH-like commutative diagrams, and the newer, higher-dimensional representations (such as those used in FESTA or SQIsignHD) [BaMa25]. By having one party compute isogenies of an unknown, non-smooth degree (requiring higher-dimensional representation techniques to evaluate) and the other party compute smooth-degree isogenies (with kernel generators defined over the base field), POKÉ establishes a commutative diagram where all four elliptic curves are made public. Despite the curves being known, the scheme achieves a shared secret by exploiting the commutativity of the hidden isogenies evaluated on a set of auxiliary torsion points. This structural choice completely circumvents the polynomial-time attacks that broke SIDH, which intrinsically require the exact degree of the targeted isogeny to be known.",
-    "crumbs": [
-      "Key Exchange",
-      "POKÉ"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/poke.html#scheme-design",
-    "href": "schemes/key-exchange/poke.html#scheme-design",
-    "title": "POKÉ",
-    "section": "2 Scheme Design",
-    "text": "2 Scheme Design\nThe POKÉ scheme relies on establishing a commutative diagram between two parties (Alice and Bob) using separate sets of torsion points. Before any operations take place, a set of global public parameters is defined.\nE0EAEBEABÁdegÁ=q(2a¡q)ÃÃ0Á0P0;Q02E0[2a],R0;S02E0[3b],X0;Y02E0[5c]PA;QA=[®2]Á(P0);[¯2]Á(Q0),RA;SA=[°3]Á(R0);[°3]Á(S0),XA;YA=[±5]Á(X0);[±5]Á(Y0)PB;QB=[!2]Ã(P0);[1=!2]Ã(Q0),XB;YB=D5[Ã(X0);Ã(Y0)]TPAB;QAB=[!2]Ã0(PA);[1=!2]Ã0(QA),XAB;YAB=D5[Ã0(XA);Ã0(YA)]T=[±5]Á0(XB);[±5]Á0(YB)\n\n2.1 Setup and Parameters\nThe scheme is built on a finite field where the parameters scale strictly with the targeted security parameter \\(\\lambda\\).\n\n\\(p\\): A prime characteristic \\(p = 2^a 3^b 5^c f - 1\\).\n\n\\(a \\approx \\lambda\\): Bounds the search space for the Alice’s secret degree \\(q(2^a - q)\\). \\(a \\approx \\lambda\\) ensures brute-forcing the unknown degree is exponentially hard.\n\\(3^b \\approx 2^{2\\lambda}\\): The known degree of the Bob’s isogeny. It is sized to prevent meet-in-the-middle key-recovery attacks while keeping evaluations fast.\n\\(5^c \\approx 2^{\\lambda/3}\\): The order of the shared secret points. It provides exactly enough entropy to prevent an attacker from guessing the three unknown change-of-basis coefficients.\n\n\\(E_0\\): A supersingular elliptic curve over \\(\\mathbb{F}_{p^2}\\) with \\(j\\)-invariant 1728.\nBases: \\((P_0, Q_0) \\in E_0[2^a]\\), \\((R_0, S_0) \\in E_0[3^b]\\), and \\((X_0, Y_0) \\in E_0[5^c]\\).\n\\(\\text{KDF}\\): A standard key derivation function.\n\n\n\n2.2 Key Generation (Alice)\n\nSecret Variables:\n\n\\(q \\in [1, 2^a - 1]\\): A random integer coprime to 2, 3, and 5.\n\\(\\phi: E_0 \\to E_A\\): The secret isogeny of degree \\(q(2^a - q)\\) is generated by adapting RandIsogImages algorithm proposed in QFESTA.\n\\(\\alpha_2, \\beta_2 \\in (\\mathbb{Z}/2^a\\mathbb{Z})^\\times\\): Independent diagonal masking scalars.\n\\(\\gamma_3 \\in (\\mathbb{Z}/3^b\\mathbb{Z})^\\times, \\delta_5 \\in (\\mathbb{Z}/5^c\\mathbb{Z})^\\times\\): Uniform masking scalars.\n\nMasked Points on \\(E_A\\):\n\n\\(2^a\\)-torsion: \\(P_A = [\\alpha_2]\\phi(P_0), \\quad Q_A = [\\beta_2]\\phi(Q_0)\\)\n\\(3^b\\)-torsion: \\(R_A = [\\gamma_3]\\phi(R_0), \\quad S_A = [\\gamma_3]\\phi(S_0)\\)\n\\(5^c\\)-torsion: \\(X_A = [\\delta_5]\\phi(X_0), \\quad Y_A = [\\delta_5]\\phi(Y_0)\\)\n\nOutput:\n\nPublic Key: \\((E_A, P_A, Q_A, R_A, S_A, X_A, Y_A)\\)\nSecret Key: \\((q, \\alpha_2, \\beta_2, \\delta_5)\\) alongside the higher-dimensional representation of \\(\\phi\\).\n\n\n\n\n2.3 Encryption (Bob)\n\nSecret Variables:\n\n\\(r_3 \\in \\mathbb{Z}/3^b\\mathbb{Z}\\): An ephemeral scalar to define the isogeny kernel.\n\\(\\omega_2 \\in (\\mathbb{Z}/2^a\\mathbb{Z})^\\times\\): A masking scalar to prevent pairing leakage.\n\\(\\mathbf{D}_5 \\in SL_2(\\mathbb{Z}/5^c\\mathbb{Z})\\): A determinant-1 masking matrix.\n\nParallel Isogenies:\n\n\\(\\psi: E_0 \\to E_B\\): Degree \\(3^b\\) isogeny with kernel \\(\\langle R_0 + [r_3]S_0 \\rangle\\).\n\\(\\psi': E_A \\to E_{AB}\\): Pushforward isogeny \\([\\phi]_*\\psi\\) with kernel \\(\\langle R_A + [r_3]S_A \\rangle=\\phi(\\mathrm{ker}(\\psi))\\).\n\nMasked Points on \\(E_B\\) and \\(E_{AB}\\):\n\n\\(P_B = [\\omega_2]\\psi(P_0), \\quad Q_B = [1/\\omega_2]\\psi(Q_0)\\)\n\\(P_{AB} = [\\omega_2]\\psi'(P_A), \\quad Q_{AB} = [1/\\omega_2]\\psi'(Q_A)\\)\n\\([X_B, Y_B]^T = \\mathbf{D}_5[\\psi(X_0), \\psi(Y_0)]^T\\)\n\nShared Secret Points:\n\n\\([X_{AB}, Y_{AB}]^T = \\mathbf{D}_5[\\psi'(X_A), \\psi'(Y_A)]^T\\)\n\nMessage Encoding:\n\n\\(ct' = m \\oplus \\text{KDF}(X_{AB}, Y_{AB})\\)\n\nOutput:\n\nCiphertext: \\(((E_B, P_B, Q_B, X_B, Y_B), (E_{AB}, P_{AB}, Q_{AB}), ct')\\)\n\n\n\n\n2.4 Decryption (Alice)\nThe goal of decryption is for Alice (receiver) to push the Bob’s (sender) points \\((X_B, Y_B)\\) through their secret pushforward isogeny \\(\\phi': E_B \\to E_{AB}\\) to reconstruct the shared secret \\((X_{AB}, Y_{AB})\\).\n\nUnmask Anchor Points:\n\nCompute \\(P'_{AB} = [1/\\alpha_2]P_{AB}\\) and \\(Q'_{AB} = [1/\\beta_2]Q_{AB}\\).\n\nConstruct 2D Isogeny (\\(\\Phi'\\)):\n\nDefine kernel \\(\\langle([-q]P_B, P'_{AB}), ([-q]Q_B, Q'_{AB})\\rangle\\).\nApply Kani’s Theorem to generate a 2-dimensional isogeny matrix \\(\\Phi': E_B \\times E_{AB} \\to F \\times F'\\).\n\n2D Evaluation:\n\nEmbed input points as \\((X_B, \\mathcal{O}_{E_{AB}})\\) and \\((Y_B, \\mathcal{O}_{E_{AB}})\\).\nEvaluate via \\(\\Phi'\\) to obtain points \\(X'_B\\) and \\(Y'_B\\) on the intermediate curve \\(F\\).\n\nCoordinate Translation:\n\nGenerate a reference basis \\((U, V)\\) on \\(E_{AB}\\).\nEmbed and evaluate \\((\\mathcal{O}_{E_B}, U)\\) and \\((\\mathcal{O}_{E_B}, V)\\) via \\(\\Phi'\\) to obtain basis \\(U'\\) and \\(V'\\) on \\(F\\).\nSolve discrete logarithms in \\(\\mathbb{Z}_{5^c}\\) to find coefficients \\(x, y, w, z\\) such that:\n\n\\(X'_B = [x]U' + [y]V'\\)\n\\(Y'_B = [w]U' + [z]V'\\)\n\n\nReconstruct Shared Secret: Compute target points on \\(E_{AB}\\):\n\n\\(X_{AB} = [\\delta_5][2^a-q]([x]U + [y]V)\\)\n\\(Y_{AB} = [\\delta_5][2^a-q]([w]U + [z]V)\\)\n\nMessage Decoding: \\(m = ct' \\oplus \\text{KDF}(X_{AB}, Y_{AB})\\)",
-    "crumbs": [
-      "Key Exchange",
-      "POKÉ"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/poke.html#security-assumptions",
-    "href": "schemes/key-exchange/poke.html#security-assumptions",
-    "title": "POKÉ",
-    "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\n\nC-POKE Problem (Computational): Given the public transcripts of Key Generation and Encryption, an adversary cannot efficiently compute the shared secret points \\(X_{AB}\\) and \\(Y_{AB}\\). It relies on the hardness of recovering either secret isogeny.\nD-POKE Problem (Decisional): An adversary cannot distinguish the true shared secret points \\((X_{AB}, Y_{AB})\\) from a pair of random points on \\(E_{AB}[5^c]\\) with identical Weil pairings. (Required for standard-model IND-CPA security).\nReceiver’s Isogeny Security: The use of an unknown degree \\(q(2^a-q)\\) combined with independent diagonal masking (\\(\\alpha_2 \\neq \\beta_2\\)) breaks the structural prerequisites needed for known pairing-based or torsion-exploiting attacks.\nSender’s Isogeny Security: The hardness of recovering the sender’s isogeny \\(\\psi\\) from diagonally scaled target points reduces to a parallel variant of the CIST problem.\nHeuristic Key Generation Indistinguishability: If the optimized heuristic approach is used for Key Generation, it relies on the assumption that the output curve is computationally indistinguishable from a uniformly sampled \\(q(2^a-q)\\)-isogenous curve.",
-    "crumbs": [
-      "Key Exchange",
-      "POKÉ"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/poke.html#progress",
-    "href": "schemes/key-exchange/poke.html#progress",
-    "title": "POKÉ",
-    "section": "4 Progress",
-    "text": "4 Progress\nTODO",
-    "crumbs": [
-      "Key Exchange",
-      "POKÉ"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/poke.html#references",
-    "href": "schemes/key-exchange/poke.html#references",
-    "title": "POKÉ",
-    "section": "5 References",
-    "text": "5 References\n\n\n[BaMa25] Basso, Andrea ; Maino, Luciano: POKÉ: A compact and efficient PKE from higher-dimensional isogenies. In: EUROCRYPT : Springer, 2025, pp. 94–123",
-    "crumbs": [
-      "Key Exchange",
-      "POKÉ"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/togaue.html",
-    "href": "schemes/key-exchange/togaue.html",
-    "title": "TOGA-UE",
-    "section": "",
-    "text": "The development of Updatable Encryption (UE) schemes using post-quantum group actions has historically been bottlenecked by the requirement for Mappable Effective Group Actions (MEGA). In the isogeny setting, instantiating a MEGA is practically infeasible due to the notorious difficulty of hashing into the set of supersingular elliptic curves. The TOGA-UE (Triple Orbital Group Action Updatable Encryption) scheme circumvents this limitation by drawing inspiration from the SiGamal encryption scheme [LeRo24]. Instead of attempting to map messages directly to an isogeny graph vertex (a curve), TOGA-UE maps messages as scalars to specific points on an elliptic curve via scalar multiplication. The underlying curve and the points are then transformed using the isogeny group action. This architectural shift eliminates the need to hash into supersingular curves while natively supporting an unbounded number of ciphertext updates. Consequently, TOGA-UE instantiated from CSIDH stands as the first post-quantum UE scheme that is not based on lattices and places no limits on key rotations.",
-    "crumbs": [
-      "Key Exchange",
-      "TOGA-UE"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/togaue.html#overview",
-    "href": "schemes/key-exchange/togaue.html#overview",
-    "title": "TOGA-UE",
-    "section": "",
-    "text": "The development of Updatable Encryption (UE) schemes using post-quantum group actions has historically been bottlenecked by the requirement for Mappable Effective Group Actions (MEGA). In the isogeny setting, instantiating a MEGA is practically infeasible due to the notorious difficulty of hashing into the set of supersingular elliptic curves. The TOGA-UE (Triple Orbital Group Action Updatable Encryption) scheme circumvents this limitation by drawing inspiration from the SiGamal encryption scheme [LeRo24]. Instead of attempting to map messages directly to an isogeny graph vertex (a curve), TOGA-UE maps messages as scalars to specific points on an elliptic curve via scalar multiplication. The underlying curve and the points are then transformed using the isogeny group action. This architectural shift eliminates the need to hash into supersingular curves while natively supporting an unbounded number of ciphertext updates. Consequently, TOGA-UE instantiated from CSIDH stands as the first post-quantum UE scheme that is not based on lattices and places no limits on key rotations.",
-    "crumbs": [
-      "Key Exchange",
-      "TOGA-UE"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/togaue.html#scheme-design",
-    "href": "schemes/key-exchange/togaue.html#scheme-design",
-    "title": "TOGA-UE",
-    "section": "2 Scheme Design",
-    "text": "2 Scheme Design\nTOGA-UE is built upon an abstract algebraic framework known as an Effective Triple Orbital Group Action (ETOGA). To instantiate this from CSIDH, the scheme defines specific group actions operating over supersingular curves enriched with torsion point information.\n\n2.1 System Setup\nThis algorithm takes the security parameter \\(\\lambda\\) as input (which dictates the sizes of the underlying cryptographic structures) and establishes the public parameters and mathematical framework for the CSIDH instantiation.\n\nDefine the Field and Curve: Based on \\(\\lambda\\), choose a large prime \\(p \\equiv 3 \\pmod 4\\) and define the base supersingular elliptic curve \\(E_0: y^2 = x^3 + x\\) over \\(\\mathbb{F}_p\\).\nEstablish the Order and Torsion: Let \\(\\mathfrak{O} = \\mathbb{Z}[\\sqrt{-p}]\\) be the quadratic order corresponding to the Frobenius endomorphism ring. Choose a smooth integer \\(N\\) (sized according to \\(\\lambda\\)), split in \\(\\mathfrak{O}\\) and coprime to the ideal factor base.\nDefine the State Space (\\(S\\)): Let \\(S\\) be the set of elements \\((E, \\iota, P)\\), where \\(E\\) is a supersingular curve, \\(\\iota\\) is an \\(\\mathfrak{O}\\)-orientation, and \\(P \\in E[N]\\) is a point of order \\(N\\). Fix a public origin state \\(s_0 \\in S\\) using \\(E_0\\), its canonical orientation, and a deterministic base point \\(P_0 \\in E_0[N]\\).\nDefine the Main Group Action (\\(*_A\\)) and Sample Space (\\(A'\\)): Let \\(A\\) be a subgroup of fractional \\(\\mathfrak{O}\\)-ideals generated by small prime ideals \\(\\mathfrak{l}_1, \\dots, \\mathfrak{l}_n\\). Define a finite subset \\(A' \\subset A\\) bounded by a small exponent maximum \\(m\\) (i.e., ideals with exponents \\(\\in [-m, m]\\)) to allow efficient, near-uniform sampling. For an ideal \\(\\mathfrak{a} \\in A\\), define its action as evaluating an isogeny: \\(\\mathfrak{a} *_A (E, \\iota, P) = (E_{\\mathfrak{a}}, \\iota_{\\mathfrak{a}}, \\varphi_{\\mathfrak{a}}^E(P))\\).\nDefine the Orbital Group Action (\\(*_H\\)): Let \\(H = (\\mathbb{Z}/N\\mathbb{Z})^\\times\\). Define the action of \\(h \\in H\\) as scalar multiplication on the order-\\(N\\) point: \\(h *_H (E, \\iota, P) = (E, \\iota, [h]P)\\).\nEstablish Helper Functions:\n\nDefine \\(\\sim_A\\) as the congruence relation where ideals are equivalent if they share the same ideal class.\nDefine \\(\\text{Reduce}_A\\) to output a short, canonical representative of an ideal’s equivalence class.\nDefine \\(\\text{Reduce}_S\\) to output a canonical representative for an equivalence class in \\(S\\) under the orbital action.\nDefine \\(\\text{Invert}_H\\) as an efficient algorithm that computes the discrete logarithm between two points in \\(E[N]\\) to invert the group action \\(*_H\\).\nDefine \\(\\psi\\) as an efficiently invertible map from the message space \\(\\mathcal{M}\\) to \\(H\\).\nDefine \\(h(\\cdot, \\cdot)\\) as a function computing a structural modifier in \\(H\\) to correct discrepancies during ideal reduction.\n\nOutput: The public parameters \\(pp = (A, A', H, S, s_0, *_A, \\sim_A, *_H, \\psi, \\text{Reduce}_A, \\text{Reduce}_S, \\text{Invert}_H)\\).\n\n\n\n2.2 Key Generation\nGenerates an epoch encryption key \\(k_e\\) using the public parameters \\(pp\\).\n\nSample a bounded ideal vector \\(a' \\leftarrow A'\\) and a scalar \\(h \\leftarrow H\\).\nReturn \\(k_e = (\\text{Reduce}_A(a'), h) \\in A \\times H\\).\n\n\n\n2.3 Encryption\nEncrypts a message \\(M \\in \\mathcal{M}\\) under epoch key \\(k_e = (a_e, h_e)\\).\n\nSample a random, bounded ideal \\(r' \\leftarrow A'\\).\nCompute reduced ideal \\(r = \\text{Reduce}_A(r')\\).\nCalculate the base state \\(s = \\text{Reduce}_S(r *_A s_0)\\).\nReturn ciphertext \\(C_e = (\\psi(M)h_e) *_H (a_e *_A s)\\).\n\n\n\n2.4 Token Generation\nGenerates the update token \\(\\Delta_{e+1}\\) used to transition ciphertexts from epoch \\(e\\) to \\(e+1\\) given keys \\(k_e\\) and \\(k_{e+1}\\).\n\nParse \\(k_e = (a_e, h_e)\\) and \\(k_{e+1} = (a_{e+1}, h_{e+1})\\).\nCompute the ideal transition \\(c_e = \\text{Reduce}_A(a_e^{-1}a_{e+1})\\).\nCompute the structural modifier \\(h' = h(a_e^{-1}a_{e+1}, c_e^{-1})\\).\nReturn update token \\(\\Delta_{e+1} = (c_e, h' h_{e+1} h_e^{-1})\\).\n\n\n\n2.5 Ciphertext Update\nDeterministically updates a ciphertext \\(C_e\\) from epoch \\(e\\) to \\(e+1\\) using the server-side token \\(\\Delta_{e+1}\\).\n\nParse \\(\\Delta_{e+1} = (a, h)\\).\nReturn updated ciphertext \\(C_{e+1} = h *_H (a *_A C_e)\\).\n\n\n\n2.6 Decryption\nDecrypts ciphertext \\(C_e\\) using epoch key \\(k_e = (a_e, h_e)\\).\n\nCompute the inverse ideal \\(b_e = \\text{Reduce}_A(a_e^{-1})\\) and modifier \\(h' = h(a_e, b_e)\\).\nUndo the key’s actions: \\(s' = (h_e h')^{-1} *_H (b_e *_A C_e)\\).\nRecover the canonical representative \\(s = \\text{Reduce}_S(s')\\).\nExtract the message by solving the discrete logarithm in the smooth-order group \\(E[N]\\): \\(M' = \\psi^{-1}(\\text{Invert}_H(s', s))\\).\nReturn \\(M'\\).",
-    "crumbs": [
-      "Key Exchange",
-      "TOGA-UE"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/togaue.html#security-assumptions",
-    "href": "schemes/key-exchange/togaue.html#security-assumptions",
-    "title": "TOGA-UE",
-    "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nThe detIND-UE-CPA (Deterministic Updates Indistinguishability - Updatable Encryption - Chosen Plaintext Attack) confidentiality of the TOGA-UE scheme directly relies on specific computational hardness properties embedded within the group action. Notably, TOGA-UE is a promising approach because it avoids reliance on the ideal cipher model. However, its security relies on the weak pseudorandomness of the entire TOGA structure. The core security assumptions and their nuances are detailed below:\n\nExtended Weak Pseudorandomness (P-CSSDDH Connection): The core problem assumed to be computationally hard is distinguishing tuples of the form \\((s_i, \\mathfrak{a} *_A s_i)\\) from tuples of the form \\((s_i, t_i)\\), where \\(\\mathfrak{a} \\leftarrow \\mathcal{D}_A\\) is a secret ideal and \\(s_i, t_i \\leftarrow \\mathcal{D}_S\\) are random elements from the state space \\(S\\). This instantiation based on CSIDH closely aligns with the P-CSSDDH assumption.\nIrreducibility to Standard CSIDH: Standard isogeny-based group actions assume the weak pseudorandomness of the induced class group action (\\(*_G\\)) operating purely on oriented curves. Unfortunately, the P-CSSDDH assumption does not reduce to the standard weak pseudorandomness of CSIDH because additional torsion point information is revealed in the extended state space \\(S\\).\nResilience and Uncertainty: The revealed torsion point information makes the exact hardness of P-CSSDDH less well understood compared to standard CSIDH. However, this revealed information is not sufficient to apply the catastrophic torsion-point attacks that broke SIDH. The degree of the secret isogeny remains unknown and uniform over a large sample, which invalidates standard Weil pairing or genus-theory reduction attacks.",
-    "crumbs": [
-      "Key Exchange",
-      "TOGA-UE"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/togaue.html#progress",
-    "href": "schemes/key-exchange/togaue.html#progress",
-    "title": "TOGA-UE",
-    "section": "4 Progress",
-    "text": "4 Progress\nTODO",
-    "crumbs": [
-      "Key Exchange",
-      "TOGA-UE"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/togaue.html#references",
-    "href": "schemes/key-exchange/togaue.html#references",
-    "title": "TOGA-UE",
-    "section": "5 References",
-    "text": "5 References\n\n\n[LeRo24] Leroux, Antonin ; Roméas, Maxime: Updatable encryption from group actions. In: PQCrypto : Springer, 2024, pp. 20–53\n\n\n\nContributors: @gkorpal",
-    "crumbs": [
-      "Key Exchange",
-      "TOGA-UE"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/litsigamal.html",
-    "href": "schemes/key-exchange/litsigamal.html",
-    "title": "LIT-SiGamal",
-    "section": "",
-    "text": "LIT-SiGamal is a public key encryption (PKE) scheme that constructs an ElGamal-like mechanism over supersingular elliptic curve isogenies by combining the structural approach of SiGamal with the Long Isogeny with Torsion (LIT) diagram framework [MoSt25]. The original SiGamal scheme relied on a commutative CSIDH-based diagram to enable the sender and receiver to compute parallel isogenies without revealing their secret paths. However, CSIDH-based constructions require computing group actions over extremely large primes (often exceeding 3,000 bits for baseline security), rendering them highly inefficient. LIT-SiGamal bypasses this bottleneck by replacing the CSIDH diagram with a LIT diagram, a commutative diagram parameterized to consist of large-degree horizontal isogenies and relatively low-degree vertical isogenies. To make the bottom isogeny computable without knowledge of the vertical secret isogenies, LIT-SiGamal incorporates auxiliary torsion points masked by matrices, a technique adapted from the FESTA scheme. This design allows for significantly smaller primes and faster execution times while maintaining robust post-quantum security. Moreover, the constructions of POKÉ and LIT-SiGamal are nearly identical, with the key distinction being the degree of the isogeny used in the public key: POKÉ employs an isogeny of degree approximately \\(2^{2\\lambda}\\), whereas LIT-SiGamal uses one of degree approximately \\(2^{6\\lambda}\\).",
-    "crumbs": [
-      "Key Exchange",
-      "LIT-SiGamal"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/litsigamal.html#overview",
-    "href": "schemes/key-exchange/litsigamal.html#overview",
-    "title": "LIT-SiGamal",
-    "section": "",
-    "text": "LIT-SiGamal is a public key encryption (PKE) scheme that constructs an ElGamal-like mechanism over supersingular elliptic curve isogenies by combining the structural approach of SiGamal with the Long Isogeny with Torsion (LIT) diagram framework [MoSt25]. The original SiGamal scheme relied on a commutative CSIDH-based diagram to enable the sender and receiver to compute parallel isogenies without revealing their secret paths. However, CSIDH-based constructions require computing group actions over extremely large primes (often exceeding 3,000 bits for baseline security), rendering them highly inefficient. LIT-SiGamal bypasses this bottleneck by replacing the CSIDH diagram with a LIT diagram, a commutative diagram parameterized to consist of large-degree horizontal isogenies and relatively low-degree vertical isogenies. To make the bottom isogeny computable without knowledge of the vertical secret isogenies, LIT-SiGamal incorporates auxiliary torsion points masked by matrices, a technique adapted from the FESTA scheme. This design allows for significantly smaller primes and faster execution times while maintaining robust post-quantum security. Moreover, the constructions of POKÉ and LIT-SiGamal are nearly identical, with the key distinction being the degree of the isogeny used in the public key: POKÉ employs an isogeny of degree approximately \\(2^{2\\lambda}\\), whereas LIT-SiGamal uses one of degree approximately \\(2^{6\\lambda}\\).",
-    "crumbs": [
-      "Key Exchange",
-      "LIT-SiGamal"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/litsigamal.html#scheme-design",
-    "href": "schemes/key-exchange/litsigamal.html#scheme-design",
-    "title": "LIT-SiGamal",
-    "section": "2 Scheme Design",
-    "text": "2 Scheme Design\nThe LIT-SiGamal protocol operates over a carefully structured prime field and relies on the exchange of evaluated torsion bases to enable a shared commutative diagram.\nE0E1E00kE0=hPB+sQBiE01kE1=hÁ1(PB)+sÁ1(QB)iÁ1degÁ1=`2aA¡n2Á2Á02Á01A¡1µP3Q3¶=µÁ01(P2)Á01(Q2)¶µPAQA¶,µPBQB¶,RµP1Q1¶:=AµÁ1(PA)Á1(QA)¶,µÁ1(PB)Á1(QB)¶,R1:=®Á1(R)µP2Q2¶:=BµÁ2(PA)Á2(QA)¶,R0:=¯Á2(R)µP3Q3¶:=BµÁ02(P1)Á02(Q1)¶,R01:=¹¯Á02(R1)\n\n2.1 Public Parameters\n\nPrime Characteristic: The scheme operates over \\(\\mathbb{F}_{p^2}\\) where the prime \\(p\\) is of the form \\(p = \\ell_A^a \\ell_B^b \\ell_C^c f - 1\\). Here, \\(\\ell_A\\), \\(\\ell_B\\), and \\(\\ell_C\\) are pairwise coprime small integers, and \\(f\\) is a small positive cofactor.\nMatrix Group (\\(\\mathcal{M}_a\\)): The subgroup of diagonal matrices within \\(GL_2(\\mathbb{Z}/\\ell_A^a\\mathbb{Z})\\).\nPlaintext Space (\\(\\mathcal{P}\\)): The unit group of \\(\\mathbb{Z}/\\ell_C^c\\mathbb{Z}\\), meaning \\(\\mathcal{P} = (\\mathbb{Z}/\\ell_C^c\\mathbb{Z})^\\times\\).\nSecurity Parameter (\\(\\lambda\\)): Determines the exact exponents \\(a, b, c\\) such that \\(\\ell_B^b \\approx 2^{2\\lambda}\\), \\(\\ell_C^c \\approx 2^\\lambda\\), and \\(\\ell_A^{2a} \\approx \\ell_B^{2b} \\cdot 2^{2\\lambda}\\).\n\n\n\n2.2 Key Generation (Receiver)\nReceiver’s goal is to establish the top horizontal isogeny of the LIT diagram and publicize its action on specific torsion subgroups.\n\nCurve and Isogeny Generation: Generates a pair of supersingular elliptic curves \\((E_0, E_1)\\) over \\(\\mathbb{F}_{p^2}\\) along with a cyclic isogeny \\(\\phi_1: E_0 \\rightarrow E_1\\) of large degree \\(\\ell_A^{2a} - n^2\\). The integer \\(n\\) is chosen such that \\(\\ell_A^{2a} - n^2 &gt; \\ell_B^{2b} \\cdot 2^{2\\lambda}\\).\nTorsion Bases: Defines \\(\\mathcal{B}_A=(P_A,Q_A)\\) as an ordered basis of \\(E_0[\\ell_A^a]\\), and \\(\\mathcal{B}_B = (P_B, Q_B)\\) as an ordered basis of \\(E_0[\\ell_B^b]\\).\nAuxiliary Point: Selects a random point \\(R \\in E_0\\) of order \\(\\ell_C^c\\).\nMasking: Samples a random masking matrix \\(\\mathbf{A} \\in \\mathcal{M}_a\\) and a random scalar \\(\\alpha \\in (\\mathbb{Z}/\\ell_C^c\\mathbb{Z})^\\times\\).\nEvaluation: Computes the masked image of the torsion basis as \\({}^t\\mathcal{B}_1 := \\mathbf{A} \\cdot {}^t\\phi_1(\\mathcal{B}_A)\\) and the scaled image of the auxiliary point as \\(R_1 := \\alpha\\phi_1(R)\\).\nKeys:\n\nPublic Key: \\((E_0, \\mathcal{B}_A, \\mathcal{B}_B, R), (E_1, \\mathcal{B}_1, \\phi_1(\\mathcal{B}_B), R_1)\\).\nSecret Key: The masking matrix and scalar \\((\\mathbf{A}, \\alpha)\\).\n\n\n\n\n2.3 Encryption (Sender)\nSender embeds his plaintext \\(\\mu \\in (\\mathbb{Z}/\\ell_C^c\\mathbb{Z})^\\times\\) by pushing the public parameters through random vertical \\(\\ell_B^b\\)-isogenies.\n\nSecret Isogeny Kernels: Sender samples \\(s \\in (\\mathbb{Z}/\\ell_B^b\\mathbb{Z})^\\times\\), which defines the kernels for his vertical isogenies. Computes \\(\\phi_2: E_0 \\rightarrow E_0' := E_0/\\langle P_B + sQ_B \\rangle\\) and \\(\\phi_2': E_1 \\rightarrow E_1' := E_1/\\langle \\phi_1(P_B) + s\\phi_1(Q_B) \\rangle\\).\nMasking: Samples his own random masking matrix \\(\\mathbf{B} \\in \\mathcal{M}_a\\) and scalar \\(\\beta \\in (\\mathbb{Z}/\\ell_C^c\\mathbb{Z})^\\times\\).\nEvaluation: Pushes receiver’s bases through his vertical isogenies and masks them:\n\n\\({}^t\\mathcal{B}_2 := \\mathbf{B} \\cdot {}^t\\phi_2(\\mathcal{B}_A)\\).\n\\({}^t\\mathcal{B}_3 := \\mathbf{B} \\cdot {}^t\\phi_2'(\\mathcal{B}_1)\\).\n\nMessage Embedding: Scales the torsion points: \\(R' := \\beta\\phi_2(R)\\) and embeds the plaintext into the target point: \\(R_1' := \\mu\\beta\\phi_2'(R_1)\\).\nCiphertext: Sender outputs \\((E_0', \\mathcal{B}_2, R'), (E_1', \\mathcal{B}_3, R_1')\\).\n\n\n\n2.4 Decryption (Receiver)\nReceiver must recover the bottom horizontal isogeny \\(\\phi_1': E_0' \\rightarrow E_1'\\) to unmask the plaintext, without knowing sender’s vertical isogenies.\n\nUnmasking: Uses secret matrix \\(\\mathbf{A}\\) to compute \\({}^t(P_2', Q_2') := \\mathbf{A} \\cdot {}^t\\mathcal{B}_2\\), where \\(\\mathcal{B}_2 = (P_2,Q_2)\\). Also scales the intermediate point \\(R'' := \\alpha R'\\).\nHigher-Dimensional Recovery: Using techniques originally developed for SIDH attacks, constructs two 2-dimensional isogenies from \\(E_0' \\times E_1'\\) to an abelian surface \\(V\\).\n\n\\(\\Psi_0: E_0' \\times E_1' \\rightarrow V\\) with kernel \\(\\langle (nP_2', P_3), (nQ_2', Q_3) \\rangle\\)\n\\(\\Psi_1: E_0' \\times E_1' \\rightarrow V\\) with kernel \\(\\langle (nP_2', -P_3), (nQ_2', -Q_3) \\rangle\\)\n\nwhere \\((P_3, Q_3) := \\mathcal{B}_3\\).\nEvaluating the Hidden Isogeny: The map \\(\\phi_1'\\) is implicitly captured within these dimension-2 isogenies via Kani’s theorem. Recovers the un-blinded target point \\(R_1'' := \\pi_2 \\circ \\hat{\\Psi}_1 \\circ \\Psi_0((-R'', 0))\\), where \\(\\pi_2\\) is the projection \\(E_0'\\times E_1'\\to E_1'\\).\nMessage Extraction: Finally, using Pohlig-Hellman, solves the discrete logarithm problem in the smooth subgroup of order \\(\\ell_C^c\\) to find \\(\\mu'\\) such that \\(R_1' = \\mu' R_1''\\), outputting \\(\\mu'\\) as the plaintext.",
-    "crumbs": [
-      "Key Exchange",
-      "LIT-SiGamal"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/litsigamal.html#security-assumptions",
-    "href": "schemes/key-exchange/litsigamal.html#security-assumptions",
-    "title": "LIT-SiGamal",
-    "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nThe security of LIT-SiGamal relies on variants of the isogeny problem structured around torsion point revelations.\n\nLIT-DDH Assumption: The primary assumption under which LIT-SiGamal is proven IND-CPA secure is the LIT-DDH assumption. This is a decisional assumption analogous to the standard Decisional Diffie-Hellman (DDH) assumption, but formulated specifically for the tuples generated within a LIT diagram. It asserts that an adversary cannot computationally distinguish between a valid completed commutative isogeny square (with associated evaluated torsion points) and a randomized tuple.\nCIST Problem: The vertical isogenies executed by the encryptor are protected by the Hardness of the CIST problem. The CIST problem assumes that extracting the secret isogeny is hard when the images of the torsion points are masked by an unknown matrix from a structured subgroup. Because sender masks their torsion evaluations with the matrix \\(\\mathbf{B} \\in \\mathcal{M}_a\\), an attacker is prevented from performing direct torsion-based attacks to reveal \\(\\phi_2\\) and \\(\\phi_2'\\).\nLIT Problem: The top horizontal isogeny \\(\\phi_1\\) is protected by the LIT (Long Isogeny with Torsion) problem. In the LIT problem setting, torsion points are explicitly revealed (unmasked), but the degree of the isogeny \\(d_1\\) is strictly required to be significantly larger than the order of the revealed torsion subgroup (\\(d_1 &gt; d_2^2\\)). By choosing the horizontal isogeny degree \\(\\ell_A^{2a} - n^2 \\gg \\ell_B^{2b} \\cdot 2^{2\\lambda}\\), LIT-SiGamal ensures that the revealed \\(\\phi_1(\\mathcal{B}_B)\\) does not leak enough information to mount an attack against \\(\\phi_1\\).\n\nWhile LIT-SiGamal achieves IND-CPA security under these assumptions, it is not inherently IND-CCA secure due to malleability in the ciphertext components (similar to the original SiGamal). To achieve IND-CCA security for practical KEM use, the scheme must be combined with standard transformations such as the Fujisaki-Okamoto transform.",
-    "crumbs": [
-      "Key Exchange",
-      "LIT-SiGamal"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/litsigamal.html#progress",
-    "href": "schemes/key-exchange/litsigamal.html#progress",
-    "title": "LIT-SiGamal",
-    "section": "4 Progress",
-    "text": "4 Progress\nTODO",
-    "crumbs": [
-      "Key Exchange",
-      "LIT-SiGamal"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/litsigamal.html#references",
-    "href": "schemes/key-exchange/litsigamal.html#references",
-    "title": "LIT-SiGamal",
-    "section": "5 References",
-    "text": "5 References\n\n\n[MoSt25] Moriya, Tomoki ; Stopar, Miha: LIT-SiGamal: An efficient isogeny-based PKE based on a LIT diagram. In: ASIACRYPT : Springer, 2025, pp. 275–306\n\n\n\nContributors: @gkorpal",
-    "crumbs": [
-      "Key Exchange",
-      "LIT-SiGamal"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/csidhupke.html",
-    "href": "schemes/key-exchange/csidhupke.html",
-    "title": "CSIDH UPKE",
-    "section": "",
-    "text": "The Key-Updatable Public-Key Encryption (UPKE) scheme based on CSIDH is the first post-quantum secure scheme of its kind, designed to improve the forward-secrecy and post-compromise security of secure messaging schemes [EJKM21]. UPKE constructions allow cryptographic keys to be updated over time, repairing security in the event of a key compromise. The scheme is a “Symmetric UPKE”, meaning that the same secret update value is applied to both the decryption key and the encryption key. A defining feature of this CSIDH UPKE variant is that it mandates the use of a parameter set where the structure of the class group is completely known (such as CSI-FiSh). This algebraic property ensures that secret elements and updates can be uniquely represented and uniformly sampled, completely preventing information leakage across sequential key updates.",
-    "crumbs": [
-      "Key Exchange",
-      "CSIDH UPKE"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/csidhupke.html#overview",
-    "href": "schemes/key-exchange/csidhupke.html#overview",
-    "title": "CSIDH UPKE",
-    "section": "",
-    "text": "The Key-Updatable Public-Key Encryption (UPKE) scheme based on CSIDH is the first post-quantum secure scheme of its kind, designed to improve the forward-secrecy and post-compromise security of secure messaging schemes [EJKM21]. UPKE constructions allow cryptographic keys to be updated over time, repairing security in the event of a key compromise. The scheme is a “Symmetric UPKE”, meaning that the same secret update value is applied to both the decryption key and the encryption key. A defining feature of this CSIDH UPKE variant is that it mandates the use of a parameter set where the structure of the class group is completely known (such as CSI-FiSh). This algebraic property ensures that secret elements and updates can be uniquely represented and uniformly sampled, completely preventing information leakage across sequential key updates.",
-    "crumbs": [
-      "Key Exchange",
-      "CSIDH UPKE"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/csidhupke.html#scheme-design",
-    "href": "schemes/key-exchange/csidhupke.html#scheme-design",
-    "title": "CSIDH UPKE",
-    "section": "2 Scheme Design",
-    "text": "2 Scheme Design\nA naive application of CSIDH to UPKE fails because repeated additions of short update vectors (represented in \\(\\mathbb{Z}^l\\)) center the new keys around the old ones, leading to information leakage. Furthermore, this causes the error term to grow with updates until the decryption process becomes unacceptably inefficient. To overcome these limitations, the CSIDH UPKE scheme requires a parameter set where the structure of the class group is completely computed and known. This mathematical property ensures unique group element representation and allows for uniform sampling.\n\n2.1 Parameters & Primitives\nBefore executing the scheme, participants establish the mathematical foundation and cryptographic primitives in a strict, logical sequence:\n\nPrime Field \\(p\\): The scheme fixes a large prime of the form \\(p = 4 \\cdot \\ell_1 \\cdots \\ell_n - 1\\), where \\(\\ell_i\\) are small, distinct odd primes.\nBase Curve \\(E_0\\): The starting supersingular elliptic curve agreed upon by participants, defined as \\(E_0 : y^2 = x^3 + x\\) over \\(\\mathbb{F}_p\\). The condition \\(p \\equiv 3 \\pmod 4\\) ensures \\(E_0\\) is supersingular.\n\\(cl(\\mathcal{O})\\): The ideal-class group of the \\(\\mathbb{F}_p\\)-rational endomorphism ring \\(\\mathcal{O}\\) corresponding to the commutative supersingular isogeny graph of \\(E_0\\).\nGroup Order \\(N\\): The exact known order of the class group \\(cl(\\mathcal{O})\\).\n\\(*\\): The group action, which applies an isogeny (derived from an element in \\(\\mathbb{Z}/N\\mathbb{Z}\\)) to a supersingular elliptic curve.\n\\(\\text{KDF}\\) and \\(\\text{DEM}\\): A Key Derivation Function and a Data Encapsulation Mechanism, which together provide hybrid symmetric encryption and decryption capabilities.\n\n\n\n2.2 Keys & Initialization\nThe scheme initializes a participant’s long-lived cryptographic keys via the KeyGen() algorithm.\n\nPrivate Key: A secret key \\(g_{sk}\\) is sampled uniformly at random from \\(\\mathbb{Z}/N\\mathbb{Z}\\).\nPublic Key: The public key \\(E_{pk} := g_{sk} * E_0\\) is computed by applying the group action to the starting curve.\nOutput: The algorithm outputs the initial keypair \\((sk, pk) = (g_{sk}, E_{pk})\\).\n\n\n\n2.3 Key Updatability\nThese distinct functions allow the keypair to be asynchronously updated, restoring security in the event of compromised secret values. By utilizing uniform sampling and modular arithmetic over \\(\\mathbb{Z}/N\\mathbb{Z}\\), the updated secret key leaks no information about the previous secret key, avoiding error accumulation and ensuring both forward secrecy and post-compromise security.\n\nUpdate Generation (GenUpdate): An update value \\(\\mu\\) is sampled uniformly at random from \\(\\mathbb{Z}/N\\mathbb{Z}\\).\nPrivate Key Update (UpdatePrivate): The updated secret key is computed via straightforward modular addition, outputting \\(sk' \\leftarrow sk + \\mu \\pmod N\\).\nPublic Key Update (UpdatePublic): The public key is updated by applying the group action corresponding to the update value, outputting \\(pk' \\leftarrow \\mu * pk\\).\n\n\n\n2.4 Message Encapsulation\nTo securely transmit a plaintext message \\(m\\), the scheme uses the following hybrid encapsulation algorithms:\n\nEncryption (Encrypt): The sender samples a random ephemeral element \\(g_{enc} \\leftarrow \\mathbb{Z}/N\\mathbb{Z}\\) and computes a shared symmetric key \\(K \\leftarrow \\text{KDF}(g_{enc} * pk)\\). They apply the group action to obtain the ephemeral public curve \\(E_{enc} \\leftarrow g_{enc} * E_0\\) and encrypt the message using the DEM to yield \\(ctxt \\leftarrow \\text{DEM.Encrypt}(K, m)\\). The output is the combined ciphertext \\(ct = (E_{enc}, ctxt)\\).\nDecryption (Decrypt): The recipient parses the ciphertext \\(ct\\) into \\((E_{enc}, ctxt)\\) and derives the matching shared symmetric key \\(K \\leftarrow \\text{KDF}(sk * E_{enc})\\). They output the plaintext \\(m\\) by executing \\(\\text{DEM.Decrypt}(K, ctxt)\\).",
-    "crumbs": [
-      "Key Exchange",
-      "CSIDH UPKE"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/csidhupke.html#security-assumptions",
-    "href": "schemes/key-exchange/csidhupke.html#security-assumptions",
-    "title": "CSIDH UPKE",
-    "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nThe scheme is proven to satisfy IND-CPA-U (Indistinguishability Under Chosen Plaintext Attack with Updatability) security. This relies on the hardness of the Supersingular Isogeny Problem, i.e. computing an isogeny between two supersingular elliptic curves over \\(\\mathbb{F}_p\\) with the same number of rational points. In addition to this core mathematical problem, the security model depends on the following explicit assumptions:\n\nUniform Sampling: The class group structure (\\(N\\)) must be strictly known to allow uniform sampling from \\(\\mathbb{Z}/N\\mathbb{Z}\\), ensuring that updates reveal zero information about previous secret keys.\nSubexponential Precomputation: Computing the class group structure takes subexponential time. The scheme assumes attackers cannot break the underlying isogeny mapping itself, even if sufficient resources eventually allow scaling this subexponential initialization phase.\nDEM Security: The underlying Data Encapsulation Mechanism (DEM) must be fundamentally secure to ensure the hybrid construction provides baseline IND-CPA security.",
-    "crumbs": [
-      "Key Exchange",
-      "CSIDH UPKE"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/csidhupke.html#progress",
-    "href": "schemes/key-exchange/csidhupke.html#progress",
-    "title": "CSIDH UPKE",
-    "section": "4 Progress",
-    "text": "4 Progress\nTODO",
-    "crumbs": [
-      "Key Exchange",
-      "CSIDH UPKE"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/csidhupke.html#references",
-    "href": "schemes/key-exchange/csidhupke.html#references",
-    "title": "CSIDH UPKE",
-    "section": "5 References",
-    "text": "5 References\n\n\n[EJKM21] Eaton, Edward ; Jao, David ; Komlo, Chelsea ; Mokrani, Youcef: Towards post-quantum updatable public-key encryption via supersingular isogenies. In: SAC : Springer, 2021, pp. 461–482\n\n\n\nContributors: @gkorpal",
-    "crumbs": [
-      "Key Exchange",
-      "CSIDH UPKE"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/seta.html",
-    "href": "schemes/key-exchange/seta.html",
-    "title": "Séta",
-    "section": "",
-    "text": "Broken by a polynomial time classical algorithm.\n\nSéta (Supersingular Encryption from Torsion Attacks) constructs a trapdoor one-way function family by cleverly turning torsion-point attacks against SIDH-like schemes into a decryption mechanism [FSFK21]. In this framework, a message is encoded as a secret isogeny, and the ciphertext consists of the codomain curve along with the images of certain torsion points. The trapdoor inversion algorithm leverages an endomorphism of the starting curve and the torsion point images to compute the secret isogeny. To ensure that key generation, specifically the computation of a supersingular elliptic curve with a prescribed endomorphism ring, is practically efficient rather than just polynomial-time, Séta heavily relies on techniques from SQISign.",
-    "crumbs": [
-      "Key Exchange",
-      "Séta"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/seta.html#overview",
-    "href": "schemes/key-exchange/seta.html#overview",
-    "title": "Séta",
-    "section": "",
-    "text": "Broken by a polynomial time classical algorithm.\n\nSéta (Supersingular Encryption from Torsion Attacks) constructs a trapdoor one-way function family by cleverly turning torsion-point attacks against SIDH-like schemes into a decryption mechanism [FSFK21]. In this framework, a message is encoded as a secret isogeny, and the ciphertext consists of the codomain curve along with the images of certain torsion points. The trapdoor inversion algorithm leverages an endomorphism of the starting curve and the torsion point images to compute the secret isogeny. To ensure that key generation, specifically the computation of a supersingular elliptic curve with a prescribed endomorphism ring, is practically efficient rather than just polynomial-time, Séta heavily relies on techniques from SQISign.",
-    "crumbs": [
-      "Key Exchange",
-      "Séta"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/seta.html#scheme-design",
-    "href": "schemes/key-exchange/seta.html#scheme-design",
-    "title": "Séta",
-    "section": "2 Scheme Design",
-    "text": "2 Scheme Design\nThe Séta Public Key Encryption (PKE) scheme is defined by a tuple of Probabilistic Polynomial Time (PPT) algorithms (KGen, Enc, Dec).\n\n2.1 Parameters\nLet \\(\\lambda\\) be the computational security parameter. A Séta instance requires a base prime \\(p\\) chosen such that \\(p^2 - 1 = D N f\\), where \\(D\\) and \\(N\\) are smooth, coprime integers, and \\(f\\) is a small cofactor. The parameter constraints are \\(2^{2\\lambda} &lt; D\\) and \\(D^2 &lt; N\\). These bounds ensure the security of the isogeny walk while allowing the torsion-point attack to recover the isogeny in polynomial time. We define \\(\\text{params} = (\\lambda, p, D, N)\\).\n\n\n2.2 Key Generation\n\nThe key generation algorithm computes a uniformly random \\((D, N)\\)-trapdoor supersingular elliptic curve \\((E_{j_T}, T)\\) defined over \\(\\mathbb{F}_{p^2}\\).\n\nThe curve \\(E_{j_T}\\) serves as the starting point.\nTo construct the trapdoor \\(T\\), the algorithm generates two specific integers \\(d\\) and \\(e\\) (where \\(e\\) is chosen to be small, typically \\(O(\\log p)\\)) such that they satisfy a strict algebraic relationship: \\(N^2e - d^2 &gt; 0\\) and \\(N^2e - d^2\\) is exactly divisible by \\(D^2\\).\nThe trapdoor \\(T\\) consists of an endomorphism \\(\\theta \\in \\text{End}(E_{j_T})\\) with trace zero and degree (norm) \\(\\frac{N^2e-d^2}{D^2}\\), as well as the evaluation of \\(\\theta\\) on the \\(N\\)-torsion group \\(E_{j_T}[N]\\).\n\nPublic Key (\\(pk\\)): The public key is set to \\(j_T\\), which is the j-invariant of the curve \\(E_{j_T}\\).\nSecret Key (\\(sk\\)): The secret key is the trapdoor \\(T\\).\n\n\n\n2.3 Encryption\n\nTo encrypt a message \\(m \\in \\{0, 1\\}^{n_m}\\), the message is mapped to a unique walk in the isogeny graph, defining a secret isogeny \\(\\phi: E_{j_T} \\to E_c\\) of degree \\(D\\).\nGiven a known basis \\(P_{j_T}, Q_{j_T}\\) of the \\(N\\)-torsion \\(E_{j_T}[N]\\), the sender evaluates the secret isogeny \\(\\phi\\) on these points to obtain the torsion images.\nCiphertext (\\(c\\)): The resulting ciphertext consists of the codomain curve \\(E_c\\) and the evaluated \\(N\\)-torsion points, denoted roughly as \\((E_c, \\phi(P_{j_T}), \\phi(Q_{j_T}))\\).\n\n\n\n2.4 Decryption\n\nUpon receiving the ciphertext, the receiver uses the secret trapdoor \\(T\\) to recover the message. Here trapdoor acts as a mathematical backdoor to recover hidden \\(D\\)-degree isogenies.\nDecryption relies on evaluating and decomposing an endomorphism on the target curve \\(E_c\\).\nEjTEcµÁbÁEcÁ±µ±bÁÁ±µ±bÁ+[d]\nThe receiver calculates the action of the endomorphism \\(\\tau = \\phi \\circ \\theta \\circ \\hat{\\phi} + [d]\\) on the \\(N\\)-torsion of \\(E_c\\). Because the degree of the pushed-forward trace-zero endomorphism \\(\\phi \\circ   \\theta \\circ \\hat{\\phi}\\) is designed to be \\(N^2e - d^2\\), adding \\([d]\\) shifts the degree of \\(\\tau\\) to exactly \\(N^2e\\).\nDecomposing \\(\\tau\\): Because the target degree \\(N^2e\\) is heavily dominated by the known \\(N^2\\) component, the receiver uses the evaluated \\(N\\)-torsion images from the ciphertext to factor \\(\\tau\\) into a sequence of smaller, manageable isogenies (e.g., \\(\\tau = \\psi' \\circ \\eta \\circ \\psi\\), where \\(\\psi, \\psi'\\) have degree \\(N\\) and \\(\\eta\\) has small degree \\(e\\)).\nRecovering the Dual Isogeny: After reconstructing \\(\\tau\\), the receiver subtracts \\([d]\\) to compute \\(\\tau - [d] = \\phi \\circ \\theta \\circ \\hat{\\phi}\\). The kernel of the dual isogeny \\(\\hat{\\phi}\\) is mathematically contained within the kernel of \\((\\tau - [d])\\). By computing the intersection of this kernel with the \\(D\\)-torsion of the target curve \\(E_c\\), the receiver systematically recovers \\(\\hat{\\phi}\\).\nDecoding: Knowing \\(\\hat{\\phi}\\) is equivalent to knowing the secret isogeny \\(\\phi\\). The receiver traces the path of \\(\\phi\\) back in the isogeny graph to decode and recover the original binary message \\(m\\) in polynomial time.",
-    "crumbs": [
-      "Key Exchange",
-      "Séta"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/seta.html#security-assumptions",
-    "href": "schemes/key-exchange/seta.html#security-assumptions",
-    "title": "Séta",
-    "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nThe security of Séta is predicated on assumptions that blend traditional isogeny hardness with new formalized frameworks.\n\nSupersingular Isogeny with Torsion (SSI-T) problem: Séta’s One-Way Chosen-Plaintext Attack (OW-CPA) security heavily relies on a variant of the Computational Supersingular Isogeny (CSSI) problem, originally introduced in SIDH. Séta borrows this foundational assumption but modifies it: instead of a fixed public starting curve, the starting j-invariant \\(j_T\\) is chosen at random from the space of trapdoor curves.\nThe Uber Isogeny Assumption (\\(\\mathfrak{O}\\)-UIP): Séta formalizes a new framework termed the “uber” isogeny assumption. This problem, inspired directly by the key recovery problem in CSIDH and OSIDH, asks: given two curves \\(E_0\\) and \\(E_s\\), both with a known quadratic order \\(\\mathfrak{O}\\) embedded in their endomorphism rings, and a concrete embedding in \\(E_0\\), find an isogeny between them corresponding to an \\(\\mathfrak{O}\\)-ideal. Solving this new uber isogeny problem for the order \\(\\mathfrak{O}\\) utilized in Séta’s setup implies the ability to recover the trapdoor \\(T\\) from the public key, breaking the scheme.\nIndistinguishability of Trapdoor Curves: For the secret key to remain hidden, it is implicitly assumed that the distribution of trapdoor curves \\((E_{j_T})\\) generated by the key generation algorithm does not leak the trapdoor. Simple knowledge of the starting curve equation and a description of the quadratic order embedded in it does not seem to be helpful without the concrete knowledge of an endomorphism realizing this embedding.",
-    "crumbs": [
-      "Key Exchange",
-      "Séta"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/seta.html#progress",
-    "href": "schemes/key-exchange/seta.html#progress",
-    "title": "Séta",
-    "section": "4 Progress",
-    "text": "4 Progress\nTODO",
-    "crumbs": [
-      "Key Exchange",
-      "Séta"
-    ]
-  },
-  {
-    "objectID": "schemes/key-exchange/seta.html#references",
-    "href": "schemes/key-exchange/seta.html#references",
-    "title": "Séta",
-    "section": "5 References",
-    "text": "5 References\n\n\n[FSFK21] Feo, Luca De ; Saint Guilhem, Cyprien Delpech de ; Fouotsa, Tako Boris ; Kutas, Péter ; Leroux, Antonin ; Petit, Christophe ; Silva, Javier ; Wesolowski, Benjamin: Séta: Supersingular Encryption from Torsion Attacks. In: ASIACRYPT : Springer, 2021, pp. 249–278\n\n\n\nContributors: @gkorpal",
-    "crumbs": [
-      "Key Exchange",
-      "Séta"
+      "$k$-SIDH"
     ]
   },
   {
@@ -1107,69 +645,597 @@
     ]
   },
   {
-    "objectID": "schemes/key-exchange/ksidh.html",
-    "href": "schemes/key-exchange/ksidh.html",
-    "title": "\\(k\\)-SIDH",
+    "objectID": "schemes/key-exchange/seta.html",
+    "href": "schemes/key-exchange/seta.html",
+    "title": "Séta",
     "section": "",
-    "text": "Broken by a polynomial time classical algorithm.\n\nThe \\(k\\)-SIDH scheme introduces a generic transformation designed to secure SIDH key agreement against active attacks in the static-static setting [AzJaLe17].\nIn a standard SIDH static-static key exchange, a malicious participant can mount an adaptive attack by sending specialized, manipulated public torsion points. By observing whether the subsequent key validation succeeds or fails, the attacker can iteratively leak the honest party’s static private key. Extant countermeasures, such as the Fujisaki-Okamoto transform, enforce indirect validation by requiring the untrusted party to disclose their private key. While secure, this precludes the use of static-static drop-in replacements.\nTo thwart these attacks without exposing private keys, \\(k\\)-SIDH uses a multiple instances model. Instead of a single key, each party generates \\(k\\) different keys. During the exchange, the participants perform key agreement using all \\(k^2\\) combinations of their individual keys. The resulting \\(k^2\\) shared secrets are hashed together. If a malicious, modified public key is used, it will almost certainly cause at least one of the \\(k^2\\) key derivations to fail, causing the final hashed validation to fail. This expands the space of failure outcomes exponentially, rendering it computationally infeasible for an attacker to predict the correct final hash and salvage the attack.",
+    "text": "Broken by a polynomial time classical algorithm.\n\nSéta (Supersingular Encryption from Torsion Attacks) constructs a trapdoor one-way function family by cleverly turning torsion-point attacks against SIDH-like schemes into a decryption mechanism [FSFK21]. In this framework, a message is encoded as a secret isogeny, and the ciphertext consists of the codomain curve along with the images of certain torsion points. The trapdoor inversion algorithm leverages an endomorphism of the starting curve and the torsion point images to compute the secret isogeny. To ensure that key generation, specifically the computation of a supersingular elliptic curve with a prescribed endomorphism ring, is practically efficient rather than just polynomial-time, Séta heavily relies on techniques from SQISign.",
     "crumbs": [
       "Key Exchange",
-      "$k$-SIDH"
+      "Séta"
     ]
   },
   {
-    "objectID": "schemes/key-exchange/ksidh.html#overview",
-    "href": "schemes/key-exchange/ksidh.html#overview",
-    "title": "\\(k\\)-SIDH",
+    "objectID": "schemes/key-exchange/seta.html#overview",
+    "href": "schemes/key-exchange/seta.html#overview",
+    "title": "Séta",
     "section": "",
-    "text": "Broken by a polynomial time classical algorithm.\n\nThe \\(k\\)-SIDH scheme introduces a generic transformation designed to secure SIDH key agreement against active attacks in the static-static setting [AzJaLe17].\nIn a standard SIDH static-static key exchange, a malicious participant can mount an adaptive attack by sending specialized, manipulated public torsion points. By observing whether the subsequent key validation succeeds or fails, the attacker can iteratively leak the honest party’s static private key. Extant countermeasures, such as the Fujisaki-Okamoto transform, enforce indirect validation by requiring the untrusted party to disclose their private key. While secure, this precludes the use of static-static drop-in replacements.\nTo thwart these attacks without exposing private keys, \\(k\\)-SIDH uses a multiple instances model. Instead of a single key, each party generates \\(k\\) different keys. During the exchange, the participants perform key agreement using all \\(k^2\\) combinations of their individual keys. The resulting \\(k^2\\) shared secrets are hashed together. If a malicious, modified public key is used, it will almost certainly cause at least one of the \\(k^2\\) key derivations to fail, causing the final hashed validation to fail. This expands the space of failure outcomes exponentially, rendering it computationally infeasible for an attacker to predict the correct final hash and salvage the attack.",
+    "text": "Broken by a polynomial time classical algorithm.\n\nSéta (Supersingular Encryption from Torsion Attacks) constructs a trapdoor one-way function family by cleverly turning torsion-point attacks against SIDH-like schemes into a decryption mechanism [FSFK21]. In this framework, a message is encoded as a secret isogeny, and the ciphertext consists of the codomain curve along with the images of certain torsion points. The trapdoor inversion algorithm leverages an endomorphism of the starting curve and the torsion point images to compute the secret isogeny. To ensure that key generation, specifically the computation of a supersingular elliptic curve with a prescribed endomorphism ring, is practically efficient rather than just polynomial-time, Séta heavily relies on techniques from SQISign.",
     "crumbs": [
       "Key Exchange",
-      "$k$-SIDH"
+      "Séta"
     ]
   },
   {
-    "objectID": "schemes/key-exchange/ksidh.html#scheme-design",
-    "href": "schemes/key-exchange/ksidh.html#scheme-design",
-    "title": "\\(k\\)-SIDH",
+    "objectID": "schemes/key-exchange/seta.html#scheme-design",
+    "href": "schemes/key-exchange/seta.html#scheme-design",
+    "title": "Séta",
     "section": "2 Scheme Design",
-    "text": "2 Scheme Design\nThe \\(k\\)-SIDH key agreement process requires both parties (Alice and Bob) to perform \\(k^2\\) pairwise derivations.\n\n2.1 Setup\nThe global parameters \\(gp\\) are identical to standard SIDH:\n\nA preimage-resistant hash function \\(H\\).\nA prime number \\(p = 2^m 3^n f \\pm 1\\).\nA supersingular elliptic curve \\(E/\\mathbb{F}_{p^2}\\).\nFixed, independent torsion bases: \\(P_A, Q_A \\in E[2^m]\\) and \\(P_B, Q_B \\in E[3^n]\\).\n\n\n\n2.2 Key Generation\n\n2.2.1 Alice’s Key Generation\n\nAlice generates \\(k\\) random private keys: \\(\\alpha_i \\in_R \\mathbb{Z}/2^m\\mathbb{Z}\\) for \\(1 \\le i \\le k\\).\nFor each key, she computes a \\(2^m\\)-isogeny: \\(\\phi_{Ai}: E \\rightarrow E_{Ai} = E / \\langle P_A + [\\alpha_i]Q_A \\rangle\\).\nShe projects Bob’s torsion bases through each isogeny: \\(R_i = \\phi_{Ai}(P_B)\\) and \\(S_i = \\phi_{Ai}(Q_B)\\).\nHer public key is the set of \\(k\\) tuples: \\(\\{(E_{Ai}, R_i, S_i)\\}_{i=1}^k\\).\n\n\n\n2.2.2 Bob’s Key Generation\n\nBob generates \\(k\\) random private keys: \\(\\beta_j \\in_R \\mathbb{Z}/3^n\\mathbb{Z}\\) for \\(1 \\le j \\le k\\).\nFor each key, he computes a \\(3^n\\)-isogeny: \\(\\phi_{Bj}: E \\rightarrow E_{Bj} = E / \\langle P_B + [\\beta_j]Q_B \\rangle\\).\nHe projects Alice’s torsion bases through each isogeny: \\(U_j = \\phi_{Bj}(P_A)\\) and \\(V_j = \\phi_{Bj}(Q_A)\\).\nHis public key is the set of \\(k\\) tuples: \\(\\{(E_{Bj}, U_j, V_j)\\}_{j=1}^k\\).\n\n\n\n\n2.3 Communication\nAlice and Bob exchange their respective lists of \\(k\\) public keys.\n\n2.3.1 Alice’s Computation\n\nFor every pair \\((i, j)\\) where \\(1 \\le i, j \\le k\\), Alice uses Bob’s \\(i\\)-th public key and her \\(j\\)-th private key to compute the \\(k^2\\) shared curves: \\[E_{BiAj} = E_{Bi} / \\langle U_i + [\\alpha_j]V_i \\rangle\\]\nShe extracts the j-invariants to form the shared secrets: \\(z_{i,j} = j(E_{BiAj})\\).\nShe computes the combined hash: \\(h = H(z_{1,1}, \\dots, z_{k,k})\\).\n\n\n\n2.3.2 Bob’s Computation\n\nFor every pair \\((i, j)\\), Bob uses Alice’s \\(j\\)-th public key and his \\(i\\)-th private key to compute: \\[E_{AjBi} = E_{Aj} / \\langle R_j + [\\beta_i]S_j \\rangle\\]\nHe extracts the j-invariants: \\(z'_{i,j} = j(E_{AjBi})\\).\nHe computes the combined hash: \\(h' = H(z'_{1,1}, \\dots, z'_{k,k})\\).\n\n\n\n\n2.4 Verification\n\nValidation: Both parties perform validation tests on the received public keys. Alice verifies that for each \\(j\\), \\(U_j\\) and \\(V_j\\) are independent points of order \\(2^m\\) on \\(E_{Bj}\\) and that the Weil pairing holds: \\[e_{2^m}(U_j, V_j) = e_{2^m}(P_A, Q_A)^{3^n}\\] Bob performs the analogous checks.\nKey Confirmation:\n\nAlice sends \\(H(H(h))\\) to Bob. Bob verifies it equals \\(H(H(h'))\\).\nBob sends \\(H(h')\\) to Alice. Alice verifies it equals \\(H(h)\\).\n\nTermination: If any public key pair fails validation, or if the hashes mismatch, the scheme terminates. Otherwise, they continue with \\(h = h'\\) as their shared secret key.",
+    "text": "2 Scheme Design\nThe Séta Public Key Encryption (PKE) scheme is defined by a tuple of Probabilistic Polynomial Time (PPT) algorithms (KGen, Enc, Dec).\n\n2.1 Parameters\nLet \\(\\lambda\\) be the computational security parameter. A Séta instance requires a base prime \\(p\\) chosen such that \\(p^2 - 1 = D N f\\), where \\(D\\) and \\(N\\) are smooth, coprime integers, and \\(f\\) is a small cofactor. The parameter constraints are \\(2^{2\\lambda} &lt; D\\) and \\(D^2 &lt; N\\). These bounds ensure the security of the isogeny walk while allowing the torsion-point attack to recover the isogeny in polynomial time. We define \\(\\text{params} = (\\lambda, p, D, N)\\).\n\n\n2.2 Key Generation\n\nThe key generation algorithm computes a uniformly random \\((D, N)\\)-trapdoor supersingular elliptic curve \\((E_{j_T}, T)\\) defined over \\(\\mathbb{F}_{p^2}\\).\n\nThe curve \\(E_{j_T}\\) serves as the starting point.\nTo construct the trapdoor \\(T\\), the algorithm generates two specific integers \\(d\\) and \\(e\\) (where \\(e\\) is chosen to be small, typically \\(O(\\log p)\\)) such that they satisfy a strict algebraic relationship: \\(N^2e - d^2 &gt; 0\\) and \\(N^2e - d^2\\) is exactly divisible by \\(D^2\\).\nThe trapdoor \\(T\\) consists of an endomorphism \\(\\theta \\in \\text{End}(E_{j_T})\\) with trace zero and degree (norm) \\(\\frac{N^2e-d^2}{D^2}\\), as well as the evaluation of \\(\\theta\\) on the \\(N\\)-torsion group \\(E_{j_T}[N]\\).\n\nPublic Key (\\(pk\\)): The public key is set to \\(j_T\\), which is the j-invariant of the curve \\(E_{j_T}\\).\nSecret Key (\\(sk\\)): The secret key is the trapdoor \\(T\\).\n\n\n\n2.3 Encryption\n\nTo encrypt a message \\(m \\in \\{0, 1\\}^{n_m}\\), the message is mapped to a unique walk in the isogeny graph, defining a secret isogeny \\(\\phi: E_{j_T} \\to E_c\\) of degree \\(D\\).\nGiven a known basis \\(P_{j_T}, Q_{j_T}\\) of the \\(N\\)-torsion \\(E_{j_T}[N]\\), the sender evaluates the secret isogeny \\(\\phi\\) on these points to obtain the torsion images.\nCiphertext (\\(c\\)): The resulting ciphertext consists of the codomain curve \\(E_c\\) and the evaluated \\(N\\)-torsion points, denoted roughly as \\((E_c, \\phi(P_{j_T}), \\phi(Q_{j_T}))\\).\n\n\n\n2.4 Decryption\n\nUpon receiving the ciphertext, the receiver uses the secret trapdoor \\(T\\) to recover the message. Here trapdoor acts as a mathematical backdoor to recover hidden \\(D\\)-degree isogenies.\nDecryption relies on evaluating and decomposing an endomorphism on the target curve \\(E_c\\).\nEjTEcµÁbÁEcÁ±µ±bÁÁ±µ±bÁ+[d]\nThe receiver calculates the action of the endomorphism \\(\\tau = \\phi \\circ \\theta \\circ \\hat{\\phi} + [d]\\) on the \\(N\\)-torsion of \\(E_c\\). Because the degree of the pushed-forward trace-zero endomorphism \\(\\phi \\circ   \\theta \\circ \\hat{\\phi}\\) is designed to be \\(N^2e - d^2\\), adding \\([d]\\) shifts the degree of \\(\\tau\\) to exactly \\(N^2e\\).\nDecomposing \\(\\tau\\): Because the target degree \\(N^2e\\) is heavily dominated by the known \\(N^2\\) component, the receiver uses the evaluated \\(N\\)-torsion images from the ciphertext to factor \\(\\tau\\) into a sequence of smaller, manageable isogenies (e.g., \\(\\tau = \\psi' \\circ \\eta \\circ \\psi\\), where \\(\\psi, \\psi'\\) have degree \\(N\\) and \\(\\eta\\) has small degree \\(e\\)).\nRecovering the Dual Isogeny: After reconstructing \\(\\tau\\), the receiver subtracts \\([d]\\) to compute \\(\\tau - [d] = \\phi \\circ \\theta \\circ \\hat{\\phi}\\). The kernel of the dual isogeny \\(\\hat{\\phi}\\) is mathematically contained within the kernel of \\((\\tau - [d])\\). By computing the intersection of this kernel with the \\(D\\)-torsion of the target curve \\(E_c\\), the receiver systematically recovers \\(\\hat{\\phi}\\).\nDecoding: Knowing \\(\\hat{\\phi}\\) is equivalent to knowing the secret isogeny \\(\\phi\\). The receiver traces the path of \\(\\phi\\) back in the isogeny graph to decode and recover the original binary message \\(m\\) in polynomial time.",
     "crumbs": [
       "Key Exchange",
-      "$k$-SIDH"
+      "Séta"
     ]
   },
   {
-    "objectID": "schemes/key-exchange/ksidh.html#security-assumptions",
-    "href": "schemes/key-exchange/ksidh.html#security-assumptions",
-    "title": "\\(k\\)-SIDH",
+    "objectID": "schemes/key-exchange/seta.html#security-assumptions",
+    "href": "schemes/key-exchange/seta.html#security-assumptions",
+    "title": "Séta",
     "section": "3 Security Assumptions",
-    "text": "3 Security Assumptions\nThe security of the \\(k\\)-SIDH scheme relies on the following foundational assumptions.\n\nIntractability of the Supersingular Isogeny (SSI) Problem: The underlying primitive relies on the hardness of finding an isogeny of a specific degree with a cyclic kernel between two known supersingular elliptic curves defined over \\(\\mathbb{F}_{p^2}\\).\nIrreducibility of SIDH: The multiple-instances transformation requires the underlying key establishment to be irreducible. A scheme is irreducible if it is computationally infeasible for a malicious participant to craft a modified public key that successfully passes all public validation tests while generating the exact same shared secret across multiple different honest private keys. The authors prove that if an attacker could violate this irreducibility in SIDH, they could use that capability to efficiently solve the SSI problem.\nPreimage Resistance of the Hash Function: The hash function \\(H\\) must be strong and preimage-resistant. Since a dishonest Bob only receives \\(H(h)\\) (or \\(H(H(h))\\)), he must guess the entirety of the \\(k\\)-element preimage correctly. The hash prevents the attacker from successfully testing failures instance-by-instance.\nNo Curve Manipulation: The proof model primarily addresses adversaries that manipulate elliptic curve torsion points. It relies on the heuristic assumption that the curves themselves are not being maliciously generated or manipulated in unverified ways, noting that there are no known active attacks exploiting manipulated curves directly in this context.",
+    "text": "3 Security Assumptions\nThe security of Séta is predicated on assumptions that blend traditional isogeny hardness with new formalized frameworks.\n\nSupersingular Isogeny with Torsion (SSI-T) problem: Séta’s One-Way Chosen-Plaintext Attack (OW-CPA) security heavily relies on a variant of the Computational Supersingular Isogeny (CSSI) problem, originally introduced in SIDH. Séta borrows this foundational assumption but modifies it: instead of a fixed public starting curve, the starting j-invariant \\(j_T\\) is chosen at random from the space of trapdoor curves.\nThe Uber Isogeny Assumption (\\(\\mathfrak{O}\\)-UIP): Séta formalizes a new framework termed the “uber” isogeny assumption. This problem, inspired directly by the key recovery problem in CSIDH and OSIDH, asks: given two curves \\(E_0\\) and \\(E_s\\), both with a known quadratic order \\(\\mathfrak{O}\\) embedded in their endomorphism rings, and a concrete embedding in \\(E_0\\), find an isogeny between them corresponding to an \\(\\mathfrak{O}\\)-ideal. Solving this new uber isogeny problem for the order \\(\\mathfrak{O}\\) utilized in Séta’s setup implies the ability to recover the trapdoor \\(T\\) from the public key, breaking the scheme.\nIndistinguishability of Trapdoor Curves: For the secret key to remain hidden, it is implicitly assumed that the distribution of trapdoor curves \\((E_{j_T})\\) generated by the key generation algorithm does not leak the trapdoor. Simple knowledge of the starting curve equation and a description of the quadratic order embedded in it does not seem to be helpful without the concrete knowledge of an endomorphism realizing this embedding.",
     "crumbs": [
       "Key Exchange",
-      "$k$-SIDH"
+      "Séta"
     ]
   },
   {
-    "objectID": "schemes/key-exchange/ksidh.html#progress",
-    "href": "schemes/key-exchange/ksidh.html#progress",
-    "title": "\\(k\\)-SIDH",
+    "objectID": "schemes/key-exchange/seta.html#progress",
+    "href": "schemes/key-exchange/seta.html#progress",
+    "title": "Séta",
     "section": "4 Progress",
-    "text": "4 Progress\nTODO 2019/890",
+    "text": "4 Progress\nTODO",
     "crumbs": [
       "Key Exchange",
-      "$k$-SIDH"
+      "Séta"
     ]
   },
   {
-    "objectID": "schemes/key-exchange/ksidh.html#references",
-    "href": "schemes/key-exchange/ksidh.html#references",
-    "title": "\\(k\\)-SIDH",
+    "objectID": "schemes/key-exchange/seta.html#references",
+    "href": "schemes/key-exchange/seta.html#references",
+    "title": "Séta",
     "section": "5 References",
-    "text": "5 References\n\n\n[AzJaLe17] Azarderakhsh, Reza ; Jao, David ; Leonar, Christopher: Post-quantum static-static key agreement using multiple protocol instances. In: SAC : Springer, 2017, pp. 45–63\n\n\n\nContributors: @gkorpal",
+    "text": "5 References\n\n\n[FSFK21] Feo, Luca De ; Saint Guilhem, Cyprien Delpech de ; Fouotsa, Tako Boris ; Kutas, Péter ; Leroux, Antonin ; Petit, Christophe ; Silva, Javier ; Wesolowski, Benjamin: Séta: Supersingular Encryption from Torsion Attacks. In: ASIACRYPT : Springer, 2021, pp. 249–278\n\n\n\nContributors: @gkorpal",
     "crumbs": [
       "Key Exchange",
-      "$k$-SIDH"
+      "Séta"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/csidhupke.html",
+    "href": "schemes/key-exchange/csidhupke.html",
+    "title": "CSIDH UPKE",
+    "section": "",
+    "text": "The Key-Updatable Public-Key Encryption (UPKE) scheme based on CSIDH is the first post-quantum secure scheme of its kind, designed to improve the forward-secrecy and post-compromise security of secure messaging schemes [EJKM21]. UPKE constructions allow cryptographic keys to be updated over time, repairing security in the event of a key compromise. The scheme is a “Symmetric UPKE”, meaning that the same secret update value is applied to both the decryption key and the encryption key. A defining feature of this CSIDH UPKE variant is that it mandates the use of a parameter set where the structure of the class group is completely known (such as CSI-FiSh). This algebraic property ensures that secret elements and updates can be uniquely represented and uniformly sampled, completely preventing information leakage across sequential key updates.",
+    "crumbs": [
+      "Key Exchange",
+      "CSIDH UPKE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/csidhupke.html#overview",
+    "href": "schemes/key-exchange/csidhupke.html#overview",
+    "title": "CSIDH UPKE",
+    "section": "",
+    "text": "The Key-Updatable Public-Key Encryption (UPKE) scheme based on CSIDH is the first post-quantum secure scheme of its kind, designed to improve the forward-secrecy and post-compromise security of secure messaging schemes [EJKM21]. UPKE constructions allow cryptographic keys to be updated over time, repairing security in the event of a key compromise. The scheme is a “Symmetric UPKE”, meaning that the same secret update value is applied to both the decryption key and the encryption key. A defining feature of this CSIDH UPKE variant is that it mandates the use of a parameter set where the structure of the class group is completely known (such as CSI-FiSh). This algebraic property ensures that secret elements and updates can be uniquely represented and uniformly sampled, completely preventing information leakage across sequential key updates.",
+    "crumbs": [
+      "Key Exchange",
+      "CSIDH UPKE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/csidhupke.html#scheme-design",
+    "href": "schemes/key-exchange/csidhupke.html#scheme-design",
+    "title": "CSIDH UPKE",
+    "section": "2 Scheme Design",
+    "text": "2 Scheme Design\nA naive application of CSIDH to UPKE fails because repeated additions of short update vectors (represented in \\(\\mathbb{Z}^l\\)) center the new keys around the old ones, leading to information leakage. Furthermore, this causes the error term to grow with updates until the decryption process becomes unacceptably inefficient. To overcome these limitations, the CSIDH UPKE scheme requires a parameter set where the structure of the class group is completely computed and known. This mathematical property ensures unique group element representation and allows for uniform sampling.\n\n2.1 Parameters & Primitives\nBefore executing the scheme, participants establish the mathematical foundation and cryptographic primitives in a strict, logical sequence:\n\nPrime Field \\(p\\): The scheme fixes a large prime of the form \\(p = 4 \\cdot \\ell_1 \\cdots \\ell_n - 1\\), where \\(\\ell_i\\) are small, distinct odd primes.\nBase Curve \\(E_0\\): The starting supersingular elliptic curve agreed upon by participants, defined as \\(E_0 : y^2 = x^3 + x\\) over \\(\\mathbb{F}_p\\). The condition \\(p \\equiv 3 \\pmod 4\\) ensures \\(E_0\\) is supersingular.\n\\(cl(\\mathcal{O})\\): The ideal-class group of the \\(\\mathbb{F}_p\\)-rational endomorphism ring \\(\\mathcal{O}\\) corresponding to the commutative supersingular isogeny graph of \\(E_0\\).\nGroup Order \\(N\\): The exact known order of the class group \\(cl(\\mathcal{O})\\).\n\\(*\\): The group action, which applies an isogeny (derived from an element in \\(\\mathbb{Z}/N\\mathbb{Z}\\)) to a supersingular elliptic curve.\n\\(\\text{KDF}\\) and \\(\\text{DEM}\\): A Key Derivation Function and a Data Encapsulation Mechanism, which together provide hybrid symmetric encryption and decryption capabilities.\n\n\n\n2.2 Keys & Initialization\nThe scheme initializes a participant’s long-lived cryptographic keys via the KeyGen() algorithm.\n\nPrivate Key: A secret key \\(g_{sk}\\) is sampled uniformly at random from \\(\\mathbb{Z}/N\\mathbb{Z}\\).\nPublic Key: The public key \\(E_{pk} := g_{sk} * E_0\\) is computed by applying the group action to the starting curve.\nOutput: The algorithm outputs the initial keypair \\((sk, pk) = (g_{sk}, E_{pk})\\).\n\n\n\n2.3 Key Updatability\nThese distinct functions allow the keypair to be asynchronously updated, restoring security in the event of compromised secret values. By utilizing uniform sampling and modular arithmetic over \\(\\mathbb{Z}/N\\mathbb{Z}\\), the updated secret key leaks no information about the previous secret key, avoiding error accumulation and ensuring both forward secrecy and post-compromise security.\n\nUpdate Generation (GenUpdate): An update value \\(\\mu\\) is sampled uniformly at random from \\(\\mathbb{Z}/N\\mathbb{Z}\\).\nPrivate Key Update (UpdatePrivate): The updated secret key is computed via straightforward modular addition, outputting \\(sk' \\leftarrow sk + \\mu \\pmod N\\).\nPublic Key Update (UpdatePublic): The public key is updated by applying the group action corresponding to the update value, outputting \\(pk' \\leftarrow \\mu * pk\\).\n\n\n\n2.4 Message Encapsulation\nTo securely transmit a plaintext message \\(m\\), the scheme uses the following hybrid encapsulation algorithms:\n\nEncryption (Encrypt): The sender samples a random ephemeral element \\(g_{enc} \\leftarrow \\mathbb{Z}/N\\mathbb{Z}\\) and computes a shared symmetric key \\(K \\leftarrow \\text{KDF}(g_{enc} * pk)\\). They apply the group action to obtain the ephemeral public curve \\(E_{enc} \\leftarrow g_{enc} * E_0\\) and encrypt the message using the DEM to yield \\(ctxt \\leftarrow \\text{DEM.Encrypt}(K, m)\\). The output is the combined ciphertext \\(ct = (E_{enc}, ctxt)\\).\nDecryption (Decrypt): The recipient parses the ciphertext \\(ct\\) into \\((E_{enc}, ctxt)\\) and derives the matching shared symmetric key \\(K \\leftarrow \\text{KDF}(sk * E_{enc})\\). They output the plaintext \\(m\\) by executing \\(\\text{DEM.Decrypt}(K, ctxt)\\).",
+    "crumbs": [
+      "Key Exchange",
+      "CSIDH UPKE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/csidhupke.html#security-assumptions",
+    "href": "schemes/key-exchange/csidhupke.html#security-assumptions",
+    "title": "CSIDH UPKE",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nThe scheme is proven to satisfy IND-CPA-U (Indistinguishability Under Chosen Plaintext Attack with Updatability) security. This relies on the hardness of the Supersingular Isogeny Problem, i.e. computing an isogeny between two supersingular elliptic curves over \\(\\mathbb{F}_p\\) with the same number of rational points. In addition to this core mathematical problem, the security model depends on the following explicit assumptions:\n\nUniform Sampling: The class group structure (\\(N\\)) must be strictly known to allow uniform sampling from \\(\\mathbb{Z}/N\\mathbb{Z}\\), ensuring that updates reveal zero information about previous secret keys.\nSubexponential Precomputation: Computing the class group structure takes subexponential time. The scheme assumes attackers cannot break the underlying isogeny mapping itself, even if sufficient resources eventually allow scaling this subexponential initialization phase.\nDEM Security: The underlying Data Encapsulation Mechanism (DEM) must be fundamentally secure to ensure the hybrid construction provides baseline IND-CPA security.",
+    "crumbs": [
+      "Key Exchange",
+      "CSIDH UPKE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/csidhupke.html#progress",
+    "href": "schemes/key-exchange/csidhupke.html#progress",
+    "title": "CSIDH UPKE",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "CSIDH UPKE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/csidhupke.html#references",
+    "href": "schemes/key-exchange/csidhupke.html#references",
+    "title": "CSIDH UPKE",
+    "section": "5 References",
+    "text": "5 References\n\n\n[EJKM21] Eaton, Edward ; Jao, David ; Komlo, Chelsea ; Mokrani, Youcef: Towards post-quantum updatable public-key encryption via supersingular isogenies. In: SAC : Springer, 2021, pp. 461–482\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "CSIDH UPKE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/litsigamal.html",
+    "href": "schemes/key-exchange/litsigamal.html",
+    "title": "LIT-SiGamal",
+    "section": "",
+    "text": "LIT-SiGamal is a public key encryption (PKE) scheme that constructs an ElGamal-like mechanism over supersingular elliptic curve isogenies by combining the structural approach of SiGamal with the Long Isogeny with Torsion (LIT) diagram framework [MoSt25]. The original SiGamal scheme relied on a commutative CSIDH-based diagram to enable the sender and receiver to compute parallel isogenies without revealing their secret paths. However, CSIDH-based constructions require computing group actions over extremely large primes (often exceeding 3,000 bits for baseline security), rendering them highly inefficient. LIT-SiGamal bypasses this bottleneck by replacing the CSIDH diagram with a LIT diagram, a commutative diagram parameterized to consist of large-degree horizontal isogenies and relatively low-degree vertical isogenies. To make the bottom isogeny computable without knowledge of the vertical secret isogenies, LIT-SiGamal incorporates auxiliary torsion points masked by matrices, a technique adapted from the FESTA scheme. This design allows for significantly smaller primes and faster execution times while maintaining robust post-quantum security. Moreover, the constructions of POKÉ and LIT-SiGamal are nearly identical, with the key distinction being the degree of the isogeny used in the public key: POKÉ employs an isogeny of degree approximately \\(2^{2\\lambda}\\), whereas LIT-SiGamal uses one of degree approximately \\(2^{6\\lambda}\\).",
+    "crumbs": [
+      "Key Exchange",
+      "LIT-SiGamal"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/litsigamal.html#overview",
+    "href": "schemes/key-exchange/litsigamal.html#overview",
+    "title": "LIT-SiGamal",
+    "section": "",
+    "text": "LIT-SiGamal is a public key encryption (PKE) scheme that constructs an ElGamal-like mechanism over supersingular elliptic curve isogenies by combining the structural approach of SiGamal with the Long Isogeny with Torsion (LIT) diagram framework [MoSt25]. The original SiGamal scheme relied on a commutative CSIDH-based diagram to enable the sender and receiver to compute parallel isogenies without revealing their secret paths. However, CSIDH-based constructions require computing group actions over extremely large primes (often exceeding 3,000 bits for baseline security), rendering them highly inefficient. LIT-SiGamal bypasses this bottleneck by replacing the CSIDH diagram with a LIT diagram, a commutative diagram parameterized to consist of large-degree horizontal isogenies and relatively low-degree vertical isogenies. To make the bottom isogeny computable without knowledge of the vertical secret isogenies, LIT-SiGamal incorporates auxiliary torsion points masked by matrices, a technique adapted from the FESTA scheme. This design allows for significantly smaller primes and faster execution times while maintaining robust post-quantum security. Moreover, the constructions of POKÉ and LIT-SiGamal are nearly identical, with the key distinction being the degree of the isogeny used in the public key: POKÉ employs an isogeny of degree approximately \\(2^{2\\lambda}\\), whereas LIT-SiGamal uses one of degree approximately \\(2^{6\\lambda}\\).",
+    "crumbs": [
+      "Key Exchange",
+      "LIT-SiGamal"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/litsigamal.html#scheme-design",
+    "href": "schemes/key-exchange/litsigamal.html#scheme-design",
+    "title": "LIT-SiGamal",
+    "section": "2 Scheme Design",
+    "text": "2 Scheme Design\nThe LIT-SiGamal protocol operates over a carefully structured prime field and relies on the exchange of evaluated torsion bases to enable a shared commutative diagram.\nE0E1E00kE0=hPB+sQBiE01kE1=hÁ1(PB)+sÁ1(QB)iÁ1degÁ1=`2aA¡n2Á2Á02Á01A¡1µP3Q3¶=µÁ01(P2)Á01(Q2)¶µPAQA¶,µPBQB¶,RµP1Q1¶:=AµÁ1(PA)Á1(QA)¶,µÁ1(PB)Á1(QB)¶,R1:=®Á1(R)µP2Q2¶:=BµÁ2(PA)Á2(QA)¶,R0:=¯Á2(R)µP3Q3¶:=BµÁ02(P1)Á02(Q1)¶,R01:=¹¯Á02(R1)\n\n2.1 Public Parameters\n\nPrime Characteristic: The scheme operates over \\(\\mathbb{F}_{p^2}\\) where the prime \\(p\\) is of the form \\(p = \\ell_A^a \\ell_B^b \\ell_C^c f - 1\\). Here, \\(\\ell_A\\), \\(\\ell_B\\), and \\(\\ell_C\\) are pairwise coprime small integers, and \\(f\\) is a small positive cofactor.\nMatrix Group (\\(\\mathcal{M}_a\\)): The subgroup of diagonal matrices within \\(GL_2(\\mathbb{Z}/\\ell_A^a\\mathbb{Z})\\).\nPlaintext Space (\\(\\mathcal{P}\\)): The unit group of \\(\\mathbb{Z}/\\ell_C^c\\mathbb{Z}\\), meaning \\(\\mathcal{P} = (\\mathbb{Z}/\\ell_C^c\\mathbb{Z})^\\times\\).\nSecurity Parameter (\\(\\lambda\\)): Determines the exact exponents \\(a, b, c\\) such that \\(\\ell_B^b \\approx 2^{2\\lambda}\\), \\(\\ell_C^c \\approx 2^\\lambda\\), and \\(\\ell_A^{2a} \\approx \\ell_B^{2b} \\cdot 2^{2\\lambda}\\).\n\n\n\n2.2 Key Generation (Receiver)\nReceiver’s goal is to establish the top horizontal isogeny of the LIT diagram and publicize its action on specific torsion subgroups.\n\nCurve and Isogeny Generation: Generates a pair of supersingular elliptic curves \\((E_0, E_1)\\) over \\(\\mathbb{F}_{p^2}\\) along with a cyclic isogeny \\(\\phi_1: E_0 \\rightarrow E_1\\) of large degree \\(\\ell_A^{2a} - n^2\\). The integer \\(n\\) is chosen such that \\(\\ell_A^{2a} - n^2 &gt; \\ell_B^{2b} \\cdot 2^{2\\lambda}\\).\nTorsion Bases: Defines \\(\\mathcal{B}_A=(P_A,Q_A)\\) as an ordered basis of \\(E_0[\\ell_A^a]\\), and \\(\\mathcal{B}_B = (P_B, Q_B)\\) as an ordered basis of \\(E_0[\\ell_B^b]\\).\nAuxiliary Point: Selects a random point \\(R \\in E_0\\) of order \\(\\ell_C^c\\).\nMasking: Samples a random masking matrix \\(\\mathbf{A} \\in \\mathcal{M}_a\\) and a random scalar \\(\\alpha \\in (\\mathbb{Z}/\\ell_C^c\\mathbb{Z})^\\times\\).\nEvaluation: Computes the masked image of the torsion basis as \\({}^t\\mathcal{B}_1 := \\mathbf{A} \\cdot {}^t\\phi_1(\\mathcal{B}_A)\\) and the scaled image of the auxiliary point as \\(R_1 := \\alpha\\phi_1(R)\\).\nKeys:\n\nPublic Key: \\((E_0, \\mathcal{B}_A, \\mathcal{B}_B, R), (E_1, \\mathcal{B}_1, \\phi_1(\\mathcal{B}_B), R_1)\\).\nSecret Key: The masking matrix and scalar \\((\\mathbf{A}, \\alpha)\\).\n\n\n\n\n2.3 Encryption (Sender)\nSender embeds his plaintext \\(\\mu \\in (\\mathbb{Z}/\\ell_C^c\\mathbb{Z})^\\times\\) by pushing the public parameters through random vertical \\(\\ell_B^b\\)-isogenies.\n\nSecret Isogeny Kernels: Sender samples \\(s \\in (\\mathbb{Z}/\\ell_B^b\\mathbb{Z})^\\times\\), which defines the kernels for his vertical isogenies. Computes \\(\\phi_2: E_0 \\rightarrow E_0' := E_0/\\langle P_B + sQ_B \\rangle\\) and \\(\\phi_2': E_1 \\rightarrow E_1' := E_1/\\langle \\phi_1(P_B) + s\\phi_1(Q_B) \\rangle\\).\nMasking: Samples his own random masking matrix \\(\\mathbf{B} \\in \\mathcal{M}_a\\) and scalar \\(\\beta \\in (\\mathbb{Z}/\\ell_C^c\\mathbb{Z})^\\times\\).\nEvaluation: Pushes receiver’s bases through his vertical isogenies and masks them:\n\n\\({}^t\\mathcal{B}_2 := \\mathbf{B} \\cdot {}^t\\phi_2(\\mathcal{B}_A)\\).\n\\({}^t\\mathcal{B}_3 := \\mathbf{B} \\cdot {}^t\\phi_2'(\\mathcal{B}_1)\\).\n\nMessage Embedding: Scales the torsion points: \\(R' := \\beta\\phi_2(R)\\) and embeds the plaintext into the target point: \\(R_1' := \\mu\\beta\\phi_2'(R_1)\\).\nCiphertext: Sender outputs \\((E_0', \\mathcal{B}_2, R'), (E_1', \\mathcal{B}_3, R_1')\\).\n\n\n\n2.4 Decryption (Receiver)\nReceiver must recover the bottom horizontal isogeny \\(\\phi_1': E_0' \\rightarrow E_1'\\) to unmask the plaintext, without knowing sender’s vertical isogenies.\n\nUnmasking: Uses secret matrix \\(\\mathbf{A}\\) to compute \\({}^t(P_2', Q_2') := \\mathbf{A} \\cdot {}^t\\mathcal{B}_2\\), where \\(\\mathcal{B}_2 = (P_2,Q_2)\\). Also scales the intermediate point \\(R'' := \\alpha R'\\).\nHigher-Dimensional Recovery: Using techniques originally developed for SIDH attacks, constructs two 2-dimensional isogenies from \\(E_0' \\times E_1'\\) to an abelian surface \\(V\\).\n\n\\(\\Psi_0: E_0' \\times E_1' \\rightarrow V\\) with kernel \\(\\langle (nP_2', P_3), (nQ_2', Q_3) \\rangle\\)\n\\(\\Psi_1: E_0' \\times E_1' \\rightarrow V\\) with kernel \\(\\langle (nP_2', -P_3), (nQ_2', -Q_3) \\rangle\\)\n\nwhere \\((P_3, Q_3) := \\mathcal{B}_3\\).\nEvaluating the Hidden Isogeny: The map \\(\\phi_1'\\) is implicitly captured within these dimension-2 isogenies via Kani’s theorem. Recovers the un-blinded target point \\(R_1'' := \\pi_2 \\circ \\hat{\\Psi}_1 \\circ \\Psi_0((-R'', 0))\\), where \\(\\pi_2\\) is the projection \\(E_0'\\times E_1'\\to E_1'\\).\nMessage Extraction: Finally, using Pohlig-Hellman, solves the discrete logarithm problem in the smooth subgroup of order \\(\\ell_C^c\\) to find \\(\\mu'\\) such that \\(R_1' = \\mu' R_1''\\), outputting \\(\\mu'\\) as the plaintext.",
+    "crumbs": [
+      "Key Exchange",
+      "LIT-SiGamal"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/litsigamal.html#security-assumptions",
+    "href": "schemes/key-exchange/litsigamal.html#security-assumptions",
+    "title": "LIT-SiGamal",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nThe security of LIT-SiGamal relies on variants of the isogeny problem structured around torsion point revelations.\n\nLIT-DDH Assumption: The primary assumption under which LIT-SiGamal is proven IND-CPA secure is the LIT-DDH assumption. This is a decisional assumption analogous to the standard Decisional Diffie-Hellman (DDH) assumption, but formulated specifically for the tuples generated within a LIT diagram. It asserts that an adversary cannot computationally distinguish between a valid completed commutative isogeny square (with associated evaluated torsion points) and a randomized tuple.\nCIST Problem: The vertical isogenies executed by the encryptor are protected by the Hardness of the CIST problem. The CIST problem assumes that extracting the secret isogeny is hard when the images of the torsion points are masked by an unknown matrix from a structured subgroup. Because sender masks their torsion evaluations with the matrix \\(\\mathbf{B} \\in \\mathcal{M}_a\\), an attacker is prevented from performing direct torsion-based attacks to reveal \\(\\phi_2\\) and \\(\\phi_2'\\).\nLIT Problem: The top horizontal isogeny \\(\\phi_1\\) is protected by the LIT (Long Isogeny with Torsion) problem. In the LIT problem setting, torsion points are explicitly revealed (unmasked), but the degree of the isogeny \\(d_1\\) is strictly required to be significantly larger than the order of the revealed torsion subgroup (\\(d_1 &gt; d_2^2\\)). By choosing the horizontal isogeny degree \\(\\ell_A^{2a} - n^2 \\gg \\ell_B^{2b} \\cdot 2^{2\\lambda}\\), LIT-SiGamal ensures that the revealed \\(\\phi_1(\\mathcal{B}_B)\\) does not leak enough information to mount an attack against \\(\\phi_1\\).\n\nWhile LIT-SiGamal achieves IND-CPA security under these assumptions, it is not inherently IND-CCA secure due to malleability in the ciphertext components (similar to the original SiGamal). To achieve IND-CCA security for practical KEM use, the scheme must be combined with standard transformations such as the Fujisaki-Okamoto transform.",
+    "crumbs": [
+      "Key Exchange",
+      "LIT-SiGamal"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/litsigamal.html#progress",
+    "href": "schemes/key-exchange/litsigamal.html#progress",
+    "title": "LIT-SiGamal",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "LIT-SiGamal"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/litsigamal.html#references",
+    "href": "schemes/key-exchange/litsigamal.html#references",
+    "title": "LIT-SiGamal",
+    "section": "5 References",
+    "text": "5 References\n\n\n[MoSt25] Moriya, Tomoki ; Stopar, Miha: LIT-SiGamal: An efficient isogeny-based PKE based on a LIT diagram. In: ASIACRYPT : Springer, 2025, pp. 275–306\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "LIT-SiGamal"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/togaue.html",
+    "href": "schemes/key-exchange/togaue.html",
+    "title": "TOGA-UE",
+    "section": "",
+    "text": "Updatable Encryption (UE) allows untrusted servers to update ciphertexts via tokens without exposing secret keys, ensuring forward and post-compromise security for outsourced storage. Crucially, UE differs significantly from UPKE: while UE fundamentally requires ciphertext updatability, UPKE generally does not. Historically, building post-quantum UE from group actions required Mappable Effective Group Actions (MEGA). In the isogeny setting, this is practically infeasible due to the notorious difficulty of hashing into supersingular elliptic curves. The TOGA-UE (Triple Orbital Group Action Updatable Encryption) scheme circumvents this limitation by drawing inspiration from the SiGamal encryption scheme [LeRo24]. Instead of attempting to map messages directly to an isogeny graph vertex (a curve), TOGA-UE maps messages as scalars to specific points on an elliptic curve via scalar multiplication. The underlying curve and the points are then transformed using the isogeny group action. This architectural shift eliminates the need to hash into supersingular curves while natively supporting an unbounded number of ciphertext updates. Consequently, TOGA-UE instantiated from CSIDH stands as the first post-quantum UE scheme that is not based on lattices and places no limits on key rotations.",
+    "crumbs": [
+      "Key Exchange",
+      "TOGA-UE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/togaue.html#overview",
+    "href": "schemes/key-exchange/togaue.html#overview",
+    "title": "TOGA-UE",
+    "section": "",
+    "text": "Updatable Encryption (UE) allows untrusted servers to update ciphertexts via tokens without exposing secret keys, ensuring forward and post-compromise security for outsourced storage. Crucially, UE differs significantly from UPKE: while UE fundamentally requires ciphertext updatability, UPKE generally does not. Historically, building post-quantum UE from group actions required Mappable Effective Group Actions (MEGA). In the isogeny setting, this is practically infeasible due to the notorious difficulty of hashing into supersingular elliptic curves. The TOGA-UE (Triple Orbital Group Action Updatable Encryption) scheme circumvents this limitation by drawing inspiration from the SiGamal encryption scheme [LeRo24]. Instead of attempting to map messages directly to an isogeny graph vertex (a curve), TOGA-UE maps messages as scalars to specific points on an elliptic curve via scalar multiplication. The underlying curve and the points are then transformed using the isogeny group action. This architectural shift eliminates the need to hash into supersingular curves while natively supporting an unbounded number of ciphertext updates. Consequently, TOGA-UE instantiated from CSIDH stands as the first post-quantum UE scheme that is not based on lattices and places no limits on key rotations.",
+    "crumbs": [
+      "Key Exchange",
+      "TOGA-UE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/togaue.html#scheme-design",
+    "href": "schemes/key-exchange/togaue.html#scheme-design",
+    "title": "TOGA-UE",
+    "section": "2 Scheme Design",
+    "text": "2 Scheme Design\nTOGA-UE is built upon an abstract algebraic framework known as an Effective Triple Orbital Group Action (ETOGA). To instantiate this from CSIDH, the scheme defines specific group actions operating over supersingular curves enriched with torsion point information.\n\n2.1 System Setup\nThis algorithm takes the security parameter \\(\\lambda\\) as input (which dictates the sizes of the underlying cryptographic structures) and establishes the public parameters and mathematical framework for the CSIDH instantiation.\n\nDefine the Field and Curve: Based on \\(\\lambda\\), choose a large prime \\(p \\equiv 3 \\pmod 4\\) and define the base supersingular elliptic curve \\(E_0: y^2 = x^3 + x\\) over \\(\\mathbb{F}_p\\).\nEstablish the Order and Torsion: Let \\(\\mathfrak{O} = \\mathbb{Z}[\\sqrt{-p}]\\) be the quadratic order corresponding to the Frobenius endomorphism ring. Choose a smooth integer \\(N\\) (sized according to \\(\\lambda\\)), split in \\(\\mathfrak{O}\\) and coprime to the ideal factor base.\nDefine the State Space (\\(S\\)): Let \\(S\\) be the set of elements \\((E, \\iota, P)\\), where \\(E\\) is a supersingular curve, \\(\\iota\\) is an \\(\\mathfrak{O}\\)-orientation, and \\(P \\in E[N]\\) is a point of order \\(N\\). Fix a public origin state \\(s_0 \\in S\\) using \\(E_0\\), its canonical orientation, and a deterministic base point \\(P_0 \\in E_0[N]\\).\nDefine the Main Group Action (\\(*_A\\)) and Sample Space (\\(A'\\)): Let \\(A\\) be a subgroup of fractional \\(\\mathfrak{O}\\)-ideals generated by small prime ideals \\(\\mathfrak{l}_1, \\dots, \\mathfrak{l}_n\\). Define a finite subset \\(A' \\subset A\\) bounded by a small exponent maximum \\(m\\) (i.e., ideals with exponents \\(\\in [-m, m]\\)) to allow efficient, near-uniform sampling. For an ideal \\(\\mathfrak{a} \\in A\\), define its action as evaluating an isogeny: \\(\\mathfrak{a} *_A (E, \\iota, P) = (E_{\\mathfrak{a}}, \\iota_{\\mathfrak{a}}, \\varphi_{\\mathfrak{a}}^E(P))\\).\nDefine the Orbital Group Action (\\(*_H\\)): Let \\(H = (\\mathbb{Z}/N\\mathbb{Z})^\\times\\). Define the action of \\(h \\in H\\) as scalar multiplication on the order-\\(N\\) point: \\(h *_H (E, \\iota, P) = (E, \\iota, [h]P)\\).\nEstablish Helper Functions:\n\nDefine \\(\\sim_A\\) as the congruence relation where ideals are equivalent if they share the same ideal class.\nDefine \\(\\text{Reduce}_A\\) to output a short, canonical representative of an ideal’s equivalence class.\nDefine \\(\\text{Reduce}_S\\) to output a canonical representative for an equivalence class in \\(S\\) under the orbital action.\nDefine \\(\\text{Invert}_H\\) as an efficient algorithm that computes the discrete logarithm between two points in \\(E[N]\\) to invert the group action \\(*_H\\).\nDefine \\(\\psi\\) as an efficiently invertible map from the message space \\(\\mathcal{M}\\) to \\(H\\).\nDefine \\(h(\\cdot, \\cdot)\\) as a function computing a structural modifier in \\(H\\) to correct discrepancies during ideal reduction.\n\nOutput: The public parameters \\(pp = (A, A', H, S, s_0, *_A, \\sim_A, *_H, \\psi, \\text{Reduce}_A, \\text{Reduce}_S, \\text{Invert}_H)\\).\n\n\n\n2.2 Key Generation\nGenerates an epoch encryption key \\(k_e\\) using the public parameters \\(pp\\).\n\nSample a bounded ideal vector \\(a' \\leftarrow A'\\) and a scalar \\(h \\leftarrow H\\).\nReturn \\(k_e = (\\text{Reduce}_A(a'), h) \\in A \\times H\\).\n\n\n\n2.3 Encryption\nEncrypts a message \\(M \\in \\mathcal{M}\\) under epoch key \\(k_e = (a_e, h_e)\\).\n\nSample a random, bounded ideal \\(r' \\leftarrow A'\\).\nCompute reduced ideal \\(r = \\text{Reduce}_A(r')\\).\nCalculate the base state \\(s = \\text{Reduce}_S(r *_A s_0)\\).\nReturn ciphertext \\(C_e = (\\psi(M)h_e) *_H (a_e *_A s)\\).\n\n\n\n2.4 Token Generation\nGenerates the update token \\(\\Delta_{e+1}\\) used to transition ciphertexts from epoch \\(e\\) to \\(e+1\\) given keys \\(k_e\\) and \\(k_{e+1}\\).\n\nParse \\(k_e = (a_e, h_e)\\) and \\(k_{e+1} = (a_{e+1}, h_{e+1})\\).\nCompute the ideal transition \\(c_e = \\text{Reduce}_A(a_e^{-1}a_{e+1})\\).\nCompute the structural modifier \\(h' = h(a_e^{-1}a_{e+1}, c_e^{-1})\\).\nReturn update token \\(\\Delta_{e+1} = (c_e, h' h_{e+1} h_e^{-1})\\).\n\n\n\n2.5 Ciphertext Update\nDeterministically updates a ciphertext \\(C_e\\) from epoch \\(e\\) to \\(e+1\\) using the server-side token \\(\\Delta_{e+1}\\).\n\nParse \\(\\Delta_{e+1} = (a, h)\\).\nReturn updated ciphertext \\(C_{e+1} = h *_H (a *_A C_e)\\).\n\n\n\n2.6 Decryption\nDecrypts ciphertext \\(C_e\\) using epoch key \\(k_e = (a_e, h_e)\\).\n\nCompute the inverse ideal \\(b_e = \\text{Reduce}_A(a_e^{-1})\\) and modifier \\(h' = h(a_e, b_e)\\).\nUndo the key’s actions: \\(s' = (h_e h')^{-1} *_H (b_e *_A C_e)\\).\nRecover the canonical representative \\(s = \\text{Reduce}_S(s')\\).\nExtract the message by solving the discrete logarithm in the smooth-order group \\(E[N]\\): \\(M' = \\psi^{-1}(\\text{Invert}_H(s', s))\\).\nReturn \\(M'\\).",
+    "crumbs": [
+      "Key Exchange",
+      "TOGA-UE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/togaue.html#security-assumptions",
+    "href": "schemes/key-exchange/togaue.html#security-assumptions",
+    "title": "TOGA-UE",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nThe detIND-UE-CPA (Deterministic Updates Indistinguishability - Updatable Encryption - Chosen Plaintext Attack) confidentiality of the TOGA-UE scheme directly relies on specific computational hardness properties embedded within the group action. Notably, TOGA-UE is a promising approach because it avoids reliance on the ideal cipher model. However, its security relies on the weak pseudorandomness of the entire TOGA structure. The core security assumptions and their nuances are detailed below:\n\nExtended Weak Pseudorandomness (P-CSSDDH Connection): The core problem assumed to be computationally hard is distinguishing tuples of the form \\((s_i, \\mathfrak{a} *_A s_i)\\) from tuples of the form \\((s_i, t_i)\\), where \\(\\mathfrak{a} \\leftarrow \\mathcal{D}_A\\) is a secret ideal and \\(s_i, t_i \\leftarrow \\mathcal{D}_S\\) are random elements from the state space \\(S\\). This instantiation based on CSIDH closely aligns with the P-CSSDDH assumption.\nIrreducibility to Standard CSIDH: Standard isogeny-based group actions assume the weak pseudorandomness of the induced class group action (\\(*_G\\)) operating purely on oriented curves. Unfortunately, the P-CSSDDH assumption does not reduce to the standard weak pseudorandomness of CSIDH because additional torsion point information is revealed in the extended state space \\(S\\).\nResilience and Uncertainty: The revealed torsion point information makes the exact hardness of P-CSSDDH less well understood compared to standard CSIDH. However, this revealed information is not sufficient to apply the catastrophic torsion-point attacks that broke SIDH. The degree of the secret isogeny remains unknown and uniform over a large sample, which invalidates standard Weil pairing or genus-theory reduction attacks.",
+    "crumbs": [
+      "Key Exchange",
+      "TOGA-UE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/togaue.html#progress",
+    "href": "schemes/key-exchange/togaue.html#progress",
+    "title": "TOGA-UE",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "TOGA-UE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/togaue.html#references",
+    "href": "schemes/key-exchange/togaue.html#references",
+    "title": "TOGA-UE",
+    "section": "5 References",
+    "text": "5 References\n\n\n[LeRo24] Leroux, Antonin ; Roméas, Maxime: Updatable encryption from group actions. In: PQCrypto : Springer, 2024, pp. 20–53\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "TOGA-UE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/poke.html",
+    "href": "schemes/key-exchange/poke.html",
+    "title": "POKÉ",
+    "section": "",
+    "text": "POKÉ is a public-key encryption scheme constructed from isogenies of unknown degrees. The primary motivation behind POKÉ is to bridge two distinct paradigms in isogeny-based cryptography: the traditional one-dimensional SIDH-like commutative diagrams, and the newer, higher-dimensional representations (such as those used in FESTA or SQIsignHD) [BaMa25]. By having one party compute isogenies of an unknown, non-smooth degree (requiring higher-dimensional representation techniques to evaluate) and the other party compute smooth-degree isogenies (with kernel generators defined over the base field), POKÉ establishes a commutative diagram where all four elliptic curves are made public. Despite the curves being known, the scheme achieves a shared secret by exploiting the commutativity of the hidden isogenies evaluated on a set of auxiliary torsion points. This structural choice completely circumvents the polynomial-time attacks that broke SIDH, which intrinsically require the exact degree of the targeted isogeny to be known.",
+    "crumbs": [
+      "Key Exchange",
+      "POKÉ"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/poke.html#overview",
+    "href": "schemes/key-exchange/poke.html#overview",
+    "title": "POKÉ",
+    "section": "",
+    "text": "POKÉ is a public-key encryption scheme constructed from isogenies of unknown degrees. The primary motivation behind POKÉ is to bridge two distinct paradigms in isogeny-based cryptography: the traditional one-dimensional SIDH-like commutative diagrams, and the newer, higher-dimensional representations (such as those used in FESTA or SQIsignHD) [BaMa25]. By having one party compute isogenies of an unknown, non-smooth degree (requiring higher-dimensional representation techniques to evaluate) and the other party compute smooth-degree isogenies (with kernel generators defined over the base field), POKÉ establishes a commutative diagram where all four elliptic curves are made public. Despite the curves being known, the scheme achieves a shared secret by exploiting the commutativity of the hidden isogenies evaluated on a set of auxiliary torsion points. This structural choice completely circumvents the polynomial-time attacks that broke SIDH, which intrinsically require the exact degree of the targeted isogeny to be known.",
+    "crumbs": [
+      "Key Exchange",
+      "POKÉ"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/poke.html#scheme-design",
+    "href": "schemes/key-exchange/poke.html#scheme-design",
+    "title": "POKÉ",
+    "section": "2 Scheme Design",
+    "text": "2 Scheme Design\nThe POKÉ scheme relies on establishing a commutative diagram between two parties (Alice and Bob) using separate sets of torsion points. Before any operations take place, a set of global public parameters is defined.\nE0EAEBEABÁdegÁ=q(2a¡q)ÃÃ0Á0P0;Q02E0[2a],R0;S02E0[3b],X0;Y02E0[5c]PA;QA=[®2]Á(P0);[¯2]Á(Q0),RA;SA=[°3]Á(R0);[°3]Á(S0),XA;YA=[±5]Á(X0);[±5]Á(Y0)PB;QB=[!2]Ã(P0);[1=!2]Ã(Q0),XB;YB=D5[Ã(X0);Ã(Y0)]TPAB;QAB=[!2]Ã0(PA);[1=!2]Ã0(QA),XAB;YAB=D5[Ã0(XA);Ã0(YA)]T=[±5]Á0(XB);[±5]Á0(YB)\n\n2.1 Setup and Parameters\nThe scheme is built on a finite field where the parameters scale strictly with the targeted security parameter \\(\\lambda\\).\n\n\\(p\\): A prime characteristic \\(p = 2^a 3^b 5^c f - 1\\).\n\n\\(a \\approx \\lambda\\): Bounds the search space for the Alice’s secret degree \\(q(2^a - q)\\). \\(a \\approx \\lambda\\) ensures brute-forcing the unknown degree is exponentially hard.\n\\(3^b \\approx 2^{2\\lambda}\\): The known degree of the Bob’s isogeny. It is sized to prevent meet-in-the-middle key-recovery attacks while keeping evaluations fast.\n\\(5^c \\approx 2^{\\lambda/3}\\): The order of the shared secret points. It provides exactly enough entropy to prevent an attacker from guessing the three unknown change-of-basis coefficients.\n\n\\(E_0\\): A supersingular elliptic curve over \\(\\mathbb{F}_{p^2}\\) with \\(j\\)-invariant 1728.\nBases: \\((P_0, Q_0) \\in E_0[2^a]\\), \\((R_0, S_0) \\in E_0[3^b]\\), and \\((X_0, Y_0) \\in E_0[5^c]\\).\n\\(\\text{KDF}\\): A standard key derivation function.\n\n\n\n2.2 Key Generation (Alice)\n\nSecret Variables:\n\n\\(q \\in [1, 2^a - 1]\\): A random integer coprime to 2, 3, and 5.\n\\(\\phi: E_0 \\to E_A\\): The secret isogeny of degree \\(q(2^a - q)\\) is generated by adapting RandIsogImages algorithm proposed in QFESTA.\n\\(\\alpha_2, \\beta_2 \\in (\\mathbb{Z}/2^a\\mathbb{Z})^\\times\\): Independent diagonal masking scalars.\n\\(\\gamma_3 \\in (\\mathbb{Z}/3^b\\mathbb{Z})^\\times, \\delta_5 \\in (\\mathbb{Z}/5^c\\mathbb{Z})^\\times\\): Uniform masking scalars.\n\nMasked Points on \\(E_A\\):\n\n\\(2^a\\)-torsion: \\(P_A = [\\alpha_2]\\phi(P_0), \\quad Q_A = [\\beta_2]\\phi(Q_0)\\)\n\\(3^b\\)-torsion: \\(R_A = [\\gamma_3]\\phi(R_0), \\quad S_A = [\\gamma_3]\\phi(S_0)\\)\n\\(5^c\\)-torsion: \\(X_A = [\\delta_5]\\phi(X_0), \\quad Y_A = [\\delta_5]\\phi(Y_0)\\)\n\nOutput:\n\nPublic Key: \\((E_A, P_A, Q_A, R_A, S_A, X_A, Y_A)\\)\nSecret Key: \\((q, \\alpha_2, \\beta_2, \\delta_5)\\) alongside the higher-dimensional representation of \\(\\phi\\).\n\n\n\n\n2.3 Encryption (Bob)\n\nSecret Variables:\n\n\\(r_3 \\in \\mathbb{Z}/3^b\\mathbb{Z}\\): An ephemeral scalar to define the isogeny kernel.\n\\(\\omega_2 \\in (\\mathbb{Z}/2^a\\mathbb{Z})^\\times\\): A masking scalar to prevent pairing leakage.\n\\(\\mathbf{D}_5 \\in SL_2(\\mathbb{Z}/5^c\\mathbb{Z})\\): A determinant-1 masking matrix.\n\nParallel Isogenies:\n\n\\(\\psi: E_0 \\to E_B\\): Degree \\(3^b\\) isogeny with kernel \\(\\langle R_0 + [r_3]S_0 \\rangle\\).\n\\(\\psi': E_A \\to E_{AB}\\): Pushforward isogeny \\([\\phi]_*\\psi\\) with kernel \\(\\langle R_A + [r_3]S_A \\rangle=\\phi(\\mathrm{ker}(\\psi))\\).\n\nMasked Points on \\(E_B\\) and \\(E_{AB}\\):\n\n\\(P_B = [\\omega_2]\\psi(P_0), \\quad Q_B = [1/\\omega_2]\\psi(Q_0)\\)\n\\(P_{AB} = [\\omega_2]\\psi'(P_A), \\quad Q_{AB} = [1/\\omega_2]\\psi'(Q_A)\\)\n\\([X_B, Y_B]^T = \\mathbf{D}_5[\\psi(X_0), \\psi(Y_0)]^T\\)\n\nShared Secret Points:\n\n\\([X_{AB}, Y_{AB}]^T = \\mathbf{D}_5[\\psi'(X_A), \\psi'(Y_A)]^T\\)\n\nMessage Encoding:\n\n\\(ct' = m \\oplus \\text{KDF}(X_{AB}, Y_{AB})\\)\n\nOutput:\n\nCiphertext: \\(((E_B, P_B, Q_B, X_B, Y_B), (E_{AB}, P_{AB}, Q_{AB}), ct')\\)\n\n\n\n\n2.4 Decryption (Alice)\nThe goal of decryption is for Alice (receiver) to push the Bob’s (sender) points \\((X_B, Y_B)\\) through their secret pushforward isogeny \\(\\phi': E_B \\to E_{AB}\\) to reconstruct the shared secret \\((X_{AB}, Y_{AB})\\).\n\nUnmask Anchor Points:\n\nCompute \\(P'_{AB} = [1/\\alpha_2]P_{AB}\\) and \\(Q'_{AB} = [1/\\beta_2]Q_{AB}\\).\n\nConstruct 2D Isogeny (\\(\\Phi'\\)):\n\nDefine kernel \\(\\langle([-q]P_B, P'_{AB}), ([-q]Q_B, Q'_{AB})\\rangle\\).\nApply Kani’s Theorem to generate a 2-dimensional isogeny matrix \\(\\Phi': E_B \\times E_{AB} \\to F \\times F'\\).\n\n2D Evaluation:\n\nEmbed input points as \\((X_B, \\mathcal{O}_{E_{AB}})\\) and \\((Y_B, \\mathcal{O}_{E_{AB}})\\).\nEvaluate via \\(\\Phi'\\) to obtain points \\(X'_B\\) and \\(Y'_B\\) on the intermediate curve \\(F\\).\n\nCoordinate Translation:\n\nGenerate a reference basis \\((U, V)\\) on \\(E_{AB}\\).\nEmbed and evaluate \\((\\mathcal{O}_{E_B}, U)\\) and \\((\\mathcal{O}_{E_B}, V)\\) via \\(\\Phi'\\) to obtain basis \\(U'\\) and \\(V'\\) on \\(F\\).\nSolve discrete logarithms in \\(\\mathbb{Z}_{5^c}\\) to find coefficients \\(x, y, w, z\\) such that:\n\n\\(X'_B = [x]U' + [y]V'\\)\n\\(Y'_B = [w]U' + [z]V'\\)\n\n\nReconstruct Shared Secret: Compute target points on \\(E_{AB}\\):\n\n\\(X_{AB} = [\\delta_5][2^a-q]([x]U + [y]V)\\)\n\\(Y_{AB} = [\\delta_5][2^a-q]([w]U + [z]V)\\)\n\nMessage Decoding: \\(m = ct' \\oplus \\text{KDF}(X_{AB}, Y_{AB})\\)",
+    "crumbs": [
+      "Key Exchange",
+      "POKÉ"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/poke.html#security-assumptions",
+    "href": "schemes/key-exchange/poke.html#security-assumptions",
+    "title": "POKÉ",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\n\nC-POKE Problem (Computational): Given the public transcripts of Key Generation and Encryption, an adversary cannot efficiently compute the shared secret points \\(X_{AB}\\) and \\(Y_{AB}\\). It relies on the hardness of recovering either secret isogeny.\nD-POKE Problem (Decisional): An adversary cannot distinguish the true shared secret points \\((X_{AB}, Y_{AB})\\) from a pair of random points on \\(E_{AB}[5^c]\\) with identical Weil pairings. (Required for standard-model IND-CPA security).\nReceiver’s Isogeny Security: The use of an unknown degree \\(q(2^a-q)\\) combined with independent diagonal masking (\\(\\alpha_2 \\neq \\beta_2\\)) breaks the structural prerequisites needed for known pairing-based or torsion-exploiting attacks.\nSender’s Isogeny Security: The hardness of recovering the sender’s isogeny \\(\\psi\\) from diagonally scaled target points reduces to a parallel variant of the CIST problem.\nHeuristic Key Generation Indistinguishability: If the optimized heuristic approach is used for Key Generation, it relies on the assumption that the output curve is computationally indistinguishable from a uniformly sampled \\(q(2^a-q)\\)-isogenous curve.",
+    "crumbs": [
+      "Key Exchange",
+      "POKÉ"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/poke.html#progress",
+    "href": "schemes/key-exchange/poke.html#progress",
+    "title": "POKÉ",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "POKÉ"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/poke.html#references",
+    "href": "schemes/key-exchange/poke.html#references",
+    "title": "POKÉ",
+    "section": "5 References",
+    "text": "5 References\n\n\n[BaMa25] Basso, Andrea ; Maino, Luciano: POKÉ: A compact and efficient PKE from higher-dimensional isogenies. In: EUROCRYPT : Springer, 2025, pp. 94–123",
+    "crumbs": [
+      "Key Exchange",
+      "POKÉ"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/psidh.html",
+    "href": "schemes/key-exchange/psidh.html",
+    "title": "pSIDH",
+    "section": "",
+    "text": "Broken by a polynomial time quantum algorithm.\n\nThe pSIDH (prime-SIDH) scheme is a novel Non-Interactive Key Exchange (NIKE) scheme introduced to circumvent the catastrophic torsion-point attacks that broke smooth-degree isogeny schemes like SIDH and Séta. While SIDH utilizes secret isogenies of smooth degrees to allow for efficient evaluation via Vélu’s formulas, this smooth-degree structure fundamentally enables the polynomial-time attacks. pSIDH transitions the SIDH-style commutative isogeny diagram to the setting of large prime degrees.\nBecause standard evaluation of large prime-degree isogenies is computationally infeasible, pSIDH relies on a novel cryptographic tool: the suborder representation [Lero22]. In this scheme, secret keys are represented as quaternion ideals (the ideal representation), while public keys are broadcast as suborder representations.",
+    "crumbs": [
+      "Key Exchange",
+      "pSIDH"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/psidh.html#overview",
+    "href": "schemes/key-exchange/psidh.html#overview",
+    "title": "pSIDH",
+    "section": "",
+    "text": "Broken by a polynomial time quantum algorithm.\n\nThe pSIDH (prime-SIDH) scheme is a novel Non-Interactive Key Exchange (NIKE) scheme introduced to circumvent the catastrophic torsion-point attacks that broke smooth-degree isogeny schemes like SIDH and Séta. While SIDH utilizes secret isogenies of smooth degrees to allow for efficient evaluation via Vélu’s formulas, this smooth-degree structure fundamentally enables the polynomial-time attacks. pSIDH transitions the SIDH-style commutative isogeny diagram to the setting of large prime degrees.\nBecause standard evaluation of large prime-degree isogenies is computationally infeasible, pSIDH relies on a novel cryptographic tool: the suborder representation [Lero22]. In this scheme, secret keys are represented as quaternion ideals (the ideal representation), while public keys are broadcast as suborder representations.",
+    "crumbs": [
+      "Key Exchange",
+      "pSIDH"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/psidh.html#scheme-design",
+    "href": "schemes/key-exchange/psidh.html#scheme-design",
+    "title": "pSIDH",
+    "section": "2 Scheme Design",
+    "text": "2 Scheme Design\nThe pSIDH scheme involves two parties, Alice and Bob, agreeing on a shared secret over supersingular elliptic curves.\nE0EAEBEAB'A'B['A]¤'B['B]¤'A^ÃB^ÃA\nHere isogenies \\([\\varphi_A]_* \\varphi_B\\) and \\([\\varphi_B]_* \\varphi_A\\) are defined as the separable isogenies of respective kernels \\(\\varphi_A(\\text{ker}(\\varphi_B))\\) and \\(\\varphi_B(\\text{ker}(\\varphi_A))\\).\n\n2.1 Global Parameters\n\n\\(p\\): A large prime characterizing the field \\(\\mathbb{F}_{p^2}\\).\n\\(E_0\\): A starting supersingular elliptic curve defined over \\(\\mathbb{F}_{p^2}\\).\n\\(\\mathcal{O}_0\\): A known maximal order in the quaternion algebra \\(B_{p, \\infty}\\) such that \\(\\text{End}(E_0) \\cong \\mathcal{O}_0\\).\n\n\n\n2.2 Key Generation\nAlice selects a large secret prime \\(D_A \\neq p\\).\n\nSecret Key (\\(I_A\\), \\(\\varphi_A\\)): Alice samples a random integral left-\\(\\mathcal{O}_0\\) ideal \\(I_A\\) of norm \\(D_A\\). Through the Deuring correspondence, \\(I_A\\) represents a cyclic isogeny \\(\\varphi_A: E_0 \\to E_A\\) of degree \\(D_A\\).\nPublic Key (\\(E_A, \\pi_A\\)): Alice computes the suborder representation \\(\\pi_A = \\text{IdealToSuborder}(I_A)\\). This representation consists of the codomain curve \\(E_A\\) and a collection of endomorphisms that reveal a specific suborder \\(\\mathbb{Z} + D_A \\mathcal{O}_0\\) embedded within \\(\\text{End}(E_A)\\).\n\nBob symmetrically generates his keys using a distinct prime \\(D_B\\), producing an ideal \\(I_B\\) (corresponding to \\(\\varphi_B: E_0 \\to E_B\\)) and public key \\((E_B, \\pi_B)\\).\n\n\n2.3 Key Exchange\nTo compute the shared curve \\(E\\), Alice uses Bob’s public key \\((E_B, \\pi_B)\\) alongside her secret key \\(I_A\\). Because Alice cannot directly compute the push-forward isogeny \\([\\varphi_B]_* \\varphi_A : E_B \\to E_{AB}\\) due to \\(D_A\\) being a large prime, she relies on an auxiliary smooth-degree path to reach \\(E\\):\n\nAlice uses the algorithm IdealSuborderNormEquation to find an element \\(\\theta \\in (\\mathbb{Z} + D_B \\mathcal{O}_0) \\cap I_A\\) with norm \\(D_A \\cdot S\\), where \\(S\\) is a carefully chosen powersmooth integer. Moreover, because \\(\\theta \\in I_A\\), under the Deuring correspondence it maps to an endomorphism on \\(E_0\\) that factors through her secret isogeny \\(\\varphi_A\\). That is, the endomorphism \\(\\theta\\) can be written as \\(\\sigma_A \\circ \\varphi_A\\), where \\(\\sigma_A : E_A \\to E_0\\) is an auxiliary isogeny of smooth degree \\(S\\).\nBy pushing this endomorphism forward through Bob’s isogeny \\(\\varphi_B\\), Alice utilizes Bob’s suborder representation \\(\\pi_B\\) to obtain an embedding \\(\\iota_B(\\theta)\\) into \\(\\text{End}(E_B)\\).\nThis embedded endomorphism on \\(E_B\\) is equivalent to \\(\\psi_A \\circ [\\varphi_B]_*\\varphi_A\\), where \\(\\psi_A: E_{AB} \\to E_B\\) is an auxiliary isogeny of degree \\(S\\).\nSince \\(S\\) is smooth, Alice can use the SuborderEvaluation algorithm on this endomorphism to explicitly find the kernel of the dual isogeny \\(\\hat{\\psi}_A : E_B \\to E_{AB}\\).\nTaking the quotient by this kernel, Alice computes the isogeny \\(\\hat{\\psi}_A\\). The codomain of \\(\\hat{\\psi}_A\\) is the target shared curve \\(E_{AB}\\), satisfying the commutativity of the diagram.\nSymmetrically, Bob computes an analogous auxiliary isogeny \\(\\hat{\\psi}_B: E_A \\to E_{AB}\\) using Alice’s public key and his secret key.\n\nBoth parties arrive at the identical curve \\(E_{AB}\\), allowing them to use the \\(j\\)-invariant \\(j(E_{AB})\\) as the shared secret.",
+    "crumbs": [
+      "Key Exchange",
+      "pSIDH"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/psidh.html#security-assumptions",
+    "href": "schemes/key-exchange/psidh.html#security-assumptions",
+    "title": "pSIDH",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nThe core security of pSIDH is tied to the SubOrder to Ideal Problem (SOIP), which relates more closely to the key recovery of CSIDH (involving partial endomorphism ring knowledge) than that of SIDH, yet maintains an SIDH-like key agreement flow.\n\nSubOrder to Ideal Problem (SOIP): This is the underlying key recovery assumption. It states that given a suborder representation \\(\\pi\\) of an isogeny \\(\\varphi\\) of prime degree \\(D\\), it is computationally infeasible to recover the ideal representation \\(I_\\varphi\\) (the secret key). Because the degree \\(D\\) is a large prime, the \\(D\\)-torsion points are defined over an exponentially large field extension \\(\\mathbb{F}_{p^k}\\) (where \\(k = O(D)\\)). This prevents the polynomial-time torsion point attacks that devastated SIDH from being applied to SOIP. However, there is a sub-exponential quantum attack against the SOIP.\nprime Supersingular Decisional Diffie-Hellman (pSSDDH): The semantic security of the key exchange relies on this decisional assumption. pSSDDH assumes that an adversary cannot distinguish the valid shared curve \\(E_{AB}\\) (where \\(\\text{End}(E_{AB}) \\cong \\mathcal{O}_R(I_A \\cap I_B)\\)) from a random curve \\(E_C\\) that is merely \\(D_A D_B\\)-isogenous to \\(E_0\\). This assumption directly borrows its structural formulation from the SSDDH problem introduced in the original SIDH proposal, but strictly limits the isogeny degrees to large primes and leverages suborder representations rather than torsion point images.",
+    "crumbs": [
+      "Key Exchange",
+      "pSIDH"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/psidh.html#progress",
+    "href": "schemes/key-exchange/psidh.html#progress",
+    "title": "pSIDH",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO\n2021/282 and 2023/779",
+    "crumbs": [
+      "Key Exchange",
+      "pSIDH"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/psidh.html#references",
+    "href": "schemes/key-exchange/psidh.html#references",
+    "title": "pSIDH",
+    "section": "5 References",
+    "text": "5 References\n\n\n[Lero22] Leroux, Antonin: A new isogeny representation and applications to cryptography. In: ASIACRYPT : Springer, 2022, pp. 3–35\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "pSIDH"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/qfesta.html",
+    "href": "schemes/key-exchange/qfesta.html",
+    "title": "QFESTA",
+    "section": "",
+    "text": "QFESTA (Quaternion Fast Encapsulation from Supersingular Torsion Attacks) is a new isogeny-based public-key encryption (PKE) and key encapsulation mechanism (KEM) based on the FESTA scheme [NaOn24]. The main innovation in QFESTA’s design is the sub-algorithm RandIsogImages, which evaluates non-smooth degree isogenies using Kani’s lemma and quaternion endomorphisms. Finally, to achieve indistinguishability against chosen ciphertext attacks (IND-CCA) in the quantum random oracle model (QROM), the core One-Way Chosen Plaintext Attack (OW-CPA) secure PKE is wrapped using the Fujisaki-Okamoto (\\(FO^{\\not\\perp}\\)) transform.\n\n\nGiven a special supersingular elliptic curve \\(E_0/\\mathbb{F}_{p^2}\\) with \\(j\\)-invariant 1728, its known maximal order \\(\\mathcal{O}_0 \\cong \\text{End}(E_0)\\), and an target non-smooth isogeny degree \\(d\\):\nE0EA¿:d¡isogeny½:(D¡d)¡isogeny®\n\nA smooth integer \\(D = 2^{3a}\\) is chosen such that \\(E_0[D] \\subset E_0(\\mathbb{F}_{p^2})\\) and \\(D - d \\approx p\\).\nThe algorithm computes an element \\(\\alpha \\in \\mathcal{O}_0\\) with a reduced norm of \\(d(D-d)\\) using an extension of Cornacchia’s algorithm.\nThe quaternion element \\(\\alpha\\) is formally decomposed into \\(\\hat{\\rho} \\circ \\tau\\), where \\(\\tau\\) and \\(\\rho\\) are isogenies of degrees \\(d\\) and \\(D-d\\), respectively.\nBy leveraging Kani’s lemma (via SIDH attack components), the algorithm extracts the codomain of \\(\\tau\\) and the images of arbitrary torsion points under \\(\\tau\\) entirely through (2,2)-isogeny chains.",
+    "crumbs": [
+      "Key Exchange",
+      "QFESTA"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/qfesta.html#overview",
+    "href": "schemes/key-exchange/qfesta.html#overview",
+    "title": "QFESTA",
+    "section": "",
+    "text": "QFESTA (Quaternion Fast Encapsulation from Supersingular Torsion Attacks) is a new isogeny-based public-key encryption (PKE) and key encapsulation mechanism (KEM) based on the FESTA scheme [NaOn24]. The main innovation in QFESTA’s design is the sub-algorithm RandIsogImages, which evaluates non-smooth degree isogenies using Kani’s lemma and quaternion endomorphisms. Finally, to achieve indistinguishability against chosen ciphertext attacks (IND-CCA) in the quantum random oracle model (QROM), the core One-Way Chosen Plaintext Attack (OW-CPA) secure PKE is wrapped using the Fujisaki-Okamoto (\\(FO^{\\not\\perp}\\)) transform.\n\n\nGiven a special supersingular elliptic curve \\(E_0/\\mathbb{F}_{p^2}\\) with \\(j\\)-invariant 1728, its known maximal order \\(\\mathcal{O}_0 \\cong \\text{End}(E_0)\\), and an target non-smooth isogeny degree \\(d\\):\nE0EA¿:d¡isogeny½:(D¡d)¡isogeny®\n\nA smooth integer \\(D = 2^{3a}\\) is chosen such that \\(E_0[D] \\subset E_0(\\mathbb{F}_{p^2})\\) and \\(D - d \\approx p\\).\nThe algorithm computes an element \\(\\alpha \\in \\mathcal{O}_0\\) with a reduced norm of \\(d(D-d)\\) using an extension of Cornacchia’s algorithm.\nThe quaternion element \\(\\alpha\\) is formally decomposed into \\(\\hat{\\rho} \\circ \\tau\\), where \\(\\tau\\) and \\(\\rho\\) are isogenies of degrees \\(d\\) and \\(D-d\\), respectively.\nBy leveraging Kani’s lemma (via SIDH attack components), the algorithm extracts the codomain of \\(\\tau\\) and the images of arbitrary torsion points under \\(\\tau\\) entirely through (2,2)-isogeny chains.",
+    "crumbs": [
+      "Key Exchange",
+      "QFESTA"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/qfesta.html#scheme-design",
+    "href": "schemes/key-exchange/qfesta.html#scheme-design",
+    "title": "QFESTA",
+    "section": "2 Scheme Design",
+    "text": "2 Scheme Design\nFESTA uses the SIDH attack machinery for decryption, which natively imposes strong smoothness constraints on the degrees of the underlying isogenies (\\(d_A, d_1, d_2\\)), forcing them to be large and leading to significant data sizes and computational overhead. To circumvent these limitations, QFESTA introduces a novel technique leveraging quaternion algebras to compute the codomain and point images of non-smooth degree isogenies from a special starting curve. This eliminates the smoothness restriction for degrees \\(d_A\\) and \\(d_1\\), vastly shrinking parameter sizes.\nE0EA;1EAE1E2ÁA;1:dA;1¡isogenyÁA;2:3b¡isogenyÁAµP0Q0¶µRASA¶=AµÁA(P0)ÁA(Q0)¶µR1S1¶=BµÁ1(P0)Á1(Q0)¶µR2S2¶=BµÁ2(RA)Á2(SA)¶Á1:d1¡isogenyÁ2:32b¡isogenyÃ1Ã2\n\n2.1 System Setup and Parameters\nBefore key generation, the system initializes global parameters based on a chosen security parameter \\(\\lambda\\). This setup routine computes the necessary constants and defines the mathematical structures used by all parties:\n\nDegree Exponents (\\(a, b\\)): To achieve the desired security level, the protocol sets \\(b = \\lceil \\log_3 2^\\lambda \\rceil\\) and \\(a = \\lceil \\log_2 (2^\\lambda + 3^b) \\rceil\\). This ensures the sizes of the isogeny walks are properly balanced.\nSecret Isogeny Degrees (\\(d_{A,1}, d_1\\)): Using the exponents above, the non-smooth isogeny degrees are defined as \\(d_{A,1} = 2^a - 3^b\\) and \\(d_1 = 2^{2a} + 2^a \\cdot 3^b + 3^{2b}\\).\nCharacteristic (\\(p\\)): A prime \\(p\\) is calculated as \\(p = 2^{3a} \\cdot 3f - 1\\), where \\(f\\) is a small positive integer found by ascending search until \\(p\\) is prime.\nBase Curve and Ring: The initial supersingular elliptic curve is defined over \\(\\mathbb{F}_{p^2}\\) as \\(E_0 : y^2 = x^3 + x\\), and its known endomorphism ring is \\(\\mathcal{O}_0 = \\mathbb{Z}\\langle1, i, \\frac{i+j}{2}, \\frac{1+k}{2}\\rangle\\).\nTorsion Basis: A basis \\((P_0, Q_0)\\) is established for the \\(2^{3a}\\)-torsion subgroup \\(E_0[2^{3a}]\\).\nMatrix Space (\\(\\mathcal{M}_{2^{3a}}\\)): Let \\(\\mathcal{M}_{2^{3a}}\\) denote the set of \\(2 \\times 2\\) diagonal invertible matrices over the ring \\(\\mathbb{Z}/2^{3a}\\mathbb{Z}\\). These matrices are used to “mask” the torsion point images.\n\nThe resulting public system parameter set available to all parties is \\(\\text{param} = (p, a, b, d_{A,1}, d_1, E_0, \\mathcal{O}_0, P_0, Q_0)\\).\n\n\n2.2 Key Generation (Receiver)\n\nSecret Isogeny 1 (\\(\\phi_{A,1}\\)): Using the global parameters, an intermediate curve \\(E_{A,1}\\) and mapped torsion points \\((P_{A,1}, Q_{A,1})\\) are generated by executing \\(\\text{RandIsogImages}_{\\mathcal{O}_0}(d_{A,1}, 2^{3a}; P_0, Q_0)\\).\nSecret Isogeny 2 (\\(\\phi_{A,2}\\)): A random \\(3^b\\)-isogeny \\(\\phi_{A,2}\\) is computed from \\(E_{A,1}\\) to the final public curve \\(E_A\\), mapping the torsion points to \\((P_A, Q_A) = (\\phi_{A,2}(P_{A,1}), \\phi_{A,2}(Q_{A,1}))\\).\nMasking: A diagonal matrix \\(\\mathbf{A} \\in_U \\mathcal{M}_{2^{3a}}\\) is chosen uniformly at random. This matrix is used to mask the torsion points, computing \\((R_A, S_A)^\\top = \\mathbf{A}(P_A, Q_A)^\\top\\).\nKeys: The resulting public key is \\(\\text{pk} = (E_A, R_A, S_A)\\), while the secret key is retained as \\(\\text{sk} = (E_{A,1}, P_{A,1}, Q_{A,1}, \\mathbf{A})\\).\n\n\n\n2.3 Encryption (Sender)\n\nMessage Encoding: A message \\(m \\in \\{0, 1\\}^{3a-2}\\) is treated as an integer \\(m \\in [0, 2^{3a-2}-1]\\). To map this integer bijectively into the invertible elements of the modular ring, the sender maps it to an odd integer: \\(s_B = 2m + 1\\). The sender then reduces \\(s_B \\pmod{2^{3a}}\\) and calculates its modular inverse \\(s_B^{-1} \\pmod{2^{3a}}\\) to construct the diagonal masking matrix \\(\\mathbf{B} = \\text{diag}(s_B, s_B^{-1}) \\in \\mathcal{M}_{2^{3a}}\\).\nIsogeny \\(\\phi_1\\): An isogeny of degree \\(d_1\\) to curve \\(E_1\\), alongside mapped points \\((P_1, Q_1)\\), is generated via \\(\\text{RandIsogImages}_{\\mathcal{O}_0}(d_1, 2^{3a}; P_0, Q_0)\\).\nFirst Ciphertext Component: The intermediate points are masked using the encoded matrix \\(\\mathbf{B}\\) to compute \\((R_1, S_1)^\\top = \\mathbf{B}(P_1, Q_1)^\\top\\).\nIsogeny \\(\\phi_2\\): A random \\(3^{2b}\\)-isogeny \\(\\phi_2\\) is computed from the public key’s curve \\(E_A\\) to a new curve \\(E_2\\).\nSecond Ciphertext Component: The masked points from the public key are evaluated through \\(\\phi_2\\) and further masked by \\(\\mathbf{B}\\) to yield \\((R_2, S_2)^\\top = \\mathbf{B}(\\phi_2(R_A), \\phi_2(S_A))^\\top\\).\nOutput: The final ciphertext encapsulates these elements as \\(\\text{ct} = (E_1, R_1, S_1, E_2, R_2, S_2)\\).\n\n\n\n2.4 Decryption (Receiver)\n\nInitialization & Kani’s Criterion: The receiver begins by setting the combined degrees of the parallel isogeny paths: \\(N_1 = d_{A,1}d_1\\) and \\(N_2 = 3^{3b}\\). Crucially, the system parameters guarantee that \\(N_1 + N_2 = 2^{3a}\\), which perfectly matches the \\(2^{3a}\\)-torsion space and strictly satisfies Kani’s criterion for the subsequent step.\nUnmasking Setup: Using the secret matrix \\(\\mathbf{A}\\), the receiver computes the partially unmasked ciphertext points: \\((R_2', S_2')^\\top = d_1 \\mathbf{A}^{-1}(R_2, S_2)^\\top\\).\nKani’s Evaluation: The core of the decryption uses Kani’s lemma to navigate the commutative isogeny square. To achieve this, the algorithm constructs a higher-dimensional \\((2^{3a}, 2^{3a})\\)-isogeny originating from the product of the two ciphertext curves, \\(E_1 \\times E_2\\). By combining the points \\((R_1, S_1)\\) from the first curve and the partially unmasked points \\((R_2', S_2')\\) from the second curve to form the kernel of this product isogeny, the receiver systematically strips away the outer isogeny layers. This geometric projection recovers the target point images \\((R_{A,1}, S_{A,1})\\) resting on the intermediate secret curve \\(E_{A,1}\\).\nMatrix Recovery: Kani’s evaluation yields the matrix equation \\((R_{A,1}, S_{A,1})^\\top = d_1 \\mathbf{B}(P_{A,1}, Q_{A,1})^\\top\\). Because the masking matrix is strictly defined as \\(\\mathbf{B} = \\text{diag}(s_B, s_B^{-1})\\), this expands into a direct scalar multiplication: \\(R_{A,1} = [d_1 \\cdot s_B] P_{A,1}\\). The receiver isolates the unknown scalar \\(s_B\\) by solving this discrete logarithm problem via the \\(2^{3a}\\)-Tate pairing, which fully reconstructs \\(\\mathbf{B}\\).\nMessage Decoding: Kani’s evaluation recovers the point images up to a curve automorphism (which is \\(\\{\\pm 1\\}\\) for standard curves), yielding a modular representative \\(s_B\\). To resolve the sign ambiguity and step out of the modular ring, the algorithm lifts the value back into a bounded integer: \\(s_B = \\min(s_B, 2^{3a} - s_B)\\). This isolates the exact odd integer \\(s_B \\in [1, 2^{3a-1}-1]\\) chosen during encoding. Finally, using standard integer arithmetic, the original plaintext message is retrieved: \\(m = (s_B - 1) / 2\\).",
+    "crumbs": [
+      "Key Exchange",
+      "QFESTA"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/qfesta.html#security-assumptions",
+    "href": "schemes/key-exchange/qfesta.html#security-assumptions",
+    "title": "QFESTA",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nThe core OW-CPA security of the QFESTA PKE relies on specialized variants of FESTA’s distinguishing and computational problems.\n\nPseudorandomness of RandIsogImages: The foundational assumption assumes that the codomain elliptic curve \\(E_1\\) and its mapped torsion points \\((P_1, Q_1)\\) produced by RandIsogImages are computationally indistinguishable from a tuple drawn uniformly at random from valid configurations.\nVariant DIST Problem: The security proof extends this to the public keys themselves, assuming an adversary cannot distinguish the legitimate masked points \\((R_A, S_A)\\) on \\(E_A\\) from uniformly random torsion points.\nHardness of Isogeny Recovery: Finding the secret isogenies (\\(\\phi_A, \\phi_1, \\phi_2\\)) given the degrees (\\(d_A, d_1, d_2\\)) requires \\(O(2^{\\lambda})\\) operations classically and \\(O(2^{\\lambda/2})\\) operations via quantum attacks (using Grover’s algorithm or meet-in-the-middle strategies), satisfying the targeted security levels.",
+    "crumbs": [
+      "Key Exchange",
+      "QFESTA"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/qfesta.html#progress",
+    "href": "schemes/key-exchange/qfesta.html#progress",
+    "title": "QFESTA",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "QFESTA"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/qfesta.html#references",
+    "href": "schemes/key-exchange/qfesta.html#references",
+    "title": "QFESTA",
+    "section": "5 References",
+    "text": "5 References\n\n\n[NaOn24] Nakagawa, Kohei ; Onuki, Hiroshi: QFESTA: Efficient algorithms and parameters for FESTA using quaternion algebras. In: CRYPTO : Springer, 2024, pp. 75–106\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "QFESTA"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/binsidh.html",
+    "href": "schemes/key-exchange/binsidh.html",
+    "title": "binSIDH",
+    "section": "",
+    "text": "The binSIDH scheme is designed to provide a secure and efficient isogeny-based key exchange in the wake of the polynomial-time key-recovery attacks that broke the original SIDH scheme [BaFo23]. Originally, SIDH required revealing the images of torsion points to enable parties to compute parallel isogenies and arrive at a shared secret, but this extra torsion information was ultimately exploited to recover the secret isogeny. To circumvent these attacks without sacrificing the efficiency of SIDH too heavily, binSIDH introduces the concept of “artificially oriented curves.” By equipping an elliptic curve with a pair of cyclic disjoint subgroups (an artificial orientation), the scheme limits the set of allowable isogenies and restricts the revealed information strictly to the push-forwards of these orientations. This formulation interpolates between the original SIDH and group-action based schemes (like CSIDH), revealing sufficiently less information to prevent the known torsion-based attacks while preserving the parallel isogeny structure necessary for a Diffie-Hellman-like key agreement.",
+    "crumbs": [
+      "Key Exchange",
+      "binSIDH"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/binsidh.html#overview",
+    "href": "schemes/key-exchange/binsidh.html#overview",
+    "title": "binSIDH",
+    "section": "",
+    "text": "The binSIDH scheme is designed to provide a secure and efficient isogeny-based key exchange in the wake of the polynomial-time key-recovery attacks that broke the original SIDH scheme [BaFo23]. Originally, SIDH required revealing the images of torsion points to enable parties to compute parallel isogenies and arrive at a shared secret, but this extra torsion information was ultimately exploited to recover the secret isogeny. To circumvent these attacks without sacrificing the efficiency of SIDH too heavily, binSIDH introduces the concept of “artificially oriented curves.” By equipping an elliptic curve with a pair of cyclic disjoint subgroups (an artificial orientation), the scheme limits the set of allowable isogenies and restricts the revealed information strictly to the push-forwards of these orientations. This formulation interpolates between the original SIDH and group-action based schemes (like CSIDH), revealing sufficiently less information to prevent the known torsion-based attacks while preserving the parallel isogeny structure necessary for a Diffie-Hellman-like key agreement.",
+    "crumbs": [
+      "Key Exchange",
+      "binSIDH"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/binsidh.html#scheme-design",
+    "href": "schemes/key-exchange/binsidh.html#scheme-design",
+    "title": "binSIDH",
+    "section": "2 Scheme Design",
+    "text": "2 Scheme Design\nThe binSIDH scheme restricts computations to full-degree artificially oriented isogenies. Below is a detailed walkthrough of the scheme setup, key generation, and shared key derivation.\n\n2.1 Setup\nThe public parameters are generated as follows:\n\n\\(\\lambda\\): The security parameter (e.g., 128, 192, 256) that dictates the targeted security level.\n\\(t\\): An integer depending on \\(\\lambda\\), representing the number of distinct prime factors required to achieve the desired security.\n\\(l_i, q_i\\): Small, distinct prime numbers for \\(i \\in \\{1, \\dots, t\\}\\).\n\\(A, B\\): Coprime integers where \\(A = \\prod_{i=1}^t l_i\\) and \\(B = \\prod_{i=1}^t q_i\\). \\(A\\) dictates the degree of Alice’s isogenies, while \\(B\\) dictates Bob’s. The values are chosen such that \\(A \\approx B \\approx \\sqrt{p}\\).\n\\(f\\): A small cofactor used to ensure the resulting \\(p\\) is a valid prime.\n\\(p\\): A large prime of the form \\(p = ABf - 1\\).\n\\(E_0\\): A starting supersingular elliptic curve defined over \\(\\mathbb{F}_{p^2}\\) with cardinality \\(\\#E_0(\\mathbb{F}_{p^2}) = (p+1)^2\\). To avoid special endomorphism ring properties that could lead to attacks, this curve should be generated via a uniformly random walk.\n\\(\\mathfrak{A}, \\mathfrak{B}\\): Artificial orientations on \\(E_0\\). Specifically, the artificial \\(A\\)-orientation is defined as \\(\\mathfrak{A} = (G_1, G_2)\\), where \\(G_1, G_2 \\subset E_0[A]\\) are cyclic disjoint subgroups of order \\(A\\). The artificial \\(B\\)-orientation is similarly defined as \\(\\mathfrak{B} = (H_1, H_2)\\), a pair of cyclic disjoint subgroups of order \\(B\\).\n\nThe globally public parameters are \\((E_0, p, A, B, \\mathfrak{A}, \\mathfrak{B})\\).\n\n\n2.2 Key Generation\nBoth parties independently sample random secret vectors that dictate the specific subgroups used to construct their secret isogenies.\nAlice:\n\nSamples a secret vector \\(\\mathbf{a}\\) uniformly at random from \\(\\{1, 2\\}^t\\).\nDecomposes her artificial \\(A\\)-orientation \\(\\mathfrak{A} = (G_1, G_2)\\). Since \\(G_1\\) and \\(G_2\\) are cyclic groups of order \\(A = \\prod_{i=1}^t l_i\\), they can be written as the direct sum of their prime-order components: \\(G_1 = G_1^1 \\oplus \\dots \\oplus G_1^t\\) and \\(G_2 = G_2^1 \\oplus \\dots \\oplus G_2^t\\), where each \\(G_1^i\\) and \\(G_2^i\\) has order \\(l_i\\).\nConstructs the \\(\\mathfrak{A}\\)-isogeny \\(\\phi_A : E_0 \\to E_A\\) of degree \\(A\\). The kernel of \\(\\phi_A\\) is strictly dictated by the vector \\(\\mathbf{a}\\): for each \\(i\\)-th prime factor \\(l_i\\), she selects the kernel component from either \\(G_1^i\\) (if \\(\\mathbf{a}_i = 1\\)) or \\(G_2^i\\) (if \\(\\mathbf{a}_i = 2\\)). Formally, \\(\\ker \\phi_A = \\langle G_{\\mathbf{a}_1}^1, G_{\\mathbf{a}_2}^2, \\dots, G_{\\mathbf{a}_t}^t \\rangle\\).\nComputes the image of Bob’s artificial \\(B\\)-orientation \\(\\mathfrak{B}\\) under her isogeny. This is simply the evaluation of \\(\\phi_A\\) on the subgroups of \\(\\mathfrak{B}\\), yielding \\(\\mathfrak{B}' = \\phi_A(\\mathfrak{B}) = (\\phi_A(H_1),\\phi_A(H_2))\\).\nAlice’s secret key is \\(\\mathbf{a}\\) and her public key is \\((E_A, \\mathfrak{B}')\\).\n\nBob:\n\nSamples a secret vector \\(\\mathbf{b}\\) uniformly at random from \\(\\{1, 2\\}^t\\).\nDecomposes his artificial \\(B\\)-orientation \\(\\mathfrak{B} = (H_1, H_2)\\) into its prime-order components \\(H_1^i\\) and \\(H_2^i\\) of order \\(q_i\\).\nConstructs the \\(\\mathfrak{B}\\)-isogeny \\(\\phi_B : E_0 \\to E_B\\) of degree \\(B\\). The kernel is chosen from \\(\\mathfrak{B}\\) according to the vector \\(\\mathbf{b}\\), such that \\(\\ker \\phi_B = \\langle H_{\\mathbf{b}_1}^1, H_{\\mathbf{b}_2}^2, \\dots, H_{\\mathbf{b}_t}^t \\rangle\\).\nComputes the image of Alice’s artificial \\(A\\)-orientation \\(\\mathfrak{A}\\) under his isogeny, yielding \\(\\mathfrak{A}' = \\phi_B(\\mathfrak{A})\\).\nBob’s secret key is \\(\\mathbf{b}\\) and his public key is \\((E_B, \\mathfrak{A}')\\).\n\n\n\n2.3 Shared Key Computation\nUpon exchanging public keys, the parties compute their parallel isogenies to arrive at a common curve.\nAlice:\n\nReceives Bob’s public key \\((E_B, \\mathfrak{A}')\\). She verifies that \\(\\mathfrak{A}'\\) is indeed a valid artificial \\(A\\)-orientation on \\(E_B\\); if not, she aborts.\nShe computes the \\(\\mathfrak{A}'\\)-isogeny \\(\\phi_A' : E_B \\to E_{BA}\\) of degree \\(A\\), defined by her secret vector \\(\\mathbf{a}\\).\nHer shared key is the \\(j\\)-invariant of the resulting curve, \\(j(E_{BA})\\).\n\nBob:\n\nReceives Alice’s public key \\((E_A, \\mathfrak{B}')\\). He verifies that \\(\\mathfrak{B}'\\) is a valid artificial \\(B\\)-orientation on \\(E_A\\); if not, he aborts.\nHe computes the \\(\\mathfrak{B}'\\)-isogeny \\(\\phi_B' : E_A \\to E_{AB}\\) of degree \\(B\\), defined by his secret vector \\(\\mathbf{b}\\).\nHis shared key is the \\(j\\)-invariant of the resulting curve, \\(j(E_{AB})\\).\n\nDue to the structure of parallel isogenies over artificially oriented curves, the resulting codomain curves \\(E_{AB}\\) and \\(E_{BA}\\) are isomorphic, ensuring \\(j(E_{AB}) = j(E_{BA})\\).",
+    "crumbs": [
+      "Key Exchange",
+      "binSIDH"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/binsidh.html#security-assumptions",
+    "href": "schemes/key-exchange/binsidh.html#security-assumptions",
+    "title": "binSIDH",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\nThe security of binSIDH relies on a set of computational problems related to artificially oriented curves, some of which are generalizations of recently introduced isogeny problems.\n\nSupersingular Isogeny Problem for artificially A-oriented curves (SSIP-A): Given an artificially \\(A\\)-oriented curve \\((E, \\mathfrak{A})\\), a codomain curve \\(E'\\), the image orientation \\(\\mathfrak{A}'\\), and a degree \\(B\\), compute the isogeny of degree \\(B\\) connecting them. This is a generalization of the CIST problem previously introduced in the FESTA cryptosystem.\nArtificially Oriented Isogeny Problem (AOIP): Given a starting curve \\(E\\) with an artificial \\(A\\)-orientation \\(\\mathfrak{A}\\) and an artificial \\(B\\)-orientation \\(\\mathfrak{B}\\), along with the codomain curve \\(E'\\) and the image orientation \\(\\mathfrak{A}'\\), compute the cyclic \\(B\\)-isogeny.\nArtificially Oriented Computational Diffie-Hellman (AO-CDH): Given the initial public parameters and the two public keys \\((E_A, \\phi_A(\\mathfrak{B}))\\) and \\((E_B, \\phi_B(\\mathfrak{A}))\\), compute the shared invariant \\(j(E_{AB})\\).",
+    "crumbs": [
+      "Key Exchange",
+      "binSIDH"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/binsidh.html#progress",
+    "href": "schemes/key-exchange/binsidh.html#progress",
+    "title": "binSIDH",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO\n2026/032",
+    "crumbs": [
+      "Key Exchange",
+      "binSIDH"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/binsidh.html#references",
+    "href": "schemes/key-exchange/binsidh.html#references",
+    "title": "binSIDH",
+    "section": "5 References",
+    "text": "5 References\n\n\n[BaFo23] Basso, Andrea ; Fouotsa, Tako Boris: New SIDH countermeasures for a more efficient key exchange. In: ASIACRYPT : Springer, 2023, pp. 208–233\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "binSIDH"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/binue.html",
+    "href": "schemes/key-exchange/binue.html",
+    "title": "BIN-UE",
+    "section": "",
+    "text": "Constructing post-quantum, ciphertext-independent Updatable Encryption (UE) schemes from group actions has historically faced significant structural barriers. Previous approaches either rely on idealized models that require a mappable group action (which natural isogeny-based group actions like CSIDH do not satisfy) or necessitate complex algebraic abstractions. For instance, schemes like TOGA-UE circumvent the need for an ideal cipher by introducing Triple Orbital Group Actions, which inherently rely on non-standard computational assumptions (e.g., P-CSSDDH) and lack active security. BIN-UE is introduced to resolve these limitations [MeRi24]. By adopting a bit-wise encryption approach, BIN-UE securely instantiates updatable encryption from any plain, non-mappable effective group action (such as standard CSIDH). It operates entirely in the standard model and relies strictly on the well-established assumption of weak pseudorandomness. However, these theoretical benefits come with significant practical drawbacks. The primary disadvantage of BIN-UE’s bit-wise approach is that both the key size and the overall scheme efficiency scale poorly, as key and ciphertext sizes grow linearly with the bit-length of the messages.",
+    "crumbs": [
+      "Key Exchange",
+      "BIN-UE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/binue.html#overview",
+    "href": "schemes/key-exchange/binue.html#overview",
+    "title": "BIN-UE",
+    "section": "",
+    "text": "Constructing post-quantum, ciphertext-independent Updatable Encryption (UE) schemes from group actions has historically faced significant structural barriers. Previous approaches either rely on idealized models that require a mappable group action (which natural isogeny-based group actions like CSIDH do not satisfy) or necessitate complex algebraic abstractions. For instance, schemes like TOGA-UE circumvent the need for an ideal cipher by introducing Triple Orbital Group Actions, which inherently rely on non-standard computational assumptions (e.g., P-CSSDDH) and lack active security. BIN-UE is introduced to resolve these limitations [MeRi24]. By adopting a bit-wise encryption approach, BIN-UE securely instantiates updatable encryption from any plain, non-mappable effective group action (such as standard CSIDH). It operates entirely in the standard model and relies strictly on the well-established assumption of weak pseudorandomness. However, these theoretical benefits come with significant practical drawbacks. The primary disadvantage of BIN-UE’s bit-wise approach is that both the key size and the overall scheme efficiency scale poorly, as key and ciphertext sizes grow linearly with the bit-length of the messages.",
+    "crumbs": [
+      "Key Exchange",
+      "BIN-UE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/binue.html#scheme-design",
+    "href": "schemes/key-exchange/binue.html#scheme-design",
+    "title": "BIN-UE",
+    "section": "2 Scheme Design",
+    "text": "2 Scheme Design\nBIN-UE leverages an Effective Group Action (EGA) to encrypt messages bit-by-bit. Because BIN-UE does not require the group action to be mappable, it can be instantiated concretely and securely from plain CSIDH.\n\n2.1 Setup and CSIDH Instantiation\nThe EGA is defined as a tuple \\((\\mathcal{G}, \\mathcal{X}, *, \\tilde{x})\\). When instantiated with CSIDH, this setup directly corresponds to isogenies between elliptic curves:\n\n\\(\\mathcal{X}\\): Represents a finite set of supersingular elliptic curves defined over a finite field \\(\\mathbb{F}_p\\).\n\\(\\mathcal{G}\\): Represents a finite commutative group (the ideal class group) that acts on the set of elliptic curves.\n\\(*\\): Represents the group action map \\(*: \\mathcal{G} \\times \\mathcal{X} \\rightarrow \\mathcal{X}\\), evaluated by computing isogenies between the supersingular elliptic curves.\n\\(\\tilde{x} \\in \\mathcal{X}\\): A distinguished origin element, representing a known starting elliptic curve.\n\nBefore outlining the algorithms, we define the following parameters and symbols:\n\n\\(n\\): The bit-length of the message.\n\\(M\\): The message to be encrypted, represented as a bitstring \\(M = (m_1, \\dots, m_n) \\in \\{0, 1\\}^n \\setminus \\{0^n, 1^n\\}\\). The all-zero and all-one strings are excluded to prevent decryption ambiguity.\n\\(k\\): The secret key, structured as a vector of \\(n\\) group elements \\(k = (k_1, \\dots, k_n) \\in \\mathcal{G}^n\\).\n\\(x_0, x_1\\): Two randomly sampled basis set elements from \\(\\mathcal{X}\\) serving as explicit encryption randomness, strictly ordered lexicographically such that \\(x_0 &lt;_{lex} x_1\\).\n\\(C\\): The resulting ciphertext, represented as a vector of \\(n\\) set elements \\(C = (c_1, \\dots, c_n) \\in \\mathcal{X}^n\\).\n\\(\\Delta\\): The update token, consisting of \\(n\\) group elements \\(\\Delta = (\\Delta_1, \\dots, \\Delta_n) \\in \\mathcal{G}^n\\).\n\n\n\n2.2 Key Generation\n\nUniformly sample \\(n\\) group elements from the group \\(\\mathcal{G}\\).\nOutput the new epoch key as the vector \\(k := (k_1, \\dots, k_n) \\leftarrow \\mathcal{G}^n\\).\n\n\n\n2.3 Encryption\n\nReceive the public parameters, secret key \\(k\\), and an \\(n\\)-bit message \\(M\\).\nSample two random basis elements (elliptic curves) \\(x_0, x_1 \\leftarrow \\mathcal{X}\\) to serve as explicit randomness, avoiding the need for nonces or programmable ideal ciphers.\nOrder the basis elements lexicographically to ensure \\(x_0 &lt;_{lex} x_1\\).\nIterate through each bit \\(m_i\\) of the message.\nApply the corresponding group element \\(k_i\\) from the key vector to the basis element \\(x_{m_i}\\).\nCompute the ciphertext components as \\(c_i := k_i * x_{m_i}\\) for \\(i \\in [1, n]\\).\nOutput the final ciphertext vector \\(C := (c_1, \\dots, c_n)\\).\n\n\n\n2.4 Token Generation\n\nReceive the key from the old epoch \\(k = (k_1, \\dots, k_n)\\) and the key for the new epoch \\(k' = (k'_1, \\dots, k'_n)\\).\nCompute the relative group difference for each vector position.\nCalculate \\(\\Delta_i := k'_i \\cdot k_i^{-1}\\) for \\(i \\in [1, n]\\).\nOutput the update token \\(\\Delta := (\\Delta_1, \\dots, \\Delta_n)\\).\n\n\n\n2.5 Ciphertext Update\n\nReceive an update token \\(\\Delta\\) and an existing ciphertext \\(C\\).\nAdvance the ciphertext to the new key epoch by applying the token’s group elements to the ciphertext’s set elements.\nCompute the updated components as \\(c'_i := \\Delta_i * c_i\\) for \\(i \\in [1, n]\\).\nMaintain perfect correctness due to the compatibility property of the group action, where \\(\\Delta_i * c_i = (k'_i \\cdot k_i^{-1}) * (k_i * x_{m_i}) = k'_i * x_{m_i}\\).\n\n\n\n2.6 Decryption\n\nReceive the epoch key \\(k\\) and the ciphertext \\(C\\).\nInvert the group action at each position to recover the base set elements.\nCompute \\(y_i := k_i^{-1} * c_i\\) for \\(i \\in [1, n]\\).\nIdentify the two distinct set elements from the collection \\(\\{y_1, \\dots, y_n\\}\\), which is guaranteed because the message space excludes the uniform strings \\(0^n\\) and \\(1^n\\).\nSort these two recovered elements lexicographically as \\(\\tilde{x}_0 &lt;_{lex} \\tilde{x}_1\\).\nRecover the original message bits by mapping \\(\\tilde{x}_1\\) to 1 and \\(\\tilde{x}_0\\) to 0.\nSet \\(m_i := 1\\) if \\(y_i = \\tilde{x}_1\\), and set \\(m_i := 0\\) if \\(y_i = \\tilde{x}_0\\).",
+    "crumbs": [
+      "Key Exchange",
+      "BIN-UE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/binue.html#security-assumptions",
+    "href": "schemes/key-exchange/binue.html#security-assumptions",
+    "title": "BIN-UE",
+    "section": "3 Security Assumptions",
+    "text": "3 Security Assumptions\n\nWeak Pseudorandomness (Wk-PR): The confidentiality of BIN-UE (detIND-UE-CPA security) is based entirely on the Weak Pseudorandomness (Wk-PR) assumption of the underlying effective group action. Wk-PR is a well-established, standard assumption for CSIDH, functioning essentially as a multi-instance decisional Diffie-Hellman assumption for group actions.\nMulti Strong Pseudorandomness (Multi-St-PR): The security proof relies on an intermediate hardness assumption called Multi Strong Pseudorandomness (Multi-St-PR), which abstractly models the ability of an adversary to distinguish between honestly evaluated group actions on chosen base elements and uniformly random set elements. Crucially, Multi-St-PR is not a new or isolated assumption; it is proven to reduce tightly to the standard Wk-PR assumption via a hybrid argument. This ensures that BIN-UE achieves its security entirely in the standard model, completely bypassing the need for Random Oracles or Ideal Ciphers.\nTag-then-Encrypt: While BIN-UE achieves CPA security, it does not prevent chosen-ciphertext attacks (detIND-UE-CCA). To achieve CCA security, BIN-UE can be seamlessly extended into the COM-UE scheme using the Tag-then-Encrypt paradigm. Instead of treating COM-UE as a different construction, it utilizes BIN-UE as its core cryptographic engine. In COM-UE, a message \\(M\\) with randomness \\(r\\) is prepended/appended with a cryptographic tag generated by a random oracle \\(H(M, r)\\). The combined string \\(M' = M || H(M, r)\\) is then directly encrypted using the standard BIN-UE bit-wise encryption logic under an expanded key \\(k \\in \\mathcal{G}^{n+t}\\). Because it employs the Tag-then-Encrypt framework, COM-UE inherits the exact updatability properties of BIN-UE but requires an augmented security assumption to prove CCA integrity (INT-CTXT):\n\nMulti Strong Unpredictability (Multi-St-UP): A new, non-standard computational assumption required for the ROM-based proof of COM-UE’s ciphertext integrity.\nDiscrete Logarithm with Auxiliary Input (DLAI): To justify the plausibility of Multi-St-UP, it is shown that in the Algebraic Group Action Model (AGAM), Multi-St-UP is directly implied by the DLAI problem, connecting the CCA security of COM-UE back to hard, structured discrete logarithm equivalents in the group action setting.",
+    "crumbs": [
+      "Key Exchange",
+      "BIN-UE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/binue.html#progress",
+    "href": "schemes/key-exchange/binue.html#progress",
+    "title": "BIN-UE",
+    "section": "4 Progress",
+    "text": "4 Progress\nTODO",
+    "crumbs": [
+      "Key Exchange",
+      "BIN-UE"
+    ]
+  },
+  {
+    "objectID": "schemes/key-exchange/binue.html#references",
+    "href": "schemes/key-exchange/binue.html#references",
+    "title": "BIN-UE",
+    "section": "5 References",
+    "text": "5 References\n\n\n[MeRi24] Meers, Jonas ; Riepel, Doreen: CCA secure updatable encryption from non-mappable group actions. In: PQCrypto : Springer, 2024, pp. 137–169\n\n\n\nContributors: @gkorpal",
+    "crumbs": [
+      "Key Exchange",
+      "BIN-UE"
     ]
   },
   {
