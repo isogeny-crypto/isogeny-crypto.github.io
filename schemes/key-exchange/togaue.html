@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2026-07-17">
 
-<title>Isogeny-based Cryptography Wiki</title>
+<title>TOGA-UE – Isogeny-based Cryptography Wiki</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,30 +24,49 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-7e462b68550b93e95c1625bbce22e1a6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-e87c5c1d56de9691d994e10447346916.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-7e462b68550b93e95c1625bbce22e1a6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-7e462b68550b93e95c1625bbce22e1a6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e87c5c1d56de9691d994e10447346916.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-7e462b68550b93e95c1625bbce22e1a6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": true,
@@ -74,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <!-- Self-hosted fonts for pre-rendered TikZ SVGs -->
-<link rel="stylesheet" type="text/css" href="./assets/fonts.css">
+<link rel="stylesheet" type="text/css" href="../../assets/fonts.css">
 
 <style>
 .tikz-diagram {
@@ -121,8 +141,8 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="./assets/fonts.css">
-<link rel="stylesheet" href="./assets/scheme-list.css">
+<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/scheme-list.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -296,7 +316,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Home</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../schemes/key-exchange/binsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../schemes/key-exchange/togaue.html">TOGA-UE</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -311,7 +331,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Isogeny-based Cryptography Wiki</a> 
+      <a href="../../">Isogeny-based Cryptography Wiki</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
@@ -326,7 +346,7 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
@@ -341,139 +361,139 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/binsidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/binsidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">binSIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/bsidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/bsidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">B-SIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/csidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/csidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/csidhupke.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/csidhupke.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSIDH UPKE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/csigamal.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/csigamal.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">C-SiGamal</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/csurf.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/csurf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSURF</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/festa.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/festa.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">FESTA</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/healsidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/healsidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">HealSIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/ksidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/ksidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="math inline">\(k\)</span>-SIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/litsigamal.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/litsigamal.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">LIT-SiGamal</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/mdsidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/mdsidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">MD-SIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/msidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/msidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">M-SIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/osidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/osidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">OSIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/pike.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/pike.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">PIKE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/poke.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/poke.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">POKÉ</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/psidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/psidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">pSIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/qfesta.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/qfesta.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">QFESTA</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/seta.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/seta.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Séta</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/sidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/sigamal.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/sigamal.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SiGamal</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/sims.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/sims.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SimS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/tersidh.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/tersidh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">terSIDH</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/key-exchange/togaue.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/key-exchange/togaue.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">TOGA-UE</span></a>
   </div>
 </li>
@@ -490,19 +510,19 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/digital-signature/csifish.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/digital-signature/csifish.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CSI-FiSh</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/digital-signature/sqisign.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/digital-signature/sqisign.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SQISign</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schemes/digital-signature/sqisignhd.html" class="sidebar-item-text sidebar-link">
+  <a href="../../schemes/digital-signature/sqisignhd.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SQIsignHD</span></a>
   </div>
 </li>
@@ -518,9 +538,19 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started"><span class="header-section-number">1</span> Getting Started</a></li>
-  <li><a href="#cryptographic-schemes" id="toc-cryptographic-schemes" class="nav-link" data-scroll-target="#cryptographic-schemes"><span class="header-section-number">2</span> Cryptographic Schemes</a></li>
-  <li><a href="#contributing" id="toc-contributing" class="nav-link" data-scroll-target="#contributing"><span class="header-section-number">3</span> Contributing</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
+  <li><a href="#scheme-design" id="toc-scheme-design" class="nav-link" data-scroll-target="#scheme-design"><span class="header-section-number">2</span> Scheme Design</a>
+  <ul class="collapse">
+  <li><a href="#system-setup" id="toc-system-setup" class="nav-link" data-scroll-target="#system-setup"><span class="header-section-number">2.1</span> System Setup</a></li>
+  <li><a href="#key-generation" id="toc-key-generation" class="nav-link" data-scroll-target="#key-generation"><span class="header-section-number">2.2</span> Key Generation</a></li>
+  <li><a href="#encryption" id="toc-encryption" class="nav-link" data-scroll-target="#encryption"><span class="header-section-number">2.3</span> Encryption</a></li>
+  <li><a href="#token-generation" id="toc-token-generation" class="nav-link" data-scroll-target="#token-generation"><span class="header-section-number">2.4</span> Token Generation</a></li>
+  <li><a href="#ciphertext-update" id="toc-ciphertext-update" class="nav-link" data-scroll-target="#ciphertext-update"><span class="header-section-number">2.5</span> Ciphertext Update</a></li>
+  <li><a href="#decryption" id="toc-decryption" class="nav-link" data-scroll-target="#decryption"><span class="header-section-number">2.6</span> Decryption</a></li>
+  </ul></li>
+  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a></li>
+  <li><a href="#progress" id="toc-progress" class="nav-link" data-scroll-target="#progress"><span class="header-section-number">4</span> Progress</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">5</span> References</a></li>
   </ul>
 </nav>
     </div>
@@ -528,10 +558,10 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../schemes/key-exchange/binsidh.html">Key Exchange</a></li><li class="breadcrumb-item"><a href="../../schemes/key-exchange/togaue.html">TOGA-UE</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Isogeny-based Cryptography Wiki</h1>
-<p class="subtitle lead">A collaborative, accessible reference for isogeny-based cryptographic schemes.</p>
+<h1 class="title">TOGA-UE</h1>
+<p class="subtitle lead">Triple Orbital Group Action Updatable Encryption</p>
 </div>
 
 
@@ -539,7 +569,19 @@ window.Quarto = {
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 17, 2026</p>
+    </div>
+  </div>
   
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">July 17, 2026</p>
+    </div>
+  </div>
     
   </div>
   
@@ -548,107 +590,106 @@ window.Quarto = {
 </header>
 
 
-<p>Welcome to the <strong>Isogeny-based Cryptography Wiki</strong>. This site serves as an open-source, mathematically rigorous, and accessible repository of knowledge detailing post-quantum cryptographic schemes built on the hardness of finding isogenies between elliptic curves.</p>
-<section id="getting-started" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="getting-started"><span class="header-section-number">1</span> Getting Started</h2>
-<p>If you are not familiar with cryptographic schemes, we recommend <a href="https://toc.cryptobook.us/">this book draft</a> by Dan Boneh and Victor Shoup. For the underlying mathematics, see <a href="https://www.math.auckland.ac.nz/~sgal018/crypto-book/crypto-book.html">Steven Galbraith’s book</a>. You may also benefit from reading PhD theses in this area, for instance <a href="https://github.com/GiacomoPope/maths-theses">this list</a> curated by Giacomo Pope.</p>
-<p>You may also find good reference material in past schools, such as <a href="https://isogenyschool2020.co.uk/schedule/">Bristol 2020</a>, <a href="https://www.youtube.com/@ANTSSummerSchool/videos">ANTS 2020</a>, <a href="https://www.youtube.com/playlist?list=PLldN_DpkXL3amFV76Dmimhbrm0MYa4d32">PCMI 2022</a>, <a href="https://www.youtube.com/playlist?list=PLHyI3Fbmv0SdibCMJcJFBZPARwec6fPnQ">IPAM 2022</a>, <a href="https://www.youtube.com/playlist?list=PLo3uxbU5v05z8XnaEeNYI_xbn_IrvgLvJ">VaNTAGe 2022</a>, <a href="https://www.youtube.com/playlist?list=PLLxG_np9o-2fSsZcOq0woYWBxbiSFy1qI">CIMPA 2024</a>, <a href="https://www.slmath.org/summer-schools/1068#schedule_notes">SLMath 2024</a>, <a href="https://www.youtube.com/playlist?list=PLiHaXFHjrqYcvzIxFEo118XCzxI-KSctT">PQCSA 2025</a>, and <a href="https://swc-math.github.io/aws/2026/index.html">AWS 2026</a>.</p>
-<p>To engage with the community, consider joining activities such as the <a href="https://isogeny.club/">Isogeny Club</a>, <a href="https://www.esat.kuleuven.be/cosic/projects/isocrypt/workshops/">Leuven Isogeny Days</a>, <a href="https://www.birs.ca/events/2025/5-day-workshops/25w5500">BIRS workshops</a>, and <a href="https://swissogeny.github.io/">Swissogeny Day</a>.</p>
+<section id="overview" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
+<p>The development of Updatable Encryption (UE) schemes using post-quantum group actions has historically been bottlenecked by the requirement for Mappable Effective Group Actions (MEGA). In the isogeny setting, instantiating a MEGA is practically infeasible due to the notorious difficulty of hashing into the set of supersingular elliptic curves. The TOGA-UE (Triple Orbital Group Action Updatable Encryption) scheme circumvents this limitation by drawing inspiration from the <a href="../../schemes/key-exchange/sigamal.html">SiGamal</a> encryption scheme <span class="citation" data-cites="togaue">[<a href="#ref-togaue" role="doc-biblioref">LeRo24</a>]</span>. Instead of attempting to map messages directly to an isogeny graph vertex (a curve), TOGA-UE maps messages as scalars to specific points on an elliptic curve via scalar multiplication. The underlying curve and the points are then transformed using the isogeny group action. This architectural shift eliminates the need to hash into supersingular curves while natively supporting an unbounded number of ciphertext updates. Consequently, TOGA-UE instantiated from <a href="../../schemes/key-exchange/csidh.html">CSIDH</a> stands as the first post-quantum UE scheme that is not based on lattices and places no limits on key rotations.</p>
 </section>
-<section id="cryptographic-schemes" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="cryptographic-schemes"><span class="header-section-number">2</span> Cryptographic Schemes</h2>
-<p>This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes (including KEM, etc.) and digital signature schemes.</p>
-<p><strong>Legend:</strong> <span class="scheme-disc" style="background: var(--dot-red);"></span> torsion points; <span class="scheme-disc" style="background: var(--dot-blue);"></span> quaternion algebra; <span class="scheme-disc" style="background: var(--dot-green);"></span> group action;</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<section id="key-exchange" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="key-exchange"><span class="header-section-number">2.1</span> Key Exchange</h3>
-<div class="unlisted-schemes">
+<section id="scheme-design" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="scheme-design"><span class="header-section-number">2</span> Scheme Design</h2>
+<p>TOGA-UE is built upon an abstract algebraic framework known as an Effective Triple Orbital Group Action (ETOGA). To instantiate this from CSIDH, the scheme defines specific group actions operating over supersingular curves enriched with torsion point information.</p>
+<section id="system-setup" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="system-setup"><span class="header-section-number">2.1</span> System Setup</h3>
+<p>This algorithm takes the security parameter <span class="math inline">\(\lambda\)</span> as input (which dictates the sizes of the underlying cryptographic structures) and establishes the public parameters and mathematical framework for the CSIDH instantiation.</p>
 <ul>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/sidh.html">SIDH</a> (2011–2022)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/ksidh.html"><span class="math inline">\(k\)</span>-SIDH</a> (2017-2022)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> <a href="./schemes/key-exchange/csidh.html">CSIDH</a> (2018)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> <a href="./schemes/key-exchange/osidh.html">OSIDH</a> (2019)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> <a href="./schemes/key-exchange/csurf.html">CSURF</a> (2020)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/bsidh.html">B-SIDH</a> (2020–2022)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-green) 50% 100%);"></span> <a href="./schemes/key-exchange/sigamal.html">SiGamal</a> (2020)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-green) 50% 100%);"></span> <a href="./schemes/key-exchange/csigamal.html">C-SiGamal</a> (2020)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-green) 50% 100%);"></span> <a href="./schemes/key-exchange/sims.html">SimS</a> (2021)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> <a href="./schemes/key-exchange/csidhupke.html">CSIDH UPKE</a> (2021)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> <a href="./schemes/key-exchange/seta.html">Séta</a> (2021–2022)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/healsidh.html">HealSIDH</a> (2021-2022)</li>
-<li><span class="scheme-disc" style="background: var(--dot-blue);"></span> <a href="./schemes/key-exchange/psidh.html">pSIDH</a> (2022–2023)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/msidh.html">M-SIDH</a> (2023)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/mdsidh.html">MD-SIDH</a> (2023)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/festa.html">FESTA</a> (2023)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/binsidh.html">binSIDH</a> (2023)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/tersidh.html">terSIDH</a> (2023)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> <a href="./schemes/key-exchange/qfesta.html">QFESTA</a> (2024)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-green) 50% 100%);"></span> <a href="./schemes/key-exchange/togaue.html">TOGA-UE</a> (2024)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> BIN-UE (2024)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> SILBE (2024)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> <a href="./schemes/key-exchange/poke.html">POKÉ</a> (2025)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> <a href="./schemes/key-exchange/litsigamal.html">LIT-SiGamal</a> (2025)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> <a href="./schemes/key-exchange/pike.html">PIKE</a> (2026)</li>
-</ul>
-</div>
-</section>
-</div><div class="column" style="width:50%;">
-<section id="digital-signature" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="digital-signature"><span class="header-section-number">2.2</span> Digital Signature</h3>
-<div class="unlisted-schemes">
+<li><strong>Define the Field and Curve:</strong> Based on <span class="math inline">\(\lambda\)</span>, choose a large prime <span class="math inline">\(p \equiv 3 \pmod 4\)</span> and define the base supersingular elliptic curve <span class="math inline">\(E_0: y^2 = x^3 + x\)</span> over <span class="math inline">\(\mathbb{F}_p\)</span>.</li>
+<li><strong>Establish the Order and Torsion:</strong> Let <span class="math inline">\(\mathfrak{O} = \mathbb{Z}[\sqrt{-p}]\)</span> be the quadratic order corresponding to the Frobenius endomorphism ring. Choose a smooth integer <span class="math inline">\(N\)</span> (sized according to <span class="math inline">\(\lambda\)</span>), split in <span class="math inline">\(\mathfrak{O}\)</span> and coprime to the ideal factor base.</li>
+<li><strong>Define the State Space (<span class="math inline">\(S\)</span>):</strong> Let <span class="math inline">\(S\)</span> be the set of elements <span class="math inline">\((E, \iota, P)\)</span>, where <span class="math inline">\(E\)</span> is a supersingular curve, <span class="math inline">\(\iota\)</span> is an <span class="math inline">\(\mathfrak{O}\)</span>-orientation, and <span class="math inline">\(P \in E[N]\)</span> is a point of order <span class="math inline">\(N\)</span>. Fix a public origin state <span class="math inline">\(s_0 \in S\)</span> using <span class="math inline">\(E_0\)</span>, its canonical orientation, and a deterministic base point <span class="math inline">\(P_0 \in E_0[N]\)</span>.</li>
+<li><strong>Define the Main Group Action (<span class="math inline">\(*_A\)</span>) and Sample Space (<span class="math inline">\(A'\)</span>):</strong> Let <span class="math inline">\(A\)</span> be a subgroup of fractional <span class="math inline">\(\mathfrak{O}\)</span>-ideals generated by small prime ideals <span class="math inline">\(\mathfrak{l}_1, \dots, \mathfrak{l}_n\)</span>. Define a finite subset <span class="math inline">\(A' \subset A\)</span> bounded by a small exponent maximum <span class="math inline">\(m\)</span> (i.e., ideals with exponents <span class="math inline">\(\in [-m, m]\)</span>) to allow efficient, near-uniform sampling. For an ideal <span class="math inline">\(\mathfrak{a} \in A\)</span>, define its action as evaluating an isogeny: <span class="math inline">\(\mathfrak{a} *_A (E, \iota, P) = (E_{\mathfrak{a}}, \iota_{\mathfrak{a}}, \varphi_{\mathfrak{a}}^E(P))\)</span>.</li>
+<li><strong>Define the Orbital Group Action (<span class="math inline">\(*_H\)</span>):</strong> Let <span class="math inline">\(H = (\mathbb{Z}/N\mathbb{Z})^\times\)</span>. Define the action of <span class="math inline">\(h \in H\)</span> as scalar multiplication on the order-<span class="math inline">\(N\)</span> point: <span class="math inline">\(h *_H (E, \iota, P) = (E, \iota, [h]P)\)</span>.</li>
+<li><strong>Establish Helper Functions:</strong>
 <ul>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> JS (2014)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> YAJJS (2017)</li>
-<li><span class="scheme-disc" style="background: var(--dot-blue);"></span> GPS (2017)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> SeaSign (2019)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> <a href="./schemes/digital-signature/csifish.html">CSI-FiSh</a> (2019)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> Sashimi (2020)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> Lossy CSI-FiSh (2020)</li>
-<li><span class="scheme-disc" style="background: var(--dot-blue);"></span> <a href="./schemes/digital-signature/sqisign.html">SQISign</a> (2020)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> Calamari (2020)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> IAS (2021)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> BDKLP (2022)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> SIDH PoK (2022)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> SCALLOP (2023)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> CJSS (2023)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> CSI-Otter (2023)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> JSD (2024)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> SCALLOP-HD (2024)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQIsignHD (2024)</li>
-<li><span class="scheme-disc" style="background: var(--dot-blue);"></span> AprèsSQI (2024)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQIsign2D-East (2024)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQIsign2D-West (2024)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQIPrime (2024)</li>
-<li><span class="scheme-disc" style="background: var(--dot-blue);"></span> Erebor (2025)</li>
-<li><span class="scheme-disc" style="background: var(--dot-blue);"></span> Durian (2025)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> PRISM (2025)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> PEARL-SCALLOP (2025)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> Tanuki (2025)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQIsign2D<span class="math inline">\(^2\)</span> (2025)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SPIDER (2026)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> ORCAS (2026)</li>
-<li><span class="scheme-disc" style="background: var(--dot-green);"></span> Wombat (2026)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQIsign2DPush (2026)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> WaterSQI (2026)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> PRISMO (2026)</li>
-<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQInstructor (2026)</li>
+<li>Define <span class="math inline">\(\sim_A\)</span> as the congruence relation where ideals are equivalent if they share the same ideal class.</li>
+<li>Define <span class="math inline">\(\text{Reduce}_A\)</span> to output a short, canonical representative of an ideal’s equivalence class.</li>
+<li>Define <span class="math inline">\(\text{Reduce}_S\)</span> to output a canonical representative for an equivalence class in <span class="math inline">\(S\)</span> under the orbital action.</li>
+<li>Define <span class="math inline">\(\text{Invert}_H\)</span> as an efficient algorithm that computes the discrete logarithm between two points in <span class="math inline">\(E[N]\)</span> to invert the group action <span class="math inline">\(*_H\)</span>.</li>
+<li>Define <span class="math inline">\(\psi\)</span> as an efficiently invertible map from the message space <span class="math inline">\(\mathcal{M}\)</span> to <span class="math inline">\(H\)</span>.</li>
+<li>Define <span class="math inline">\(h(\cdot, \cdot)\)</span> as a function computing a structural modifier in <span class="math inline">\(H\)</span> to correct discrepancies during ideal reduction.</li>
+</ul></li>
+<li><strong>Output:</strong> The public parameters <span class="math inline">\(pp = (A, A', H, S, s_0, *_A, \sim_A, *_H, \psi, \text{Reduce}_A, \text{Reduce}_S, \text{Invert}_H)\)</span>.</li>
 </ul>
-</div>
 </section>
-</div>
-</div>
+<section id="key-generation" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="key-generation"><span class="header-section-number">2.2</span> Key Generation</h3>
+<p>Generates an epoch encryption key <span class="math inline">\(k_e\)</span> using the public parameters <span class="math inline">\(pp\)</span>.</p>
+<ul>
+<li>Sample a bounded ideal vector <span class="math inline">\(a' \leftarrow A'\)</span> and a scalar <span class="math inline">\(h \leftarrow H\)</span>.</li>
+<li>Return <span class="math inline">\(k_e = (\text{Reduce}_A(a'), h) \in A \times H\)</span>.</li>
+</ul>
 </section>
-<section id="contributing" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="contributing"><span class="header-section-number">3</span> Contributing</h2>
-<p>This wiki is maintained by the <strong>isogeny-crypto</strong> organization. If you spot a mathematical error, want to expand on a protocol’s performance metrics, or wish to add a new primitive:</p>
-<ol type="1">
-<li>Fork the repository on <a href="https://github.com/isogeny-crypto/isogeny-crypto.github.io">GitHub</a>.</li>
-<li>Create your article using a <code>.qmd</code> file in the <code>schemes/</code> directory.</li>
-<li>Submit a Pull Request.</li>
-</ol>
+<section id="encryption" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="encryption"><span class="header-section-number">2.3</span> Encryption</h3>
+<p>Encrypts a message <span class="math inline">\(M \in \mathcal{M}\)</span> under epoch key <span class="math inline">\(k_e = (a_e, h_e)\)</span>.</p>
+<ul>
+<li>Sample a random, bounded ideal <span class="math inline">\(r' \leftarrow A'\)</span>.</li>
+<li>Compute reduced ideal <span class="math inline">\(r = \text{Reduce}_A(r')\)</span>.</li>
+<li>Calculate the base state <span class="math inline">\(s = \text{Reduce}_S(r *_A s_0)\)</span>.</li>
+<li>Return ciphertext <span class="math inline">\(C_e = (\psi(M)h_e) *_H (a_e *_A s)\)</span>.</li>
+</ul>
+</section>
+<section id="token-generation" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="token-generation"><span class="header-section-number">2.4</span> Token Generation</h3>
+<p>Generates the update token <span class="math inline">\(\Delta_{e+1}\)</span> used to transition ciphertexts from epoch <span class="math inline">\(e\)</span> to <span class="math inline">\(e+1\)</span> given keys <span class="math inline">\(k_e\)</span> and <span class="math inline">\(k_{e+1}\)</span>.</p>
+<ul>
+<li>Parse <span class="math inline">\(k_e = (a_e, h_e)\)</span> and <span class="math inline">\(k_{e+1} = (a_{e+1}, h_{e+1})\)</span>.</li>
+<li>Compute the ideal transition <span class="math inline">\(c_e = \text{Reduce}_A(a_e^{-1}a_{e+1})\)</span>.</li>
+<li>Compute the structural modifier <span class="math inline">\(h' = h(a_e^{-1}a_{e+1}, c_e^{-1})\)</span>.</li>
+<li>Return update token <span class="math inline">\(\Delta_{e+1} = (c_e, h' h_{e+1} h_e^{-1})\)</span>.</li>
+</ul>
+</section>
+<section id="ciphertext-update" class="level3" data-number="2.5">
+<h3 data-number="2.5" class="anchored" data-anchor-id="ciphertext-update"><span class="header-section-number">2.5</span> Ciphertext Update</h3>
+<p>Deterministically updates a ciphertext <span class="math inline">\(C_e\)</span> from epoch <span class="math inline">\(e\)</span> to <span class="math inline">\(e+1\)</span> using the server-side token <span class="math inline">\(\Delta_{e+1}\)</span>.</p>
+<ul>
+<li>Parse <span class="math inline">\(\Delta_{e+1} = (a, h)\)</span>.</li>
+<li>Return updated ciphertext <span class="math inline">\(C_{e+1} = h *_H (a *_A C_e)\)</span>.</li>
+</ul>
+</section>
+<section id="decryption" class="level3" data-number="2.6">
+<h3 data-number="2.6" class="anchored" data-anchor-id="decryption"><span class="header-section-number">2.6</span> Decryption</h3>
+<p>Decrypts ciphertext <span class="math inline">\(C_e\)</span> using epoch key <span class="math inline">\(k_e = (a_e, h_e)\)</span>.</p>
+<ul>
+<li>Compute the inverse ideal <span class="math inline">\(b_e = \text{Reduce}_A(a_e^{-1})\)</span> and modifier <span class="math inline">\(h' = h(a_e, b_e)\)</span>.</li>
+<li>Undo the key’s actions: <span class="math inline">\(s' = (h_e h')^{-1} *_H (b_e *_A C_e)\)</span>.</li>
+<li>Recover the canonical representative <span class="math inline">\(s = \text{Reduce}_S(s')\)</span>.</li>
+<li>Extract the message by solving the discrete logarithm in the smooth-order group <span class="math inline">\(E[N]\)</span>: <span class="math inline">\(M' = \psi^{-1}(\text{Invert}_H(s', s))\)</span>.</li>
+<li>Return <span class="math inline">\(M'\)</span>.</li>
+</ul>
+</section>
+</section>
+<section id="security-assumptions" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
+<p>The detIND-UE-CPA (Deterministic Updates Indistinguishability - Updatable Encryption - Chosen Plaintext Attack) confidentiality of the TOGA-UE scheme directly relies on specific computational hardness properties embedded within the group action. Notably, TOGA-UE is a promising approach because it avoids reliance on the ideal cipher model. However, its security relies on the weak pseudorandomness of the entire TOGA structure. The core security assumptions and their nuances are detailed below:</p>
+<ul>
+<li><strong>Extended Weak Pseudorandomness (<a href="../../schemes/key-exchange/sigamal.html#security-assumptions">P-CSSDDH</a> Connection)</strong>: The core problem assumed to be computationally hard is distinguishing tuples of the form <span class="math inline">\((s_i, \mathfrak{a} *_A s_i)\)</span> from tuples of the form <span class="math inline">\((s_i, t_i)\)</span>, where <span class="math inline">\(\mathfrak{a} \leftarrow \mathcal{D}_A\)</span> is a secret ideal and <span class="math inline">\(s_i, t_i \leftarrow \mathcal{D}_S\)</span> are random elements from the state space <span class="math inline">\(S\)</span>. This instantiation based on CSIDH closely aligns with the P-CSSDDH assumption.</li>
+<li><strong>Irreducibility to Standard CSIDH</strong>: Standard isogeny-based group actions assume the weak pseudorandomness of the induced class group action (<span class="math inline">\(*_G\)</span>) operating purely on oriented curves. Unfortunately, the P-CSSDDH assumption does not reduce to the standard weak pseudorandomness of CSIDH because additional torsion point information is revealed in the extended state space <span class="math inline">\(S\)</span>.</li>
+<li><strong>Resilience and Uncertainty</strong>: The revealed torsion point information makes the exact hardness of P-CSSDDH less well understood compared to standard CSIDH. However, this revealed information is not sufficient to apply the catastrophic torsion-point attacks that broke SIDH. The degree of the secret isogeny remains unknown and uniform over a large sample, which invalidates standard Weil pairing or genus-theory reduction attacks.</li>
+</ul>
+</section>
+<section id="progress" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="progress"><span class="header-section-number">4</span> Progress</h2>
+<p>TODO</p>
 
 
+</section>
+<section id="references" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="references"><span class="header-section-number">5</span> References</h2>
+<div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-togaue" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[LeRo24] </div><div class="csl-right-inline"><span class="smallcaps">Leroux, Antonin</span> ; <span class="smallcaps">Roméas, Maxime</span>: <a href="https://eprint.iacr.org/2022/739">Updatable encryption from group actions</a>. In: <em>PQCrypto</em>&nbsp;: Springer, 2024, pp.&nbsp;20–53</div>
+</div>
+</div>
+<hr>
+<p><strong>Contributors:</strong> <a href="https://github.com/gkorpal">@gkorpal</a></p>
 </section>
 
 </main> <!-- /main -->
