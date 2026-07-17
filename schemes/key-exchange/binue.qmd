@@ -1,0 +1,78 @@
+---
+title: "BIN-UE"
+subtitle: "Bit wise updatable encryption"
+date: 2026-07-17
+---
+
+## Overview
+
+Constructing post-quantum, ciphertext-independent Updatable Encryption (UE) schemes from group actions has historically faced significant structural barriers. Previous approaches either rely on idealized models that require a mappable group action (which natural isogeny-based group actions like [CSIDH](/schemes/key-exchange/csidh.qmd) do not satisfy) or necessitate complex algebraic abstractions. For instance, schemes like [TOGA-UE](/schemes/key-exchange/togaue.qmd) circumvent the need for an ideal cipher by introducing Triple Orbital Group Actions, which inherently rely on non-standard computational assumptions (e.g., [P-CSSDDH](/schemes/key-exchange/sigamal.qmd#security-assumptions)) and lack active security. BIN-UE is introduced to resolve these limitations [@binue]. By adopting a bit-wise encryption approach, BIN-UE securely instantiates updatable encryption from any plain, non-mappable effective group action (such as standard CSIDH). It operates entirely in the standard model and relies strictly on the well-established assumption of weak pseudorandomness. However, these theoretical benefits come with significant practical drawbacks. The primary disadvantage of BIN-UE's bit-wise approach is that both the key size and the overall scheme efficiency scale poorly, as key and ciphertext sizes grow linearly with the bit-length of the messages. 
+
+## Scheme Design
+
+BIN-UE leverages an Effective Group Action (EGA) to encrypt messages bit-by-bit. Because BIN-UE does not require the group action to be mappable, it can be instantiated concretely and securely from plain CSIDH.
+
+### Setup and CSIDH Instantiation
+The EGA is defined as a tuple $(\mathcal{G}, \mathcal{X}, *, \tilde{x})$. When instantiated with CSIDH, this setup directly corresponds to isogenies between elliptic curves:
+
+*   $\mathcal{X}$: Represents a finite set of supersingular elliptic curves defined over a finite field $\mathbb{F}_p$.
+*   $\mathcal{G}$: Represents a finite commutative group (the ideal class group) that acts on the set of elliptic curves.
+*   $*$: Represents the group action map $*: \mathcal{G} \times \mathcal{X} \rightarrow \mathcal{X}$, evaluated by computing isogenies between the supersingular elliptic curves.
+*   $\tilde{x} \in \mathcal{X}$: A distinguished origin element, representing a known starting elliptic curve.
+
+Before outlining the algorithms, we define the following parameters and symbols:
+
+*   $n$: The bit-length of the message.
+*   $M$: The message to be encrypted, represented as a bitstring $M = (m_1, \dots, m_n) \in \{0, 1\}^n \setminus \{0^n, 1^n\}$. The all-zero and all-one strings are excluded to prevent decryption ambiguity.
+*   $k$: The secret key, structured as a vector of $n$ group elements $k = (k_1, \dots, k_n) \in \mathcal{G}^n$.
+*   $x_0, x_1$: Two randomly sampled basis set elements from $\mathcal{X}$ serving as explicit encryption randomness, strictly ordered lexicographically such that $x_0 <_{lex} x_1$.
+*   $C$: The resulting ciphertext, represented as a vector of $n$ set elements $C = (c_1, \dots, c_n) \in \mathcal{X}^n$.
+*   $\Delta$: The update token, consisting of $n$ group elements $\Delta = (\Delta_1, \dots, \Delta_n) \in \mathcal{G}^n$.
+
+### Key Generation
+*   Uniformly sample $n$ group elements from the group $\mathcal{G}$.
+*   Output the new epoch key as the vector $k := (k_1, \dots, k_n) \leftarrow \mathcal{G}^n$.
+
+### Encryption
+*   Receive the public parameters, secret key $k$, and an $n$-bit message $M$.
+*   Sample two random basis elements (elliptic curves) $x_0, x_1 \leftarrow \mathcal{X}$ to serve as explicit randomness, avoiding the need for nonces or programmable ideal ciphers.
+*   Order the basis elements lexicographically to ensure $x_0 <_{lex} x_1$.
+*   Iterate through each bit $m_i$ of the message.
+*   Apply the corresponding group element $k_i$ from the key vector to the basis element $x_{m_i}$.
+*   Compute the ciphertext components as $c_i := k_i * x_{m_i}$ for $i \in [1, n]$.
+*   Output the final ciphertext vector $C := (c_1, \dots, c_n)$.
+
+### Token Generation 
+*   Receive the key from the old epoch $k = (k_1, \dots, k_n)$ and the key for the new epoch $k' = (k'_1, \dots, k'_n)$.
+*   Compute the relative group difference for each vector position.
+*   Calculate $\Delta_i := k'_i \cdot k_i^{-1}$ for $i \in [1, n]$.
+*   Output the update token $\Delta := (\Delta_1, \dots, \Delta_n)$.
+
+### Ciphertext Update 
+*   Receive an update token $\Delta$ and an existing ciphertext $C$.
+*   Advance the ciphertext to the new key epoch by applying the token's group elements to the ciphertext's set elements.
+*   Compute the updated components as $c'_i := \Delta_i * c_i$ for $i \in [1, n]$.
+*   Maintain perfect correctness due to the compatibility property of the group action, where $\Delta_i * c_i = (k'_i \cdot k_i^{-1}) * (k_i * x_{m_i}) = k'_i * x_{m_i}$.
+
+### Decryption
+*   Receive the epoch key $k$ and the ciphertext $C$.
+*   Invert the group action at each position to recover the base set elements.
+*   Compute $y_i := k_i^{-1} * c_i$ for $i \in [1, n]$.
+*   Identify the two distinct set elements from the collection $\{y_1, \dots, y_n\}$, which is guaranteed because the message space excludes the uniform strings $0^n$ and $1^n$.
+*   Sort these two recovered elements lexicographically as $\tilde{x}_0 <_{lex} \tilde{x}_1$.
+*   Recover the original message bits by mapping $\tilde{x}_1$ to 1 and $\tilde{x}_0$ to 0.
+*   Set $m_i := 1$ if $y_i = \tilde{x}_1$, and set $m_i := 0$ if $y_i = \tilde{x}_0$.
+
+## Security Assumptions
+
+* **Weak Pseudorandomness (Wk-PR)**: The confidentiality of BIN-UE (detIND-UE-CPA security) is based entirely on the Weak Pseudorandomness (Wk-PR) assumption of the underlying effective group action. Wk-PR is a well-established, standard assumption for CSIDH, functioning essentially as a multi-instance decisional Diffie-Hellman assumption for group actions. 
+
+* **Multi Strong Pseudorandomness (Multi-St-PR)**: The security proof relies on an intermediate hardness assumption called Multi Strong Pseudorandomness (Multi-St-PR), which abstractly models the ability of an adversary to distinguish between honestly evaluated group actions on chosen base elements and uniformly random set elements. Crucially, Multi-St-PR is not a new or isolated assumption; it is proven to reduce tightly to the standard Wk-PR assumption via a hybrid argument. This ensures that BIN-UE achieves its security entirely in the standard model, completely bypassing the need for Random Oracles or Ideal Ciphers.
+
+* **Tag-then-Encrypt**: While BIN-UE achieves CPA security, it does not prevent chosen-ciphertext attacks (detIND-UE-CCA). To achieve CCA security, BIN-UE can be seamlessly extended into the COM-UE scheme using the Tag-then-Encrypt paradigm. Instead of treating COM-UE as a different construction, it utilizes BIN-UE as its core cryptographic engine. In COM-UE, a message $M$ with randomness $r$ is prepended/appended with a cryptographic tag generated by a random oracle $H(M, r)$. The combined string $M' = M || H(M, r)$ is then directly encrypted using the standard BIN-UE bit-wise encryption logic under an expanded key $k \in \mathcal{G}^{n+t}$. Because it employs the Tag-then-Encrypt framework, COM-UE inherits the exact updatability properties of BIN-UE but requires an augmented security assumption to prove CCA integrity (INT-CTXT):
+    1.  **Multi Strong Unpredictability (Multi-St-UP):** A new, non-standard computational assumption required for the ROM-based proof of COM-UE's ciphertext integrity.
+    2.  **Discrete Logarithm with Auxiliary Input (DLAI):** To justify the plausibility of Multi-St-UP, it is shown that in the Algebraic Group Action Model (AGAM), Multi-St-UP is directly implied by the DLAI problem, connecting the CCA security of COM-UE back to hard, structured discrete logarithm equivalents in the group action setting.
+
+## Progress
+
+TODO
