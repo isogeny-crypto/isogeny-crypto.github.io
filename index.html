@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -39,14 +42,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-7e462b68550b93e95c1625bbce22e1a6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-e87c5c1d56de9691d994e10447346916.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-7e462b68550b93e95c1625bbce22e1a6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-fbc5b4e29cc3cf7a21410927c5af7b66.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-6fd26b6ca19124a5b35b83a9c91326a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-fbc5b4e29cc3cf7a21410927c5af7b66.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": true,
@@ -92,7 +95,7 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -578,23 +581,31 @@ window.Quarto = {
 <div class="unlisted-schemes">
 <ul>
 <li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/sidh.html">SIDH</a> (2011–2022)</li>
-<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/ksidh.html"><span class="math inline">\(k\)</span>-SIDH</a> (2017-2022)</li>
+<li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/ksidh.html"><span class="math inline">\(k\)</span>-SIDH</a> (2017–2022)</li>
 <li><span class="scheme-disc" style="background: var(--dot-green);"></span> <a href="./schemes/key-exchange/csidh.html">CSIDH</a> (2018)</li>
+<li><span class="scheme-disc" style="background: var(--dot-red);"></span> SIDH UM (2018–2022)</li>
+<li><span class="scheme-disc" style="background: var(--dot-red);"></span> SIAKE (2019–2022)</li>
+<li><span class="scheme-disc" style="background: var(--dot-green);"></span> AGKE (2019)</li>
 <li><span class="scheme-disc" style="background: var(--dot-green);"></span> <a href="./schemes/key-exchange/osidh.html">OSIDH</a> (2019)</li>
 <li><span class="scheme-disc" style="background: var(--dot-green);"></span> <a href="./schemes/key-exchange/csurf.html">CSURF</a> (2020)</li>
 <li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/bsidh.html">B-SIDH</a> (2020–2022)</li>
 <li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-green) 50% 100%);"></span> <a href="./schemes/key-exchange/sigamal.html">SiGamal</a> (2020)</li>
 <li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-green) 50% 100%);"></span> <a href="./schemes/key-exchange/csigamal.html">C-SiGamal</a> (2020)</li>
+<li><span class="scheme-disc" style="background: var(--dot-green);"></span> <span class="math inline">\(\Pi\)</span>-SIDE (2020)</li>
+<li><span class="scheme-disc" style="background: var(--dot-green);"></span> <span class="math inline">\(\Pi\)</span>-CSIDH (2020)</li>
 <li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-green) 50% 100%);"></span> <a href="./schemes/key-exchange/sims.html">SimS</a> (2021)</li>
 <li><span class="scheme-disc" style="background: var(--dot-green);"></span> <a href="./schemes/key-exchange/csidhupke.html">CSIDH UPKE</a> (2021)</li>
 <li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> <a href="./schemes/key-exchange/seta.html">Séta</a> (2021–2022)</li>
 <li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/healsidh.html">HealSIDH</a> (2021-2022)</li>
+<li><span class="scheme-disc" style="background: var(--dot-blue);"></span> GA-PAKE (2022)</li>
 <li><span class="scheme-disc" style="background: var(--dot-blue);"></span> <a href="./schemes/key-exchange/psidh.html">pSIDH</a> (2022–2023)</li>
 <li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/msidh.html">M-SIDH</a> (2023)</li>
 <li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/mdsidh.html">MD-SIDH</a> (2023)</li>
 <li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/festa.html">FESTA</a> (2023)</li>
 <li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/binsidh.html">binSIDH</a> (2023)</li>
 <li><span class="scheme-disc" style="background: var(--dot-red);"></span> <a href="./schemes/key-exchange/tersidh.html">terSIDH</a> (2023)</li>
+<li><span class="scheme-disc" style="background: var(--dot-blue);"></span> saPAKE (2023)</li>
+<li><span class="scheme-disc" style="background: var(--dot-blue);"></span> LPKEga (2024)</li>
 <li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> <a href="./schemes/key-exchange/qfesta.html">QFESTA</a> (2024)</li>
 <li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-green) 50% 100%);"></span> <a href="./schemes/key-exchange/togaue.html">TOGA-UE</a> (2024)</li>
 <li><span class="scheme-disc" style="background: var(--dot-green);"></span> <a href="./schemes/key-exchange/binue.html">BIN-UE</a> (2024)</li>
@@ -632,9 +643,11 @@ window.Quarto = {
 <li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQIsign2D-East (2024)</li>
 <li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQIsign2D-West (2024)</li>
 <li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQIPrime (2024)</li>
+<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> PIsignHD (2025)</li>
 <li><span class="scheme-disc" style="background: var(--dot-blue);"></span> Erebor (2025)</li>
 <li><span class="scheme-disc" style="background: var(--dot-blue);"></span> Durian (2025)</li>
 <li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> PRISM (2025)</li>
+<li><span class="scheme-disc" style="background: var(--dot-green);"></span> SDVS (2025)</li>
 <li><span class="scheme-disc" style="background: var(--dot-green);"></span> PEARL-SCALLOP (2025)</li>
 <li><span class="scheme-disc" style="background: var(--dot-green);"></span> Tanuki (2025)</li>
 <li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQIsign2D<span class="math inline">\(^2\)</span> (2025)</li>
@@ -645,6 +658,7 @@ window.Quarto = {
 <li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> WaterSQI (2026)</li>
 <li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> PRISMO (2026)</li>
 <li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQInstructor (2026)</li>
+<li><span class="scheme-disc" style="background: conic-gradient(var(--dot-red) 0% 50%, var(--dot-blue) 50% 100%);"></span> SQIAsignHD (2026)</li>
 </ul>
 </div>
 </section>
