@@ -75,6 +75,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes (in
 - []{b=100} [SQISign](schemes/digital-signature/sqisign.qmd) (2020) 
 - []{g=100} Calamari (2020)
 - []{g=100} IAS (2021)
+- []{g=100} CSI-RAShi (2021)
 - []{g=100} BDKLP (2022)
 - []{r=100} SIDH PoK (2022)
 - []{g=100} CSI-SharK (2023)
