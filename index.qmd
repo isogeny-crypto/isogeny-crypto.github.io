@@ -77,6 +77,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes (in
 - []{g=100} IAS (2021)
 - []{g=100} BDKLP (2022)
 - []{r=100} SIDH PoK (2022)
+- []{g=100} CSI-SharK (2023)
 - []{g=100} SCALLOP (2023)
 - []{g=100} CJSS (2023)
 - []{g=100} CSI-Otter (2023)
