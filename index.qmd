@@ -74,6 +74,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes (in
 - []{g=100} Lossy CSI-FiSh (2020)
 - []{b=100} [SQISign](schemes/digital-signature/sqisign.qmd) (2020) 
 - []{g=100} Calamari (2020)
+- []{g=100} FSIBS (2021)
 - []{g=100} IAS (2021)
 - []{g=100} CSI-RAShi (2021)
 - []{g=100} BDKLP (2022)
@@ -105,6 +106,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes (in
 - []{r=50 b=50} PRISMO (2026)
 - []{r=50 b=50} SQInstructor (2026)
 - []{r=50 b=50} SQIAsignHD (2026)
+- []{r=100} SPRINT (2026)
 :::
 :::
 
