@@ -6,7 +6,7 @@ date: 2026-07-09
 
 ## Overview
 
-The Oriented Supersingular Isogeny Diffie-Hellman (OSIDH) scheme is a cryptographic key exchange mechanism that generalizes the [CSIDH](/schemes/key-exchange/csidh.qmd) scheme and acts as an analogue to the standard [SIDH](/schemes/key-exchange/sidh.qmd) scheme [@osidh]. At a high level, OSIDH establishes a shared secret between two parties by navigating a complex mathematical structure composed of an $\ell$-isogeny cordillera acted upon by an ideal class group. 
+The Oriented Supersingular Isogeny Diffie-Hellman (OSIDH) scheme is a cryptographic key exchange mechanism that generalizes the [CSIDH](/schemes/key-establishment/csidh.qmd) scheme and acts as an analogue to the standard [SIDH](/schemes/key-establishment/sidh.qmd) scheme [@osidh]. At a high level, OSIDH establishes a shared secret between two parties by navigating a complex mathematical structure composed of an $\ell$-isogeny cordillera acted upon by an ideal class group. 
 
 Unlike CSIDH, which relies heavily on the availability of rational torsion subgroups (points of finite order whose coordinates exist entirely within the base field) over the prime field $\mathbb{F}_p$, OSIDH leverages a category of $\mathcal{O}$-oriented supersingular elliptic curves defined over the extension field $\mathbb{F}_{p^2}$. This design removes strict conditions on rational torsion subgroups and covers virtually all isomorphism classes of supersingular elliptic curves. The scheme evaluates the group action efficiently using modular isogenies and precomputations, deliberately avoiding the exchange of full isogeny chains to prevent structural attacks on the endomorphism rings.
 

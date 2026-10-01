@@ -6,7 +6,7 @@ date: 2026-06-18
 
 ## Overview
 
-FESTA is a public-key encryption (PKE) scheme that creatively repurposes the devastating attacks on the [SIDH](/schemes/key-exchange/sidh.qmd) scheme. While SIDH's security was compromised by torsion-point attacks when auxiliary torsion information is revealed, FESTA relies on a novel trapdoor function where these very attacks are leveraged by the legitimate trapdoor holder to invert a one-way function [@festa]. 
+FESTA is a public-key encryption (PKE) scheme that creatively repurposes the devastating attacks on the [SIDH](/schemes/key-establishment/sidh.qmd) scheme. While SIDH's security was compromised by torsion-point attacks when auxiliary torsion information is revealed, FESTA relies on a novel trapdoor function where these very attacks are leveraged by the legitimate trapdoor holder to invert a one-way function [@festa]. 
 
 
 ## Scheme Design

@@ -6,7 +6,7 @@ date: 2026-07-13
 
 ## Overview
 
-PIKE (Pairing-assisted Isogeny-based Key Encryption) is a public key encryption scheme that builds upon the recent ElGamal-type [POKÉ](/schemes/key-exchange/poke.qmd) design framework [@pike]. While POKÉ relies on deriving a shared secret on a higher-dimensional, SIDH-like commutative diagram through basis evaluations and solving discrete logarithms, PIKE modifies this approach by using bilinear pairings to establish the shared secret. This careful integration of pairings preserves post-quantum security while bringing two distinct advantages: it yields faster decryption by bypassing the discrete logarithm step entirely, and it significantly relaxes the required prime form. Consequently, PIKE can operate over smaller prime fields, yielding faster overall runtime performance and competitive compactness compared to other isogeny schemes.
+PIKE (Pairing-assisted Isogeny-based Key Encryption) is a public key encryption scheme that builds upon the recent ElGamal-type [POKÉ](/schemes/key-establishment/poke.qmd) design framework [@pike]. While POKÉ relies on deriving a shared secret on a higher-dimensional, SIDH-like commutative diagram through basis evaluations and solving discrete logarithms, PIKE modifies this approach by using bilinear pairings to establish the shared secret. This careful integration of pairings preserves post-quantum security while bringing two distinct advantages: it yields faster decryption by bypassing the discrete logarithm step entirely, and it significantly relaxes the required prime form. Consequently, PIKE can operate over smaller prime fields, yielding faster overall runtime performance and competitive compactness compared to other isogeny schemes.
 
 ## Scheme Design
 
@@ -83,7 +83,7 @@ The public parameters for PIKE are defined as $\mathsf{pp} = (p, a, C, D, E_0, (
 The receiver (Alice) computes a secret isogeny and masked basis evaluations to form the public key.
 
 1.  **Secret Prime Selection**: Alice samples a positive integer $q < 2^a$ such that $q(2^a - q)$ is coprime to $2$, $C$, and $D$.
-2.  **Secret Isogeny**: She generates a random isogeny $\phi: E_0 \rightarrow E_A$ of degree $q(2^a - q)$ by adapting [`RandIsogImages` algorithm](/schemes/key-exchange/qfesta.qmd#the-randisogimages-algorithm) proposed in QFESTA. 
+2.  **Secret Isogeny**: She generates a random isogeny $\phi: E_0 \rightarrow E_A$ of degree $q(2^a - q)$ by adapting [`RandIsogImages` algorithm](/schemes/key-establishment/qfesta.qmd#the-randisogimages-algorithm) proposed in QFESTA. 
 3.  **Masking Scalars**: Alice randomly samples $\alpha_2, \beta_2 \in (\mathbb{Z}/2^a\mathbb{Z})^\times$, $\gamma_C \in (\mathbb{Z}/C\mathbb{Z})^\times$, and $\delta_D \in (\mathbb{Z}/D\mathbb{Z})^\times$.
 4.  **Basis Evaluation**: She evaluates $\phi$ on the torsion bases and masks them using the scalars:
     * $P_A = [\alpha_2]\phi(P_0)$, $Q_A = [\beta_2]\phi(Q_0)$
@@ -131,9 +131,9 @@ Alice’s goal is to reconstruct the exact shared pairing value Bob used, $w_0^{
 
 PIKE's IND-CPA security reduces to the underlying **Computational-PIKE (C-PIKE)** problem in the random oracle model. 
 
-* **The C-PIKE Problem**: Given the public parameters and the protocol's transmitted tuple $(E_A, P_A, Q_A, R_A, S_A, X_A)$ and $(P_B, Q_B, Y_B, P_{AB}, Q_{AB}, X_{AB})$, an adversary must compute the target pairing value $e_D(X_0, Y_0)^{\eta_D \zeta_D}$. The problem bears heuristic equivalence to [C-LIT-SiGamal](/schemes/key-exchange/litsigamal.qmd) where $X_A, X_B, X_{AB}$ are revealed. However, there is no known one-sided reduction between C-PIKE and  [C-POKÉ](/schemes/key-exchange/poke.qmd#security-assumptions).
+* **The C-PIKE Problem**: Given the public parameters and the protocol's transmitted tuple $(E_A, P_A, Q_A, R_A, S_A, X_A)$ and $(P_B, Q_B, Y_B, P_{AB}, Q_{AB}, X_{AB})$, an adversary must compute the target pairing value $e_D(X_0, Y_0)^{\eta_D \zeta_D}$. The problem bears heuristic equivalence to [C-LIT-SiGamal](/schemes/key-establishment/litsigamal.qmd) where $X_A, X_B, X_{AB}$ are revealed. However, there is no known one-sided reduction between C-PIKE and  [C-POKÉ](/schemes/key-establishment/poke.qmd#security-assumptions).
 
-* **Resistance to Concrete Attacks**: The core of the C-PIKE problem assumes the hardness of the *Receiver Isogeny Recovery Problem* and the *Sender Isogeny Recovery Problem*. The masking scalars ($\alpha_2, \beta_2, \gamma_C, \delta_D$) are drawn randomly and independently, which neutralizes the vulnerabilities exploited by [SIDH key-recovery attacks](/schemes/key-exchange/sidh.qmd#progress). Furthermore, the scheme resists meet-in-the-middle attacks and variants mapped in FESTA by keeping torsion points evaluated sufficiently masked or restricted.
+* **Resistance to Concrete Attacks**: The core of the C-PIKE problem assumes the hardness of the *Receiver Isogeny Recovery Problem* and the *Sender Isogeny Recovery Problem*. The masking scalars ($\alpha_2, \beta_2, \gamma_C, \delta_D$) are drawn randomly and independently, which neutralizes the vulnerabilities exploited by [SIDH key-recovery attacks](/schemes/key-establishment/sidh.qmd#progress). Furthermore, the scheme resists meet-in-the-middle attacks and variants mapped in FESTA by keeping torsion points evaluated sufficiently masked or restricted.
 
 ## Progress
 

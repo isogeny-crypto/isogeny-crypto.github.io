@@ -6,7 +6,7 @@ date: 2026-07-09
 
 ## Overview
 
-The terSIDH scheme is a variant of the [binSIDH](/schemes/key-exchange/binsidh.qmd) scheme designed to significantly improve efficiency and reduce parameter sizes by utilizing variable-degree isogenies [@binsidh-tersidh]. In the binSIDH scheme, computations are restricted to full-degree artificially oriented isogenies where the path is defined by a binary choice for each prime factor. The terSIDH scheme introduces a third option: for each prime factor, the scheme can choose to omit that component entirely, effectively skipping the isogeny step for that prime. This ternary approach yields approximately $\log_2(3) \approx 1.6$ bits of security per prime compared to the single bit provided by binary choices, allowing the scheme to achieve target security levels with substantially smaller isogeny degrees and underlying primes.
+The terSIDH scheme is a variant of the [binSIDH](/schemes/key-establishment/binsidh.qmd) scheme designed to significantly improve efficiency and reduce parameter sizes by utilizing variable-degree isogenies [@binsidh-tersidh]. In the binSIDH scheme, computations are restricted to full-degree artificially oriented isogenies where the path is defined by a binary choice for each prime factor. The terSIDH scheme introduces a third option: for each prime factor, the scheme can choose to omit that component entirely, effectively skipping the isogeny step for that prime. This ternary approach yields approximately $\log_2(3) \approx 1.6$ bits of security per prime compared to the single bit provided by binary choices, allowing the scheme to achieve target security levels with substantially smaller isogeny degrees and underlying primes.
 
 ## Scheme Design
 
@@ -67,7 +67,7 @@ Due to the structure of parallel isogenies over artificially oriented curves, th
 
 ## Security Assumptions
 
-terSIDH shares its mathematical [security assumptions](/schemes/key-exchange/binsidh.qmd#security-assumptions) with binSIDH but its reliance on variable-degree isogenies introduces unique implementation-level security challenges. Constructing constant-time implementations for terSIDH is inherently more difficult than for binSIDH due to the variable execution paths. Furthermore, designing zero-knowledge proofs for terSIDH public keys is particularly challenging because existing proof techniques inevitably leak the secret isogeny degree, potentially limiting terSIDH's applicability in advanced cryptographic constructions compared to binSIDH. 
+terSIDH shares its mathematical [security assumptions](/schemes/key-establishment/binsidh.qmd#security-assumptions) with binSIDH but its reliance on variable-degree isogenies introduces unique implementation-level security challenges. Constructing constant-time implementations for terSIDH is inherently more difficult than for binSIDH due to the variable execution paths. Furthermore, designing zero-knowledge proofs for terSIDH public keys is particularly challenging because existing proof techniques inevitably leak the secret isogeny degree, potentially limiting terSIDH's applicability in advanced cryptographic constructions compared to binSIDH. 
 
 ## Progress
 

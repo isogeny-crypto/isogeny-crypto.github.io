@@ -2,7 +2,7 @@
 
 Run after `quarto render`:  python3 scripts/check_links.py
 Exits non-zero if any link points at a page or #anchor that doesn't exist,
-e.g. [CSIDH](/schemes/key-exchange/csidh.qmd#foundations) when csidh.qmd has
+e.g. [CSIDH](/schemes/key-establishment/csidh.qmd#foundations) when csidh.qmd has
 no "Foundations" heading. External (http/https/mailto) links are not checked.
 """
 import sys

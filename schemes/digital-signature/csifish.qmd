@@ -6,7 +6,7 @@ date: 2026-06-01
 
 ## Overview
 
-CSI-FiSh applies the Fiat–Shamir transform to the identification protocol of [Couveignes](https://eprint.iacr.org/2006/291), found independently by Stolbunov, instantiated with the [CSIDH](/schemes/key-exchange/csidh.qmd)-512 class group action [@csifish]. The protocol needs uniform sampling and a canonical representation of class group elements, which were out of reach while the class group of the CSIDH-512 order was unknown. The authors computed this class group and its relation lattice, finding it cyclic, so that every element can be written as a power of one generator and sampled as an exponent modulo the class number. They then shrink signatures using several public keys, quadratic twists, and, optionally, a Merkle tree that shortens the public key.
+CSI-FiSh applies the Fiat–Shamir transform to the identification protocol of [Couveignes](https://eprint.iacr.org/2006/291), found independently by Stolbunov, instantiated with the [CSIDH](/schemes/key-establishment/csidh.qmd)-512 class group action [@csifish]. The protocol needs uniform sampling and a canonical representation of class group elements, which were out of reach while the class group of the CSIDH-512 order was unknown. The authors computed this class group and its relation lattice, finding it cyclic, so that every element can be written as a power of one generator and sampled as an exponent modulo the class number. They then shrink signatures using several public keys, quadratic twists, and, optionally, a Merkle tree that shortens the public key.
 
 ## Scheme Design
 
@@ -61,7 +61,7 @@ For security level $\lambda$, $t = \lambda / \log_2 S$. A signature has $t(\lcei
 
 CSI-FiSh is strongly existentially unforgeable under chosen-message attacks (sEUF-CMA) in the quantum random oracle model, assuming:
 
-* **Group Action Inverse Problem (GAIP):** given a curve $E$ with $\mathrm{End}(E) = \mathcal{O}$, find an ideal $\mathfrak{a} \subset \mathcal{O}$ such that $E = \mathfrak{a} \star E_0$. Borrowed from [CSIDH](/schemes/key-exchange/csidh.qmd#security-assumptions).
+* **Group Action Inverse Problem (GAIP):** given a curve $E$ with $\mathrm{End}(E) = \mathcal{O}$, find an ideal $\mathfrak{a} \subset \mathcal{O}$ such that $E = \mathfrak{a} \star E_0$. Borrowed from [CSIDH](/schemes/key-establishment/csidh.qmd#security-assumptions).
 * **Multi-Target GAIP (MT-GAIP):** given curves $E_1, \dots, E_k$ with $\mathrm{End}(E_i) = \mathcal{O}$, find an ideal $\mathfrak{a}$ such that $E_i = \mathfrak{a} \star E_j$ for some $i \neq j$. Borrowed from [SeaSign](/schemes/digital-signature/seasign.qmd#security-assumptions), where it reduces tightly to GAIP once the class group structure is known. The variant with quadratic twists reduces to MT-GAIP.
 
 ## Progress

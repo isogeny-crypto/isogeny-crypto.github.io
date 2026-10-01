@@ -56,7 +56,7 @@ git switch -c add-sidh-um                        # branch: add-…, fix-…, pro
 npm run preview                                  # live preview (shows drafts)
 npm run lint                                     # rule check; must show 0 errors
 git add <files>                                  # by name, not `git add .`
-git commit -m "Add SIDH UM key-exchange page"
+git commit -m "Add SIDH UM key-establishment page"
 git push -u origin add-sidh-um                   # then open the PR from the printed link
 ```
 
@@ -73,11 +73,11 @@ Running example: **Foo-SIDH**.
 2. **BibTeX:** check that `references.bib` has its entry. Add one if needed, following [§6.5](#65-bibliography).
 3. **Page:**
    ```bash
-   cp templates/key-exchange.qmd schemes/key-exchange/foosidh.qmd
+   cp templates/key-establishment.qmd schemes/key-establishment/foosidh.qmd
    # signatures: templates/digital-signature.qmd → schemes/digital-signature/
    ```
    The filename is the scheme name in lowercase letters and digits (`POKÉ` → `poke.qmd`, `$k$-SIDH` → `ksidh.qmd`). Write it following [§6](#6-rules), and delete the template comments.
-4. **Home page:** link the name in `index.qmd`: `[Foo-SIDH](/schemes/key-exchange/foosidh.qmd)`. A new line must follow [§6.7](#67-home-page-lists).
+4. **Home page:** link the name in `index.qmd`: `[Foo-SIDH](/schemes/key-establishment/foosidh.qmd)`. A new line must follow [§6.7](#67-home-page-lists).
 5. **Publish:** delete `draft: true` once Overview, Scheme Design and Security Assumptions are complete. Until then the page is hidden from the site, and links to it show as plain text.
 
 ## 6. Rules
@@ -117,7 +117,7 @@ These `##` sections, in this order:
 ### 6.4 Links and citations
 
 - Cite with `[@key]` or `[@key1; @key2]`.
-- Link wiki pages by absolute path: `[FESTA](/schemes/key-exchange/festa.qmd)`. To link a section, add its anchor (the heading in lowercase, spaces → hyphens): `…/csidh.qmd#security-assumptions`.
+- Link wiki pages by absolute path: `[FESTA](/schemes/key-establishment/festa.qmd)`. To link a section, add its anchor (the heading in lowercase, spaces → hyphens): `…/csidh.qmd#security-assumptions`.
 - Couveignes and Rostovtsev–Stolbunov have no wiki pages, so always link their ePrints: `[Couveignes](https://eprint.iacr.org/2006/291)`, `[Rostovtsev–Stolbunov](https://eprint.iacr.org/2006/145)`.
 
 ### 6.5 Bibliography
@@ -188,7 +188,7 @@ Allowed, but **you are the author**: verify every statement against the paper. D
 ## 7. Commits and pull requests
 
 - One scheme or fix per PR.
-- Imperative commit messages: `Add PIKE key-exchange page`, `Fix degree of phi in QFESTA keygen`. Not `update` or `typos`.
+- Imperative commit messages: `Add PIKE key-establishment page`, `Fix degree of phi in QFESTA keygen`. Not `update` or `typos`.
 - A PR is merged after maintainer approval and green CI, usually squashed.
 
 ## 8. Checklist

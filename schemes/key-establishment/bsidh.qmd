@@ -8,7 +8,7 @@ date: 2026-06-23
 
 > Broken by a polynomial time classical algorithm.
  
-B-SIDH (pronounced "B-side") is a novel instantiation that significantly improves upon the original [SIDH](/schemes/key-exchange/sidh.qmd) scheme. It bypasses previous restrictions on the shape of the underlying prime field by permitting parties to operate simultaneously within the $(p+1)$-torsion of a supersingular elliptic curve and the $(p-1)$-torsion of its quadratic twist [@bsidh]. 
+B-SIDH (pronounced "B-side") is a novel instantiation that significantly improves upon the original [SIDH](/schemes/key-establishment/sidh.qmd) scheme. It bypasses previous restrictions on the shape of the underlying prime field by permitting parties to operate simultaneously within the $(p+1)$-torsion of a supersingular elliptic curve and the $(p-1)$-torsion of its quadratic twist [@bsidh]. 
 
 ## Scheme Design
 

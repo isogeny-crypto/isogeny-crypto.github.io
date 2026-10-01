@@ -40,7 +40,7 @@ Windows: use WSL (`scripts/tikz.lua` calls `mkdir -p`).
 
 ```
 index.qmd                 home page: intro, scheme lists, legend
-schemes/<section>/*.qmd   one page per scheme (key-exchange, digital-signature)
+schemes/<section>/*.qmd   one page per scheme (key-establishment, digital-signature)
 references.bib            scheme papers (by year), then follow-up work (by key)
 templates/                page templates (not rendered); tikzjax-header.html (diagram CSS)
 assets/                   fonts for TikZ SVGs; disc colours (scheme-list.css)

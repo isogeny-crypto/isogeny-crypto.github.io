@@ -7,7 +7,7 @@ body:
     attributes:
       label: Page
       description: URL of the page with the problem.
-      placeholder: https://isogeny-crypto.github.io/schemes/key-exchange/sidh.html
+      placeholder: https://isogeny-crypto.github.io/schemes/key-establishment/sidh.html
     validations:
       required: true
   - type: dropdown

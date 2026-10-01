@@ -8,7 +8,7 @@ date: 2026-06-24
 
 > Broken by a polynomial time classical algorithm.
 
-The **$k$-SIDH** scheme introduces a generic transformation designed to secure [SIDH](/schemes/key-exchange/sidh.qmd) key agreement against active attacks in the static-static setting [@ksidh]. 
+The **$k$-SIDH** scheme introduces a generic transformation designed to secure [SIDH](/schemes/key-establishment/sidh.qmd) key agreement against active attacks in the static-static setting [@ksidh]. 
 
 In a standard SIDH static-static key exchange, a malicious participant can mount an adaptive attack by sending specialized, manipulated public torsion points. By observing whether the subsequent key validation succeeds or fails, the attacker can iteratively leak the honest party's static private key. Extant countermeasures, such as the Fujisaki-Okamoto transform, enforce indirect validation by requiring the untrusted party to disclose their private key. While secure, this precludes the use of static-static drop-in replacements.
 

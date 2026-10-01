@@ -19,7 +19,7 @@ if CALLED_DIRECTLY:
     print("fetch_contributors.py: running standalone.")
 
 def snippet_path_for(file_path):
-    """Map schemes/key-exchange/sidh.qmd -> .contributors/schemes/key-exchange/sidh.md.
+    """Map schemes/key-establishment/sidh.qmd -> .contributors/schemes/key-establishment/sidh.md.
 
     Keyed by source path (not title) so that pages whose titles contain one
     another, e.g. FESTA / QFESTA, can never pick up each other's snippet.
@@ -60,22 +60,29 @@ for file_path in scheme_files:
     except Exception:
         pass
 
-    # 2. Fetch contributors
+    # 2. Fetch contributors, under every path the file has had: the API's
+    #    ?path= filter does not follow renames (e.g. schemes/key-exchange/).
     snippet_path = snippet_path_for(file_path)
-    url = (f"https://api.github.com/repos/{REPO}/commits"
-           f"?path={file_path.as_posix()}&per_page=100")
+    result = subprocess.run(
+        ["git", "log", "--follow", "--name-only", "--format=", "--", str(file_path)],
+        capture_output=True, text=True
+    )
+    paths = {file_path.as_posix(), *result.stdout.split()}
 
     try:
-        req = urllib.request.Request(url, headers=headers)
-        response = urllib.request.urlopen(req)
-        commits = json.loads(response.read())
-
         handles = set()
-        for commit in commits:
-            if isinstance(commit, dict) and commit.get("author"):
-                login = commit["author"].get("login")
-                if login:
-                    handles.add(login)
+        for path in sorted(paths):
+            url = (f"https://api.github.com/repos/{REPO}/commits"
+                   f"?path={path}&per_page=100")
+            req = urllib.request.Request(url, headers=headers)
+            response = urllib.request.urlopen(req)
+            commits = json.loads(response.read())
+
+            for commit in commits:
+                if isinstance(commit, dict) and commit.get("author"):
+                    login = commit["author"].get("login")
+                    if login:
+                        handles.add(login)
 
         if handles:
             links = [f"[\\@{h}](https://github.com/{h})" for h in sorted(handles)]

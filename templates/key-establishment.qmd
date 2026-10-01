@@ -6,7 +6,7 @@ draft: true
 ---
 
 <!--
-  Copy to schemes/key-exchange/<name>.qmd (lowercase letters and digits).
+  Copy to schemes/key-establishment/<name>.qmd (lowercase letters and digits).
   Rules: CONTRIBUTING.md §6. Delete all comments; delete `draft: true`
   once Overview, Scheme Design and Security Assumptions are complete.
 -->

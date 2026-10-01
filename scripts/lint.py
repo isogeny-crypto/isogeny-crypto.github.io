@@ -28,7 +28,7 @@ from format_bib import format_bib, parse
 
 ROOT = Path(__file__).resolve().parent.parent
 SECTIONS = ["Overview", "Scheme Design", "Security Assumptions", "Progress"]
-LISTS = {"Key Establishment": "key-exchange", "Digital Signature": "digital-signature"}
+LISTS = {"Key Establishment": "key-establishment", "Digital Signature": "digital-signature"}
 LEGACY = set()
 CRS_EPRINTS = {"Couveignes": "eprint.iacr.org/2006/291", "Rostovtsev": "eprint.iacr.org/2006/145"}
 EMOJI = re.compile("[\U0001F000-\U0001FAFF\u2600-\u27BF\u2B00-\u2BFF\uFE0F]")

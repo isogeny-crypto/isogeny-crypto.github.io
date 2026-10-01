@@ -30,7 +30,7 @@ website:
       - href: index.qmd
         text: Home
       - section: "Key Establishment"
-        contents: "schemes/key-exchange/*.qmd"
+        contents: "schemes/key-establishment/*.qmd"
       - section: "Digital Signature"
         contents: "schemes/digital-signature/*.qmd"
 

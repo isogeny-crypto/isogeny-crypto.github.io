@@ -1,4 +1,4 @@
-**Change:** <!-- e.g. Add PIKE key-exchange page. Closes #123 -->
+**Change:** <!-- e.g. Add PIKE key-establishment page. Closes #123 -->
 
 **Source:** <!-- paper(s), e.g. ePrint 2025/1234 -->
 

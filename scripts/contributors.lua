@@ -36,7 +36,7 @@ local function has_citations(doc)
   return found
 end
 
--- schemes/key-exchange/sidh.qmd -> .contributors/schemes/key-exchange/sidh.md
+-- schemes/key-establishment/sidh.qmd -> .contributors/schemes/key-establishment/sidh.md
 -- (must match snippet_path_for() in fetch_contributors.py)
 local function snippet_path()
   local input = quarto.doc.input_file
