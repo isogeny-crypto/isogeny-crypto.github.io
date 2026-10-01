@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-07-07">
+
+<title>pSIDH – Isogeny-based Cryptography Wiki</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-e3dee882a3b2c91c4202c8c9ce9c6192.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-35803d492dad18a57ad070df2a89dbd5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-e3dee882a3b2c91c4202c8c9ce9c6192.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": true,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<!-- Self-hosted fonts for pre-rendered TikZ SVGs -->
+<link rel="stylesheet" type="text/css" href="../../assets/fonts.css">
+
+<style>
+.tikz-diagram {
+    display: flex;
+    justify-content: center;
+    margin: 1.5em auto;
+}
+.tikz-diagram svg {
+    max-width: 100%;
+    height: auto;
+}
+.quarto-dark .tikz-diagram svg {
+    filter: invert(1) hue-rotate(180deg);
+}
+</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/scheme-list.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../schemes/key-establishment/binsidh.html">Key Establishment</a></li><li class="breadcrumb-item"><a href="../../schemes/key-establishment/psidh.html">pSIDH</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Isogeny-based Cryptography Wiki</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Key Establishment</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/binsidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">binSIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/binue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">BIN-UE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/bsidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">B-SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/csidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CSIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/csidhupke.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CSIDH UPKE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/csigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C-SiGamal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/csurf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CSURF</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/festa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">FESTA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/healsidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">HealSIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/ksidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="math inline">\(k\)</span>-SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/litsigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LIT-SiGamal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/mdsidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MD-SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/msidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">M-SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/osidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">OSIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/pike.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">PIKE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/poke.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">POKÉ</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/psidh.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">pSIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/qfesta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">QFESTA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/seta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Séta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/sidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/sigamal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SiGamal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/silbe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SILBE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/sims.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SimS</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/tersidh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">terSIDH</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/key-establishment/togaue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">TOGA-UE</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Digital Signature</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../schemes/digital-signature/csifish.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CSI-FiSh</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
+  <li><a href="#scheme-design" id="toc-scheme-design" class="nav-link" data-scroll-target="#scheme-design"><span class="header-section-number">2</span> Scheme Design</a>
+  <ul class="collapse">
+  <li><a href="#global-parameters" id="toc-global-parameters" class="nav-link" data-scroll-target="#global-parameters"><span class="header-section-number">2.1</span> Global Parameters</a></li>
+  <li><a href="#key-generation" id="toc-key-generation" class="nav-link" data-scroll-target="#key-generation"><span class="header-section-number">2.2</span> Key Generation</a></li>
+  <li><a href="#key-exchange" id="toc-key-exchange" class="nav-link" data-scroll-target="#key-exchange"><span class="header-section-number">2.3</span> Key Exchange</a></li>
+  </ul></li>
+  <li><a href="#security-assumptions" id="toc-security-assumptions" class="nav-link" data-scroll-target="#security-assumptions"><span class="header-section-number">3</span> Security Assumptions</a></li>
+  <li><a href="#progress" id="toc-progress" class="nav-link" data-scroll-target="#progress"><span class="header-section-number">4</span> Progress</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">5</span> References</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/isogeny-crypto/isogeny-crypto.github.io/edit/main/schemes/key-establishment/psidh.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/isogeny-crypto/isogeny-crypto.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../schemes/key-establishment/binsidh.html">Key Establishment</a></li><li class="breadcrumb-item"><a href="../../schemes/key-establishment/psidh.html">pSIDH</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">pSIDH</h1>
+<p class="subtitle lead">prime-SIDH</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Created</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 7, 2026</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">October 1, 2026</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
+<blockquote class="blockquote">
+<p>Broken by a polynomial time quantum algorithm.</p>
+</blockquote>
+<p>The pSIDH (prime-SIDH) scheme is a novel Non-Interactive Key Exchange (NIKE) scheme introduced to circumvent the catastrophic torsion-point attacks that broke smooth-degree isogeny schemes like <a href="../../schemes/key-establishment/sidh.html">SIDH</a> and <a href="../../schemes/key-establishment/seta.html">Séta</a>. While SIDH utilizes secret isogenies of smooth degrees to allow for efficient evaluation via Vélu’s formulas, this smooth-degree structure fundamentally enables the polynomial-time attacks. pSIDH transitions the SIDH-style commutative isogeny diagram to the setting of large prime degrees.</p>
+<p>Because standard evaluation of large prime-degree isogenies is computationally infeasible, pSIDH relies on a novel cryptographic tool: the suborder representation <span class="citation" data-cites="psidh">[<a href="#ref-psidh" role="doc-biblioref">Lero22</a>]</span>. In this scheme, secret keys are represented as quaternion ideals (the ideal representation), while public keys are broadcast as suborder representations.</p>
+</section>
+<section id="scheme-design" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="scheme-design"><span class="header-section-number">2</span> Scheme Design</h2>
+<p>The pSIDH scheme involves two parties, Alice and Bob, agreeing on a shared secret over supersingular elliptic curves.</p>
+<div class="tikz-diagram" role="img" aria-label="pSIDH diagram. phi_A maps E_0 to E_A and phi_B maps E_0 to E_B. The pushforwards [phi_A]_* phi_B from E_A and [phi_B]_* phi_A from E_B both reach E_AB, as do the curved arrows hat psi_B from E_A and hat psi_A from E_B."><svg xmlns="http://www.w3.org/2000/svg" width="256.291" height="151.421" viewbox="-72 -72 192.218 113.566"><defs><style>@import url(../../assets/fonts.css);</style></defs><g stroke="#000" stroke-miterlimit="10" stroke-width=".4"><g stroke="none"><text x="-63.45" y="-15.464" font-family="cmmi9" font-size="9" transform="translate(-5.487 2.575)">E</text><text x="-56.643" y="-14.464" font-family="cmr6" font-size="6" transform="translate(-5.487 2.575)">0</text></g><g stroke="none"><text x="-63.45" y="-15.464" font-family="cmmi9" font-size="9" transform="translate(78.933 -25.878)">E</text><text x="-56.643" y="-14.464" font-family="cmmi6" font-size="6" transform="translate(78.933 -25.878)">A</text></g><g stroke="none"><text x="-63.45" y="-15.464" font-family="cmmi9" font-size="9" transform="translate(78.782 31.028)">E</text><text x="-56.643" y="-14.464" font-family="cmmi6" font-size="6" transform="translate(78.782 31.028)">B</text></g><g stroke="none"><text x="-63.45" y="-15.464" font-family="cmmi9" font-size="9" transform="translate(161.368 2.575)">E</text><text x="-56.643" y="-14.464" font-family="cmmi6" font-size="6" transform="translate(161.368 2.575)">AB</text></g><g stroke-width=".8"><path fill="none" d="M-54.43-18.47 8.035-39.295"></path><path stroke-width=".79996" d="m10.869-40.24-4.454-.177 1.81 1.058-.813 1.933Z"></path><g stroke="none"><text x="-63.45" y="-15.464" font-family="cmmi9" font-size="9" transform="matrix(.94862 -.31625 .31625 .94862 36.374 -38.222)">'</text><text x="-57.41" y="-14.464" font-family="cmmi6" font-size="6" transform="matrix(.94862 -.31625 .31625 .94862 36.374 -38.222)">A</text></g></g><g stroke-width=".8"><path fill="none" d="M-54.43-12.46 7.884 8.318"></path><path stroke-width=".79996" d="M10.718 9.262 7.262 6.448l.812 1.933-1.81 1.058Z"></path><g stroke="none"><text x="-63.45" y="-15.464" font-family="cmmi9" font-size="9" transform="matrix(.94861 .3163 -.3163 .94861 25.7 38.578)">'</text><text x="-57.41" y="-14.464" font-family="cmmi6" font-size="6" transform="matrix(.94861 .3163 -.3163 .94861 25.7 38.578)">B</text></g></g><g stroke-width=".8"><path fill="none" d="m31.867-40.597 58.604 19.54"></path><path stroke-width=".79996" d="m93.304-20.113-3.457-2.814.813 1.932-1.81 1.059Z"></path><g stroke="none"><text x="-63.45" y="-15.464" font-family="cmr9" font-size="9" transform="scale(.99995)rotate(18.438 72.08 317.821)">[</text><text x="-60.881" y="-15.464" font-family="cmmi9" font-size="9" transform="scale(.99995)rotate(18.438 72.08 317.821)">'</text><text x="-54.841" y="-14.464" font-family="cmmi6" font-size="6" transform="scale(.99995)rotate(18.438 72.08 317.821)">A</text><text x="-48.796" y="-15.464" font-family="cmr9" font-size="9" transform="scale(.99995)rotate(18.438 72.08 317.821)">]</text><text x="-46.227" y="-14.464" font-family="cmsy6" font-size="6" transform="scale(.99995)rotate(18.438 72.08 317.821)">¤</text><text x="-41.893" y="-15.464" font-family="cmmi9" font-size="9" transform="scale(.99995)rotate(18.438 72.08 317.821)">'</text><text x="-35.853" y="-14.464" font-family="cmmi6" font-size="6" transform="scale(.99995)rotate(18.438 72.08 317.821)">B</text></g></g><g stroke-width=".8"><path fill="none" d="M32.018 9.62 90.47-9.87"></path><path stroke-width=".799968" d="m93.304-10.814-4.454-.177 1.81 1.059L89.847-8Z"></path><g stroke="none"><text x="-63.45" y="-15.464" font-family="cmr9" font-size="9" transform="matrix(.94862 -.31628 .31628 .94862 115.498 9.136)">[</text><text x="-60.881" y="-15.464" font-family="cmmi9" font-size="9" transform="matrix(.94862 -.31628 .31628 .94862 115.498 9.136)">'</text><text x="-54.841" y="-14.464" font-family="cmmi6" font-size="6" transform="matrix(.94862 -.31628 .31628 .94862 115.498 9.136)">B</text><text x="-48.494" y="-15.464" font-family="cmr9" font-size="9" transform="matrix(.94862 -.31628 .31628 .94862 115.498 9.136)">]</text><text x="-45.925" y="-14.464" font-family="cmsy6" font-size="6" transform="matrix(.94862 -.31628 .31628 .94862 115.498 9.136)">¤</text><text x="-41.591" y="-15.464" font-family="cmmi9" font-size="9" transform="matrix(.94862 -.31628 .31628 .94862 115.498 9.136)">'</text><text x="-35.551" y="-14.464" font-family="cmmi6" font-size="6" transform="matrix(.94862 -.31628 .31628 .94862 115.498 9.136)">A</text></g></g><g stroke-width=".8"><path fill="none" d="M31.867-50.028c25.229-14.148 59.294-2.346 71.056 23.625"></path><path stroke-width=".799984" d="m104.03-23.628-.102-4.455-.943 1.872-1.98-.69Z"></path><g stroke="none"><text x="-61.556" y="-17.839" font-family="cmr9" font-size="9" transform="rotate(20.717 125.085 328.639)scale(.99995)">^</text><text x="-63.45" y="-15.464" font-family="cmmi9" font-size="9" transform="rotate(20.717 125.085 328.639)scale(.99995)">Ã</text><text x="-57.416" y="-14.464" font-family="cmmi6" font-size="6" transform="rotate(20.717 125.085 328.639)scale(.99995)">B</text></g></g><g stroke-width=".8"><path fill="none" d="M32.018 19.194c25.2 14.07 59.214 2.22 70.912-23.716"></path><path stroke-width=".799976" d="m104.032-7.299-3.02 3.278 1.98-.693.945 1.871Z"></path><g stroke="none"><text x="-61.556" y="-17.839" font-family="cmr9" font-size="9" transform="rotate(-20.822 143.167 -361.817)scale(.99996)">^</text><text x="-63.45" y="-15.464" font-family="cmmi9" font-size="9" transform="rotate(-20.822 143.167 -361.817)scale(.99996)">Ã</text><text x="-57.416" y="-14.464" font-family="cmmi6" font-size="6" transform="rotate(-20.822 143.167 -361.817)scale(.99996)">A</text></g></g></g></svg></div>
+<p>Here isogenies <span class="math inline">\([\varphi_A]_* \varphi_B\)</span> and <span class="math inline">\([\varphi_B]_* \varphi_A\)</span> are defined as the separable isogenies of respective kernels <span class="math inline">\(\varphi_A(\text{ker}(\varphi_B))\)</span> and <span class="math inline">\(\varphi_B(\text{ker}(\varphi_A))\)</span>.</p>
+<section id="global-parameters" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="global-parameters"><span class="header-section-number">2.1</span> Global Parameters</h3>
+<ul>
+<li><span class="math inline">\(p\)</span>: A large prime characterizing the field <span class="math inline">\(\mathbb{F}_{p^2}\)</span>.</li>
+<li><span class="math inline">\(E_0\)</span>: A starting supersingular elliptic curve defined over <span class="math inline">\(\mathbb{F}_{p^2}\)</span>.</li>
+<li><span class="math inline">\(\mathcal{O}_0\)</span>: A known maximal order in the quaternion algebra <span class="math inline">\(B_{p, \infty}\)</span> such that <span class="math inline">\(\text{End}(E_0) \cong \mathcal{O}_0\)</span>.</li>
+</ul>
+</section>
+<section id="key-generation" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="key-generation"><span class="header-section-number">2.2</span> Key Generation</h3>
+<p>Alice selects a large secret prime <span class="math inline">\(D_A \neq p\)</span>.</p>
+<ol type="1">
+<li><strong>Secret Key (<span class="math inline">\(I_A\)</span>, <span class="math inline">\(\varphi_A\)</span>):</strong> Alice samples a random integral left-<span class="math inline">\(\mathcal{O}_0\)</span> ideal <span class="math inline">\(I_A\)</span> of norm <span class="math inline">\(D_A\)</span>. Through the Deuring correspondence, <span class="math inline">\(I_A\)</span> represents a cyclic isogeny <span class="math inline">\(\varphi_A: E_0 \to E_A\)</span> of degree <span class="math inline">\(D_A\)</span>.</li>
+<li><strong>Public Key (<span class="math inline">\(E_A, \pi_A\)</span>):</strong> Alice computes the suborder representation <span class="math inline">\(\pi_A = \text{IdealToSuborder}(I_A)\)</span>. This representation consists of the codomain curve <span class="math inline">\(E_A\)</span> and a collection of endomorphisms that reveal a specific suborder <span class="math inline">\(\mathbb{Z} + D_A \mathcal{O}_0\)</span> embedded within <span class="math inline">\(\text{End}(E_A)\)</span>.</li>
+</ol>
+<p>Bob symmetrically generates his keys using a distinct prime <span class="math inline">\(D_B\)</span>, producing an ideal <span class="math inline">\(I_B\)</span> (corresponding to <span class="math inline">\(\varphi_B: E_0 \to E_B\)</span>) and public key <span class="math inline">\((E_B, \pi_B)\)</span>.</p>
+</section>
+<section id="key-exchange" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="key-exchange"><span class="header-section-number">2.3</span> Key Exchange</h3>
+<p>To compute the shared curve <span class="math inline">\(E\)</span>, Alice uses Bob’s public key <span class="math inline">\((E_B, \pi_B)\)</span> alongside her secret key <span class="math inline">\(I_A\)</span>. Because Alice cannot directly compute the push-forward isogeny <span class="math inline">\([\varphi_B]_* \varphi_A : E_B \to E_{AB}\)</span> due to <span class="math inline">\(D_A\)</span> being a large prime, she relies on an auxiliary smooth-degree path to reach <span class="math inline">\(E\)</span>:</p>
+<ol type="1">
+<li>Alice uses the algorithm <code>IdealSuborderNormEquation</code> to find an element <span class="math inline">\(\theta \in (\mathbb{Z} + D_B \mathcal{O}_0) \cap I_A\)</span> with norm <span class="math inline">\(D_A \cdot S\)</span>, where <span class="math inline">\(S\)</span> is a carefully chosen powersmooth integer. Moreover, because <span class="math inline">\(\theta \in I_A\)</span>, under the Deuring correspondence it maps to an endomorphism on <span class="math inline">\(E_0\)</span> that factors through her secret isogeny <span class="math inline">\(\varphi_A\)</span>. That is, the endomorphism <span class="math inline">\(\theta\)</span> can be written as <span class="math inline">\(\sigma_A \circ \varphi_A\)</span>, where <span class="math inline">\(\sigma_A : E_A \to E_0\)</span> is an auxiliary isogeny of smooth degree <span class="math inline">\(S\)</span>.</li>
+<li>By pushing this endomorphism forward through Bob’s isogeny <span class="math inline">\(\varphi_B\)</span>, Alice utilizes Bob’s suborder representation <span class="math inline">\(\pi_B\)</span> to obtain an embedding <span class="math inline">\(\iota_B(\theta)\)</span> into <span class="math inline">\(\text{End}(E_B)\)</span>.</li>
+<li>This embedded endomorphism on <span class="math inline">\(E_B\)</span> is equivalent to <span class="math inline">\(\psi_A \circ [\varphi_B]_*\varphi_A\)</span>, where <span class="math inline">\(\psi_A: E_{AB} \to E_B\)</span> is an auxiliary isogeny of degree <span class="math inline">\(S\)</span>.</li>
+<li>Since <span class="math inline">\(S\)</span> is smooth, Alice can use the <code>SuborderEvaluation</code> algorithm on this endomorphism to explicitly find the kernel of the dual isogeny <span class="math inline">\(\hat{\psi}_A : E_B \to E_{AB}\)</span>.</li>
+<li>Taking the quotient by this kernel, Alice computes the isogeny <span class="math inline">\(\hat{\psi}_A\)</span>. The codomain of <span class="math inline">\(\hat{\psi}_A\)</span> is the target shared curve <span class="math inline">\(E_{AB}\)</span>, satisfying the commutativity of the diagram.</li>
+<li>Symmetrically, Bob computes an analogous auxiliary isogeny <span class="math inline">\(\hat{\psi}_B: E_A \to E_{AB}\)</span> using Alice’s public key and his secret key.</li>
+</ol>
+<p>Both parties arrive at the identical curve <span class="math inline">\(E_{AB}\)</span>, allowing them to use the <span class="math inline">\(j\)</span>-invariant <span class="math inline">\(j(E_{AB})\)</span> as the shared secret.</p>
+</section>
+</section>
+<section id="security-assumptions" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="security-assumptions"><span class="header-section-number">3</span> Security Assumptions</h2>
+<p>The core security of pSIDH is tied to the SubOrder to Ideal Problem (SOIP), which relates more closely to the key recovery of <a href="../../schemes/key-establishment/csidh.html">CSIDH</a> (involving partial endomorphism ring knowledge) than that of SIDH, yet maintains an SIDH-like key agreement flow.</p>
+<ul>
+<li><strong>SubOrder to Ideal Problem (SOIP):</strong> This is the underlying key recovery assumption. It states that given a suborder representation <span class="math inline">\(\pi\)</span> of an isogeny <span class="math inline">\(\varphi\)</span> of prime degree <span class="math inline">\(D\)</span>, it is computationally infeasible to recover the ideal representation <span class="math inline">\(I_\varphi\)</span> (the secret key). Because the degree <span class="math inline">\(D\)</span> is a large prime, the <span class="math inline">\(D\)</span>-torsion points are defined over an exponentially large field extension <span class="math inline">\(\mathbb{F}_{p^k}\)</span> (where <span class="math inline">\(k = O(D)\)</span>). This prevents the polynomial-time torsion point attacks that devastated SIDH from being applied to SOIP. However, there is a sub-exponential quantum attack against the SOIP.</li>
+<li><strong>prime Supersingular Decisional Diffie-Hellman (pSSDDH):</strong> The semantic security of the key exchange relies on this decisional assumption. pSSDDH assumes that an adversary cannot distinguish the valid shared curve <span class="math inline">\(E_{AB}\)</span> (where <span class="math inline">\(\text{End}(E_{AB}) \cong \mathcal{O}_R(I_A \cap I_B)\)</span>) from a random curve <span class="math inline">\(E_C\)</span> that is merely <span class="math inline">\(D_A D_B\)</span>-isogenous to <span class="math inline">\(E_0\)</span>. This assumption directly borrows its structural formulation from the <a href="../../schemes/key-establishment/sidh.html#security-assumptions">SSDDH problem</a> introduced in the original SIDH proposal, but strictly limits the isogeny degrees to large primes and leverages suborder representations rather than torsion point images.</li>
+</ul>
+</section>
+<section id="progress" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="progress"><span class="header-section-number">4</span> Progress</h2>
+<p>TODO</p>
+<p>2021/282 and 2023/779</p>
+
+
+</section>
+<section id="references" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="references"><span class="header-section-number">5</span> References</h2>
+<div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-psidh" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Lero22] </div><div class="csl-right-inline"><span class="smallcaps">Leroux, Antonin</span>: <a href="https://eprint.iacr.org/2021/1600">A new isogeny representation and applications to cryptography</a>. In: <em>ASIACRYPT</em>&nbsp;: Springer, 2022, pp.&nbsp;3–35</div>
+</div>
+</div>
+<hr>
+<p><strong>Contributors:</strong> <a href="https://github.com/gkorpal">@gkorpal</a></p>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/isogeny-crypto\.github\.io");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Content licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. If you reuse it, credit the <a href="https://isogeny-crypto.github.io">Isogeny-based Cryptography Wiki</a>.</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/isogeny-crypto/isogeny-crypto.github.io/edit/main/schemes/key-establishment/psidh.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/isogeny-crypto/isogeny-crypto.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
