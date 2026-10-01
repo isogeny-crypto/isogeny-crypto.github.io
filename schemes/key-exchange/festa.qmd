@@ -14,7 +14,7 @@ FESTA is a public-key encryption (PKE) scheme that creatively repurposes the dev
 The foundation of FESTA is an injective trapdoor function evaluated over supersingular elliptic curves. By scaling the revealed torsion points with a secret matrix, FESTA prevents malicious attackers from utilizing the SIDH attacks. Using standard transformations (like OAEP), this trapdoor mechanism enables the construction of an efficient IND-CCA secure PKE in the Quantum Random Oracle Model (QROM).
 
 
-```{.tikz}
+```{.tikz fig-alt="FESTA trapdoor. Alice's isogeny phi_A maps E_0 to E_A; she publishes R_A, S_A, the images of the basis P_b, Q_b masked by the matrix A. Bob's phi_1 maps E_0 to E_1 and phi_2 maps E_A to E_2, and the images of P_b, Q_b and of R_A, S_A are masked by the matrix B. A dashed path psi runs from E_1 through E_0 and E_A to E_2."}
 \usetikzlibrary{arrows.meta, bending, calc}
 \begin{tikzpicture}[
   every node/.style={font=\small},

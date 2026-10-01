@@ -20,8 +20,20 @@ local function fix_font_path(svg)
   return svg:gsub("@import url%(fonts%.css%)", "@import url(/assets/fonts.css)")
 end
 
+-- Wrap the SVG; {.tikz fig-alt="..."} becomes the diagram's accessible name,
+-- so screen readers announce a description instead of raw SVG glyphs.
+local function wrap(svg, alt)
+  local attrs = 'class="tikz-diagram"'
+  if alt and alt ~= "" then
+    local escaped = alt:gsub("&", "&amp;"):gsub('"', "&quot;"):gsub("<", "&lt;"):gsub(">", "&gt;")
+    attrs = attrs .. ' role="img" aria-label="' .. escaped .. '"'
+  end
+  return pandoc.RawBlock("html", "<div " .. attrs .. ">" .. fix_font_path(svg) .. "</div>")
+end
+
 function CodeBlock(el)
   if el.classes:includes("tikz") then
+    local alt  = el.attributes["fig-alt"]
     local key  = hash(el.text)
     local path = pandoc.path.join({cache_dir, key .. ".svg"})
 
@@ -30,11 +42,16 @@ function CodeBlock(el)
     if f then
       local svg = f:read("*a")
       f:close()
-      return pandoc.RawBlock("html", '<div class="tikz-diagram">' .. fix_font_path(svg) .. '</div>')
+      return wrap(svg, alt)
     end
 
     -- Otherwise render and save to cache
-    local svg = pandoc.pipe("node", {tikz2svg_path}, el.text)
+    local ok, svg = pcall(pandoc.pipe, "node", {tikz2svg_path}, el.text)
+    if not ok then
+      error("TikZ diagram failed to render in " .. tostring(quarto.doc.input_file)
+        .. (alt and (' (fig-alt "' .. alt .. '")') or "")
+        .. ". Check for unsupported packages/fonts or several \\usetikzlibrary lines.")
+    end
 
     local out = io.open(path, "w")
     if out then
@@ -42,6 +59,6 @@ function CodeBlock(el)
       out:close()
     end
 
-    return pandoc.RawBlock("html", '<div class="tikz-diagram">' .. fix_font_path(svg) .. '</div>')
+    return wrap(svg, alt)
   end
 end

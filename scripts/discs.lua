@@ -6,7 +6,7 @@
 --
 -- instead of writing out the raw HTML/CSS by hand. r/g/b are percentages
 -- (0-100) for red / green / blue, matching the wiki's legend:
---   r = torsion points, b = Deuring correspondence, g = group action.
+--   r = torsion points, b = quaternion algebra, g = group action.
 -- Any subset of r/g/b may be given; a single color (e.g. []{r=100}) gives
 -- a solid disc, two or three give a split conic-gradient disc in that
 -- ratio, read clockwise starting at 12 o'clock in the order r, b, g.

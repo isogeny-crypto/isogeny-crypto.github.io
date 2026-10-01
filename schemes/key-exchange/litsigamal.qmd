@@ -12,7 +12,7 @@ LIT-SiGamal is a public key encryption (PKE) scheme that constructs an ElGamal-l
 
 The LIT-SiGamal protocol operates over a carefully structured prime field and relies on the exchange of evaluated torsion bases to enable a shared commutative diagram.
 
-```{.tikz}
+```{.tikz fig-alt="LIT-SiGamal commutative square. phi_1, of degree l_A^(2a) minus n^2, maps E_0 to E_1; phi_2 maps E_0 to E_0' = E_0/<P_B + s Q_B> and phi_2' maps E_1 to E_1' = E_1/<phi_1(P_B) + s phi_1(Q_B)>; the dashed phi_1' maps E_0' to E_1'. Torsion points are masked along the way: P_1, Q_1 by the matrix A and R_1 = alpha phi_1(R) on E_1; P_2, Q_2 by the matrix B and R' = beta phi_2(R) on E_0'; P_3, Q_3 by B and R_1' = mu beta phi_2'(R_1) on E_1'. A inverse applied to (P_3, Q_3) equals phi_1' applied to (P_2, Q_2)."}
 \usetikzlibrary{arrows.meta, bending, calc}
 \begin{tikzpicture}[
   every node/.style={font=\small},

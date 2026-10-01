@@ -12,7 +12,7 @@ SILBE (Supersingular Isogeny Lollipop Based Encryption) is an isogeny-based Upda
 
 The SILBE scheme alternates between different representations of isogenies (kernel, ideal, and higher-dimensional) and utilizes the Deuring correspondence and Kani's Lemma.
 
-```{.tikz}
+```{.tikz fig-alt="SILBE diagram. The ideal I_phiA gives Alice's isogeny from E_0 to E_A, and its Frobenius pushforward gives an isogeny from E_0 to E_A^(p). Bob's phi_B maps E_A to E_B, and its Frobenius conjugate phi_B^(p) maps E_A^(p) to E_B^(p). Dashed Frobenius maps pi send E_0 to itself, E_A to E_A^(p) and E_B to E_B^(p); a further isogeny psi maps E_B to E_B^(p)."}
 \usetikzlibrary{arrows.meta, bending, calc}
 \begin{tikzpicture}[
   every node/.style={font=\small},

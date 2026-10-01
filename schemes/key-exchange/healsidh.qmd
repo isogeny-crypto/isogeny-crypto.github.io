@@ -14,7 +14,7 @@ HealSIDH is a statically secure, interactive key exchange scheme designed to mit
 
 The scheme fundamentally integrates the direct key validation mechanism within the standard [SIDH workflow](/schemes/key-exchange/sidh.qmd#scheme-design). The design involves canonical basis generation to prevent the leakage of points on the shared secret curve.
 
-```{.tikz}
+```{.tikz fig-alt="HealSIDH key validation. Alice's phi_A maps E_0 to E_A; she publishes phi_A(P_B), phi_A(Q_B), and phi_A(P_2), phi_A(Q_2) written in a basis R_A, S_A with coefficients e_1, f_1, e_2, f_2. Bob's phi_B maps E_0 to E_B with points R_a, S_a, and phi_B' maps E_A to E_AB with points R_ab, S_ab; an honest Bob takes these as images of P_2, Q_2 and of R_A, S_A. Alice computes phi_A' from E_B to E_BA and checks a Weil pairing equation on R_a, S_a and that phi_A'(R_a), phi_A'(S_a) match the same combinations of R_ab, S_ab: the key is valid if all checks pass, invalid otherwise."}
 \usetikzlibrary{arrows.meta}
 \begin{tikzpicture}[
   every node/.style={font=\small},
@@ -53,8 +53,8 @@ The scheme fundamentally integrates the direct key validation mechanism within t
   % --- Right column top: Honest Bob ---
   \node[titlebox, draw=green!60!black, text=green!60!black] (bobtitle) at (11.2, 4.6) {Honest Bob};
   \node[box, minimum width=4.6cm, minimum height=1.2cm, draw=green!60!black] (bobcontent) at (11.2, 3.6) {
-    $R_a = \phi_B(P_2),\ S_a = \phi_B'(Q_2)$\\
-    $R_{ab} = \phi_B'(R_A),\ S_{ab} = \phi_B(S_A)$
+    $R_a = \phi_B(P_2),\ S_a = \phi_B(Q_2)$\\
+    $R_{ab} = \phi_B'(R_A),\ S_{ab} = \phi_B'(S_A)$
   };
 
   % --- Right column: Key validation ---

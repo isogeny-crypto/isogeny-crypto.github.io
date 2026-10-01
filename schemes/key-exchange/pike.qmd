@@ -12,7 +12,7 @@ PIKE (Pairing-assisted Isogeny-based Key Encryption) is a public key encryption 
 
 Just like POKÉ, the PIKE scheme relies on establishing a commutative diagram between two parties (Alice and Bob) using separate sets of torsion points. 
 
-```{.tikz}
+```{.tikz fig-alt="PIKE commutative square. Alice's phi, of degree q(2^a minus q), maps E_0 to E_A; Bob's psi maps E_0 to E_B and psi' maps E_A to E_AB; phi' from E_B to E_AB factors through a middle curve E_M as phi_2' after phi_1'. E_0 has bases P_0, Q_0 of E_0[2^a], R_0, S_0 of E_0[C], and X_0, Y_0 of E_0[D]. Alice publishes their images under phi scaled by secret scalars alpha_2, beta_2, gamma_C, delta_D; Bob publishes images under psi and psi' scaled by omega_2, 1/omega_2, eta_D and zeta_D."}
 \usetikzlibrary{arrows.meta, bending, calc}
 \begin{tikzpicture}[
   every node/.style={font=\small},

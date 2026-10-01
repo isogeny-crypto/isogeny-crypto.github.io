@@ -13,7 +13,7 @@ SimS (Simplified SiGamal) is a post-quantum public-key encryption (PKE) scheme b
 SimS operates over a supersingular elliptic curve $E_0 : y^2 = x^3 + x$ defined over $\mathbb{F}_p$, where $p = 2^r \ell_1 \cdots \ell_n - 1$ is a prime such that $\ell_1, \ldots, \ell_n$ are small distinct odd primes. The scheme relies on the free and transitive action of the ideal class group $\text{cl}(\mathbb{Z}[\pi])$ on the set of supersingular elliptic curves defined over $\mathbb{F}_p$ with endomorphism ring $\mathbb{Z}[\pi]$. 
 
 
-```{.tikz}
+```{.tikz fig-alt="SimS diagram. Alice's action [a] maps E_0 to E_1 = [a]E_0, and Bob's action [b] maps E_0 to E_3 = [b]E_0. Bob computes E_4 = [b]E_1 with the point P_4 = [2m+1]P_E4; Alice applies [a] to E_3, reaching the same E_4, and recovers m' as the discrete logarithm of P_4 with respect to P_E4."}
 \usetikzlibrary{arrows.meta}
 \begin{tikzpicture}[
   every node/.style={font=\small},
@@ -27,7 +27,7 @@ SimS operates over a supersingular elliptic curve $E_0 : y^2 = x^3 + x$ defined 
   \node[box] (E1) at (6, 0) {$E_1 = {\color{red}[\mathrm{a}]}E_0$};
   \node[box] (E3) at (0, -4) {$E_3 = {\color{blue}[\mathrm{b}]}E_0$};
   \node[box] (E4top) at (6, -2.2) {${\color{blue}E_4} = {\color{blue}[\mathrm{b}]}E_1,$\\$P_4 = {\color{blue}[2m+1]P_{E_4}}$};
-  \node[box] (E4bot) at (6, -4) {${\color{red}E_4} = {\color{red}[\mathrm{a}]}E_0,$\\${\color{red}m'} = DLP(P_4, {\color{red}P_{E_4}})$};
+  \node[box] (E4bot) at (6, -4) {${\color{red}E_4} = {\color{red}[\mathrm{a}]}E_3,$\\${\color{red}m'} = DLP(P_4, {\color{red}P_{E_4}})$};
 
   % E0 -> E1 (red, top)
   \draw[redarr] (E0) -- node[above, red]{$[\mathrm{a}]$} (E1);

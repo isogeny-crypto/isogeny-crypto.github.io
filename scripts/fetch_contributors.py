@@ -5,6 +5,8 @@ import subprocess
 from pathlib import Path
 
 REPO = "isogeny-crypto/isogeny-crypto.github.io"
+os.chdir(Path(__file__).resolve().parent.parent)  # paths below are relative to the repo root
+CONTRIBUTORS_DIR = Path(".contributors")
 
 QUARTO_FULL_RENDER = os.environ.get("QUARTO_PROJECT_RENDER_ALL") == "1"
 CALLED_DIRECTLY    = os.environ.get("QUARTO_PROJECT_OUTPUT_DIR") is None
@@ -16,44 +18,40 @@ if not (QUARTO_FULL_RENDER or CALLED_DIRECTLY):
 if CALLED_DIRECTLY:
     print("fetch_contributors.py: running standalone.")
 
-def get_qmd_title(file_path):
-    """Extract the title field from a .qmd YAML frontmatter."""
-    with open(file_path, "r") as f:
-        lines = f.readlines()
-    in_frontmatter = False
-    for line in lines:
-        if line.strip() == "---":
-            in_frontmatter = not in_frontmatter
-            continue
-        if in_frontmatter and line.startswith("title:"):
-            return line.split(":", 1)[1].strip().strip('"').strip("'")
-    return file_path.stem  # fallback to filename stem if no title found
+def snippet_path_for(file_path):
+    """Map schemes/key-exchange/sidh.qmd -> .contributors/schemes/key-exchange/sidh.md.
 
-def title_to_key(title):
-    """Lowercase the title for use as a snippet filename key."""
-    return title.strip().lower()
+    Keyed by source path (not title) so that pages whose titles contain one
+    another, e.g. FESTA / QFESTA, can never pick up each other's snippet.
+    contributors.lua computes the same path from the page being rendered.
+    """
+    return CONTRIBUTORS_DIR / file_path.with_suffix(".md")
 
-os.makedirs(".contributors", exist_ok=True)
+def write_snippet(path, markdown):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(markdown, encoding="utf-8")
+
+PENDING = "\n\n**Contributors:** Pending GitHub sync...\n"
+
+scheme_files = sorted(Path("schemes").rglob("*.qmd"))
 
 # Create placeholder snippets for any .qmd files that don't have one yet,
-# so Quarto never fails on a missing include before the API fetch runs.
-for file_path in Path("schemes").rglob("*.qmd"):
-    title = get_qmd_title(file_path)
-    key = title_to_key(title)
-    snippet_path = Path(".contributors") / f"{key}.md"
+# so every page renders even if the API fetch below fails.
+for file_path in scheme_files:
+    snippet_path = snippet_path_for(file_path)
     if not snippet_path.exists():
-        snippet_path.write_text("\n\n**Contributors:** Pending GitHub sync...\n")
+        write_snippet(snippet_path, PENDING)
 
 github_token = os.environ.get("GITHUB_TOKEN")
-headers = {"User-Agent": "Mozilla/5.0"}
+headers = {"User-Agent": "isogeny-crypto-wiki-build"}
 if github_token:
     headers["Authorization"] = f"token {github_token}"
 
-for file_path in Path("schemes").rglob("*.qmd"):
-    # 1. Sync mtime to last git commit
+for file_path in scheme_files:
+    # 1. Sync mtime to last git commit (drives the page's "Modified" date)
     try:
         result = subprocess.run(
-            ["git", "log", "-1", "--format=%ct", str(file_path)],
+            ["git", "log", "-1", "--format=%ct", "--", str(file_path)],
             capture_output=True, text=True
         )
         if result.stdout.strip():
@@ -63,10 +61,9 @@ for file_path in Path("schemes").rglob("*.qmd"):
         pass
 
     # 2. Fetch contributors
-    title = get_qmd_title(file_path)
-    key = title_to_key(title)
-    snippet_path = Path(".contributors") / f"{key}.md"
-    url = f"https://api.github.com/repos/{REPO}/commits?path={file_path}"
+    snippet_path = snippet_path_for(file_path)
+    url = (f"https://api.github.com/repos/{REPO}/commits"
+           f"?path={file_path.as_posix()}&per_page=100")
 
     try:
         req = urllib.request.Request(url, headers=headers)
@@ -86,9 +83,7 @@ for file_path in Path("schemes").rglob("*.qmd"):
         else:
             markdown = "\n\n**Contributors:** No GitHub history found yet.\n"
 
-        snippet_path.write_text(markdown)
+        write_snippet(snippet_path, markdown)
 
     except Exception as e:
         print(f"Warning: could not fetch contributors for {file_path}: {e}")
-        if not snippet_path.exists():
-            snippet_path.write_text("\n\n**Contributors:** Pending GitHub sync...\n")

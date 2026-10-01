@@ -1,11 +1,20 @@
-name: Deploy to GitHub Pages
+name: Build and deploy
 
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Never run two deploys at once; a newer push to the same ref cancels an
+# in-progress PR build (but not an in-progress deploy of main).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -14,7 +23,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0  # full history: fetch_contributors.py reads per-file commit dates
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -24,22 +33,49 @@ jobs:
 
       - name: Install Node dependencies
         run: npm ci
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-      
+
+      - name: Lint sources
+        run: python3 scripts/lint.py
+
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: 1.9.38  # keep in sync with the version in README.md
+
+      # SVGs are keyed by a hash of the diagram source, so an older cache is
+      # always safe to reuse; only new or edited diagrams get re-rendered.
+      - name: Restore TikZ cache
+        uses: actions/cache@v4
+        with:
+          path: .tikz-cache
+          key: tikz-${{ hashFiles('index.qmd', 'schemes/**/*.qmd') }}
+          restore-keys: tikz-
 
       - name: Render site
         run: quarto render
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check internal links
+        run: python3 scripts/check_links.py
+
+      - name: Upload preview (pull requests)
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-preview
+          path: docs
+          retention-days: 7
+
       - name: Deploy to GitHub Pages
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
+          force_orphan: true  # keep gh-pages to a single commit instead of accumulating build output

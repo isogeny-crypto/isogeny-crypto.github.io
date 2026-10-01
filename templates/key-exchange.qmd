@@ -1,0 +1,56 @@
+---
+title: "SHORTNAME"
+subtitle: "Expanded Name"
+date: YYYY-MM-DD
+draft: true
+---
+
+<!--
+  Copy to schemes/key-exchange/<name>.qmd (lowercase letters and digits).
+  Rules: CONTRIBUTING.md §6. Delete all comments; delete `draft: true`
+  once Overview, Scheme Design and Security Assumptions are complete.
+-->
+
+<!-- Broken schemes only: -->
+> Broken: no parameter choice resists [the attack](#progress).
+
+## Overview
+
+<!-- One paragraph: problem, what it builds on, key idea. Cite [@key]. -->
+
+## Scheme Design
+
+<!--
+  Diagram only if the paper has a protocol figure that helps:
+  ```{.tikz fig-alt="One-sentence description."}
+  ```
+  Follow the paper's algorithms; define each symbol before use.
+-->
+
+### Public Parameters
+
+* **$p$**: ...
+
+### Key Generation
+
+1. ...
+
+### Encryption
+
+1. ...
+
+### Decryption
+
+1. ...
+
+## Security Assumptions
+
+<!-- Theory only: security notion, then hardness assumptions. No attack costs. -->
+
+* **Problem name:** Given ..., compute .... New / borrowed from [Scheme](/schemes/<section>/<scheme>.qmd#security-assumptions).
+
+## Progress
+
+TODO
+
+<!-- Format: - **YEAR**: one-sentence result [@key].  (CONTRIBUTING.md §6.6) -->

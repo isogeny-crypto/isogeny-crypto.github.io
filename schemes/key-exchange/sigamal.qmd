@@ -13,7 +13,7 @@ SiGamal is a post-quantum public key encryption (PKE) scheme built upon the [CSI
 The SiGamal scheme operates by sending plaintexts embedded as points through hidden isogenies. The scheme consists of three primary phases: Key Generation, Encryption, and Decryption.
 
 
-```{.tikz}
+```{.tikz fig-alt="SiGamal diagram. The class-group action a maps (E_0, P_0) to (E_1, P_1); the action b (dotted) maps (E_0, P_0) to (E_3, P_3), and mu composed with b maps (E_1, P_1) to (E_4, P_4). Applying a to (E_3, P_3) gives (E_4, a P_3)."}
 \usetikzlibrary{arrows.meta, bending, calc}
 \begin{tikzpicture}[
   every node/.style={font=\small},

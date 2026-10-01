@@ -1,26 +1,24 @@
 {
   "name": "isogeny-crypto.github.io",
   "version": "1.0.0",
-  "description": "Welcome to the source repository for the [isogeny-crypto.github.io](https://isogeny-crypto.github.io) wiki. This repository contains the markdown source files, mathematical configurations, and build scripts used to generate our collaborative reference for isogeny-based cryptographic schemes.",
-  "directories": {
-    "doc": "docs"
-  },
+  "private": true,
+  "description": "Source for the Isogeny-based Cryptography Wiki (https://isogeny-crypto.github.io), built with Quarto.",
   "scripts": {
     "build": "quarto render",
     "preview": "quarto preview",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "python3 scripts/lint.py",
+    "format": "python3 scripts/format_bib.py",
+    "check": "python3 scripts/check_links.py"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/isogeny-crypto/isogeny-crypto.github.io.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "license": "CC-BY-4.0",
   "bugs": {
     "url": "https://github.com/isogeny-crypto/isogeny-crypto.github.io/issues"
   },
-  "homepage": "https://github.com/isogeny-crypto/isogeny-crypto.github.io#readme",
+  "homepage": "https://isogeny-crypto.github.io",
   "dependencies": {
     "node-tikzjax": "^1.0.5"
   }

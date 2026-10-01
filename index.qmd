@@ -16,42 +16,42 @@ To engage with the community, consider joining activities such as the [Isogeny C
 
 ## Cryptographic Schemes
 
-This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes (including KEM, etc.) and digital signature schemes.
+This wiki aims to cover all peer-reviewed isogeny-based key establishment schemes (key exchange, PKE, KEM, etc.) and digital signature schemes.
 
 **Legend:** []{r=100} torsion points; []{b=100} quaternion algebra; []{g=100} group action;
 
 :::: {.columns}
 ::: {.column width="50%"}
-### Key Exchange
+### Key Establishment
 
 ::: {.unlisted-schemes}
-- []{r=100} [SIDH](schemes/key-exchange/sidh.qmd) (2011--2022) 
-- []{r=100} [$k$-SIDH](schemes/key-exchange/ksidh.qmd) (2017--2022) 
-- []{g=100} [CSIDH](schemes/key-exchange/csidh.qmd) (2018) 
+- []{r=100} [SIDH](/schemes/key-exchange/sidh.qmd) (2011--2022) 
+- []{r=100} [$k$-SIDH](/schemes/key-exchange/ksidh.qmd) (2017--2022) 
+- []{g=100} [CSIDH](/schemes/key-exchange/csidh.qmd) (2018) 
 - []{r=100} SIDH UM (2018--2022)
 - []{r=100} SIAKE (2019--2022)
 - []{g=100} AGKE (2019)
 - []{g=100} [OSIDH](/schemes/key-exchange/osidh.qmd) (2019)
-- []{g=100} [CSURF](schemes/key-exchange/csurf.qmd) (2020) 
-- []{r=100} [B-SIDH](schemes/key-exchange/bsidh.qmd) (2020--2022) 
+- []{g=100} [CSURF](/schemes/key-exchange/csurf.qmd) (2020) 
+- []{r=100} [B-SIDH](/schemes/key-exchange/bsidh.qmd) (2020--2022) 
 - []{r=50 g=50} [SiGamal](/schemes/key-exchange/sigamal.qmd) (2020) 
 - []{r=50 g=50} [C-SiGamal](/schemes/key-exchange/csigamal.qmd) (2020)
 - []{g=100} $\Pi$-SIDE (2020) 
 - []{g=100} $\Pi$-CSIDH (2020) 
 - []{r=50 g=50} [SimS](/schemes/key-exchange/sims.qmd) (2021)
 - []{g=100} [CSIDH UPKE](/schemes/key-exchange/csidhupke.qmd) (2021)
-- []{r=50 b=50} [Séta](schemes/key-exchange/seta.qmd) (2021--2022) 
-- []{r=100} [HealSIDH](/schemes/key-exchange/healsidh.qmd) (2021-2022)
+- []{r=50 b=50} [Séta](/schemes/key-exchange/seta.qmd) (2021--2022) 
+- []{r=100} [HealSIDH](/schemes/key-exchange/healsidh.qmd) (2021--2022)
 - []{b=100} GA-PAKE (2022)
 - []{b=100} [pSIDH](/schemes/key-exchange/psidh.qmd) (2022--2023)
 - []{r=100} [M-SIDH](/schemes/key-exchange/msidh.qmd) (2023)
 - []{r=100} [MD-SIDH](/schemes/key-exchange/mdsidh.qmd) (2023)
-- []{r=100} [FESTA](schemes/key-exchange/festa.qmd) (2023)
+- []{r=100} [FESTA](/schemes/key-exchange/festa.qmd) (2023)
 - []{r=100} [binSIDH](/schemes/key-exchange/binsidh.qmd) (2023)
 - []{r=100} [terSIDH](/schemes/key-exchange/tersidh.qmd) (2023)
 - []{b=100} saPAKE (2023)
 - []{b=100} LPKEga (2024)
-- []{r=50 b=50} [QFESTA](schemes/key-exchange/qfesta.qmd) (2024)
+- []{r=50 b=50} [QFESTA](/schemes/key-exchange/qfesta.qmd) (2024)
 - []{r=50 g=50} [TOGA-UE](/schemes/key-exchange/togaue.qmd) (2024)
 - []{g=100} [BIN-UE](/schemes/key-exchange/binue.qmd) (2024)
 - []{r=50 b=50} [SILBE](/schemes/key-exchange/silbe.qmd) (2024)
@@ -68,11 +68,11 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes (in
 - []{r=100} JS (2014)
 - []{r=100} YAJJS (2017)
 - []{b=100} GPS (2017) 
-- []{g=100} SeaSign (2019)
-- []{g=100} [CSI-FiSh](schemes/digital-signature/csifish.qmd) (2019) 
+- []{g=100} [SeaSign](/schemes/digital-signature/seasign.qmd) (2019)
+- []{g=100} [CSI-FiSh](/schemes/digital-signature/csifish.qmd) (2019) 
 - []{g=100} Sashimi (2020)
 - []{g=100} Lossy CSI-FiSh (2020)
-- []{b=100} [SQISign](schemes/digital-signature/sqisign.qmd) (2020) 
+- []{b=100} [SQISign](/schemes/digital-signature/sqisign.qmd) (2020) 
 - []{g=100} Calamari (2020)
 - []{g=100} FSIBS (2021)
 - []{g=100} IAS (2021)
@@ -85,7 +85,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes (in
 - []{g=100} CSI-Otter (2023)
 - []{g=100} JSD (2024)
 - []{g=100} SCALLOP-HD (2024)
-- []{r=50 b=50} [SQIsignHD](schemes/digital-signature/sqisignhd.qmd) (2024)
+- []{r=50 b=50} [SQIsignHD](/schemes/digital-signature/sqisignhd.qmd) (2024)
 - []{b=100} AprèsSQI (2024)
 - []{r=50 b=50} SQIsign2D-East (2024)
 - []{r=50 b=50} SQIsign2D-West (2024)
@@ -115,8 +115,7 @@ This wiki aims to cover all peer-reviewed isogeny-based key exchange schemes (in
 
 ## Contributing
 
-This wiki is maintained by the **isogeny-crypto** organization. If you spot a mathematical error, want to expand on a protocol's performance metrics, or wish to add a new primitive:
+This wiki is maintained by the **isogeny-crypto** organization, and contributions are welcome:
 
-1. Fork the repository on [GitHub](https://github.com/isogeny-crypto/isogeny-crypto.github.io).
-2. Create your article using a `.qmd` file in the `schemes/` directory.
-3. Submit a Pull Request.
+- **Spotted an error?** Use the *Report an issue* link on any page, or fix it directly with *Edit this page*.
+- **Want to write up a scheme?** Any scheme listed above without a link is waiting for a page. The [contributing guide](https://github.com/isogeny-crypto/isogeny-crypto.github.io/blob/main/CONTRIBUTING.md) walks you through it step by step.

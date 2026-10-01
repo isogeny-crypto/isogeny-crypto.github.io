@@ -1,213 +1,148 @@
 # Isogeny-based Cryptography Wiki
 
-Welcome to the source repository for the [isogeny-crypto.github.io](https://isogeny-crypto.github.io) wiki. This repository contains the markdown source files, mathematical configurations, and build scripts used to generate our collaborative reference for isogeny-based cryptographic schemes.
+[![Build and deploy](https://github.com/isogeny-crypto/isogeny-crypto.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/isogeny-crypto/isogeny-crypto.github.io/actions/workflows/deploy.yml)
 
-## Tech Stack & Architecture
+Source for **[isogeny-crypto.github.io](https://isogeny-crypto.github.io)**. It is a [Quarto](https://quarto.org) website with MathJax for maths and TikZ diagrams rendered to SVG at build time.
 
-This website is statically generated using Quarto. It leverages MathJax for fully accessible mathematical rendering, `node-tikzjax` to compile TikZ diagrams to SVG at build time, and a Python pre-render hook to dynamically query the GitHub API for contributor attribution.
+**Adding content:** [CONTRIBUTING.md](CONTRIBUTING.md). **Maintaining:** [MAINTAINING.md](MAINTAINING.md). This file covers the build.
 
-**Deployment is fully automated.** Pushing to `main` triggers a GitHub Actions workflow that installs dependencies, renders the site, and publishes it to GitHub Pages — no manual build step required.
-
-### Dependencies
-
-To preview the site locally, install the following:
-
-1. **Quarto CLI** — the core HTML rendering engine. [Download here](https://quarto.org/docs/get-started/).
-2. **Python 3** — runs `fetch_contributors.py` as a pre-render hook.
-3. **Node.js (v20+)** — runs `tikz2svg.mjs` to convert TikZ diagrams to SVG at build time.
-4. **Git** — required by `fetch_contributors.py` to sync file modification dates from commit history.
-
-Recommended editor: Visual Studio Code with the official [Quarto extension](https://marketplace.visualstudio.com/items?itemName=quarto.quarto) for live previewing and integrated LaTeX support.
-
----
-
-## Accessibility & Mathematics Mandate
-
-To meet strict accessibility standards, this wiki exclusively uses MathJax for all mathematical rendering.
-
-Unlike lightweight alternatives, MathJax provides native screen-reader compatibility and an Assistive Explorer. This is a hard requirement for our repository, as it allows visually impaired researchers to interactively step through complex supersingular elliptic curve parameters, matrices, and commutative diagrams without losing semantic context.
-
-- Use standard `$` for inline math and `$$` for display equations.
-- The repository is configured to use `html-math-method: mathjax` globally. Do not override this setting in individual files.
-- For diagrams, use fenced code blocks with the `.tikz` class (see below). Diagrams automatically centre and invert correctly in dark mode.
-
-### Writing TikZ Diagrams
-
-Use a fenced code block with the `.tikz` class. The `tikz.lua` Pandoc filter converts it to SVG at build time; no raw HTML is needed in your source files. Rendered SVGs are cached in `.tikz-cache/` by content hash, so unchanged diagrams are never re-rendered.
-
-````markdown
-```{.tikz}
-\usetikzlibrary{arrows.meta}
-\begin{tikzpicture}
-
-  \node (A) at (0, 1) {$A$};
-  \node (B) at (2, 1) {$B$};
-  \node (C) at (0, 0) {$C$};
-  \node (D) at (2, 0) {$D$};
-
-  \draw[-{Stealth}, thick] (A) -- node[above] {$\phi$} (B);
-  \draw[-{Stealth}, thick] (A) -- (C);
-  \draw[-{Stealth}, thick] (B) -- (D);
-  \draw[-{Stealth}, thick] (C) -- (D);
-
-\end{tikzpicture}
-```
-````
-
-A larger example — the CSIDH key exchange diagram:
-
-````markdown
-```{.tikz}
-\usetikzlibrary{arrows.meta}
-\begin{tikzpicture}
-
-  \node (E0)  at (3, 4) {$E_0$};
-  \node (EA)  at (0, 2) {$E_A = [\mathrm{a}] * E_0$};
-  \node (EB)  at (6, 2) {$E_B = [\mathrm{b}] * E_0$};
-  \node (EAB) at (3, 0) {$E_{AB} = E_{BA}$};
-
-  \draw[-{Stealth}, thick] (E0)  -- node[left,  midway] {$[\mathrm{a}]$} (EA);
-  \draw[-{Stealth}, thick] (E0)  -- node[right, midway] {$[\mathrm{b}]$} (EB);
-  \draw[-{Stealth}, thick] (EA)  -- node[right, midway] {$[\mathrm{b}]$} (EAB);
-  \draw[-{Stealth}, thick] (EB)  -- node[left,  midway] {$[\mathrm{a}]$} (EAB);
-
-\end{tikzpicture}
-```
-````
-
-Note that TikZJax supports only a subset of LaTeX fonts and math commands. In particular, `\mathfrak` can be unreliable; prefer `\mathrm` as a fallback.
-
-To adjust diagram size, change the coordinate spacing directly — spread nodes further apart to enlarge, closer to compress. You can also add `[scale=1.5]` to the `\begin{tikzpicture}` options.
-
----
-
-## Local Development Workflow
-
-### 1. Clone the repository
+## Quick start
 
 ```bash
 git clone https://github.com/isogeny-crypto/isogeny-crypto.github.io.git
 cd isogeny-crypto.github.io
+npm ci && npm run preview
 ```
 
-### 2. Install Node dependencies
+## Prerequisites
+
+| Tool | Version | For |
+|---|---|---|
+| [Quarto](https://quarto.org/docs/get-started/) | 1.9.38 (pinned in CI) | rendering |
+| [Node.js](https://nodejs.org) | 20+ | TikZ → SVG (`node-tikzjax`) |
+| Python | 3.8+, stdlib only | lint, link check, contributor fetch |
+| Git | any | page modification dates |
+
+Windows: use WSL (`scripts/tikz.lua` calls `mkdir -p`).
+
+## Commands
+
+| Command | Does |
+|---|---|
+| `npm ci` | Install Node dependencies from the lockfile |
+| `npm run preview` | Live preview, including draft pages. Skips the contributor fetch, except on the first run in a fresh clone, which does a full render. |
+| `npm run lint` | Check sources against the CONTRIBUTING.md rules. No build needed. |
+| `npm run format` | Rewrite `references.bib` in the canonical layout |
+| `npm run build` | Full render to `docs/`, as in CI. Leaves out drafts. |
+| `npm run check` | Check internal links and anchors in `docs/` (run after `build`) |
+
+## Layout
+
+```
+index.qmd                 home page: intro, scheme lists, legend
+schemes/<section>/*.qmd   one page per scheme (key-exchange, digital-signature)
+references.bib            scheme papers (by year), then follow-up work (by key)
+templates/                page templates (not rendered); tikzjax-header.html (diagram CSS)
+assets/                   fonts for TikZ SVGs; disc colours (scheme-list.css)
+scripts/
+  lint.py                 source checks (CI, before render)
+  format_bib.py           canonical references.bib layout
+  fetch_contributors.py   pre-render: contributor snippets, mtime sync
+  tikz.lua, tikz2svg.mjs  {.tikz} blocks → cached SVG
+  contributors.lua        appends References + contributors to each page
+  discs.lua               []{r=50 b=50} → coloured disc
+  check_links.py          post-build link and anchor check
+.github/                  CI workflow, issue forms, PR template
+```
+
+Only `index.qmd` and `schemes/**/*.qmd` are published (`project.render` in `_quarto.yml`). Pages with `draft: true` are left out of the build: they're dropped from the sidebar and search, and links to them become plain text. They do appear in preview.
+
+Generated (gitignored): `docs/`, `.contributors/`, `.tikz-cache/`, `.quarto/`.
+
+## Build pipeline
+
+```
+quarto render
+├─ pre-render  fetch_contributors.py   (full renders only)
+│    ├─ mtime of each page := its last commit            → "Modified" date
+│    └─ GitHub API → .contributors/<page path>.md        → contributor list
+├─ filters     tikz.lua → contributors.lua → discs.lua
+└─ output      docs/
+```
+
+### TikZ
+
+````markdown
+```{.tikz fig-alt="CSIDH: E_0 maps to E_A and E_B, which both map to E_AB."}
+\usetikzlibrary{arrows.meta}
+\begin{tikzpicture}
+  \node (E0) at (3,4) {$E_0$};  \node (EA) at (0,2) {$E_A$};
+  \node (EB) at (6,2) {$E_B$};  \node (EAB) at (3,0) {$E_{AB}$};
+  \draw[-{Stealth}] (E0) -- node[left] {$[\mathrm{a}]$} (EA);
+  \draw[-{Stealth}] (E0) -- node[right] {$[\mathrm{b}]$} (EB);
+  \draw[-{Stealth}] (EA) -- node[right] {$[\mathrm{b}]$} (EAB);
+  \draw[-{Stealth}] (EB) -- node[left] {$[\mathrm{a}]$} (EAB);
+\end{tikzpicture}
+```
+````
+
+- `fig-alt` becomes the diagram's accessible name (`role="img"`, `aria-label`).
+- Only the **first** `\usetikzlibrary{…}` line is used, so list every library in it. `\mathfrak` is unreliable; use `\mathrm`.
+- To resize, change coordinates or use `[scale=…]`. Diagrams are centred and inverted in dark mode.
+- SVGs are cached in `.tikz-cache/` by a hash of the source. CI keeps the cache between runs.
+
+### Citations
+
+- Style: `alpha.csl` (labels like [Cas18]). A missing key is only a Pandoc warning; `npm run lint` is what catches it.
+- Cross-page links use paths (`/schemes/…/x.qmd#anchor`), not `@sec-` references.
+- To refresh the style: `curl -L -o alpha.csl https://raw.githubusercontent.com/citation-style-language/styles/master/din-1505-2-alphanumeric.csl`
+
+### Discs
+
+`[]{r=50 b=50}` becomes a conic-gradient disc, filled clockwise from 12 o'clock in r, b, g order. The colours are defined in `assets/scheme-list.css`, and their meaning is in [CONTRIBUTING.md §6.7](CONTRIBUTING.md#67-home-page-lists).
+
+### Contributors
+
+Snippets are matched to pages by **file path**. New pages show *Pending GitHub sync…* until they are pushed. If the API fails, the previous snippet is kept.
+
+Unauthenticated calls are limited to 60 per hour, and a full build makes one per page. For repeated local builds:
 
 ```bash
-npm ci
+export GITHUB_TOKEN="$(gh auth token)"
 ```
 
-Run this once after cloning, and again whenever `package-lock.json` changes. Using `npm ci` (instead of `npm install`) ensures you get exactly the versions recorded in the lockfile.
+## CI and deployment
 
-### 3. Set up your GitHub token (optional but recommended)
+`.github/workflows/deploy.yml` runs on every PR, on pushes to `main`, and on manual dispatch:
 
-`fetch_contributors.py` queries the GitHub API to attribute contributors to each page. Without a token, the API allows 60 requests per hour — enough for small builds. For frequent local builds, authenticate to raise this limit:
+1. Lint (fails fast)
+2. Restore the TikZ cache
+3. `quarto render`
+4. Link check
+5. **PR:** upload `docs/` as the `site-preview` artifact. **`main`:** publish `docs/` to `gh-pages` as a single orphan commit.
 
-**Mac/Linux** — add to your `~/.zshrc` or `~/.bashrc`:
-```bash
-export GITHUB_TOKEN="your_token_here"
-```
+GitHub settings: [MAINTAINING.md](MAINTAINING.md#repository-settings).
 
-**Windows (PowerShell)**:
-```powershell
-$env:GITHUB_TOKEN="your_token_here"
-```
+**Upgrades:**
+- **Quarto:** bump `version:` in `deploy.yml` and the Prerequisites table together.
+- **node-tikzjax:** `npm update node-tikzjax`, then `rm -rf .tikz-cache` and rebuild.
 
-To get a token: go to [GitHub Developer Settings](https://github.com/settings/tokens) → generate a new "Personal access token (classic)" with no scopes (public repo access requires none). If you skip this step, the script will fall back to "Pending GitHub sync..." for contributor fields.
+## Troubleshooting
 
-> **Token expiry:** if builds start failing with `HTTP Error 403`, your token has expired. Generate a new one and update the environment variable.
+| Symptom | Fix |
+|---|---|
+| `HTTP Error 403` during build | Rate limit or expired token: set `GITHUB_TOKEN`. The build still succeeds. |
+| Lint error | The message names the file, line and rule. `references.bib` layout errors: `npm run format`. |
+| Link check fails | The log names the page and `href`. Usually a heading was renamed. |
+| Page missing from the build | It has `draft: true`. |
+| Deleted pages still appear locally | `rm -rf docs && npm run build` |
+| Diagram fails to render | Check for unsupported fonts/packages or several `\usetikzlibrary` lines. Test with `echo '<tikz>' \| node scripts/tikz2svg.mjs` |
+| `npm ci` lockfile mismatch | `npm install`, then commit `package-lock.json` |
 
-### 4. Live preview (writing mode)
+## License and citation
 
-```bash
-npm run preview
-```
+Everything here is licensed under **[CC BY 4.0](LICENSE)**. You may reuse or fork it with credit, for example:
 
-This spins up a local development server with hot-reloading. The contributor fetch is skipped in preview mode for speed — contributor snippets from your last full build are reused.
+> Based on the [Isogeny-based Cryptography Wiki](https://isogeny-crypto.github.io), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Changes were made.
 
-### 5. Verify a full local build (optional)
-
-You only need this if you want to check the final rendered output before pushing. CI will do this automatically on every push.
-
-```bash
-npm run build
-```
-
----
-
-## Deployment
-
-**Deployment is automatic.** Simply push your changes to `main`:
-
-```bash
-git add .
-git commit -m "your descriptive message"
-git push
-```
-
-The GitHub Actions workflow (`.github/workflows/deploy.yml`) will then:
-
-1. Check out the repository with full Git history (needed for contributor date syncing).
-2. Install Python, Node.js, and Quarto.
-3. Run `npm ci` to install dependencies.
-4. Run `quarto render`, which triggers `fetch_contributors.py` automatically as a pre-render hook.
-5. Push the rendered `docs/` folder to the `gh-pages` branch, which GitHub Pages serves.
-
-You can monitor the progress of any deployment under the **Actions** tab of the repository on GitHub. A green checkmark means the site is live; a red cross means something failed and you can click through to read the logs.
-
-> **First-time setup:** after merging the Actions workflow, go to your repo on GitHub → **Settings** → **Pages** → set the source branch to `gh-pages` and the folder to `/ (root)`.
-
----
-
-## Key Configurations
-
-### Citations & cross-references
-
-We use a classic alphanumeric cryptographic citation style (e.g., [Cas18]).
-
-- Add all BibTeX entries to `references.bib`.
-- Cite inline using Citeproc syntax: `[@citation_key]`.
-- Due to Quarto's file-isolation in website projects, cross-references between different `.qmd` files must use relative path anchors, not the native `@sec-` tags.
-
-To refresh `alpha.csl` from upstream:
-```bash
-curl -L -o alpha.csl https://raw.githubusercontent.com/citation-style-language/styles/master/din-1505-2-alphanumeric.csl
-```
-
-### Automated contributor attribution
-
-At build time, `fetch_contributors.py` queries the GitHub API for the commit history of every `.qmd` file in `schemes/` and writes a small markdown snippet into the `.contributors/` directory, named after the page's title (e.g. `sidh.md`, `csi-fish.md`). The `contributors.lua` Pandoc filter then automatically appends the relevant snippet to the bottom of each rendered page, preceded by a horizontal rule.
-
-**This is fully automatic — no changes are needed to your `.qmd` files.** When you create a new scheme page, simply write your content and push; the contributor block will appear at the bottom after the first CI build.
-
-**Important notes:**
-
-- Do not edit `.contributors/` manually — it is regenerated on every full build and is gitignored.
-- New files will show "Pending GitHub sync..." until your first push, because the script queries the remote repository's commit history.
-- Contributor snippets are matched to pages by the `title:` field in each `.qmd`'s YAML frontmatter. Make sure every scheme page has a unique, stable title.
-
-### scheme list legend (colored discs)
-
-The homepage's Key Establishment / Digital Signature lists (`index.qmd`) mark each scheme with a small colored disc indicating which underlying technique it relies on, per the legend: red = torsion points, blue = Deuring correspondence, green = group action.
-
-Discs are written with a shorthand span, expanded at build time by the `discs.lua` Pandoc filter:
-
-```markdown
-- []{r=100} SIDH (2011--2022)
-- []{b=100} SQISign (2020)
-- []{r=50 b=50} pSIDH (2022--2023)
-```
-
-`r`, `g`, `b` are percentages (0–100) for red/green/blue. Give one color for a solid disc, or two/three for a split disc rendered as a CSS `conic-gradient` in that ratio — useful for schemes that draw on more than one technique. Percentages need not sum to 100. Styling for the resulting disc lives in `assets/scheme-list.css`.
-
-## Template 
-
-Upload the paper to an LLM model (e.g. Google Gemini Pro) with the following prompt:
-
-```
-Study the attached file and generate a detailed, concrete description of the newly introduced scheme [NAME] in Quarto Markdown (.qmd) format. The target audience is researchers working in isogeny-based cryptography. Organize the information under the following headings:
-1. Overview (one paragraph summarizing the scheme motivation in plain English without sounding like a sales pitch) 
-2. Scheme Design (walk through the scheme while defining each symbol before usage)
-3. Security Assumptions (what problems are assumed hard, whether assumptions are new or borrowed from previous schemes) 
-```
-
-Iterate until you get a good initial draft. Then proofread and make necessary edits like adding references, hyperlinks, and `tikz` diagram of the scheme (generated from screenshot using LLM, e.g. Anthropic Claude Sonnet or Mistral Vibe/Le Chat).
+To cite it, use [CITATION.cff](CITATION.cff) (GitHub's *Cite this repository* button).

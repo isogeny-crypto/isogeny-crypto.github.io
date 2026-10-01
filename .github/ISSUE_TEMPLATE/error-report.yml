@@ -1,0 +1,43 @@
+name: Report an error
+description: A mathematical error, wrong claim, broken link, or rendering problem on the site.
+labels: ["error"]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      description: URL of the page with the problem.
+      placeholder: https://isogeny-crypto.github.io/schemes/key-exchange/sidh.html
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of problem
+      options:
+        - Mathematical or technical error
+        - Missing or wrong citation
+        - Broken link
+        - Rendering (maths, diagram, layout)
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's wrong?
+      description: Quote the text or formula, and say what it should be.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: For technical errors, where the correct statement can be checked (paper, section, page).
+      placeholder: ePrint 2011/506, Section 3.2
+  - type: checkboxes
+    id: fix
+    attributes:
+      label: Contribution
+      options:
+        - label: I'd like to open a pull request fixing this myself.

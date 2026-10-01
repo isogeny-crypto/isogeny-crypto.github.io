@@ -12,7 +12,7 @@ POKÉ is a public-key encryption scheme constructed from isogenies of unknown de
 
 The POKÉ scheme relies on establishing a commutative diagram between two parties (Alice and Bob) using separate sets of torsion points. Before any operations take place, a set of global public parameters is defined.
 
-```{.tikz}
+```{.tikz fig-alt="POKÉ commutative square. Alice's phi, of degree q(2^a minus q), maps E_0 to E_A; Bob's psi maps E_0 to E_B and psi' maps E_A to E_AB; phi' maps E_B to E_AB. E_0 has bases P_0, Q_0 of E_0[2^a], R_0, S_0 of E_0[3^b], and X_0, Y_0 of E_0[5^c]. Alice publishes their images under phi scaled by secret scalars alpha_2, beta_2, gamma_3, delta_5. Bob publishes images under psi and psi', with the 2^a-torsion scaled by omega_2 and 1/omega_2 and the 5^c-torsion transformed by the matrix D_5."}
 \usetikzlibrary{arrows.meta, bending, calc}
 \begin{tikzpicture}[
   every node/.style={font=\small},

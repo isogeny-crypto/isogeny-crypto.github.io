@@ -16,7 +16,7 @@ Because standard evaluation of large prime-degree isogenies is computationally i
 
 The pSIDH scheme involves two parties, Alice and Bob, agreeing on a shared secret over supersingular elliptic curves.
 
-```{.tikz}
+```{.tikz fig-alt="pSIDH diagram. phi_A maps E_0 to E_A and phi_B maps E_0 to E_B. The pushforwards [phi_A]_* phi_B from E_A and [phi_B]_* phi_A from E_B both reach E_AB, as do the curved arrows hat psi_B from E_A and hat psi_A from E_B."}
 \usetikzlibrary{arrows.meta, bending, calc}
 \begin{tikzpicture}[
   every node/.style={font=\small},

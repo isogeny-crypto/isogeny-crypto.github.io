@@ -11,7 +11,7 @@ QFESTA (Quaternion Fast Encapsulation from Supersingular Torsion Attacks) is a n
 ### The `RandIsogImages` Algorithm
 Given a special supersingular elliptic curve $E_0/\mathbb{F}_{p^2}$ with $j$-invariant 1728, its known maximal order $\mathcal{O}_0 \cong \text{End}(E_0)$, and an target non-smooth isogeny degree $d$:
 
-```{.tikz}
+```{.tikz fig-alt="RandIsogImages. A red isogeny tau of degree d maps E_0 to E_A, and a dashed isogeny rho of degree D minus d maps E_A back to E_0; together they form the endomorphism alpha of E_0, drawn as a loop."}
 \usetikzlibrary{arrows.meta, bending}
 \begin{tikzpicture}[
   every node/.style={font=\large},
@@ -47,7 +47,7 @@ Given a special supersingular elliptic curve $E_0/\mathbb{F}_{p^2}$ with $j$-inv
 
 [FESTA uses the SIDH attack machinery for decryption](/schemes/key-exchange/festa.qmd#global-parameters), which natively imposes strong smoothness constraints on the degrees of the underlying isogenies ($d_A, d_1, d_2$), forcing them to be large and leading to significant data sizes and computational overhead. To circumvent these limitations, QFESTA introduces a novel technique leveraging quaternion algebras to compute the codomain and point images of non-smooth degree isogenies from a special starting curve. This eliminates the smoothness restriction for degrees $d_A$ and $d_1$, vastly shrinking parameter sizes.
 
-```{.tikz}
+```{.tikz fig-alt="QFESTA trapdoor. Alice's isogeny phi_A from E_0 to E_A is phi_A2 (degree 3^b) after phi_A1 (degree d_A1, to E_A1); she publishes R_A, S_A, the images of the basis P_0, Q_0 masked by the matrix A. Bob maps E_0 to E_1 by phi_1 (degree d_1) and E_A to E_2 by phi_2 (degree 3^2b), publishing the images masked by the matrix B. Dashed paths psi_1 and psi_2 run from E_A1 to E_1 via E_0 and to E_2 via E_A."}
 \usetikzlibrary{arrows.meta, bending, calc}
 \begin{tikzpicture}[
   every node/.style={font=\small},

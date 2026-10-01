@@ -1,0 +1,48 @@
+name: Propose a scheme
+description: Suggest a scheme that is missing from the home-page lists.
+labels: ["new scheme"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Schemes must meet the criteria in [CONTRIBUTING.md §2](https://github.com/isogeny-crypto/isogeny-crypto.github.io/blob/main/CONTRIBUTING.md#2-scope): peer-reviewed, named, new or modified.
+  - type: input
+    id: name
+    attributes:
+      label: Scheme name
+      description: Exactly as the paper writes it.
+      placeholder: SQIsign2D-West
+    validations:
+      required: true
+  - type: dropdown
+    id: list
+    attributes:
+      label: List
+      options:
+        - Key Establishment (key exchange, PKE, KEM, UE, PAKE, ...)
+        - Digital Signature (signatures, identification, ring/threshold/adaptor, ...)
+    validations:
+      required: true
+  - type: input
+    id: paper
+    attributes:
+      label: Introducing paper
+      description: Venue and year of the peer-reviewed publication, plus an ePrint or DOI link.
+      placeholder: ASIACRYPT 2024, https://eprint.iacr.org/2024/760
+    validations:
+      required: true
+  - type: checkboxes
+    id: techniques
+    attributes:
+      label: Techniques (for the coloured disc)
+      description: CONTRIBUTING.md §6.7. Tick all that apply.
+      options:
+        - label: Torsion points
+        - label: Quaternion algebra
+        - label: Group action
+  - type: checkboxes
+    id: fix
+    attributes:
+      label: Contribution
+      options:
+        - label: I'll open a pull request adding the list entry and BibTeX entry.

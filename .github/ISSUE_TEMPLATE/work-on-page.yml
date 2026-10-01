@@ -1,0 +1,31 @@
+name: Work on a page
+description: Claim a scheme page to write, or a Progress section to fill in, so others know it's taken.
+title: "[Claim] "
+labels: ["claimed"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check [open issues](https://github.com/isogeny-crypto/isogeny-crypto.github.io/issues?q=is%3Aissue+is%3Aopen+label%3Aclaimed) first to make sure nobody has claimed it already. Link this issue from your pull request with `Closes #<number>`.
+  - type: input
+    id: scheme
+    attributes:
+      label: Scheme
+      placeholder: FESTA
+    validations:
+      required: true
+  - type: dropdown
+    id: task
+    attributes:
+      label: Task
+      options:
+        - Write the Progress section
+        - Write a new page
+        - Improve or correct an existing page
+    validations:
+      required: true
+  - type: textarea
+    id: plan
+    attributes:
+      label: Plan
+      description: Optional. Papers you plan to cover, or what you want to change.

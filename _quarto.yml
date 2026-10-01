@@ -2,12 +2,22 @@ project:
   type: website
   output-dir: docs
   pre-render: python3 scripts/fetch_contributors.py
+  # Only these become site pages; README, CONTRIBUTING, templates/ and
+  # papers/ are never published.
+  render:
+    - index.qmd
+    - schemes/**/*.qmd
 
 date-modified: last-modified
 
 website:
   title: "Isogeny-based Cryptography Wiki"
   description: "An accessible reference for isogeny-based cryptographic schemes."
+  site-url: https://isogeny-crypto.github.io
+  repo-url: https://github.com/isogeny-crypto/isogeny-crypto.github.io
+  repo-actions: [edit, issue]
+  page-footer:
+    center: "Content licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). If you reuse it, credit the [Isogeny-based Cryptography Wiki](https://isogeny-crypto.github.io)."
   search:
     location: sidebar
     type: overlay
@@ -19,10 +29,13 @@ website:
     contents:
       - href: index.qmd
         text: Home
-      - section: "Key Exchange"
+      - section: "Key Establishment"
         contents: "schemes/key-exchange/*.qmd"
       - section: "Digital Signature"
         contents: "schemes/digital-signature/*.qmd"
+
+language:
+  title-block-published: "Created"
 
 format:
   html:
